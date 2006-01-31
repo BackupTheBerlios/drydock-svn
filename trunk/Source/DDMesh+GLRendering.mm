@@ -20,11 +20,17 @@
 	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
 #import "DDMesh.h"
 #import "Logging.h"
 #import "GLUtilities.h"
 #import "DDMaterial.h"
+
+#define CGL_MACRO_CACHE_RENDERER
+#import <OpenGL/CGLMacro.h>
+
+
+#define DRAW(vec)	glVertex3f(vec.x, vec.y, vec.z)
+#define NORMAL(vec)	glNormal3f(vec.x, vec.y, vec.z)
 
 
 @implementation DDMesh (GLRendering)
@@ -35,6 +41,8 @@
 	unsigned				i, j;
 	DDMeshFaceData			*face;
 	
+	CGL_MACRO_DECLARE_VARIABLES();
+	
 	EnterWireframeMode(wfmc);
 	
 	face = _faces;
@@ -44,7 +52,7 @@
 		glBegin(GL_LINE_LOOP);
 		for (j = 0; j != face->vertexCount; ++j)
 		{
-			_vertices[face->verts[j]].glDraw();
+			DRAW(_vertices[face->verts[j]]);
 		}
 		glEnd();
 		face++;
@@ -54,7 +62,7 @@
 	glBegin(GL_POINTS);
 	for (i = 0; i != _vertexCount; ++i)
 	{
-		_vertices[i].glDraw();
+		DRAW(_vertices[i]);
 	}
 	glEnd();
 	
@@ -68,6 +76,8 @@
 	DDMeshFaceData			*face;
 	float					white[4] = { 1, 1, 1, 1 };
 	DDMaterial				*currentMaterial = nil;
+	
+	CGL_MACRO_DECLARE_VARIABLES();
 	
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, white);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, white);
@@ -87,11 +97,11 @@
 				[currentMaterial makeActive];
 			}
 			glBegin(GL_POLYGON);
-			face->normal.glNormal();
+			NORMAL(face->normal);
 			for (j = 0; j != face->vertexCount; ++j)
 			{
 				glTexCoord2f(face->tex_s[j], face->tex_t[j]);
-				_vertices[face->verts[j]].glDraw();
+				DRAW(_vertices[face->verts[j]]);
 			}
 			glEnd();
 			++face;
@@ -111,14 +121,14 @@
 				glBegin(GL_TRIANGLES);
 			}
 			
-			face->normal.glNormal();
+			NORMAL(face->normal);
 			
 			glTexCoord2f(face->tex_s[0], face->tex_t[0]);
-			_vertices[face->verts[0]].glDraw();
+			DRAW(_vertices[face->verts[0]]);
 			glTexCoord2f(face->tex_s[1], face->tex_t[1]);
-			_vertices[face->verts[1]].glDraw();
+			DRAW(_vertices[face->verts[1]]);
 			glTexCoord2f(face->tex_s[2], face->tex_t[2]);
-			_vertices[face->verts[2]].glDraw();
+			DRAW(_vertices[face->verts[2]]);
 			
 			++face;
 		}
@@ -137,6 +147,8 @@
 	Vector					c;
 	Scalar					normLength;
 	
+	CGL_MACRO_DECLARE_VARIABLES();
+	
 	EnterWireframeMode(wfmc);
 	glColor3f(0, 1, 1);
 	normLength = _rMax / 16.0f;
@@ -154,8 +166,8 @@
 		c /= face->vertexCount;
 		
 		// Draw normal
-		c.glDraw();
-		(c + normLength * face->normal).glDraw();
+		DRAW(c);
+		DRAW((c + normLength * face->normal));
 		
 		++face;
 	}

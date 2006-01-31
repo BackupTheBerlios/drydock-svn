@@ -26,6 +26,9 @@
 		1A18DE11096456D20010CE0B /* UKFeedbackProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A18DE0E096456D20010CE0B /* UKFeedbackProvider.m */; };
 		1A18DE12096456D20010CE0B /* UKUpdateChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A18DE10096456D20010CE0B /* UKUpdateChecker.m */; };
 		1A18DE20096457E90010CE0B /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A18DE1F096457E90010CE0B /* Message.framework */; };
+		1A23CD3E098F40CF004A48CD /* DDMesh+GLRendering.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
+		1A23CD8C098F491A004A48CD /* DDMesh+OoliteDATSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
+		1A23CD8D098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */; };
 		1A442149094C830B000E90C2 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A442148094C830B000E90C2 /* Logging.m */; };
 		1A49F9F00959B235003B322F /* DDLightController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A49F9EE0959B235003B322F /* DDLightController.mm */; };
 		1A50518E098E1E6B0056F45F /* IconFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A50518D098E1E6B0056F45F /* IconFamily.m */; };
@@ -42,7 +45,7 @@
 		1A7D61A6094EE3D300E9D611 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A7D61A4094EE3D300E9D611 /* Localizable.strings */; };
 		1A7D62C3094EF54600E9D611 /* DDMeshNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D62C2094EF54600E9D611 /* DDMeshNode.mm */; };
 		1A80AA0C09470B80006AF8F5 /* SceneNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA0B09470B80006AF8F5 /* SceneNode.mm */; };
-		1A80AA1309470BC2006AF8F5 /* phystypes.cp in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA1209470BC2006AF8F5 /* phystypes.cp */; };
+		1A80AA1309470BC2006AF8F5 /* phystypes.cp in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA1209470BC2006AF8F5 /* phystypes.cp */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
 		1A80AA6309470D50006AF8F5 /* SimpleTag.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA6009470D50006AF8F5 /* SimpleTag.mm */; };
 		1A80AA6409470D50006AF8F5 /* SceneTag.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA6109470D50006AF8F5 /* SceneTag.mm */; };
 		1A80AA9F09470DF0006AF8F5 /* AxisNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA9D09470DF0006AF8F5 /* AxisNode.mm */; };
@@ -126,6 +129,9 @@
 		1A18DE0F096456D20010CE0B /* UKUpdateChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKUpdateChecker.h; sourceTree = "<group>"; };
 		1A18DE10096456D20010CE0B /* UKUpdateChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKUpdateChecker.m; sourceTree = "<group>"; };
 		1A18DE1F096457E90010CE0B /* Message.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Message.framework; path = /System/Library/Frameworks/Message.framework; sourceTree = "<absolute>"; };
+		1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+GLRendering.mm"; sourceTree = "<group>"; };
+		1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+OoliteDATSupport.mm"; sourceTree = "<group>"; };
+		1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+LightwaveOBJSupport.mm"; sourceTree = "<group>"; };
 		1A442147094C830B000E90C2 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		1A442148094C830B000E90C2 /* Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logging.m; sourceTree = "<group>"; };
 		1A49F9EE0959B235003B322F /* DDLightController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDLightController.mm; sourceTree = "<group>"; };
@@ -354,6 +360,9 @@
 			children = (
 				1A7D60EF094EDACB00E9D611 /* DDMesh.h */,
 				1A7D60F0094EDACB00E9D611 /* DDMesh.mm */,
+				1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */,
+				1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */,
+				1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */,
 				1AE7DFB7094F95FE000F6B6E /* DDMaterial.h */,
 				1A65C6270957A43E006990D5 /* DDMaterial.mm */,
 				1A7207CC095A8A6900C6896A /* DDTextureBuffer.h */,
@@ -591,6 +600,9 @@
 				1A670350098D81C2003BDAD5 /* CocoaExtensions.m in Sources */,
 				1A50518E098E1E6B0056F45F /* IconFamily.m in Sources */,
 				1A5051A8098E1F790056F45F /* NSString+CarbonFSRefCreation.m in Sources */,
+				1A23CD3E098F40CF004A48CD /* DDMesh+GLRendering.mm in Sources */,
+				1A23CD8C098F491A004A48CD /* DDMesh+OoliteDATSupport.mm in Sources */,
+				1A23CD8D098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -704,11 +716,13 @@
 					i386,
 				);
 				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
 				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_FAST_OBJC_DISPATCH = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
@@ -807,7 +821,7 @@
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_FAST_OBJC_DISPATCH = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
