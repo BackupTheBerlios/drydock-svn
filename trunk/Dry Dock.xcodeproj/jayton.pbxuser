@@ -2,15 +2,15 @@
 {
 	089C1660FE840EACC02AAC07 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1386, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1037, 822}}";
 			sepNavSelRange = "{198, 0}";
-			sepNavVisRect = "{{0, 0}, {1386, 822}}";
+			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
 	1A0322A8096C3D890000B217 /* Change Log.txt */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1037, 822}}";
-			sepNavSelRange = "{381, 0}";
+			sepNavSelRange = "{997, 0}";
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
@@ -118,10 +118,10 @@
 			sepNavVisRect = "{{0, 3189}, {706, 39}}";
 		};
 	};
-	1A23CC74098F2D16004A48CD /* PBXTextBookmark */ = {
+	1A23CCC8098F35FB004A48CD /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
-		name = "DDTextureBuffer.m: 24";
+		name = "DDTextureBuffer.m: ENABLE_TRACE";
 		rLen = 0;
 		rLoc = 1121;
 		rType = 0;
@@ -158,22 +158,22 @@
 	};
 	1A49FAB80959B9E5003B322F /* Swedish */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {970, 837}}";
-			sepNavSelRange = "{189, 0}";
-			sepNavVisRect = "{{0, 0}, {970, 836}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1037, 837}}";
+			sepNavSelRange = "{212, 0}";
+			sepNavVisRect = "{{0, 0}, {1037, 836}}";
 		};
 	};
 	1A49FABB0959B9F4003B322F /* Swedish */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1386, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1037, 822}}";
 			sepNavSelRange = "{202, 0}";
-			sepNavVisRect = "{{0, 0}, {1386, 822}}";
+			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
 	1A49FABC0959B9F8003B322F /* Swedish */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {2799, 1856}}";
-			sepNavSelRange = "{319, 0}";
+			sepNavSelRange = "{0, 0}";
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
@@ -210,16 +210,6 @@
 		lineNumber = 1774;
 		modificationTime = 160317933.892567;
 		state = 1;
-	};
-	1A50534D098ECF480056F45F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
-		name = "DDTextureBuffer.m: ENABLE_TRACE";
-		rLen = 0;
-		rLoc = 1121;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
 	};
 	1A65C6270957A43E006990D5 /* DDMaterial.mm */ = {
 		uiCtxt = {
@@ -331,8 +321,8 @@
 	1A7D61A5094EE3D300E9D611 /* English */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {2820, 1856}}";
-			sepNavSelRange = "{6553, 0}";
-			sepNavVisRect = "{{1108, 371}, {1037, 822}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
 	1A7D62C1094EF54600E9D611 /* DDMeshNode.h */ = {
@@ -953,9 +943,8 @@
 			PBXWorkspaceStateSaveDate = 160378117;
 		};
 		perUserProjectItems = {
-			1A23CC74098F2D16004A48CD /* PBXTextBookmark */ = 1A23CC74098F2D16004A48CD /* PBXTextBookmark */;
-			1A50534D098ECF480056F45F = 1A50534D098ECF480056F45F /* PBXTextBookmark */;
-			1AFACB28098EE33700955A89 = 1AFACB28098EE33700955A89 /* PBXTextBookmark */;
+			1A23CCC8098F35FB004A48CD /* PBXTextBookmark */ = 1A23CCC8098F35FB004A48CD /* PBXTextBookmark */;
+			1AFACB28098EE33700955A89 /* PBXTextBookmark */ = 1AFACB28098EE33700955A89 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 1A8F08B208130BF90040CAC3 /* Source Control */;
 		userBookmarkGroup = 1ACE7D60095414F500BF7642 /* PBXBookmarkGroup */;
