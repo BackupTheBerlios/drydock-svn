@@ -69,16 +69,6 @@ typedef struct DDMeshFaceData
 	BOOL					_hasNonTriangles;
 }
 
-- (id)initWithOoliteTextBasedMesh:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
-- (id)initWithOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
-
-- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingOoliteTextBasedMeshToURL:(NSURL *)inFile;
-- (BOOL)writeOoliteTextBasedMeshToURL:(NSURL *)inFile error:(NSError **)outError;
-
-- (void)glRenderShaded;
-- (void)glRenderWireframe;
-- (void)glRenderNormals;
-
 - (float)length;
 - (float)width;
 - (float)height;
@@ -98,6 +88,31 @@ typedef struct DDMeshFaceData
 - (void)recenter;
 
 - (BOOL)hasNonTriangles;
+
+@end
+
+
+@interface DDMesh (OoliteDATSupport)
+
+- (id)initWithOoliteTextBasedMesh:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
+
+- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingOoliteTextBasedMeshToURL:(NSURL *)inFile;
+- (BOOL)writeOoliteTextBasedMeshToURL:(NSURL *)inFile error:(NSError **)outError;
+
+@end
+
+
+@interface DDMesh (LightwaveOBJSupport)
+
+- (id)initWithOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
+
+@end
+
+@interface DDMesh (GLRendering)
+
+- (void)glRenderShaded;
+- (void)glRenderWireframe;
+- (void)glRenderNormals;
 
 @end
 
