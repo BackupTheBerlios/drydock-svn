@@ -65,7 +65,7 @@
 }
 
 
-- (id)initIssueOfType:(IssueType)inType withKey:(NSString *)inKey Format:(NSString *)inFormat, ...
+- (id)initIssueOfType:(IssueType)inType withKey:(NSString *)inKey format:(NSString *)inFormat, ...
 {
 	va_list				args;
 	
