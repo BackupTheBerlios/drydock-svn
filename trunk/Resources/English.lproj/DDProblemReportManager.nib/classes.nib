@@ -1,0 +1,23 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {cancelAction = id; continueAction = id; helpAction = id; }; 
+            CLASS = DDProblemReportManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                cancelButton = NSButton; 
+                cancelButton2 = NSButton; 
+                continueButton = NSButton; 
+                issuesPanel = NSPanel; 
+                layoutProxyTextView = NSTextView; 
+                questionField = NSTextField; 
+                scrollView = NSScrollView; 
+                tableView = NSTableView; 
+                titleField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

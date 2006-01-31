@@ -1,0 +1,48 @@
+0.05 (v601-4)
+	• Generalised Undo support in twenty minutes. Cocoa rules. (Admittedly I spent several hours
+	  yesterday making meshes copiable and wouldn’t be able to do this otherwise, but still.)
+	• Implemented new system for gathering and reporting “issues” – diagnostic notes, warnings and
+	  errors regarding (for now) opening and saving.
+	• Added Recentre and Flip commands.
+
+0.04 (v601-3)
+	• OBJ imporing.
+	• Added triangulation support. DAT files are now always saved triangulated, but you can do it
+	  explicitly from the Tools menu if that’s your idea of fun.
+	• Corrected loading of non-72-dpi textures.
+	• “Show” menu item status now updated correctly.
+	• You can no longer get more than one Open panel by re-activating the application.
+	• Began work on Compare window.
+	• Wireframe mode always uses yellow instead of face colour (which is otherwise ignored).
+	• Slightly less efficient texture loading which is not dependant on Tiger – this will make it
+	  into Oolite at some point.
+	• Lots of texturing changes that aren’t actually used, but will be rolled into Oolite at some
+	  point.
+	• Improved several icons.
+	• Internal infrastructure changes. Next version should be able to undo all destructive changes.
+
+0.03 (v601-2)
+	• No more pointless empty documents - brings up an Open dialog instead. Disabled equally
+	  pointless New command.
+	• Universal build. Does it work on Intel-based Macs?
+	• Rotating things a lot no longer deforms them in interesting ways.
+	• Once again rotate model to an interesting display angle on loading.
+	• Consistently scale light position feedback thing.
+	• You can no longer switch off both wireframe and face rendering.
+
+0.02 (v601-1)
+	• Much-improved “virtual joystick” rotation. Trust me, this is good.
+	• Error message instead of crash on pre-Tiger systems.
+	• Feedback when rotating lights.
+	• Reimplemented dragging (whee). The Rotate tool now works for general camera manipulation.
+	  With rotate tool selected:
+		- Dragging rotates the model.
+		- Shift-dragging rotates the lights.
+		- Command-dragging zooms.
+	  With any tool selected, the same actions are available by using the option key or the right
+	  mouse button. (May change to third button if I implement contextual menus in 3D view.)
+	  Additionally, a (vertical) scroll wheel always zooms.
+	• Got an icon (thanks, Murgh).
+	• Added version checking.
+
+0.01 (v512-1): first release

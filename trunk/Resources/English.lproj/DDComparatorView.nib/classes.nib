@@ -1,0 +1,18 @@
+{
+    IBClasses = (
+        {
+            CLASS = DDComparatorView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                contentView = NSView; 
+                glView = NSView; 
+                heightField = NSTextField; 
+                lengthField = NSTextField; 
+                widthField = NSTextField; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
