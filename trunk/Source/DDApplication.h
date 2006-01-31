@@ -29,8 +29,12 @@
 @interface DDApplication: NSApplication
 {
 	IBOutlet DDInspectorController	*inspectorController;
+	IBOutlet NSWindow				*releaseNotesWindow;
+	IBOutlet NSTextView				*releaseNotesView;
+	BOOL							_haveLoadedReleaseNotes;
 }
 
 - (IBAction)showInspector:sender;
+- (IBAction)showReleaseNotes:sender;
 
 @end

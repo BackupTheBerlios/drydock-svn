@@ -1,10 +1,14 @@
 {
     IBClasses = (
         {
-            ACTIONS = {showInspector = id; }; 
+            ACTIONS = {showInspector = id; showReleaseNotes = id; }; 
             CLASS = DDApplication; 
             LANGUAGE = ObjC; 
-            OUTLETS = {inspectorController = DDInspectorController; }; 
+            OUTLETS = {
+                inspectorController = DDInspectorController; 
+                releaseNotesView = NSTextView; 
+                releaseNotesWindow = NSWindow; 
+            }; 
             SUPERCLASS = NSApplication; 
         }, 
         {CLASS = DDApplicationDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 

@@ -41,6 +41,7 @@
 		1A7207CE095A8A6900C6896A /* DDTextureBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */; settings = {COMPILER_FLAGS = "-force_cpusubtype_ALL -falign-loops=16"; }; };
 		1A72092C095A98BF00C6896A /* DDInspectorController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A72092B095A98BF00C6896A /* DDInspectorController.mm */; };
 		1A78150309767395001C0020 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A78150209767395001C0020 /* Accelerate.framework */; };
+		1A7B6CF2098F82EF004AA6D7 /* Read Me.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */; };
 		1A7D60F1094EDACB00E9D611 /* DDMesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D60F0094EDACB00E9D611 /* DDMesh.mm */; };
 		1A7D61A6094EE3D300E9D611 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A7D61A4094EE3D300E9D611 /* Localizable.strings */; };
 		1A7D62C3094EF54600E9D611 /* DDMeshNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D62C2094EF54600E9D611 /* DDMeshNode.mm */; };
@@ -160,6 +161,7 @@
 		1A72092A095A98BF00C6896A /* DDInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInspectorController.h; sourceTree = "<group>"; };
 		1A72092B095A98BF00C6896A /* DDInspectorController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDInspectorController.mm; sourceTree = "<group>"; };
 		1A78150209767395001C0020 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read Me.rtf"; sourceTree = "<group>"; };
 		1A7D60EF094EDACB00E9D611 /* DDMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMesh.h; sourceTree = "<group>"; };
 		1A7D60F0094EDACB00E9D611 /* DDMesh.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDMesh.mm; sourceTree = "<group>"; };
 		1A7D61A5094EE3D300E9D611 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 			children = (
 				1A0322A8096C3D890000B217 /* Change Log.txt */,
 				1AF44C5E098BF74E003D2E73 /* License.txt */,
+				1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
@@ -557,6 +560,7 @@
 				1A098995098B0D31007C2F5F /* Normals Toolbar Item.icns in Resources */,
 				1A0989AE098B106C007C2F5F /* Compare Toolbar Item.icns in Resources */,
 				1A6702A8098CF005003BDAD5 /* DDProblemReportManager.nib in Resources */,
+				1A7B6CF2098F82EF004AA6D7 /* Read Me.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

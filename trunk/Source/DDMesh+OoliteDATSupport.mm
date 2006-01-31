@@ -28,6 +28,15 @@
 #import "CocoaExtensions.h"
 
 
+// Hard-coded limits from Oolite
+enum
+{
+	kMaxDATVertices			= 320,
+	kMaxDATFaces			= 512,
+	kMaxDATMaterials		= 8
+};
+
+
 @implementation DDMesh (OoliteDATSupport)
 
 - (id)initWithOoliteTextBasedMesh:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
@@ -343,10 +352,25 @@
 	DDMaterial				*material;
 	NSString				*name;
 	NSCharacterSet			*whiteSpace, *miscChars;
+	unsigned				materialCount;
 	
 	if (_hasNonTriangles)
 	{
 		[ioManager addWarningIssueWithKey:@"nonTriangularFaces" localizedFormat:@"This document contains non-triangular faces. In order to save it in the selected format, Dry Dock will triangulate it."];
+	}
+	
+	if (kMaxDATVertices < _vertexCount)
+	{
+		[ioManager addStopIssueWithKey:@"tooManyVertices" localizedFormat:@"This document contains %u vertices; the selected format allows no more than %u.", _vertexCount, kMaxDATVertices];
+	}
+	if (kMaxDATFaces < _faceCount)
+	{
+		[ioManager addStopIssueWithKey:@"tooManyFaces" localizedFormat:@"This document contains %u faces; the selected format allows no more than %u.", _faceCount, kMaxDATFaces];
+	}
+	materialCount = [_materials count];
+	if (kMaxDATMaterials < materialCount)
+	{
+		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u faces; the selected format allows no more than %u.", materialCount, kMaxDATMaterials];
 	}
 	
 	// Check for invalid texture names

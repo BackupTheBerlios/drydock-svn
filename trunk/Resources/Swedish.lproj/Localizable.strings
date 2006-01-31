@@ -65,6 +65,9 @@
 "Some or all faces in the document lack a valid normal specified. This is likely to lead to lighting problems. This issue can be rectified by selecting Recalculate Normals from the Tools menu." = "Några eller alla polygon i dokumentet saknar giltig normal. Detta kommer troligen leda till problem med ljussättningen. Problemet kan åtgärdas genom att välja Beräkna om normaler från Verktygsmenyn.";
 "Supressing further warnings about U/V indices." = "Undertrycker ytterligare varningar angående U/V-index.";
 "Supressing further warnings about normal indices." = "Undertrycker ytterligare varningar angående normalindex.";
+"This document contains %u faces; the selected format allows no more than %u." = "Dokumentet inehåller %u polygon, men det valda filformatet stöder inte fler än %u.";
+"This document contains %u vertices; the selected format allows no more than %u." = "Dokumentet inehåller %u punkter, men det valda filformatet stöder inte fler än %u.";
+"This document contains %u materials; the selected format allows no more than %u." = "Dokumentet inehåller %u material, men det valda filformatet stöder inte fler än %u.";
 
 // Unsupported OBJ line types
 "OBJ_LINE vp" = "punkt i parameterrymd";

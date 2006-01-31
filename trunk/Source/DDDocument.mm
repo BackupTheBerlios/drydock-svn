@@ -99,21 +99,43 @@
 	problemManager = [[DDProblemReportManager alloc] init];
 	[problemManager setContext:kContextOpen];
 	
-	if ([typeName isEqual:@"org.aegidian.oolite.mesh"])
+	NS_DURING
 	{
-		_mesh = [[DDMesh alloc] initWithOoliteTextBasedMesh:absoluteURL issues:problemManager];
-		success = (nil != _mesh);
+		if ([typeName isEqual:@"org.aegidian.oolite.mesh"])
+		{
+			_mesh = [[DDMesh alloc] initWithOoliteTextBasedMesh:absoluteURL issues:problemManager];
+			success = (nil != _mesh);
+		}
+		else if ([typeName isEqual:@"obj-file"])
+		{
+			_mesh = [[DDMesh alloc] initWithOBJ:absoluteURL issues:problemManager];
+			success = (nil != _mesh);
+		}
+		else
+		{
+			NSLog(@"Can't load file %@ of type %@.", absoluteURL, typeName);
+			success = NO;
+		}
 	}
-	else if ([typeName isEqual:@"obj-file"])
+	//@catch (id localException)
+	NS_HANDLER
 	{
-		_mesh = [[DDMesh alloc] initWithOBJ:absoluteURL issues:problemManager];
-		success = (nil != _mesh);
+		LogMessage(@"Caught %@", localException);
+		
+		NSString			*desc;
+		
+		if ([localException isKindOfClass:[NSException class]])
+		{
+			desc = [NSString stringWithFormat:@"%@: %@", [localException name], [localException reason]];
+		}
+		else
+		{
+			desc = [localException description];
+		}
+		
+		[problemManager addStopIssueWithKey:@"exception" localizedFormat:@"An uncaught exception occurred. This is almost certainly a programming error; please report it.\n%@", desc];
 	}
-	else
-	{
-		NSLog(@"Can't load file %@ of type %@.", absoluteURL, typeName);
-		success = NO;
-	}
+	NS_ENDHANDLER
 	
 	if (success)
 	{
@@ -158,11 +180,9 @@
 			{
 				success = [_mesh writeOoliteTextBasedMeshToURL:absoluteURL error:outError];
 				type = 'OoDa';
-				LogMessage(@"Writing file");
 			}
 			else
 			{
-				LogMessage(@"Not writing file");
 				if (NULL != outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 			}
 		}

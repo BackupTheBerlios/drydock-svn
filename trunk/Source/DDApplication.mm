@@ -45,4 +45,19 @@
 	[inspectorController bringInspectorToFront];
 }
 
+
+- (IBAction)showReleaseNotes:sender
+{
+	if (!_haveLoadedReleaseNotes)
+	{
+		NSString			*path;
+		
+		path = [[NSBundle mainBundle] pathForResource:@"Read Me" ofType:@"rtf"];
+		if (![releaseNotesView readRTFDFromFile:path]) return;
+		_haveLoadedReleaseNotes = YES;
+	}
+	
+	[releaseNotesWindow makeKeyAndOrderFront:nil];
+}
+
 @end
