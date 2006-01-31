@@ -1,0 +1,48 @@
+{
+    IBClasses = (
+        {
+            CLASS = DDApplication; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {inspectorController = DDInspectorController; }; 
+            SUPERCLASS = NSApplication; 
+        }, 
+        {
+            ACTIONS = {orderFrontStandardAboutPanel = id; }; 
+            CLASS = DDApplicationDelegate; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = DDDocumentController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSDocumentController; 
+        }, 
+        {
+            CLASS = DDInspectorController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {defaultView = NSView; window = NSWindow; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                doCompareDialog = id; 
+                exportDocument = id; 
+                flipX = id; 
+                flipY = id; 
+                flipZ = id; 
+                recalcNormals = id; 
+                recenter = id; 
+                reverseWinding = id; 
+                showInspector = id; 
+                toggleFaces = id; 
+                toggleNormals = id; 
+                toggleWireframe = id; 
+                triangulate = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
