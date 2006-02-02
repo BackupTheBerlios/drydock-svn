@@ -1,7 +1,6 @@
 /*
 	DDPreviewView.h
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -22,33 +21,20 @@
 */
 
 #import <Cocoa/Cocoa.h>
+#import "DDSceneView.h"
 #import "phystypes.h"
 
 @class DDDocumentWindowController;
-@class DDLightController;
 
 
-@interface DDPreviewView: NSOpenGLView
+@interface DDPreviewView: DDSceneView
 {
-	Matrix						_transform;
-	GLfloat						_z;
-	
 	IBOutlet DDDocumentWindowController
 								*controller;
-	IBOutlet DDLightController	*lightController;
-	
-	NSSize						_oldSize;
-	
-	unsigned					_dragAction;
-	Vector						_dragPoint;
 	
 	BOOL						_inited;
 }
 
 - (void)setController:(DDDocumentWindowController *)inController;
-
-- (id)initWithFrame:(NSRect)inFrame;
-
-- (void)setObjectSize:(float)inRadius;
 
 @end
