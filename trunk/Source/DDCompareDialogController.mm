@@ -109,18 +109,20 @@
 		issues = [[DDProblemReportManager alloc] init];
 		[issues setContext:kContextOpen];
 		
-		utiDAT = UTTypeCreatePreferredIdentifierForTag(CFSTR("com.apple.ostype"), CFSTR("OoDa"), NULL);
+		// This sucks rocks. Cocoa should have a sensible way of comparing file types… and Dry Dock should really be using some sort of content sniffing.
+//		utiDAT = UTTypeCreatePreferredIdentifierForTag(CFSTR("com.apple.ostype"), CFSTR("OoDa"), NULL);
+		utiDAT = CFSTR("org.aegidian.oolite.mesh");
 		utiOBJ = UTTypeCreatePreferredIdentifierForTag(CFSTR("public.filename-extension"), CFSTR("obj"), NULL);
 		
 		filePath = [[inSheet filenames] objectAtIndex:0];
 		fileURL = [[inSheet URLs] objectAtIndex:0];
 		fileUTI = [[NSFileManager defaultManager] utiForItemAtPath:filePath];
 		
-		if (CFEqual(utiDAT, fileUTI))
+		if (UTTypeEqual(utiDAT, (CFStringRef)fileUTI))
 		{
 			compareMesh = [[DDMesh alloc] initWithOoliteTextBasedMesh:fileURL issues:issues];
 		}
-		else if (CFEqual(utiOBJ, fileUTI))
+		else if (UTTypeEqual(utiOBJ, (CFStringRef)fileUTI))
 		{
 			compareMesh = [[DDMesh alloc] initWithOBJ:fileURL issues:issues];
 		}

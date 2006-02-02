@@ -9,8 +9,8 @@
 	};
 	1A0322A8096C3D890000B217 /* Change Log.txt */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1037, 832}}";
-			sepNavSelRange = "{88, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1037, 864}}";
+			sepNavSelRange = "{129, 0}";
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
@@ -52,7 +52,7 @@
 		functionName = "ObjFaceToArrayOfArrays()";
 		hitCount = 1;
 		lineNumber = 491;
-		modificationTime = 160578876.688338;
+		modificationTime = 160587006.75588;
 		state = 1;
 	};
 	1A0BC4DB096F194500D2B2A7 /* DDApplicationDelegate.h */ = {
@@ -72,7 +72,7 @@
 	1A0FFE520981EADC00599E84 /* DDComparatorView.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1037, 832}}";
-			sepNavSelRange = "{1161, 0}";
+			sepNavSelRange = "{1634, 0}";
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
@@ -86,15 +86,15 @@
 	1A0FFE750981EE3100599E84 /* DDCompareDialogController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1037, 822}}";
-			sepNavSelRange = "{1262, 0}";
+			sepNavSelRange = "{1420, 17}";
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
 	1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1462, 3488}}";
-			sepNavSelRange = "{4900, 0}";
-			sepNavVisRect = "{{0, 2056}, {1037, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1462, 3984}}";
+			sepNavSelRange = "{3600, 0}";
+			sepNavVisRect = "{{0, 1745}, {1247, 315}}";
 		};
 	};
 	1A18DE07096456AF0010CE0B /* English */ = {
@@ -233,27 +233,27 @@
 		functionName = "ObjLookUpMaterial()";
 		hitCount = 1;
 		lineNumber = 491;
-		modificationTime = 160578876.688293;
+		modificationTime = 160587006.755835;
 		state = 1;
 	};
 	1A512F14099090A600A55ED7 /* DDSceneView.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1037, 1232}}";
-			sepNavSelRange = "{1887, 20}";
+			sepNavSelRange = "{2388, 44}";
 			sepNavVisRect = "{{0, 410}, {1037, 822}}";
 		};
 	};
 	1A512F15099090A600A55ED7 /* DDSceneView.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1037, 8512}}";
-			sepNavSelRange = "{1121, 11}";
-			sepNavVisRect = "{{0, 0}, {1037, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1247, 8528}}";
+			sepNavSelRange = "{10817, 0}";
+			sepNavVisRect = "{{0, 2987}, {1247, 315}}";
 		};
 	};
 	1A51305C09909B6A00A55ED7 /* DDComparatorGLView.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1037, 822}}";
-			sepNavSelRange = "{1283, 0}";
+			sepNavSelRange = "{1290, 0}";
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
@@ -918,6 +918,79 @@
 		vrLen = 0;
 		vrLoc = 0;
 	};
+	1A8B181B09925CFA007265FC /* DDCompareDialogController.mm:97 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		continueAfterActions = 0;
+		delayBeforeContinue = 0;
+		fileReference = 1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */;
+		functionName = "-selectPanelDidEnd:returnCode:contextInfo:";
+		hitCount = 1;
+		lineNumber = 97;
+		modificationTime = 160587032.059464;
+		state = 1;
+	};
+	1A8B181D09925D08007265FC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
+		name = "DDTextureBuffer.m: ENABLE_TRACE";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	1A8B181F09925D1D007265FC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
+		name = "DDTextureBuffer.m: ENABLE_TRACE";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	1A8B182209925D52007265FC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
+		name = "DDTextureBuffer.m: ENABLE_TRACE";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	1A8B182609925D64007265FC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
+		name = "DDTextureBuffer.m: ENABLE_TRACE";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	1A8B183709925DF6007265FC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
+		name = "DDTextureBuffer.m: ENABLE_TRACE";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	1A8B183F09925E39007265FC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
+		name = "DDTextureBuffer.m: ENABLE_TRACE";
+		rLen = 0;
+		rLoc = 1121;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
 	1A8B67B70957CA6000EC8EDA /* DDApplication.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1037, 822}}";
@@ -1118,6 +1191,7 @@
 		breakpoints = (
 			1A50528B098E41ED0056F45F /* DDMesh.mm:491 */,
 			1A098B45098B329A007C2F5F /* DDMesh.mm:491 */,
+			1A8B181B09925CFA007265FC /* DDCompareDialogController.mm:97 */,
 		);
 		breakpointsGroup = 1A7376BA098522F1004C2DFA /* XCBreakpointsBucket */;
 		codeSenseManager = 1A8F08B308130BF90040CAC3 /* Code sense */;
@@ -1469,6 +1543,12 @@
 			1A8B17C409925580007265FC /* PBXTextBookmark */ = 1A8B17C409925580007265FC /* PBXTextBookmark */;
 			1A8B17D5099255D2007265FC /* PBXTextBookmark */ = 1A8B17D5099255D2007265FC /* PBXTextBookmark */;
 			1A8B17D9099255EE007265FC /* PBXTextBookmark */ = 1A8B17D9099255EE007265FC /* PBXTextBookmark */;
+			1A8B181D09925D08007265FC /* PBXTextBookmark */ = 1A8B181D09925D08007265FC /* PBXTextBookmark */;
+			1A8B181F09925D1D007265FC /* PBXTextBookmark */ = 1A8B181F09925D1D007265FC /* PBXTextBookmark */;
+			1A8B182209925D52007265FC /* PBXTextBookmark */ = 1A8B182209925D52007265FC /* PBXTextBookmark */;
+			1A8B182609925D64007265FC /* PBXTextBookmark */ = 1A8B182609925D64007265FC /* PBXTextBookmark */;
+			1A8B183709925DF6007265FC /* PBXTextBookmark */ = 1A8B183709925DF6007265FC /* PBXTextBookmark */;
+			1A8B183F09925E39007265FC /* PBXTextBookmark */ = 1A8B183F09925E39007265FC /* PBXTextBookmark */;
 		};
 		sourceControlManager = 1A8F08B208130BF90040CAC3 /* Source Control */;
 		userBookmarkGroup = 1ACE7D60095414F500BF7642 /* PBXBookmarkGroup */;
@@ -1519,8 +1599,8 @@
 	8D15AC360486D014006FF6A4 /* Info-DD.plist */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1037, 4032}}";
-			sepNavSelRange = "{1925, 19}";
-			sepNavVisRect = "{{0, 453}, {1037, 822}}";
+			sepNavSelRange = "{4204, 24}";
+			sepNavVisRect = "{{0, 2282}, {1037, 822}}";
 		};
 	};
 }

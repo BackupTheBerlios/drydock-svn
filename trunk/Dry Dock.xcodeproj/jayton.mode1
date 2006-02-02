@@ -273,14 +273,12 @@
 							<array>
 								<string>2A37F4AAFDCFA73011CA2CEA</string>
 								<string>2A37F4ABFDCFA73011CA2CEA</string>
-								<string>1A7D60E3094EDA8200E9D611</string>
 								<string>1C37FAAC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>15</integer>
-									<integer>4</integer>
+									<integer>23</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -332,7 +330,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1A8B17D9099255EE007265FC</string>
+										<string>1A8B183F09925E39007265FC</string>
 										<key>history</key>
 										<array>
 											<string>1A5131B20991DD4300A55ED7</string>
@@ -516,7 +514,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>160585198.11491501</real>
+	<real>160587321.37641501</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>2</integer>
 	<key>ToolbarIsVisible</key>
@@ -534,15 +532,11 @@
 		<string>1A8B150709922290007265FC</string>
 		<string>1A8B150809922290007265FC</string>
 		<string>1ABEC092094861A200B1E952</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>1A8B150509922290007265FC</string>
 		<string>1C0AD2B3069F1EA900FABCE6</string>
+		<string>1A8B182309925D52007265FC</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Dry Dock.xcodeproj</string>
-		<string>1A8B17C509925580007265FC</string>
-		<string>1A8B17C609925580007265FC</string>
-		<string>1A8B17D6099255D2007265FC</string>
-		<string>1A8B17C709925580007265FC</string>
-		<string>1A8B17C809925580007265FC</string>
 		<string>1A908FC7090E510500B6B5FC</string>
 	</array>
 	<key>WindowString</key>
@@ -749,7 +743,7 @@
 			<key>WindowToolGUID</key>
 			<string>1CD10A99069EF8BA00B06720</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
