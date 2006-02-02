@@ -55,6 +55,8 @@
 		1A80AADD09470F12006AF8F5 /* GLUtilities.cp in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AADC09470F12006AF8F5 /* GLUtilities.cp */; };
 		1A8B14B20992175F007265FC /* DDDimensionFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */; };
 		1A8B15EC099237B4007265FC /* DDMesh+Utilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */; };
+		1A8B185909926845007265FC /* DDScaleDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B185809926845007265FC /* DDScaleDialogController.mm */; };
+		1A8B185E099269EE007265FC /* DDScaleDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B185C099269EE007265FC /* DDScaleDialog.nib */; };
 		1A8B67B90957CA6000EC8EDA /* DDApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B67B80957CA6000EC8EDA /* DDApplication.mm */; };
 		1A8B680C081427270028C19F /* DDPreviewView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B680A081427270028C19F /* DDPreviewView.mm */; };
 		1A8B68130957CC4300EC8EDA /* DDDocumentController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B68120957CC4300EC8EDA /* DDDocumentController.mm */; };
@@ -191,6 +193,10 @@
 		1A8B14B00992175F007265FC /* DDDimensionFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDimensionFormatter.h; sourceTree = "<group>"; };
 		1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDimensionFormatter.mm; sourceTree = "<group>"; };
 		1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+Utilities.mm"; sourceTree = "<group>"; };
+		1A8B185709926845007265FC /* DDScaleDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDScaleDialogController.h; sourceTree = "<group>"; };
+		1A8B185809926845007265FC /* DDScaleDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDScaleDialogController.mm; sourceTree = "<group>"; };
+		1A8B185D099269EE007265FC /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDScaleDialog.nib; sourceTree = "<group>"; };
+		1A8B193F09927B93007265FC /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDScaleDialog.nib; sourceTree = "<group>"; };
 		1A8B67B70957CA6000EC8EDA /* DDApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDApplication.h; sourceTree = "<group>"; };
 		1A8B67B80957CA6000EC8EDA /* DDApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDApplication.mm; sourceTree = "<group>"; };
 		1A8B6809081427270028C19F /* DDPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPreviewView.h; sourceTree = "<group>"; };
@@ -321,6 +327,7 @@
 				1A0FFE5B0981EBB200599E84 /* DDCompareDialog.nib */,
 				1A854D1B0984FD1E00B1F25C /* DDTextureBufferVerificationWindow.nib */,
 				1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */,
+				1A8B185C099269EE007265FC /* DDScaleDialog.nib */,
 			);
 			name = NIBs;
 			sourceTree = "<group>";
@@ -353,6 +360,8 @@
 				1A0BC4DC096F194500D2B2A7 /* DDApplicationDelegate.mm */,
 				1A0FFE750981EE3100599E84 /* DDCompareDialogController.h */,
 				1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */,
+				1A8B185709926845007265FC /* DDScaleDialogController.h */,
+				1A8B185809926845007265FC /* DDScaleDialogController.mm */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -579,6 +588,7 @@
 				1A0989AE098B106C007C2F5F /* Compare Toolbar Item.icns in Resources */,
 				1A6702A8098CF005003BDAD5 /* DDProblemReportManager.nib in Resources */,
 				1A7B6CF2098F82EF004AA6D7 /* Read Me.rtf in Resources */,
+				1A8B185E099269EE007265FC /* DDScaleDialog.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +639,7 @@
 				1A51305E09909B6A00A55ED7 /* DDComparatorGLView.mm in Sources */,
 				1A8B14B20992175F007265FC /* DDDimensionFormatter.mm in Sources */,
 				1A8B15EC099237B4007265FC /* DDMesh+Utilities.mm in Sources */,
+				1A8B185909926845007265FC /* DDScaleDialogController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +713,15 @@
 				1A854D1C0984FD1E00B1F25C /* English */,
 			);
 			name = DDTextureBufferVerificationWindow.nib;
+			sourceTree = "<group>";
+		};
+		1A8B185C099269EE007265FC /* DDScaleDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A8B185D099269EE007265FC /* English */,
+				1A8B193F09927B93007265FC /* Swedish */,
+			);
+			name = DDScaleDialog.nib;
 			sourceTree = "<group>";
 		};
 		2A37F4B4FDCFA73011CA2CEA /* DDDocument.nib */ = {

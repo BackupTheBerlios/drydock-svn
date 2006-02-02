@@ -49,6 +49,8 @@ enum
 	
 	Matrix						_transform;
 	GLfloat						_z;
+	
+	SceneNode					*_oldSceneRoot;
 }
 
 - (DDLightController *)lightController;

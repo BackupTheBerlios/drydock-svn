@@ -273,12 +273,14 @@
 							<array>
 								<string>2A37F4AAFDCFA73011CA2CEA</string>
 								<string>2A37F4ABFDCFA73011CA2CEA</string>
+								<string>2A37F4B8FDCFA73011CA2CEA</string>
 								<string>1C37FAAC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>23</integer>
+									<integer>7</integer>
+									<integer>4</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -330,7 +332,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1A8B183F09925E39007265FC</string>
+										<string>1A8B193609927B0C007265FC</string>
 										<key>history</key>
 										<array>
 											<string>1A5131B20991DD4300A55ED7</string>
@@ -514,7 +516,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>160587321.37641501</real>
+	<real>160594700.283517</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>2</integer>
 	<key>ToolbarIsVisible</key>
@@ -534,9 +536,11 @@
 		<string>1ABEC092094861A200B1E952</string>
 		<string>1A8B150509922290007265FC</string>
 		<string>1C0AD2B3069F1EA900FABCE6</string>
-		<string>1A8B182309925D52007265FC</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Dry Dock.xcodeproj</string>
+		<string>1A8B193109927B02007265FC</string>
+		<string>1A8B193209927B02007265FC</string>
+		<string>1A8B193309927B02007265FC</string>
 		<string>1A908FC7090E510500B6B5FC</string>
 	</array>
 	<key>WindowString</key>
@@ -570,7 +574,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1440, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>27 128 1440 697 0 0 1440 878 </string>
+								<string>26 128 1440 697 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -598,7 +602,7 @@
 								<key>Frame</key>
 								<string>{{0, 5}, {1440, 651}}</string>
 								<key>RubberWindowFrame</key>
-								<string>27 128 1440 697 0 0 1440 878 </string>
+								<string>26 128 1440 697 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -628,7 +632,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.build</string>
 			<key>WindowString</key>
-			<string>27 128 1440 697 0 0 1440 878 </string>
+			<string>26 128 1440 697 0 0 1440 878 </string>
 			<key>WindowToolGUID</key>
 			<string>1A908FC7090E510500B6B5FC</string>
 			<key>WindowToolIsVisible</key>

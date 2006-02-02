@@ -27,6 +27,7 @@
 #import "DDError.h"
 #import "DDProblemReportManager.h"
 #import "Logging.h"
+#import "DDScaleDialogController.h"
 
 
 @interface DDDocument(Private)
@@ -371,6 +372,22 @@
 }
 
 
+- (void)scaleX:(float)inX y:(float)inY z:(float)inZ
+{
+	DDMesh					*newMesh;
+	
+	newMesh = [_mesh copy];
+	if (nil != newMesh)
+	{
+		[self setUpMeshReplacingUndoActionNamed:@"Scale"];
+		[newMesh scaleX:inX y:inY z:inZ];
+		[_mesh release];
+		_mesh = newMesh;
+		[_controller setMesh:_mesh];
+	}
+}
+
+
 - (IBAction)reverseWinding:sender
 {
 	[self sendMeshMessage:@selector(reverseWinding) selfReversibleAction:_cmd withName:@"Reverse Winding"];
@@ -403,6 +420,12 @@
 - (IBAction)doCompareDialog:sender
 {
 	[DDCompareDialogController runCompareDialogForDocument:self];
+}
+
+
+- (IBAction)doScaleDialog:sender
+{
+	[DDScaleDialogController runScaleDialogForDocument:self];
 }
 
 

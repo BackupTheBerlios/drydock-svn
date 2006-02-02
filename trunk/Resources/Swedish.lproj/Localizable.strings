@@ -9,6 +9,7 @@
 "Flip X"						= "Vänd X";
 "Flip Y"						= "Vänd Y";
 "Flip Z"						= "Vänd Z";
+"Skala"							= "Skala";
 
 // Toolbar items
 "Show Inspector"				= "Visa Granskaren";

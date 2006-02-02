@@ -44,6 +44,13 @@ NSString		*kToolbarToggleNormals				= @"de.berlios.drydock toolbar toggleNormals
 NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 
 
+@interface DDDocumentWindowController (Private)
+
+- (void)updateDimensionFields;
+
+@end
+
+
 @implementation DDDocumentWindowController
 
 - (id)initWithWindow:(NSWindow *)window
@@ -122,24 +129,8 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 	
 	[self setTool:kRotateTool];
 	
-	// Set length, width and breadth fields
-	float l, w, h;
-	if (nil != _mesh)
-	{
-		l = [_mesh length];
-		w = [_mesh width];
-		h = [_mesh height];
-	}
-	else
-	{
-		// Because the 0 result when passing a message to nil only applies for general-purpose registers
-		l = w = h = 0.0;
-	}
-	
 	[nameField setObjectValue:[[self document] modelName]];
-	[lengthField setFloatValue:l];
-	[breadthField setFloatValue:w];
-	[heightField setFloatValue:h];
+	[self updateDimensionFields];
 	[verticesField setIntValue:[_mesh vertexCount]];
 	[facesField setIntValue:[_mesh faceCount]];
 	
@@ -210,6 +201,18 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 }
 
 
+- (void)setNeedsDisplay
+{
+	[glView setNeedsDisplay:YES];
+}
+
+
+- (void)sceneModified:notification
+{
+	[self setNeedsDisplay];
+}
+
+
 - (void)setMesh:(DDMesh *)inMesh
 {
 	TraceMessage(@"Called.");
@@ -224,7 +227,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 		if (_objectRadius < 1.0) _objectRadius = 1.0;
 		
 		[self invalidateSceneGraph];
-		
+		[self updateDimensionFields];
 		[self setNeedsDisplay];
 	}
 	
@@ -313,15 +316,25 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 }
 
 
-- (void)setNeedsDisplay
+- (void)updateDimensionFields
 {
-	[glView setNeedsDisplay:YES];
-}
-
-
-- (void)sceneModified:notification
-{
-	[self setNeedsDisplay];
+	// Set length, width and breadth fields
+	float l, w, h;
+	if (nil != _mesh)
+	{
+		l = [_mesh length];
+		w = [_mesh width];
+		h = [_mesh height];
+	}
+	else
+	{
+		// Because the 0 result when passing a message to nil only applies for general-purpose registers
+		l = w = h = 0.0;
+	}
+	
+	[lengthField setFloatValue:l];
+	[breadthField setFloatValue:w];
+	[heightField setFloatValue:h];
 }
 
 
@@ -459,8 +472,8 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 								kToolbarToggleWireframe,
 								kToolbarToggleFaces,
 								kToolbarToggleNormals,
-								//NSToolbarSeparatorItemIdentifier,
-								//kToolbarCompare,
+								NSToolbarSeparatorItemIdentifier,
+								kToolbarCompare,
 								NSToolbarFlexibleSpaceItemIdentifier,
 								NSToolbarCustomizeToolbarItemIdentifier,
 							nil];

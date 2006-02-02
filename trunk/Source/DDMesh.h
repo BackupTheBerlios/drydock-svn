@@ -86,6 +86,7 @@ typedef struct DDMeshFaceData
 - (void)flipY;
 - (void)flipZ;
 - (void)recenter;
+- (void)scaleX:(float)inX y:(float)inY z:(float)inZ;
 
 - (BOOL)hasNonTriangles;
 

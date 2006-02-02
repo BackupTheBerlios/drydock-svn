@@ -220,9 +220,6 @@ static const GLuint kFallbackAttributes[] =
 	
 	LogGLErrors();
 	
-	// Craptacular hack: cause display list to be rebuilt after half a second. Dunno why, but this improves rendering performance.
-	[self performSelector:@selector(rebuildDisplayList) withObject:nil afterDelay:0.5];
-	
 	TraceOutdent();
 }
 
@@ -235,6 +232,8 @@ static const GLuint kFallbackAttributes[] =
 
 - (void)drawRect:(NSRect)inRect
 {
+	SceneNode				*sceneRoot;
+	
 	TraceMessage(@"Drawing.");
 	TraceIndent();
 	
@@ -261,7 +260,14 @@ static const GLuint kFallbackAttributes[] =
 		
 		_transform.glMult();
 		
-		[[self sceneRoot] render];
+		sceneRoot = [self sceneRoot];
+		if (sceneRoot != _oldSceneRoot)
+		{
+			// Craptacular hack: cause display list to be rebuilt after a fraction of a second. Dunno why, but this improves rendering performance.
+			[self performSelector:@selector(rebuildDisplayList) withObject:nil afterDelay:0.2];
+			_oldSceneRoot = sceneRoot;
+		}
+		[sceneRoot render];
 	}
 	@catch (id ex)
 	{

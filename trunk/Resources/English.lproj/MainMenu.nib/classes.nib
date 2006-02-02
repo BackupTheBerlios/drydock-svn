@@ -26,6 +26,7 @@
         {
             ACTIONS = {
                 doCompareDialog = id; 
+                doScaleDialog = id; 
                 exportDocument = id; 
                 flipX = id; 
                 flipY = id; 

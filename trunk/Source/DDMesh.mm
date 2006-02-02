@@ -394,7 +394,7 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 {
 	unsigned			i;
 	Vector				v, centre;
-	float				r = 0, magSq;
+	float				r;
 	
 	// Average all the vertices together
 	for (i = 0; i != _vertexCount; ++i)
@@ -414,23 +414,51 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 		v = _vertices[i] - centre;
 		_vertices[i] = v;
 		
-		magSq = v.SquareMagnitude();
-		
-		if (magSq < _xMin) _xMin = magSq;
-		if (_xMax < magSq) _xMax = magSq;
-		if (magSq < _yMin) _yMin = magSq;
-		if (_yMax < magSq) _yMax = magSq;
-		if (magSq < _zMin) _zMin = magSq;
-		if (_zMax < magSq) _zMax = magSq;
+		if (v.x < _xMin) _xMin = v.x;
+		if (_xMax < v.x) _xMax = v.x;
+		if (v.y < _yMin) _yMin = v.y;
+		if (_yMax < v.y) _yMax = v.y;
+		if (v.z < _zMin) _zMin = v.z;
+		if (_zMax < v.z) _zMax = v.z;
 		
 		r = v.SquareMagnitude();
 		if (_rMax < r) _rMax = r;
 	}
 	
-	_xMin = sqrt(_xMin); _xMax = sqrt(_xMax);
-	_yMin = sqrt(_yMin); _yMax = sqrt(_yMax);
-	_zMin = sqrt(_zMin); _zMax = sqrt(_zMax);
 	_rMax = sqrt(_rMax);
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
+}
+
+
+- (void)scaleX:(float)inX y:(float)inY z:(float)inZ
+{
+	unsigned			i;
+	float				r;
+	
+	if (1.0f == inX && 1.0f == inY && 1.0f == inZ) return;
+	
+	_rMax = 0;
+	for (i = 0; i != _vertexCount; ++i)
+	{
+		_vertices[i].x *= inX;
+		_vertices[i].y *= inY;
+		_vertices[i].z *= inZ;
+		
+		r = _vertices[i].SquareMagnitude();
+		if (_rMax < r) _rMax = r;
+	}
+	
+	_rMax = sqrt(_rMax);
+	
+	_xMin *= inX;
+	_xMax *= inX;
+	_yMin *= inY;
+	_yMax *= inY;
+	_zMin *= inZ;
+	_zMax *= inZ;
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
 }
 
 

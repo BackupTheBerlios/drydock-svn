@@ -1,5 +1,5 @@
 /*
-	DDDocument.h
+	DDScaleDialogController.h
 	Dry Dock for Oolite
 	
 	Copyright © 2006 Jens Ayton
@@ -21,27 +21,29 @@
 */
 
 #import <Cocoa/Cocoa.h>
-@class DDMesh, DDDocumentWindowController;
+
+@class DDDocument;
 
 
-@interface DDDocument: NSDocument
+@interface DDScaleDialogController: NSObject
 {
-	DDMesh							*_mesh;
-	DDDocumentWindowController		*_controller;
-	NSString						*_name;
+	IBOutlet NSPanel				*panel;
+	IBOutlet NSFormatter			*formatter;
+	IBOutlet NSMatrix				*modeRadioGroup;
+	IBOutlet NSTextField			*uniformField;
+	IBOutlet NSTextField			*xField;
+	IBOutlet NSTextField			*yField;
+	IBOutlet NSTextField			*zField;
+	
+	DDDocument						*_document;
+	
+	BOOL							_perAxis;
 }
 
-- (NSString *)modelName;
-- (void)setModelName:(NSString *)inModelName;
++ (void)runScaleDialogForDocument:(DDDocument *)inDocument;
 
-- (DDMesh *)mesh;
-
-- (IBAction)doCompareDialog:sender;
-- (IBAction)doScaleDialog:sender;
-
-- (IBAction)recalcNormals:sender;
-- (IBAction)reverseWinding:sender;
-
-- (void)scaleX:(float)inX y:(float)inY z:(float)inZ;
+- (IBAction)changeMode:(id)sender;
+- (IBAction)OKAction:(id)sender;
+- (IBAction)cancelAction:(id)sender;
 
 @end
