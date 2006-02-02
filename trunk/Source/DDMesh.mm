@@ -1,7 +1,6 @@
 /*
 	DDMesh.mm
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -29,7 +28,7 @@
 #import "CocoaExtensions.h"
 
 
-NSString *kNotificationOoliteMeshModified = @"com.is-a-geek.ahruman.drydock kNotificationOoliteMeshModified";
+NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMeshModified";
 
 @interface DDMesh (Private)
 
@@ -172,7 +171,7 @@ NSString *kNotificationOoliteMeshModified = @"com.is-a-geek.ahruman.drydock kNot
 	[_materials release];
 	[_name release];
 	
-	[[NSNotificationCenter defaultCenter] removeObserver:nil name:kNotificationOoliteMeshModified object:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:nil name:kNotificationDDMeshModified object:self];
 	
 	[super dealloc];
 }
@@ -220,7 +219,7 @@ NSString *kNotificationOoliteMeshModified = @"com.is-a-geek.ahruman.drydock kNot
 		++face;
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationOoliteMeshModified object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
 }
 
 
@@ -257,7 +256,7 @@ NSString *kNotificationOoliteMeshModified = @"com.is-a-geek.ahruman.drydock kNot
 		++face;
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationOoliteMeshModified object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
 }
 
 
@@ -318,7 +317,7 @@ NSString *kNotificationOoliteMeshModified = @"com.is-a-geek.ahruman.drydock kNot
 	_faceCount = total;
 	_hasNonTriangles = NO;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationOoliteMeshModified object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
 }
 
 
@@ -341,7 +340,7 @@ NSString *kNotificationOoliteMeshModified = @"com.is-a-geek.ahruman.drydock kNot
 	_xMin = -_xMax;
 	_xMax = -temp;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationOoliteMeshModified object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
 }
 
 
@@ -364,7 +363,7 @@ NSString *kNotificationOoliteMeshModified = @"com.is-a-geek.ahruman.drydock kNot
 	_yMin = -_yMax;
 	_yMax = -temp;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationOoliteMeshModified object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
 }
 
 
@@ -387,7 +386,7 @@ NSString *kNotificationOoliteMeshModified = @"com.is-a-geek.ahruman.drydock kNot
 	_zMin = -_zMax;
 	_zMax = -temp;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationOoliteMeshModified object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
 }
 
 

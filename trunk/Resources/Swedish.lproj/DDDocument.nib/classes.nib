@@ -1,14 +1,19 @@
 {
     IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = DDDimensionFormatter; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSNumberFormatter; 
+        }, 
         {
             ACTIONS = {nameAction = id; toolSelectAction = id; }; 
-            CLASS = SCDryDockDocumentWindowController; 
+            CLASS = DDDocumentWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 breadthField = NSTextField; 
                 facesField = NSTextField; 
-                glView = NSView; 
+                formatter = DDDimensionFormatter; 
+                glView = DDPreviewView; 
                 heightField = NSTextField; 
                 leftView = NSView; 
                 lengthField = NSTextField; 
@@ -19,7 +24,8 @@
                 verticesField = NSTextField; 
             }; 
             SUPERCLASS = NSWindowController; 
-        }
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
     ); 
     IBVersion = 1; 
 }

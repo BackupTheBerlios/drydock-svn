@@ -1,7 +1,6 @@
 /*
 	DDDocument.mm
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -54,9 +53,9 @@
 
 - (void)dealloc
 {
-	[_mesh release];
-	[_controller release];
-	[_name release];
+	[_mesh autorelease];
+	[_controller autorelease];
+	[_name autorelease];
 	
 	[super dealloc];
 }
@@ -101,20 +100,19 @@
 	
 	NS_DURING
 	{
-		if ([typeName isEqual:@"org.aegidian.oolite.mesh"])
+		if ([typeName isEqual:@"Oolite Model"])
 		{
 			_mesh = [[DDMesh alloc] initWithOoliteTextBasedMesh:absoluteURL issues:problemManager];
 			success = (nil != _mesh);
 		}
-		else if ([typeName isEqual:@"obj-file"])
+		else if ([typeName isEqual:@"Lightwave OBJ Model"])
 		{
 			_mesh = [[DDMesh alloc] initWithOBJ:absoluteURL issues:problemManager];
 			success = (nil != _mesh);
 		}
 		else
 		{
-			NSLog(@"Can't load file %@ of type %@.", absoluteURL, typeName);
-			success = NO;
+			[problemManager addStopIssueWithKey:@"unknownFormat" localizedFormat:@"The document could not be opened, because the file type could not be recognised."];
 		}
 	}
 	//@catch (id localException)
@@ -137,12 +135,12 @@
 	}
 	NS_ENDHANDLER
 	
-	if (success)
-	{
-		success = [problemManager showReportApplicationModal];
-		if (!success) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
-	}
+	success = [problemManager showReportApplicationModal];
+	if (!success) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
+	
 	[problemManager release];
+	
+	if (success && nil == _mesh) success = NO;
 	
 	if (success)
 	{
@@ -405,6 +403,12 @@
 - (IBAction)doCompareDialog:sender
 {
 	[DDCompareDialogController runCompareDialogForDocument:self];
+}
+
+
+- (DDMesh *)mesh
+{
+	return _mesh;
 }
 
 @end

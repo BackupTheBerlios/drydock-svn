@@ -1,7 +1,6 @@
 /*
 	DDComparatorView.h
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -22,16 +21,31 @@
 */
 
 #import <Cocoa/Cocoa.h>
+#import "phystypes.h"
+
+@class DDComparatorGLView;
+@class DDMesh;
+@class DDDimensionFormatter;
 
 
 @interface DDComparatorView: NSView
 {
 	IBOutlet NSView					*contentView;
-	IBOutlet NSView					*glView;
+	IBOutlet DDComparatorGLView		*glView;
 	IBOutlet NSTextField			*lengthField;
 	IBOutlet NSTextField			*widthField;
 	IBOutlet NSTextField			*heightField;
-	BOOL							haveSetSelfUp;
+	IBOutlet DDDimensionFormatter	*formatter;
+	BOOL							_haveSetSelfUp;
 }
+
+- (void)setMesh:(DDMesh *)inMesh radius:(float)inRadius;
+
+- (DDComparatorGLView *)glView;
+
+- (float)cameraDistance;
+- (void)setCameraDistance:(float)inZ;
+- (Matrix)transformationMatrix;
+- (void)setTransformationMatrix:(Matrix)inMatrix;
 
 @end

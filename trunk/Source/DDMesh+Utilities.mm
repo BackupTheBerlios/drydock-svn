@@ -1,5 +1,5 @@
 /*
-	DDDocument.h
+	DDMesh+Utilities.mm
 	Dry Dock for Oolite
 	
 	Copyright © 2006 Jens Ayton
@@ -20,25 +20,37 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Cocoa/Cocoa.h>
-@class DDMesh, DDDocumentWindowController;
+#import "DDMesh.h"
+#import "Logging.h"
+#import "SceneNode.h"
+#import "DDMeshNode.h"
+#import "DisplayListCacheNode.h"
 
 
-@interface DDDocument: NSDocument
+@implementation DDMesh (Utilities)
+
+- (SceneNode *)sceneGraphForMesh
 {
-	DDMesh							*_mesh;
-	DDDocumentWindowController		*_controller;
-	NSString						*_name;
+	/*
+		Set up simple scene graph:
+		- root			Empty node used to rotate object
+		  + cache		Display list node
+			+  mesh		Ship being viewed
+	*/
+	SceneNode		*root,
+					*cache;
+	DDMeshNode		*mesh;
+	
+	root = [SceneNode node];
+	cache = [DisplayListCacheNode node];
+	mesh = [DDMeshNode nodeWithMesh:self];
+	
+	[root addChild:cache];
+	[cache addChild:mesh];
+	
+	[root setName:@"Root"];
+	
+	return root;
 }
-
-- (NSString *)modelName;
-- (void)setModelName:(NSString *)inModelName;
-
-- (DDMesh *)mesh;
-
-- (IBAction)doCompareDialog:sender;
-
-- (IBAction)recalcNormals:sender;
-- (IBAction)reverseWinding:sender;
 
 @end

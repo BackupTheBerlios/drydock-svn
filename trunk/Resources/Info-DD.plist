@@ -14,9 +14,9 @@
 				<string>drydock</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Document</string>
+			<string>Dry Dock Document</string>
 			<key>CFBundleTypeName</key>
-			<string>com.is-a-geek.ahruman.drydock.document</string>
+			<string>Dry Dock Document</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>DryD</string>
@@ -27,7 +27,7 @@
 			<string>DDDocument</string>
 			<key>NSExportableAs</key>
 			<array>
-				<string>oolite-expansion-document</string>
+				<string>Oolite Expansion Pack</string>
 			</array>
 		</dict>
 		<dict>
@@ -36,9 +36,9 @@
 				<string>dat</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Oolite-Mesh</string>
+			<string>Oolite Model</string>
 			<key>CFBundleTypeName</key>
-			<string>org.aegidian.oolite.mesh</string>
+			<string>Oolite Model</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>OoDa</string>
@@ -54,9 +54,9 @@
 				<string>mesh</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>model</string>
+			<string>Meshwork Model</string>
 			<key>CFBundleTypeName</key>
-			<string>meshwork</string>
+			<string>Meshwork Model</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>Mesh</string>
@@ -72,9 +72,9 @@
 				<string>obj</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>OBJ-Mesh</string>
+			<string>Lightwave OBJ Model</string>
 			<key>CFBundleTypeName</key>
-			<string>obj-file</string>
+			<string>Lightwave OBJ Model</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>NSDocumentClass</key>
@@ -83,10 +83,22 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>mtl</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Lightwave Material Library</string>
+			<key>CFBundleTypeName</key>
+			<string>Lightwave Material Library</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>oxp</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>oolite-expansion-document</string>
+			<string>Oolite Expansion Pack</string>
 			<key>CFBundleTypeName</key>
 			<string>Oolite Expansion Pack</string>
 			<key>CFBundleTypeRole</key>
@@ -100,7 +112,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Dry Dock</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.is-a-geek.ahruman.drydock</string>
+	<string>de.berlios.drydock</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -124,7 +136,7 @@
 			<key>UTTypeDescription</key>
 			<string>Dry Dock Document</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.is-a-geek.ahruman.drydock.document</string>
+			<string>de.berlios.drydock.document</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
@@ -153,7 +165,7 @@
 			<dict>
 				<key>com.apple.ostype</key>
 				<array>
-					<string>OoDt</string>
+					<string>OoDa</string>
 				</array>
 				<key>public.filename-extension</key>
 				<array>
@@ -196,6 +208,23 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>obj</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Lightwave Material Library</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.newtek.lightwave.mtl</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mtl</string>
 				</array>
 			</dict>
 		</dict>

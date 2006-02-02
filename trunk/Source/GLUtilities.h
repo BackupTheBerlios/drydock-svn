@@ -1,7 +1,6 @@
 /*
 	GLUtilities.h
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2004-2006 Jens Ayton
 
@@ -146,5 +145,9 @@ typedef struct
 
 void EnterWireframeMode(WFModeContext &outContext);
 void ExitWireframeMode(const WFModeContext &inContext);
+
+
+void LogGLErrors(void);
+CFStringRef CopyGLErrorDescription(GLenum inError);
 
 #endif	/* INCLUDED_GLUTILITIES_h */

@@ -1,5 +1,5 @@
 /*
-	DDDocument.h
+	DDDimensionFormatter.h
 	Dry Dock for Oolite
 	
 	Copyright © 2006 Jens Ayton
@@ -21,24 +21,8 @@
 */
 
 #import <Cocoa/Cocoa.h>
-@class DDMesh, DDDocumentWindowController;
 
 
-@interface DDDocument: NSDocument
-{
-	DDMesh							*_mesh;
-	DDDocumentWindowController		*_controller;
-	NSString						*_name;
-}
-
-- (NSString *)modelName;
-- (void)setModelName:(NSString *)inModelName;
-
-- (DDMesh *)mesh;
-
-- (IBAction)doCompareDialog:sender;
-
-- (IBAction)recalcNormals:sender;
-- (IBAction)reverseWinding:sender;
+@interface DDDimensionFormatter: NSNumberFormatter
 
 @end

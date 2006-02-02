@@ -1,7 +1,6 @@
 /*
 	SimpleTag.mm
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2005-2006 Jens Ayton
 
@@ -25,6 +24,31 @@
 
 
 @implementation SimpleTag
+
++ (id)tagWithKey:(NSString *)inKey value:(id)inValue
+{
+	return [[[self alloc] initWithKey:inKey value:inValue] autorelease];
+}
+
+
++ (id)tagWithKey:(NSString *)inKey intValue:(int)inValue
+{
+	return [[[self alloc] initWithKey:inKey intValue:inValue] autorelease];
+}
+
+
++ (id)tagWithKey:(NSString *)inKey doubleValue:(double)inValue
+{
+	return [[[self alloc] initWithKey:inKey doubleValue:inValue] autorelease];
+}
+
+
++ (id)tagWithKey:(NSString *)inKey boolValue:(bool)inValue
+{
+	return [[[self alloc] initWithKey:inKey boolValue:inValue] autorelease];
+}
+
+
 
 - (id)initWithKey:(NSString *)inKey
 {

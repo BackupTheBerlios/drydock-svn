@@ -10,7 +10,7 @@
 		1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A032044096C10FB0000B217 /* Carbon.framework */; };
 		1A098873098AEC11007C2F5F /* BSTrampoline.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098872098AEC11007C2F5F /* BSTrampoline.m */; };
 		1A098889098AED78007C2F5F /* BS-HOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098888098AED78007C2F5F /* BS-HOM.m */; };
-		1A09893F098AFBD2007C2F5F /* OBJ-Mesh.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A09893E098AFBD2007C2F5F /* OBJ-Mesh.icns */; };
+		1A09893F098AFBD2007C2F5F /* Lightwave OBJ Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A09893E098AFBD2007C2F5F /* Lightwave OBJ Model.icns */; };
 		1A098961098B0633007C2F5F /* Wireframe Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A098960098B0632007C2F5F /* Wireframe Toolbar Item.icns */; };
 		1A09896D098B08C6007C2F5F /* Faces Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A09896C098B08C6007C2F5F /* Faces Toolbar Item.icns */; };
 		1A098995098B0D31007C2F5F /* Normals Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A098994098B0D31007C2F5F /* Normals Toolbar Item.icns */; };
@@ -33,6 +33,8 @@
 		1A49F9F00959B235003B322F /* DDLightController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A49F9EE0959B235003B322F /* DDLightController.mm */; };
 		1A50518E098E1E6B0056F45F /* IconFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A50518D098E1E6B0056F45F /* IconFamily.m */; };
 		1A5051A8098E1F790056F45F /* NSString+CarbonFSRefCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */; };
+		1A512F16099090A600A55ED7 /* DDSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A512F15099090A600A55ED7 /* DDSceneView.mm */; };
+		1A51305E09909B6A00A55ED7 /* DDComparatorGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */; };
 		1A65C6280957A43E006990D5 /* DDMaterial.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A65C6270957A43E006990D5 /* DDMaterial.mm */; };
 		1A6702A8098CF005003BDAD5 /* DDProblemReportManager.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */; };
 		1A670350098D81C2003BDAD5 /* CocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */; };
@@ -51,12 +53,14 @@
 		1A80AA6409470D50006AF8F5 /* SceneTag.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA6109470D50006AF8F5 /* SceneTag.mm */; };
 		1A80AA9F09470DF0006AF8F5 /* AxisNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA9D09470DF0006AF8F5 /* AxisNode.mm */; };
 		1A80AADD09470F12006AF8F5 /* GLUtilities.cp in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AADC09470F12006AF8F5 /* GLUtilities.cp */; };
+		1A8B14B20992175F007265FC /* DDDimensionFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */; };
+		1A8B15EC099237B4007265FC /* DDMesh+Utilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */; };
 		1A8B67B90957CA6000EC8EDA /* DDApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B67B80957CA6000EC8EDA /* DDApplication.mm */; };
 		1A8B680C081427270028C19F /* DDPreviewView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B680A081427270028C19F /* DDPreviewView.mm */; };
 		1A8B68130957CC4300EC8EDA /* DDDocumentController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B68120957CC4300EC8EDA /* DDDocumentController.mm */; };
 		1A8B684B08142C330028C19F /* DDDocumentWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B684908142C330028C19F /* DDDocumentWindowController.mm */; };
 		1A8F08B508130C020040CAC3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F08B408130C020040CAC3 /* OpenGL.framework */; };
-		1A901231096D324800A5AC2D /* Oolite-Mesh.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A901230096D324800A5AC2D /* Oolite-Mesh.icns */; };
+		1A901231096D324800A5AC2D /* Oolite Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A901230096D324800A5AC2D /* Oolite Model.icns */; };
 		1AA79C0909896FEA00A1810B /* Arrow Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */; };
 		1ABEC05409485ED500B1E952 /* DisplayListCacheNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */; };
 		1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1377F096894FD006BB3EE /* Dry Dock.icns */; };
@@ -107,7 +111,7 @@
 		1A098872098AEC11007C2F5F /* BSTrampoline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSTrampoline.m; sourceTree = "<group>"; };
 		1A098887098AED78007C2F5F /* BS-HOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BS-HOM.h"; sourceTree = "<group>"; };
 		1A098888098AED78007C2F5F /* BS-HOM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BS-HOM.m"; sourceTree = "<group>"; };
-		1A09893E098AFBD2007C2F5F /* OBJ-Mesh.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "OBJ-Mesh.icns"; sourceTree = "<group>"; };
+		1A09893E098AFBD2007C2F5F /* Lightwave OBJ Model.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Lightwave OBJ Model.icns"; sourceTree = "<group>"; };
 		1A098960098B0632007C2F5F /* Wireframe Toolbar Item.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Wireframe Toolbar Item.icns"; sourceTree = "<group>"; };
 		1A09896C098B08C6007C2F5F /* Faces Toolbar Item.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Faces Toolbar Item.icns"; sourceTree = "<group>"; };
 		1A098994098B0D31007C2F5F /* Normals Toolbar Item.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Normals Toolbar Item.icns"; sourceTree = "<group>"; };
@@ -122,7 +126,7 @@
 		1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDCompareDialogController.mm; sourceTree = "<group>"; };
 		1A18DDD209644E0D0010CE0B /* MacPAD.url */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MacPAD.url; sourceTree = "<group>"; };
 		1A18DE05096456AF0010CE0B /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/UKFeedbackProvider.nib; sourceTree = "<group>"; };
-		1A18DE07096456AF0010CE0B /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/UKUpdateChecker.strings; sourceTree = "<group>"; };
+		1A18DE07096456AF0010CE0B /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/UKUpdateChecker.strings; sourceTree = "<group>"; };
 		1A18DE0A096456B70010CE0B /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Swedish; path = Swedish.lproj/UKUpdateChecker.strings; sourceTree = "<group>"; };
 		1A18DE0B096456B70010CE0B /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/UKFeedbackProvider.nib; sourceTree = "<group>"; };
 		1A18DE0D096456D20010CE0B /* UKFeedbackProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKFeedbackProvider.h; sourceTree = "<group>"; };
@@ -146,6 +150,10 @@
 		1A50518D098E1E6B0056F45F /* IconFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconFamily.m; sourceTree = "<group>"; };
 		1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CarbonFSRefCreation.m"; sourceTree = "<group>"; };
 		1A5051A7098E1F790056F45F /* NSString+CarbonFSRefCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CarbonFSRefCreation.h"; sourceTree = "<group>"; };
+		1A512F14099090A600A55ED7 /* DDSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSceneView.h; sourceTree = "<group>"; };
+		1A512F15099090A600A55ED7 /* DDSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDSceneView.mm; sourceTree = "<group>"; };
+		1A51305C09909B6A00A55ED7 /* DDComparatorGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDComparatorGLView.h; sourceTree = "<group>"; };
+		1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDComparatorGLView.mm; sourceTree = "<group>"; };
 		1A65C6270957A43E006990D5 /* DDMaterial.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDMaterial.mm; sourceTree = "<group>"; };
 		1A6702A7098CF005003BDAD5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDProblemReportManager.nib; sourceTree = "<group>"; };
 		1A6702A9098CF011003BDAD5 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDProblemReportManager.nib; sourceTree = "<group>"; };
@@ -180,6 +188,9 @@
 		1A80AADB09470F12006AF8F5 /* GLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLUtilities.h; sourceTree = "<group>"; };
 		1A80AADC09470F12006AF8F5 /* GLUtilities.cp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLUtilities.cp; sourceTree = "<group>"; };
 		1A854D1C0984FD1E00B1F25C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDTextureBufferVerificationWindow.nib; sourceTree = "<group>"; };
+		1A8B14B00992175F007265FC /* DDDimensionFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDimensionFormatter.h; sourceTree = "<group>"; };
+		1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDimensionFormatter.mm; sourceTree = "<group>"; };
+		1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+Utilities.mm"; sourceTree = "<group>"; };
 		1A8B67B70957CA6000EC8EDA /* DDApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDApplication.h; sourceTree = "<group>"; };
 		1A8B67B80957CA6000EC8EDA /* DDApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDApplication.mm; sourceTree = "<group>"; };
 		1A8B6809081427270028C19F /* DDPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPreviewView.h; sourceTree = "<group>"; };
@@ -189,7 +200,7 @@
 		1A8B684808142C330028C19F /* DDDocumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDocumentWindowController.h; sourceTree = "<group>"; };
 		1A8B684908142C330028C19F /* DDDocumentWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDocumentWindowController.mm; sourceTree = "<group>"; };
 		1A8F08B408130C020040CAC3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		1A901230096D324800A5AC2D /* Oolite-Mesh.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Oolite-Mesh.icns"; sourceTree = "<group>"; };
+		1A901230096D324800A5AC2D /* Oolite Model.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Oolite Model.icns"; sourceTree = "<group>"; };
 		1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Arrow Tool.tiff"; sourceTree = "<group>"; };
 		1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DisplayListCacheNode.mm; sourceTree = "<group>"; };
 		1ABEC05309485ED500B1E952 /* DisplayListCacheNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayListCacheNode.h; sourceTree = "<group>"; };
@@ -286,8 +297,8 @@
 			isa = PBXGroup;
 			children = (
 				1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */,
-				1A901230096D324800A5AC2D /* Oolite-Mesh.icns */,
-				1A09893E098AFBD2007C2F5F /* OBJ-Mesh.icns */,
+				1A901230096D324800A5AC2D /* Oolite Model.icns */,
+				1A09893E098AFBD2007C2F5F /* Lightwave OBJ Model.icns */,
 				1AE683C4096CA1BB00622ECC /* Document.icns */,
 				1AC1377F096894FD006BB3EE /* Dry Dock.icns */,
 				1A09896C098B08C6007C2F5F /* Faces Toolbar Item.icns */,
@@ -351,8 +362,12 @@
 			children = (
 				1A8B6809081427270028C19F /* DDPreviewView.h */,
 				1A8B680A081427270028C19F /* DDPreviewView.mm */,
+				1A512F14099090A600A55ED7 /* DDSceneView.h */,
+				1A512F15099090A600A55ED7 /* DDSceneView.mm */,
 				1A0FFE520981EADC00599E84 /* DDComparatorView.h */,
 				1A0FFE530981EADC00599E84 /* DDComparatorView.mm */,
+				1A51305C09909B6A00A55ED7 /* DDComparatorGLView.h */,
+				1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -365,6 +380,7 @@
 				1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */,
 				1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */,
 				1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */,
+				1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */,
 				1AE7DFB7094F95FE000F6B6E /* DDMaterial.h */,
 				1A65C6270957A43E006990D5 /* DDMaterial.mm */,
 				1A7207CC095A8A6900C6896A /* DDTextureBuffer.h */,
@@ -427,6 +443,8 @@
 				1A50518D098E1E6B0056F45F /* IconFamily.m */,
 				1A5051A7098E1F790056F45F /* NSString+CarbonFSRefCreation.h */,
 				1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */,
+				1A8B14B00992175F007265FC /* DDDimensionFormatter.h */,
+				1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */,
 			);
 			name = Classes;
 			path = Source;
@@ -550,11 +568,11 @@
 				1A18DE09096456AF0010CE0B /* UKUpdateChecker.strings in Resources */,
 				1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */,
 				1AE683C5096CA1BB00622ECC /* Document.icns in Resources */,
-				1A901231096D324800A5AC2D /* Oolite-Mesh.icns in Resources */,
+				1A901231096D324800A5AC2D /* Oolite Model.icns in Resources */,
 				1A0FFE4F0981EA9F00599E84 /* DDComparatorView.nib in Resources */,
 				1A0FFE5D0981EBB200599E84 /* DDCompareDialog.nib in Resources */,
 				1AA79C0909896FEA00A1810B /* Arrow Tool.tiff in Resources */,
-				1A09893F098AFBD2007C2F5F /* OBJ-Mesh.icns in Resources */,
+				1A09893F098AFBD2007C2F5F /* Lightwave OBJ Model.icns in Resources */,
 				1A098961098B0633007C2F5F /* Wireframe Toolbar Item.icns in Resources */,
 				1A09896D098B08C6007C2F5F /* Faces Toolbar Item.icns in Resources */,
 				1A098995098B0D31007C2F5F /* Normals Toolbar Item.icns in Resources */,
@@ -607,6 +625,10 @@
 				1A23CD3E098F40CF004A48CD /* DDMesh+GLRendering.mm in Sources */,
 				1A23CD8C098F491A004A48CD /* DDMesh+OoliteDATSupport.mm in Sources */,
 				1A23CD8D098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm in Sources */,
+				1A512F16099090A600A55ED7 /* DDSceneView.mm in Sources */,
+				1A51305E09909B6A00A55ED7 /* DDComparatorGLView.mm in Sources */,
+				1A8B14B20992175F007265FC /* DDDimensionFormatter.mm in Sources */,
+				1A8B15EC099237B4007265FC /* DDMesh+Utilities.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

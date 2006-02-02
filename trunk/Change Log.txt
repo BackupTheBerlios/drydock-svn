@@ -1,3 +1,8 @@
+0.06 (v602-1)
+	• Compare dialog implemented. It’s so cool I can hardly stop playing with it in order to
+	  work on anything else.
+	• Changed bundle identifier. This will result in preferences being reset.
+
 0.05 (v601-4)
 	• Generalised Undo support in twenty minutes. Cocoa rules. (Admittedly I spent several hours
 	  yesterday making meshes copiable and wouldn’t be able to do this otherwise, but still.)

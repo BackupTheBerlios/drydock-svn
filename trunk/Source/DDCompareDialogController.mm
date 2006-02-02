@@ -1,7 +1,6 @@
 /*
 	DDCompareDialogController.mm
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -21,8 +20,14 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#import "DDDocument.h"
 #import "DDCompareDialogController.h"
+#import "DDMesh.h"
+#import "DDProblemReportManager.h"
 #import "Logging.h"
+#import "CocoaExtensions.h"
+#import "DDComparatorView.h"
+#import "DDComparatorGLView.h"
 
 
 @implementation DDCompareDialogController
@@ -54,6 +59,9 @@
 - (void)dealloc
 {
 	[dialog release];
+	[_doc release];
+	[_leftMesh release];
+	[_rightMesh release];
 	
 	[super dealloc];
 }
@@ -67,8 +75,129 @@
 
 - (void)run
 {
+	NSOpenPanel				*selectPanel;
+	NSArray					*types;
+	
 	[self retain];
-	[NSApp beginSheet:dialog modalForWindow:[_doc windowForSheet] modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+	
+	selectPanel = [NSOpenPanel openPanel];
+	[selectPanel setAllowsMultipleSelection:NO];
+	[selectPanel setTreatsFilePackagesAsDirectories:YES];
+	[selectPanel setMessage:NSLocalizedString(@"Please select a model to compare with.", NULL)];
+	
+	// There must be a better way… bug report submitted requesting UTI interface.
+	types = [NSArray arrayWithObjects:@"obj", @"dat", NSFileTypeForHFSTypeCode('OoDa'), nil];
+	
+	// Possibly you should be able to select another open document?
+	[selectPanel beginSheetForDirectory:nil file:nil types:types modalForWindow:[_doc windowForSheet] modalDelegate:self didEndSelector:@selector(selectPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+}
+
+
+- (void)selectPanelDidEnd:(NSOpenPanel *)inSheet returnCode:(int)inReturnCode contextInfo:(void *)ignored
+{
+	DDMesh					*compareMesh;
+	DDProblemReportManager	*issues;
+	CFStringRef				utiDAT, utiOBJ;
+	NSString				*filePath, *fileUTI;
+	NSURL					*fileURL;
+	
+	[inSheet orderOut:nil];
+	
+	if (NSOKButton == inReturnCode)
+	{
+		// Attempt to load the model to be compared to
+		issues = [[DDProblemReportManager alloc] init];
+		[issues setContext:kContextOpen];
+		
+		utiDAT = UTTypeCreatePreferredIdentifierForTag(CFSTR("com.apple.ostype"), CFSTR("OoDa"), NULL);
+		utiOBJ = UTTypeCreatePreferredIdentifierForTag(CFSTR("public.filename-extension"), CFSTR("obj"), NULL);
+		
+		filePath = [[inSheet filenames] objectAtIndex:0];
+		fileURL = [[inSheet URLs] objectAtIndex:0];
+		fileUTI = [[NSFileManager defaultManager] utiForItemAtPath:filePath];
+		
+		if (CFEqual(utiDAT, fileUTI))
+		{
+			compareMesh = [[DDMesh alloc] initWithOoliteTextBasedMesh:fileURL issues:issues];
+		}
+		else if (CFEqual(utiOBJ, fileUTI))
+		{
+			compareMesh = [[DDMesh alloc] initWithOBJ:fileURL issues:issues];
+		}
+		else
+		{
+			[issues addStopIssueWithKey:@"unknownFormat" localizedFormat:@"The document could not be opened, because the file type could not be recognised."];
+		}
+		
+		if (nil != compareMesh)
+		{
+			_leftMesh = [[_doc mesh] copy];
+			_rightMesh = compareMesh;	// Already retained
+		}
+		
+		CFRelease(utiDAT);
+		CFRelease(utiOBJ);
+		
+		[issues runReportModalForWindow:[_doc windowForSheet] modalDelegate:self isDoneSelector:@selector(problemReport:doneWithResult:)];
+		[issues release];
+	}
+	else
+	{
+		[self release];
+	}
+}
+
+
+-(void)problemReport:(DDProblemReportManager*)inManager doneWithResult:(BOOL)inResult
+{
+	float				maxR1, maxR2;
+	
+	if (inResult)
+	{
+		// And now… we can actually show the Compare sheet. After setting it up, of course.
+		maxR1 = [_leftMesh maxR];
+		maxR2 = [_rightMesh maxR];
+		
+		if (maxR1 < maxR2) maxR1 = maxR2;
+		
+		[leftView setMesh:_leftMesh radius:maxR1];
+		[rightView setMesh:_rightMesh radius:maxR1];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(leftViewDidChange:) name:kNotificationDDSceneViewCameraOrLightChanged object:[leftView glView]];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rightViewDidChange:) name:kNotificationDDSceneViewCameraOrLightChanged object:[rightView glView]];
+		
+		[[leftView glView] setLightController: [[rightView glView] lightController]];
+		
+		[NSApp beginSheet:dialog modalForWindow:[_doc windowForSheet] modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+	}
+	else
+	{
+		[self release];
+	}
+}
+
+
+- (void)leftViewDidChange:ignored
+{
+	if (!_settingTransform)
+	{
+		_settingTransform = YES;
+		[rightView setTransformationMatrix:[leftView transformationMatrix]];
+		[rightView setCameraDistance:[leftView cameraDistance]];
+		_settingTransform = NO;
+	}
+}
+
+
+- (void)rightViewDidChange:ignored
+{
+	if (!_settingTransform)
+	{
+		_settingTransform = YES;
+		[leftView setTransformationMatrix:[rightView transformationMatrix]];
+		[leftView setCameraDistance:[rightView cameraDistance]];
+		_settingTransform = NO;
+	}
 }
 
 
@@ -88,8 +217,11 @@
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize
 {
 	/*	Space out the left and right comparator view. Spacing is:
-	
 		|<-- 20 px -->[ left view ]<-- 8 px -- >[ right view ]<-- 20 px -->|
+		
+		Update: the sheet is no longer resizeable, because it flickers and leaves droppings (which
+		would seem to be entirely AppKit’s fault), but I’m leaving this in in case it becomes
+		resizeable again in future.
 	*/
 	
 	NSRect				leftFrame, rightFrame;

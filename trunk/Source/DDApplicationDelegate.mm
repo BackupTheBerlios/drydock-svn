@@ -22,6 +22,7 @@
 */
 
 #import "DDApplicationDelegate.h"
+#import <Carbon/Carbon.h>
 
 
 @implementation DDApplicationDelegate
@@ -36,6 +37,7 @@
 		[[NSDocumentController sharedDocumentController] openDocument:nil];
 		sShowingOpenPanel = NO;
 	}
+	
 	return YES;
 }
 

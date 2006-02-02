@@ -1,7 +1,6 @@
 /*
 	DDMesh.h
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -26,6 +25,7 @@
 
 @class DDMaterial;
 @class DDProblemReportManager;
+@class SceneNode;
 
 
 enum
@@ -108,6 +108,7 @@ typedef struct DDMeshFaceData
 
 @end
 
+
 @interface DDMesh (GLRendering)
 
 - (void)glRenderShaded;
@@ -117,4 +118,11 @@ typedef struct DDMeshFaceData
 @end
 
 
-extern NSString *kNotificationOoliteMeshModified;
+@interface DDMesh (Utilities)
+
+- (SceneNode *)sceneGraphForMesh;
+
+@end
+
+
+extern NSString *kNotificationDDMeshModified;

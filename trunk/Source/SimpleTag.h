@@ -1,7 +1,6 @@
 /*
 	SimpleTag.h
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2005-2006 Jens Ayton
 
@@ -33,6 +32,12 @@
 
 - (id)initWithKey:(NSString *)inKey andName:(NSString *)inName;
 - (id)initWithKey:(NSString *)inKey;		// Name will be Localizable.strings version of key
+
+// Conveniences
++ (id)tagWithKey:(NSString *)inKey value:(id)inValue;
++ (id)tagWithKey:(NSString *)inKey intValue:(int)inValue;
++ (id)tagWithKey:(NSString *)inKey doubleValue:(double)inValue;
++ (id)tagWithKey:(NSString *)inKey boolValue:(bool)inValue;
 - (id)initWithKey:(NSString *)inKey value:(id)inValue;
 - (id)initWithKey:(NSString *)inKey intValue:(int)inValue;
 - (id)initWithKey:(NSString *)inKey doubleValue:(double)inValue;

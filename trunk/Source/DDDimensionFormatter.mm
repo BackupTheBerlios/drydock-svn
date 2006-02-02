@@ -1,5 +1,5 @@
 /*
-	DDDocument.h
+	DDDimensionFormatter.mm
 	Dry Dock for Oolite
 	
 	Copyright © 2006 Jens Ayton
@@ -20,25 +20,27 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Cocoa/Cocoa.h>
-@class DDMesh, DDDocumentWindowController;
+#import "DDDimensionFormatter.h"
 
 
-@interface DDDocument: NSDocument
+@implementation DDDimensionFormatter
+
+
+- (NSString *)stringForObjectValue:(id)inObject
 {
-	DDMesh							*_mesh;
-	DDDocumentWindowController		*_controller;
-	NSString						*_name;
+	static NSString			*meterFormat = nil;
+	double					value;
+	NSString				*valString;
+	
+	if (![inObject isKindOfClass:[NSNumber class]]) return [inObject description];
+	
+	if (nil == meterFormat) meterFormat = NSLocalizedString(@"%@ m", NULL);
+	
+	value = [inObject doubleValue];
+	if (value < 100) valString = [NSString stringWithFormat:@"%.3g", value];
+	else valString = [NSString stringWithFormat:@"%u", (unsigned)value];
+	
+	return [NSString stringWithFormat:meterFormat, valString];
 }
-
-- (NSString *)modelName;
-- (void)setModelName:(NSString *)inModelName;
-
-- (DDMesh *)mesh;
-
-- (IBAction)doCompareDialog:sender;
-
-- (IBAction)recalcNormals:sender;
-- (IBAction)reverseWinding:sender;
 
 @end

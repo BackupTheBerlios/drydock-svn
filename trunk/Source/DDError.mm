@@ -23,7 +23,7 @@
 
 #import "DDError.h"
 
-NSString *kDDErrorDomain			= @"com.is-a-geek.ahruman.drydock ErrorDomain";
+NSString *kDDErrorDomain			= @"de.berlios.drydock ErrorDomain";
 
 
 @implementation DDError

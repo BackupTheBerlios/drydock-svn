@@ -37,22 +37,22 @@
 #define kMinPaneSize 200.0f
 
 
-NSString		*kToolbarShowInspector				= @"com.is-a-geek.ahruman.drydock toolbar showInspector";
-NSString		*kToolbarToggleWireframe			= @"com.is-a-geek.ahruman.drydock toolbar toggleWireframe";
-NSString		*kToolbarToggleFaces				= @"com.is-a-geek.ahruman.drydock toolbar toggleFaces";
-NSString		*kToolbarToggleNormals				= @"com.is-a-geek.ahruman.drydock toolbar toggleNormals";
-NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare";
+NSString		*kToolbarShowInspector				= @"de.berlios.drydock toolbar showInspector";
+NSString		*kToolbarToggleWireframe			= @"de.berlios.drydock toolbar toggleWireframe";
+NSString		*kToolbarToggleFaces				= @"de.berlios.drydock toolbar toggleFaces";
+NSString		*kToolbarToggleNormals				= @"de.berlios.drydock toolbar toggleNormals";
+NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 
 
 @implementation DDDocumentWindowController
 
-- (id)init
+- (id)initWithWindow:(NSWindow *)window
 {
-	LogMessage(@"Called.");
-	self = [super init];
+	self = [super initWithWindow:window];
 	if (nil != self)
 	{
 		_objectRadius = 1.0;
+		_showFaces = YES;
 	}
 	return self;
 }
@@ -67,10 +67,8 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 	[_sceneRoot release];
 	[_mesh release];
 	[NSOpenGLContext clearCurrentContext];
-	
+	[formatter release];
 	[glView setController:nil];
-	
-//	[glView autorelease];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
@@ -138,11 +136,10 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 		l = w = h = 0.0;
 	}
 	
-	meterFormat = NSLocalizedString(@"%g m", NULL);
 	[nameField setObjectValue:[[self document] modelName]];
-	[lengthField setObjectValue:[NSString stringWithFormat:meterFormat, l]];
-	[breadthField setObjectValue:[NSString stringWithFormat:meterFormat, w]];
-	[heightField setObjectValue:[NSString stringWithFormat:meterFormat, h]];
+	[lengthField setFloatValue:l];
+	[breadthField setFloatValue:w];
+	[heightField setFloatValue:h];
 	[verticesField setIntValue:[_mesh vertexCount]];
 	[facesField setIntValue:[_mesh faceCount]];
 	
@@ -185,53 +182,31 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 {
 	if (nil == _sceneRoot)
 	{
-		TraceMessage(@"Creating scene hierarchy.");
-		TraceIndent();
+		_sceneRoot = [[_mesh sceneGraphForMesh] retain];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sceneModified:) name:kNotificationSceneNodeModified object:_sceneRoot];
 		
-		/*
-			Set up simple scene graph:
-			- root			Empty node used to rotate object
-			  + cache		Display list node
-				+  mesh		Ship being viewed
-		*/
-		SceneNode		*root,
-						*cache;
-		DDMeshNode	*mesh;
+		_showWireframeTag = [SimpleTag tagWithKey:@"wireframe" boolValue:_showWireframe];
+		_showFacesTag = [SimpleTag tagWithKey:@"shading" boolValue:_showFaces];
+		_showNormalsTag = [SimpleTag tagWithKey:@"normals" boolValue:_showNormals];
+		[_sceneRoot addTag:_showWireframeTag];
+		[_sceneRoot addTag:_showFacesTag];
+		[_sceneRoot addTag:_showNormalsTag];
 		
-		root = [SceneNode node];
-		cache = [DisplayListCacheNode node];
-		mesh = [DDMeshNode node];
-		
-		if (nil != root && nil != cache && nil != mesh)
-		{
-			[root addChild:cache];
-			[cache addChild:mesh];
-			
-			[root setName:@"Root"];
-			
-			_sceneRoot = [root retain];
-			_meshNode = mesh;
-			[_meshNode setMesh:_mesh];
-			
-			_showWireframeTag = [[SimpleTag alloc] initWithKey:@"wireframe" boolValue:NO];
-			_showFacesTag = [[SimpleTag alloc] initWithKey:@"shading" boolValue:YES];
-			_showNormalsTag = [[SimpleTag alloc] initWithKey:@"normals" boolValue:NO];
-			[_sceneRoot addTag:_showWireframeTag];
-			[_sceneRoot addTag:_showFacesTag];
-			[_sceneRoot addTag:_showNormalsTag];
-			[_showWireframeTag release];
-			[_showFacesTag release];
-			[_showNormalsTag release];
-			
-			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sceneModified:) name:kNotificationSceneNodeModified object:_meshNode];
-			
-			[self setNeedsDisplay];
-		}
 		[outlineView reloadData];
-		TraceOutdent();
 	}
 	
 	return [[_sceneRoot retain] autorelease];
+}
+
+
+- (void)invalidateSceneGraph
+{
+	[_sceneRoot release];
+	_sceneRoot = nil;
+	
+	_showWireframeTag = nil;
+	_showFacesTag = nil;
+	_showNormalsTag = nil;
 }
 
 
@@ -248,7 +223,9 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 		_objectRadius = [_mesh maxR];
 		if (_objectRadius < 1.0) _objectRadius = 1.0;
 		
-		[_meshNode setMesh:inMesh];
+		[self invalidateSceneGraph];
+		
+		[self setNeedsDisplay];
 	}
 	
 	TraceOutdent();
@@ -257,8 +234,7 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 
 - (BOOL)showWireframe
 {
-	[self sceneRoot];
-	return [_showWireframeTag boolValue];
+	return _showWireframe;
 }
 
 
@@ -266,7 +242,7 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 {
 	if (inFlag != [_showWireframeTag boolValue])
 	{
-		[self sceneRoot];
+		_showWireframe = inFlag;
 		[_showWireframeTag setBoolValue:inFlag];
 		[[[self window] toolbar] validateVisibleItems];
 	}
@@ -275,8 +251,7 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 
 - (BOOL)showFaces
 {
-	[self sceneRoot];
-	return [_showFacesTag boolValue];
+	return _showFaces;
 }
 
 
@@ -284,7 +259,7 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 {
 	if (inFlag != [_showFacesTag boolValue])
 	{
-		[self sceneRoot];
+		_showFaces = inFlag;
 		[_showFacesTag setBoolValue:inFlag];
 		[[[self window] toolbar] validateVisibleItems];
 	}
@@ -293,8 +268,7 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 
 - (BOOL)showNormals
 {
-	[self sceneRoot];
-	return [_showNormalsTag boolValue];
+	return _showNormals;
 }
 
 
@@ -302,7 +276,7 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 {
 	if (inFlag != [_showNormalsTag boolValue])
 	{
-		[self sceneRoot];
+		_showNormals = inFlag;
 		[_showNormalsTag setBoolValue:inFlag];
 		[[[self window] toolbar] validateVisibleItems];
 	}
@@ -311,13 +285,10 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 
 - (IBAction)toggleWireframe:sender
 {
-	BOOL				showWireframe;
-	
-	showWireframe = ![self showWireframe];
-	[self setShowWireframe:showWireframe];
+	[self setShowWireframe:!_showWireframe];
 	
 	// Ensure either faces or wireframe are visible
-	if (!showWireframe && ![self showFaces])
+	if (!_showWireframe && ![self showFaces])
 	{
 		[self setShowFaces:YES];
 	}
@@ -326,13 +297,10 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 
 - (IBAction)toggleFaces:sender
 {
-	BOOL				showFaces;
-	
-	showFaces = ![self showFaces];
-	[self setShowFaces:showFaces];
+	[self setShowFaces:!_showFaces];
 	
 	// Ensure either faces or wireframe are visible
-	if (!showFaces && ![self showWireframe])
+	if (!_showFaces && ![self showWireframe])
 	{
 		[self setShowWireframe:YES];
 	}
@@ -341,7 +309,7 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 
 - (IBAction)toggleNormals:sender
 {
-	[self setShowNormals:![self showNormals]];
+	[self setShowNormals:!_showNormals];
 }
 
 
@@ -424,21 +392,21 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 	}
 	else if ([itemIdentifier isEqual:kToolbarToggleWireframe])
 	{
-		label = [_showWireframeTag boolValue] ? @"Hide Wireframe" : @"Show Wireframe";
+		label = [self showWireframe] ? @"Hide Wireframe" : @"Show Wireframe";
 		paletteLabel = @"Show/Hide Wireframe";
 		imageName = @"Wireframe Toolbar Item";
 		action = @selector(toggleWireframe:);
 	}
 	else if ([itemIdentifier isEqual:kToolbarToggleFaces])
 	{
-		label = [_showFacesTag boolValue] ? @"Hide Faces" : @"Show Faces";
+		label = [self showFaces] ? @"Hide Faces" : @"Show Faces";
 		paletteLabel = @"Show/Hide Faces";
 		imageName = @"Faces Toolbar Item";
 		action = @selector(toggleFaces:);
 	}
 	else if ([itemIdentifier isEqual:kToolbarToggleNormals])
 	{
-		label = [_showNormalsTag boolValue] ? @"Hide Normals" : @"Show Normals";
+		label = [self showNormals] ? @"Hide Normals" : @"Show Normals";
 		paletteLabel = @"Show/Hide Normals";
 		imageName = @"Normals Toolbar Item";
 		action = @selector(toggleNormals:);
@@ -527,15 +495,15 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 	identifier = [theItem itemIdentifier];
 	if ([identifier isEqual:kToolbarToggleWireframe])
 	{
-		rename = [_showWireframeTag boolValue] ? @"Hide Wireframe" : @"Show Wireframe";
+		rename = [self showWireframe] ? @"Hide Wireframe" : @"Show Wireframe";
 	}
 	else if ([identifier isEqual:kToolbarToggleFaces])
 	{
-		rename = [_showFacesTag boolValue] ? @"Hide Faces" : @"Show Faces";
+		rename = [self showFaces] ? @"Hide Faces" : @"Show Faces";
 	}
 	else if ([identifier isEqual:kToolbarToggleNormals])
 	{
-		rename = [_showNormalsTag boolValue] ? @"Hide Normals" : @"Show Normals";
+		rename = [self showNormals] ? @"Hide Normals" : @"Show Normals";
 	}
 	
 	if (nil != rename)
@@ -553,20 +521,21 @@ NSString		*kToolbarCompare					= @"com.is-a-geek.ahruman.drydock toolbar compare
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
 {
-	if (nil == item) item = _sceneRoot;
+	if (nil == item) return [self sceneRoot];
 	return [item childAtIndex:index];
 }
 
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
+	if (nil == item) return YES;
 	return 0 != [item numberOfChildren];
 }
 
 
 - (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-	if (nil == item) item = _sceneRoot;
+	if (nil == item) return 1;
 	return [item numberOfChildren];
 }
 

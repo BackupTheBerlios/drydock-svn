@@ -1,7 +1,6 @@
 /*
 	GLUtilities.mm
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2004-2006 Jens Ayton
 
@@ -22,6 +21,7 @@
 */
 
 #include "GLUtilities.h"
+#include "Logging.h"
 
 
 void DrawNormal(const Vector &inSurfacePoint, const Vector &inNormal)
@@ -425,4 +425,64 @@ void ExitWireframeMode(const WFModeContext &inContext)
 {
 	if (inContext.lighting) glEnable(GL_LIGHTING);
 	if (0 != inContext.program) glUseProgramObjectARB(inContext.program);
+}
+
+
+void LogGLErrors(void)
+{
+	GLenum					error;
+	CFStringRef				desc;
+	
+	for (;;)
+	{
+		error = glGetError();
+		if (GL_NO_ERROR == error) break;
+		
+		desc = CopyGLErrorDescription(error);
+		LogMessage(CFSTR("Got OpenGL error %@"), desc);
+		CFRelease(desc);
+	}
+}
+
+
+CFStringRef CopyGLErrorDescription(GLenum inError)
+{
+	CFStringRef				result;
+	
+	switch (inError)
+	{
+		case GL_NO_ERROR:
+			result = CFSTR("GL_NO_ERROR");
+			break;
+		
+		case GL_INVALID_ENUM:
+			result = CFSTR("GL_INVALID_ENUM");
+			break;
+		
+		case GL_INVALID_VALUE:
+			result = CFSTR("GL_INVALID_VALUE");
+			break;
+		
+		case GL_INVALID_OPERATION:
+			result = CFSTR("GL_INVALID_OPERATION");
+			break;
+		
+		case GL_STACK_OVERFLOW:
+			result = CFSTR("GL_STACK_OVERFLOW");
+			break;
+		
+		case GL_OUT_OF_MEMORY:
+			result = CFSTR("GL_OUT_OF_MEMORY");
+			break;
+		
+		case GL_TABLE_TOO_LARGE:
+			result = CFSTR("GL_TABLE_TOO_LARGE");
+			break;
+		
+		default:
+			return CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("Unknown error 0x%.4X"), inError);
+	}
+	
+	CFRetain(result);
+	return result;
 }

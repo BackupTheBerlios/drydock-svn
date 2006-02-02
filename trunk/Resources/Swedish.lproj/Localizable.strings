@@ -1,5 +1,5 @@
 // Formatting string for metres
-"%g m"							= "%.3g m";
+"%@ m"							= "%@ m";
 
 // Undo actions
 "Reverse Winding"				= "Vänd hörnordning";
@@ -23,17 +23,11 @@
 "Show/Hide Normals"				= "Visa/dölj normaler";
 "Compare..."					= "Jämför…";
 
+// Compare… file browser message
+"Please select a model to compare with." = "Var god välj en modell att jämföra med.";
+
 // Error strings
 "A memory allocation failed." = "En minnestilldelning misslyckades.";
-"No data could be loaded from this location. Please ensure that the file exists." = "Ingen data kunde laddas från denna plats. Var god bekräfta at filen existerar.";
-"The file appears to be invalid (the NVERTS line isn't where it should be)." = "Dokumentet verkar vara ogiltigt (raden NVERTS finns inte där det borde).";
-"The file appears to be invalid (the NFACES line isn't where it should be)." = "Dokumentet verkar vara ogiltigt (raden NFACES finns inte där det borde).";
-"The file appears to be invalid (couldn't read vertex data)." = "Dokumentet verkar vara ogiltigt (kunde inte läsa punktdata).";
-"The file appears to be invalid (couldn't read texture data)." = "Dokumentet verkar vara ogiltigt (kunde inte läsa data för ytmaterial).";
-"The file contains polygons with more edges than Dry Dock supports." = "Dockumentet inehåller sidor med fler kanter än Torrdockan stödjer.";
-"The document could not be saved, because an error occured when trying to create a triangulated copy." = "Dokumentet kunde inte sparas, eftersom ett fel inträffades vid försök at skapa en triangelbaserad kopia.";
-
-"The texture \"%@\" could not be opened. Additionally, the standard fallback texture could not be loaded. This could be due to a memory shortage. If the problem persists, please submit a bug report." = "Texturen ”%@” kunde inte öppnas. Dessutom kunde alternativtexturen inte öppnas. Detta kan bero på minnesbrist. Om problemet kvarstår, var vänlig skicka in en felanmälan.";
 
 // "Issue" strings
 "A memory allocation failed. This may be due to a memory shortage or a faulty input file." = "En minnestilldelning misslyckades. Detta kan bero på minnesbrist eller på ett fel i filen.";
@@ -68,6 +62,7 @@
 "This document contains %u faces; the selected format allows no more than %u." = "Dokumentet inehåller %u polygon, men det valda filformatet stöder inte fler än %u.";
 "This document contains %u vertices; the selected format allows no more than %u." = "Dokumentet inehåller %u punkter, men det valda filformatet stöder inte fler än %u.";
 "This document contains %u materials; the selected format allows no more than %u." = "Dokumentet inehåller %u material, men det valda filformatet stöder inte fler än %u.";
+"The document could not be opened, because the file type could not be recognised." = "Dokumentet kunde inte öppnas då filtypen inte känns igen.";
 
 // Unsupported OBJ line types
 "OBJ_LINE vp" = "punkt i parameterrymd";

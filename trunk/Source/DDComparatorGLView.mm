@@ -1,5 +1,5 @@
 /*
-	DDDocument.h
+	DDComparatorGLView.mm
 	Dry Dock for Oolite
 	
 	Copyright © 2006 Jens Ayton
@@ -20,25 +20,43 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Cocoa/Cocoa.h>
-@class DDMesh, DDDocumentWindowController;
+#import "DDComparatorGLView.h"
+#import "SceneNode.h"
 
 
-@interface DDDocument: NSDocument
+@implementation DDComparatorGLView
+
+- (void)dealloc
 {
-	DDMesh							*_mesh;
-	DDDocumentWindowController		*_controller;
-	NSString						*_name;
+	[_sceneRoot release];
+	
+	[super dealloc];
 }
 
-- (NSString *)modelName;
-- (void)setModelName:(NSString *)inModelName;
 
-- (DDMesh *)mesh;
+- (SceneNode *)sceneRoot
+{
+	return _sceneRoot;
+}
 
-- (IBAction)doCompareDialog:sender;
 
-- (IBAction)recalcNormals:sender;
-- (IBAction)reverseWinding:sender;
+- (void)setSceneRoot:(SceneNode *)inNode
+{
+	if (_sceneRoot != inNode)
+	{
+		[_sceneRoot autorelease];
+		_sceneRoot = [inNode retain];
+		[self noteSceneRootChanged];
+	}
+}
+
+
+- (unsigned)filterModifiers:(unsigned)inModifiers forDragActionForEvent:(NSEvent *)inEvent
+{
+	// Always treat as though option is held down, i.e. invoke rotate too.
+	if (0 == [inEvent buttonNumber]) inModifiers |= NSAlternateKeyMask;
+	
+	return inModifiers;
+}
 
 @end

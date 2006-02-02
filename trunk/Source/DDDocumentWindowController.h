@@ -26,6 +26,7 @@
 @class DDPreviewView;
 @class SceneNode, DDMeshNode, SimpleTag;
 @class DDMesh;
+@class DDDimensionFormatter;
 
 
 enum
@@ -39,29 +40,31 @@ enum
 
 @interface DDDocumentWindowController: NSWindowController<NSUserInterfaceValidations>
 {
-	IBOutlet NSView				*leftView,
-								*rightView;
-	IBOutlet DDPreviewView		*glView;
-	IBOutlet NSTextField		*nameField;
-	IBOutlet NSTextField		*lengthField;
-	IBOutlet NSTextField		*breadthField;
-	IBOutlet NSTextField		*heightField;
-	IBOutlet NSTextField		*verticesField;
-	IBOutlet NSTextField		*facesField;
-	IBOutlet NSOutlineView		*outlineView;
-	IBOutlet NSMatrix			*toolMatrix;
+	IBOutlet NSView					*leftView,
+									*rightView;
+	IBOutlet DDPreviewView			*glView;
+	IBOutlet NSTextField			*nameField;
+	IBOutlet NSTextField			*lengthField;
+	IBOutlet NSTextField			*breadthField;
+	IBOutlet NSTextField			*heightField;
+	IBOutlet NSTextField			*verticesField;
+	IBOutlet NSTextField			*facesField;
+	IBOutlet NSOutlineView			*outlineView;
+	IBOutlet NSMatrix				*toolMatrix;
+	IBOutlet DDDimensionFormatter	*formatter;
 	
-	DDMesh						*_mesh;
+	DDMesh							*_mesh;
 	
-	SceneNode					*_sceneRoot;
-	DDMeshNode					*_meshNode;
-	SimpleTag					*_showWireframeTag,
-								*_showFacesTag,
-								*_showNormalsTag;
+	SceneNode						*_sceneRoot;
+	SimpleTag						*_showWireframeTag,
+									*_showFacesTag,
+									*_showNormalsTag;
 	
-	float						_objectRadius;
+	float							_objectRadius;
 	
-	unsigned					_tool;
+	unsigned						_tool;
+	
+	BOOL							_showWireframe, _showFaces, _showNormals;
 }
 
 - (IBAction)nameAction:sender;

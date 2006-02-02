@@ -1,7 +1,6 @@
 /*
 	DDMeshNode.mm
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2004-2006 Jens Ayton
 
@@ -36,6 +35,24 @@
 		[self setLocalizedName:@"DDMesh"];
 	}
 	
+	return self;
+}
+
+
++ (id)nodeWithMesh:(DDMesh *)inMesh
+{
+	return [[[self alloc] initWithMesh:inMesh] autorelease];
+}
+
+
+- (id)initWithMesh:(DDMesh *)inMesh
+{
+	self = [self init];
+	if (nil != self)
+	{
+		[self setMesh:inMesh];
+//		[self setName:[inMesh name]];
+	}
 	return self;
 }
 
@@ -88,13 +105,13 @@
 	if (inMesh != _mesh)
 	{
 		nc = [NSNotificationCenter defaultCenter];
-		[nc removeObserver:self name:kNotificationOoliteMeshModified object:_mesh];
+		[nc removeObserver:self name:kNotificationDDMeshModified object:_mesh];
 		
 		[_mesh release];
 		_mesh = [inMesh retain];
 		[self becomeDirty];
 		
-		[nc addObserver:self selector:@selector(meshModified:) name:kNotificationOoliteMeshModified object:_mesh];
+		[nc addObserver:self selector:@selector(meshModified:) name:kNotificationDDMeshModified object:_mesh];
 	}
 }
 

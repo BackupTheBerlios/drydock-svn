@@ -5,12 +5,18 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 contentView = NSView; 
-                glView = NSView; 
+                formatter = DDDimensionFormatter; 
+                glView = DDComparatorGLView; 
                 heightField = NSTextField; 
                 lengthField = NSTextField; 
                 widthField = NSTextField; 
             }; 
             SUPERCLASS = NSView; 
+        }, 
+        {
+            CLASS = DDDimensionFormatter; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSNumberFormatter; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
     ); 

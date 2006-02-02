@@ -1,7 +1,6 @@
 /*
 	DDComparatorView.mm
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -22,28 +21,90 @@
 */
 
 #import "DDComparatorView.h"
+#import "DDComparatorGLView.h"
+#import "DDMesh.h"
 #import "Logging.h"
+#import "SceneNode.h"
 
 
 @implementation DDComparatorView
 
+- (void)dealloc
+{
+	[formatter release];
+	
+	[super dealloc];
+}
+
+
 - (void)awakeFromNib
 {
-	if (!haveSetSelfUp)
+	if (!_haveSetSelfUp)
 	{
-		haveSetSelfUp = YES;
+		_haveSetSelfUp = YES;
 		[NSBundle loadNibNamed:@"DDComparatorView" owner:self];
 	}
 	else
 	{
+		DDComparatorGLView			*view;
+		
 		[self addSubview:contentView];
+		[contentView setFrame:[self bounds]];
+		
+		view = [[DDComparatorGLView alloc] initWithFrame:[glView frame]];
+		[view setAutoresizingMask:[glView autoresizingMask]];
+		
+		[[glView superview] replaceSubview:glView with:view];
+		glView = view;
+		[view release];
 	}
 }
 
 
-/*- (void)drawRect:(NSRect)rect
+- (void)setMesh:(DDMesh *)inMesh radius:(float)inRadius
 {
-	[NSBezierPath strokeRect:rect];
-}*/
+	SceneNode				*sceneRoot;
+	
+	// Set display info
+	[lengthField setFloatValue:[inMesh length]];
+	[widthField setFloatValue:[inMesh width]];
+	[heightField setFloatValue:[inMesh height]];
+	
+	// Build a scene graph
+	sceneRoot = [inMesh sceneGraphForMesh];
+	
+	[glView setSceneRoot:sceneRoot];
+	[glView setObjectSize:inRadius];
+}
+
+
+- (DDComparatorGLView *)glView
+{
+	return [[glView retain] autorelease];
+}
+
+
+- (float)cameraDistance
+{
+	return [glView cameraDistance];
+}
+
+
+- (void)setCameraDistance:(float)inZ
+{
+	[glView setCameraDistance:inZ];
+}
+
+
+- (Matrix)transformationMatrix
+{
+	return [glView transformationMatrix];
+}
+
+
+- (void)setTransformationMatrix:(Matrix)inMatrix
+{
+	[glView setTransformationMatrix:inMatrix];
+}
 
 @end

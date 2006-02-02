@@ -1,7 +1,6 @@
 /*
 	DDMeshNode.h
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2004-2006 Jens Ayton
 
@@ -30,6 +29,9 @@
 {
 	DDMesh				*_mesh;
 }
+
++ (id)nodeWithMesh:(DDMesh *)inMesh;
+- (id)initWithMesh:(DDMesh *)inMesh;
 
 - (void)setMesh:(DDMesh *)inMesh;
 

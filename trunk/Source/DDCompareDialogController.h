@@ -1,7 +1,6 @@
 /*
 	DDCompareDialogController.h
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -24,14 +23,18 @@
 #import <Cocoa/Cocoa.h>
 
 @class DDDocument;
+@class DDComparatorView;
 
 
 @interface DDCompareDialogController: NSObject
 {
-	DDDocument					*_doc;
-	IBOutlet NSWindow			*dialog;
-	IBOutlet NSView				*leftView,
-								*rightView;
+	DDDocument						*_doc;
+	IBOutlet NSWindow				*dialog;
+	IBOutlet DDComparatorView		*leftView,
+									*rightView;
+	DDMesh							*_leftMesh,
+									*_rightMesh;
+	BOOL							_settingTransform;
 }
 
 + (void)runCompareDialogForDocument:(DDDocument *)inDocument;

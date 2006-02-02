@@ -2,7 +2,6 @@
 	CocoaExtensions.h
 	Dry Dock for Oolite
 	Miscellaneous extensions to Cocoa classes.
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -29,5 +28,12 @@
 
 // Returns the display name of the file if a file:// URL, the absolute URL string otherwise.
 - (NSString *)displayString;
+
+@end
+
+
+@interface NSFileManager (CocoaExtensions)
+
+- (NSString *)utiForItemAtPath:(NSString *)inPath;
 
 @end

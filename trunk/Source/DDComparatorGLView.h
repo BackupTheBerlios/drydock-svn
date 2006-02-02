@@ -1,5 +1,5 @@
 /*
-	DDDocument.h
+	DDComparatorGLView.h
 	Dry Dock for Oolite
 	
 	Copyright © 2006 Jens Ayton
@@ -21,24 +21,14 @@
 */
 
 #import <Cocoa/Cocoa.h>
-@class DDMesh, DDDocumentWindowController;
+#import "DDSceneView.h"
 
 
-@interface DDDocument: NSDocument
+@interface DDComparatorGLView: DDSceneView
 {
-	DDMesh							*_mesh;
-	DDDocumentWindowController		*_controller;
-	NSString						*_name;
+	SceneNode			*_sceneRoot;
 }
 
-- (NSString *)modelName;
-- (void)setModelName:(NSString *)inModelName;
-
-- (DDMesh *)mesh;
-
-- (IBAction)doCompareDialog:sender;
-
-- (IBAction)recalcNormals:sender;
-- (IBAction)reverseWinding:sender;
+- (void)setSceneRoot:(SceneNode *)inNode;
 
 @end
