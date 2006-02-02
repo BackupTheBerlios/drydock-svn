@@ -1,0 +1,114 @@
+// Formatting string for metres
+"%@ m"							= "%@ m";
+
+// Undo actions
+"Reverse Winding"				= "Vänd hörnordning";
+"Recalculate Normals"			= "Beräkna om normaler";
+"Triangulate"					= "Omvandla till trianglar";
+"Recentre"						= "Centrera om";
+"Flip X"						= "Vänd X";
+"Flip Y"						= "Vänd Y";
+"Flip Z"						= "Vänd Z";
+"Skala"							= "Skala";
+
+// Toolbar items
+"Show Inspector"				= "Visa Granskaren";
+"Hide Wireframe"				= "Dölj trådmodell";
+"Show Wireframe"				= "Visa trådmodell";
+"Show/Hide Wireframe"			= "Visa/dölj trådmodell";
+"Hide Faces"					= "Dölj ytor";
+"Show Faces"					= "Visa ytor";
+"Show/Hide Faces"				= "Visa/dölj ytor";
+"Hide Normals"					= "Dölj normaler";
+"Show Normals"					= "Visa normaler";
+"Show/Hide Normals"				= "Visa/dölj normaler";
+"Compare..."					= "Jämför…";
+
+// Compare… file browser message
+"Please select a model to compare with." = "Var god välj en modell att jämföra med.";
+
+// Error strings
+"A memory allocation failed." = "En minnestilldelning misslyckades.";
+
+// "Issue" strings
+"A memory allocation failed. This may be due to a memory shortage or a faulty input file." = "En minnestilldelning misslyckades. Detta kan bero på minnesbrist eller på ett fel i filen.";
+"This document contains non-triangular faces. In order to save it in the selected format, Dry Dock will triangulate it." = "Dokumentet innehåller icke-triangulära sidor. För at spare det i det valda formatet kommer Torrdockan att omvandle det till trianglar.";
+"This document contains a texture named \"%@\". The specified format does not support texture names containing spaces, commas, line breaks, \"#\" or \"//\"." = "Dokumentet inehaller en textur vid namn ”%@”. Det valda filformatet tillåter inte texturnamn som inehåller mellanslag, kommatecken, radbrytningar, ”#” eller ”//”.";
+"No data could be loaded from %@. %@" = "Ingen data kunde läsas från %@.";
+"The required NVERTS line could not be found." = "Dokumentet förefaller vara ogiltigt (raden NVERTS finns inte där det borde).";
+"The required NFACES line could not be found." = "Dokumentet förefaller vara ogiltigt (raden NVERTS finns inte där det borde).";
+"Vertex data could not be read for vertex line %u." = "Punktdata kunde inte läsas från punktrad %u.";
+"Colour data could not be read for face line %u." = "Färgdata kunde inte läsas från polygontrad %u.";
+"Invalid vertex count (%u) for face line %u. Each face must have at least 3 and no more than %u vertices." = "Ogiltigt punkttal (%u) på polygonrad %u. Varje sida måste ha minst tre och högst %u punkter.";
+"Vertex data could not be read for face line %u." = "Punktdata kunde inte läsas för rad %u.";
+"Face line %u specifies a vertex index of %u, but there are only %u vertices in the document." = "Polygonrad %u anger punktindex %u, men det finns bara %u punkter i dokumentet.";
+"Face line %u specifies a U/V index of %u, but there are only %u U/V pairs in the document." = "Polygonrad %u anger U/V-index %u, men det finns bara %u U/V-par i dokumentet.";
+"Face line %u specifies a normal index of %u, but there are only %u normal in the document." = "Polygonrad %u anger normalindex %u, men det finns bara %u normaler i dokumentet.";
+"Texture name could not be read for face line %u." = "Texturnamn kunde inte läsas från texturrad %u.";
+"Texture scale could not be read for texture line %u." = "Texturskala kunde inte läsas från texturrad %u.";
+"U/V pair could not be read for texture line %u." = "U/V-par kunde inte läsas från texturrad %u.";
+"No texture named \"%@\" could be found, using fallback texture." = "Ingen textur vid namn ”%@” kunde hittas; alternativetextur används i stället.";
+"The fallback texture could not be loaded. This probably indicates a memory problem." = "Alternativetexturen kunde inte läsas in. Detta beror antagligen på minnesbrist.";
+"No texture data could be loaded from %@." = "Ingen texturdata kunde läsas från %@.";
+"The document contains multiple material library references. Currently, only one material library is supported. Ignoring reference to material library \"%@\"." = "Dokumentet inehåller flera hänvisningar till materialbibliotek. I nuläget stöder Torrdockan endast ett materialbibliotek. Hänvisningen till materialbiblioteket ”%@” ignoreras.";
+"The document contains lines of unknown type \"%@\", which will be ignored." = "Dokumentet inehåller rader av okänd typ, ”%@”, vilka kommer att ignoreras.";
+"The document contains lines of type \"%@\" (%@), which will be ignored." = "Dokumentet inehåller rader av type ”%@” (%@), vilka kommer att ignoreras.";
+"No material library could be loaded from %@. %@" = "Inget materialbibliotek kunde läsas från %@.";
+"Face line %u specifies an invalid vertex index %@." = "Polygonrad %u anger ogiltigt punktindex %@.";
+"Face line %u specifies an invalid U/V index %@." = "Polygonrad %u anger ogiltigt U/V-index %@.";
+"Face line %u specifies an invalid normal index %@." = "Polygonrad %u anger ogiltigt normalindex %@.";
+"Some or all faces in the document lack a valid normal specified. This is likely to lead to lighting problems. This issue can be rectified by selecting Recalculate Normals from the Tools menu." = "Några eller alla polygon i dokumentet saknar giltig normal. Detta kommer troligen leda till problem med ljussättningen. Problemet kan åtgärdas genom att välja Beräkna om normaler från Verktygsmenyn.";
+"Supressing further warnings about U/V indices." = "Undertrycker ytterligare varningar angående U/V-index.";
+"Supressing further warnings about normal indices." = "Undertrycker ytterligare varningar angående normalindex.";
+"This document contains %u faces; the selected format allows no more than %u." = "Dokumentet inehåller %u polygon, men det valda filformatet stöder inte fler än %u.";
+"This document contains %u vertices; the selected format allows no more than %u." = "Dokumentet inehåller %u punkter, men det valda filformatet stöder inte fler än %u.";
+"This document contains %u materials; the selected format allows no more than %u." = "Dokumentet inehåller %u material, men det valda filformatet stöder inte fler än %u.";
+"The document could not be opened, because the file type could not be recognised." = "Dokumentet kunde inte öppnas då filtypen inte känns igen.";
+
+// Unsupported OBJ line types
+"OBJ_LINE vp" = "punkt i parameterrymd";
+"OBJ_LINE deg" = "grad för paramtrisk kurva/yta";
+"OBJ_LINE bmat" = "basmatris för paramtrisk kurva/yta";
+"OBJ_LINE step" = "stegavstånd för paramtrisk kurva/yta";
+"OBJ_LINE cstype" = "typ av paramtrisk kurva/yta";
+"OBJ_LINE p" = "punkt";
+"OBJ_LINE l" = "linje";
+"OBJ_LINE curv" = "kurva";
+"OBJ_LINE curv2" = "två-dimensionell kurva";
+"OBJ_LINE surf" = "yta";
+"OBJ_LINE parm" = "parametervärden";
+"OBJ_LINE trim" = "yttre trimslinga";
+"OBJ_LINE hole" = "innre trimslinga";
+"OBJ_LINE scrv" = "specialkurva";
+"OBJ_LINE sp" = "specialpunkt";
+"OBJ_LINE end" = "slutförklaring";
+"OBJ_LINE con" = "koppling";
+"OBJ_LINE s" = "utjämningsgrupp";
+"OBJ_LINE mg" = "sammansmältningsgrupp";
+"OBJ_LINE bevel" = "kant";
+"OBJ_LINE c_interp" = "färgövergång";
+"OBJ_LINE d_interp" = "genomskinlighetsövergång";
+"OBJ_LINE lod" = "detaljnivå";
+"OBJ_LINE shadow_obj" = "skuggning";
+"OBJ_LINE trace_obj" = "ray tracing"; // ??
+"OBJ_LINE ctech" = "kurvnärmevärdesteknik";
+"OBJ_LINE stech" = "ytnärmevärdesteknik";
+
+// UKFeedbackProvider stuff
+"FEEDBACK_EMAIL" = "UMHMLDIZEYNZ@spammotel.com";
+"FEEDBACK_SUBJECT_PREFIX" = "[Torrdockan] ";
+"FEEDBACK_URL" = "mailto:UMHMLDIZEYNZ@spammotel.com?subject=[Torrdockan] ";
+
+// Tiger Required alert strings
+"Dry Dock requires Mac OS X 10.4 or later." = "Torrdockan för Oolite kräver Mac OS X 10.4 eller senare.";
+"Dry Dock uses certain features specific to Mac OS X 10.4. If you feel this is a problem, please e-mail a request that this change." = "Torrdockan använder vissa funktioner som är nya i Mac OS X 10.4. Om detta är ett problem för dig, e-posta och be om en förändring.";
+
+// Problem Report Manager strings
+"An issue arose while attempting to %@:" = "Ett problem uppstod vid försöket att %@:";
+"Some issues arose while attempting to %@:" = "Vissa problem uppstod vid försöket att %@:";
+"save the document" = "spara dokumentet";
+"open the document" = "öppna dokumentet";
+"The nature of these issues is such that it is impossible to continue %@." = "Problemen är av sådan art att det inte är möjligt att %@.";
+"Do you wish to continue %@?" = "Vill du %@ ändå?";
+"saving" = "spara";
+"opening" = "öppna";

@@ -1,0 +1,13 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "Torrdockan";
+CFBundleDisplayName = "Torrdockan för Oolite";
+NSHumanReadableCopyright = "©2006 Jens Ayton";
+CFBundleShortVersionString = "0.06";
+
+"Dry Dock Document" = "Torrdockan-dokument";
+"Oolite Model" = "Oolite-modell";
+"Lightwave OBJ Model" = "Lightwave OBJ-modell";
+"Lightwave Material Library" = "Lightwave-materialbibliotek";
+"Meshwork Model" = "Meshwork-modell";
+"Oolite Expansion Pack" = "Oolite-utbyggnad";
