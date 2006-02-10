@@ -1,6 +1,9 @@
 /*
 	SimpleTag.h
 	Dry Dock for Oolite
+	$Id$
+	
+	Simple key-value implementation of SceneTag.
 	
 	Copyright © 2005-2006 Jens Ayton
 

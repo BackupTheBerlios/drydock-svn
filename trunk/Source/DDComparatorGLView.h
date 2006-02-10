@@ -1,6 +1,9 @@
 /*
 	DDComparatorGLView.h
 	Dry Dock for Oolite
+	$Id$
+	
+	GL view used in Compare… dialog. Effectively a view that always has the rotate tool selected.
 	
 	Copyright © 2006 Jens Ayton
 

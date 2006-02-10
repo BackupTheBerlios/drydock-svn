@@ -1,5 +1,7 @@
 /*	Based on code from cocoadev.com, with the comment: “Feel free to use this code for anything you
 	want, although it’d be nice if you credited the original author (Thomas Castiglione).”
+	
+	$Id$
 */
 
 #import <Foundation/Foundation.h>

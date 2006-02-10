@@ -1,6 +1,7 @@
 /*
 	DDScaleDialogController.h
 	Dry Dock for Oolite
+	$Id$
 	
 	Copyright © 2006 Jens Ayton
 

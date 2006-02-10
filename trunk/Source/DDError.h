@@ -3,6 +3,9 @@
 	Dry Dock for Oolite
 	$Id$
 	
+	NSError subclass for Dry-Dock specific errors. Now mostly abandoned in favour of
+	DDProblemReportManager.
+	
 	Copyright © 2006 Jens Ayton
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software

@@ -3,6 +3,9 @@
 	Dry Dock for Oolite
 	$Id$
 	
+	Singleton controller for document-based app, not controller for a specific document - see
+	DDDocument and DDDocumentWindowController.
+	
 	Copyright © 2006 Jens Ayton
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software

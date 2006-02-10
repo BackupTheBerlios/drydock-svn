@@ -1,6 +1,7 @@
 /*
 	DDSceneView.h
 	Dry Dock for Oolite
+	$Id$
 	
 	Core OpenGL view class for Dry Dock. The various OpenGL views used in Dry Dock are
 	specialisations of this.

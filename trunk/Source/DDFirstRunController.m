@@ -1,8 +1,7 @@
 /*
 	DDFirstRunController.mm
 	Dry Dock for Oolite
-	
-	Handles first-run configuration.
+	$Id$
 	
 	Copyright © 2006 Jens Ayton
 

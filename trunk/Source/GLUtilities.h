@@ -1,6 +1,9 @@
 /*
 	GLUtilities.h
 	Dry Dock for Oolite
+	$Id$
+	
+	Miscellaneous OpenGL tools.
 	
 	Copyright © 2004-2006 Jens Ayton
 

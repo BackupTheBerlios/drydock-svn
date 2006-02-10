@@ -1,6 +1,7 @@
 /*
 	DDFirstRunController.h
 	Dry Dock for Oolite
+	$Id$
 	
 	Handles first-run configuration.
 	

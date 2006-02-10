@@ -1,6 +1,7 @@
 /*
 	DDStaticSceneView.h
 	Dry Dock for Oolite
+	$Id$
 	
 	This is a variant of DDSceneView which doesn’t allow any interaction, i.e. rotation, scaling etc.
 	

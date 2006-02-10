@@ -3,6 +3,8 @@
 	Dry Dock for Oolite
 	$Id$
 	
+	Collects DDProblemReportIssues and presents them as a dialog.
+	
 	Copyright © 2006 Jens Ayton
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software

@@ -3,6 +3,8 @@
 	Dry Dock for Oolite
 	$Id$
 	
+	Base class for nodes in a simple scene graph.
+	
 	Copyright © 2005-2006 Jens Ayton
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
