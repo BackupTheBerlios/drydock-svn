@@ -1,7 +1,6 @@
 /*
-	DDApplicationDelegate.mm
+	DDStaticSceneView.mm
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -21,46 +20,20 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import "DDApplicationDelegate.h"
-#import "Logging.h"
-#import <Carbon/Carbon.h>
+#import "DDStaticSceneView.h"
 
 
-@implementation DDApplicationDelegate
+@implementation DDStaticSceneView
 
-- (BOOL)applicationOpenUntitledFile:(NSApplication *)sender
+- (unsigned)dragActionForEvent:(NSEvent *)inEvent
 {
-	[self runOpenPanel];
-	return YES;
+	return kDragAction_none;
 }
 
 
-- (void)runOpenPanel
+- (void)scrollWheel:(NSEvent *)theEvent
 {
-	if (!_openPanelInhibit)
-	{
-		[self inhibitOpenPanel];
-		[[NSDocumentController sharedDocumentController] openDocument:nil];
-		[self uninhibitOpenPanel];
-	}
-}
-
-
-- (void)inhibitOpenPanel
-{
-	++_openPanelInhibit;
-}
-
-
-- (void)uninhibitOpenPanel
-{
-	if (0 == _openPanelInhibit)
-	{
-		LogMessage(@"Attempt to set Open panel inhibit count to -1!");
-		return;
-	}
 	
-	--_openPanelInhibit;
 }
 
 @end

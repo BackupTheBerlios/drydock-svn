@@ -1,7 +1,8 @@
 /*
-	DDApplicationDelegate.mm
+	DDFirstRunController.h
 	Dry Dock for Oolite
-	$Id$
+	
+	Handles first-run configuration.
 	
 	Copyright © 2006 Jens Ayton
 
@@ -21,46 +22,21 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import "DDApplicationDelegate.h"
-#import "Logging.h"
-#import <Carbon/Carbon.h>
+#import <Cocoa/Cocoa.h>
 
 
-@implementation DDApplicationDelegate
-
-- (BOOL)applicationOpenUntitledFile:(NSApplication *)sender
+@interface DDFirstRunController: NSObject
 {
-	[self runOpenPanel];
-	return YES;
-}
-
-
-- (void)runOpenPanel
-{
-	if (!_openPanelInhibit)
-	{
-		[self inhibitOpenPanel];
-		[[NSDocumentController sharedDocumentController] openDocument:nil];
-		[self uninhibitOpenPanel];
-	}
-}
-
-
-- (void)inhibitOpenPanel
-{
-	++_openPanelInhibit;
-}
-
-
-- (void)uninhibitOpenPanel
-{
-	if (0 == _openPanelInhibit)
-	{
-		LogMessage(@"Attempt to set Open panel inhibit count to -1!");
-		return;
-	}
+	IBOutlet NSWindow				*firstRunWindow;
+	IBOutlet NSTabView				*firstRunStageTabView;
+	IBOutlet NSMatrix				*firstRunInstallSCRMatrix;
+	IBOutlet NSMatrix				*firstRunCheckForUpdatesMatrix;
+	IBOutlet NSButton				*firstRunContinueButton;
 	
-	--_openPanelInhibit;
+	BOOL							_runningLastFirstRunPane;
 }
+
+- (IBAction)firstRunNextButtonAction:sender;
+- (IBAction)firstRunQuitButtonAction:sender;
 
 @end

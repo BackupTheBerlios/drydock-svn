@@ -25,5 +25,13 @@
 
 
 @interface DDApplicationDelegate: NSObject
+{
+	unsigned						_openPanelInhibit;
+}
+
+- (void)runOpenPanel;
+
+- (void)inhibitOpenPanel;
+- (void)uninhibitOpenPanel;
 
 @end

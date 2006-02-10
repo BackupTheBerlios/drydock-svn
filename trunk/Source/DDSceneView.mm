@@ -181,7 +181,7 @@ static const GLuint kFallbackAttributes[] =
 	TraceIndent();
 	
 	if (inRadius < 1) inRadius = 1;
-	[self setCameraDistance:inRadius * -2.8];
+	[self setCameraDistance:inRadius * -2.5];
 	[[self lightController] setLightDistance:inRadius * 4];
 	
 	TraceOutdent();

@@ -1,7 +1,8 @@
 /*
-	DDApplicationDelegate.mm
+	DDStaticSceneView.h
 	Dry Dock for Oolite
-	$Id$
+	
+	This is a variant of DDSceneView which doesn’t allow any interaction, i.e. rotation, scaling etc.
 	
 	Copyright © 2006 Jens Ayton
 
@@ -21,46 +22,10 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import "DDApplicationDelegate.h"
-#import "Logging.h"
-#import <Carbon/Carbon.h>
+#import <Cocoa/Cocoa.h>
+#import "DDSceneView.h"
 
 
-@implementation DDApplicationDelegate
-
-- (BOOL)applicationOpenUntitledFile:(NSApplication *)sender
-{
-	[self runOpenPanel];
-	return YES;
-}
-
-
-- (void)runOpenPanel
-{
-	if (!_openPanelInhibit)
-	{
-		[self inhibitOpenPanel];
-		[[NSDocumentController sharedDocumentController] openDocument:nil];
-		[self uninhibitOpenPanel];
-	}
-}
-
-
-- (void)inhibitOpenPanel
-{
-	++_openPanelInhibit;
-}
-
-
-- (void)uninhibitOpenPanel
-{
-	if (0 == _openPanelInhibit)
-	{
-		LogMessage(@"Attempt to set Open panel inhibit count to -1!");
-		return;
-	}
-	
-	--_openPanelInhibit;
-}
+@interface DDStaticSceneView: DDSceneView
 
 @end

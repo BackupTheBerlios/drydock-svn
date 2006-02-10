@@ -49,7 +49,7 @@
 //  can cause huge bandwidth problems, you can use this number to adjust the
 //  frequency. It won't check more often than once per day, anyway.
 #ifndef DAYS_BETWEEN_CHECKS
-#define DAYS_BETWEEN_CHECKS					10						// Default: 10, you may change this.
+#define DAYS_BETWEEN_CHECKS					2						// Default: 10, you may change this.
 #endif
 
 

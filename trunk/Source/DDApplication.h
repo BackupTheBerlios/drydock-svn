@@ -1,7 +1,6 @@
 /*
 	DDApplication.h
 	Dry Dock for Oolite
-	$Id$
 	
 	Copyright © 2006 Jens Ayton
 
@@ -31,6 +30,7 @@
 	IBOutlet DDInspectorController	*inspectorController;
 	IBOutlet NSWindow				*releaseNotesWindow;
 	IBOutlet NSTextView				*releaseNotesView;
+	
 	BOOL							_haveLoadedReleaseNotes;
 }
 

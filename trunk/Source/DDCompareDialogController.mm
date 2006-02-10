@@ -170,7 +170,14 @@
 		
 		[[leftView glView] setLightController: [[rightView glView] lightController]];
 		
-		[NSApp beginSheet:dialog modalForWindow:[_doc windowForSheet] modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+		#if 0
+			// Run app-modal. For some reason, the GL views stutter in this case.
+			[NSApp runModalForWindow:dialog];
+			[self release];
+		#else
+			// Run as sheet. Smooth animation, but resizing is broken.
+			[NSApp beginSheet:dialog modalForWindow:[_doc windowForSheet] modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+		#endif
 	}
 	else
 	{

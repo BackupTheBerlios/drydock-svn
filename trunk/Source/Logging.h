@@ -47,11 +47,13 @@ extern "C" {
 
 #if __OBJC__
 #import <Foundation/Foundation.h>
-void LogMessage_(NSString *inFormat, const char *inFile, const char *inFunction, int inLine, ...);
+#define LOG_STRING_TYPE		NSString *
 #else
 #include <CoreFoundation/CoreFoundation.h>
-void LogMessage_(CFStringRef inFormat, const char *inFile, const char *inFunction, int inLine, ...);
+#define LOG_STRING_TYPE		CFStringRef
 #endif	/*__OBJC__ */
+
+void LogMessage_(LOG_STRING_TYPE inFormat, const char *inFile, const char *inFunction, int inLine, ...);
 
 #if LOGGING_SHOW_FUNCTION
 	#if LOGGING_SHOW_FILE_AND_LINE
@@ -96,5 +98,10 @@ void LogOutdent(void);
 #define TraceOutdent()		do {} while (0)
 
 #endif /* ENABLE_LOGGING */
+
+#define TraceEnter()		do { TraceMessage((LOG_STRING_TYPE)CFSTR("Called.")); TraceIndent(); } while (0)
+#define TraceEnterMsg(...)	do { TraceMessage(__VA_ARGS__); TraceIndent(); } while (0)
+#define TraceExit()			TraceOutdent()
+#define TraceReturn(...)	do { TraceExit(); return __VA_ARGS__ ; } while (0)
 
 #endif /* INCLUDED_LOGGING_h */
