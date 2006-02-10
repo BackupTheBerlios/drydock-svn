@@ -122,7 +122,7 @@
 	<key>CFBundleVersion</key>
 	<string>602-1</string>
 	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>DDApplication</string>
 	<key>NSPrincipalClass</key>
 	<string>DDApplication</string>
 	<key>UTExportedTypeDeclarations</key>
@@ -247,5 +247,10 @@
 			</dict>
 		</dict>
 	</array>
+	
+	<key>SmartCrashReports_CompanyName</key>
+	<string>Jens Ayton</string>
+	<key>SmartCrashReports_EmailTicket</key>
+	<string>SCR-E5DEF7E7FA</string>
 </dict>
 </plist>
