@@ -63,6 +63,18 @@
 		1A8B684B08142C330028C19F /* DDDocumentWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B684908142C330028C19F /* DDDocumentWindowController.mm */; };
 		1A8F08B508130C020040CAC3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F08B408130C020040CAC3 /* OpenGL.framework */; };
 		1A901231096D324800A5AC2D /* Oolite Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A901230096D324800A5AC2D /* Oolite Model.icns */; };
+		1AA5471D099B35C500625FF2 /* DDStaticSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */; };
+		1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */; };
+		1AA5477C099B3C1700625FF2 /* Right Way Around.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA5477B099B3C1700625FF2 /* Right Way Around.png */; };
+		1AA547D1099B8BF700625FF2 /* DDFirstRun.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */; };
+		1AA547D3099B8CC400625FF2 /* Big Translucent Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */; };
+		1AA547D7099BA0BF00625FF2 /* First-Run Wizard Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547D6099BA0BF00625FF2 /* First-Run Wizard Background.png */; };
+		1AA5485F099CB5D600625FF2 /* SmartCrashReportsInstall.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA5485D099CB5D600625FF2 /* SmartCrashReportsInstall.o */; };
+		1AA54885099CB77100625FF2 /* DDFirstRunController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54884099CB77100625FF2 /* DDFirstRunController.m */; };
+		1AA548B2099CB91200625FF2 /* DDApplication.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA548B0099CB91200625FF2 /* DDApplication.nib */; };
+		1AA548C0099CB99600625FF2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA548BF099CB99600625FF2 /* Security.framework */; };
+		1AA548F6099CB9B000625FF2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA548F5099CB9B000625FF2 /* libz.dylib */; };
+		1AA54975099CC00700625FF2 /* DDAxisReassignDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */; };
 		1AA79C0909896FEA00A1810B /* Arrow Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */; };
 		1ABEC05409485ED500B1E952 /* DisplayListCacheNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */; };
 		1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1377F096894FD006BB3EE /* Dry Dock.icns */; };
@@ -72,7 +84,6 @@
 		1AE7E0E1094FA7AA000F6B6E /* Placeholder Texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE7E0E0094FA7AA000F6B6E /* Placeholder Texture.png */; };
 		1AE7E10D094FA9A2000F6B6E /* DDError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE7E10C094FA9A2000F6B6E /* DDError.mm */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
-		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC2E0486D014006FF6A4 /* DDDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* DDDocument.nib */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC310486D014006FF6A4 /* DDDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* DDDocument.mm */; settings = {ATTRIBUTES = (); }; };
@@ -144,7 +155,6 @@
 		1A49F9EE0959B235003B322F /* DDLightController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDLightController.mm; sourceTree = "<group>"; };
 		1A49F9EF0959B235003B322F /* DDLightController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLightController.h; sourceTree = "<group>"; };
 		1A49FAB80959B9E5003B322F /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Swedish; path = Swedish.lproj/Credits.rtf; sourceTree = "<group>"; };
-		1A49FAB90959B9EC003B322F /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		1A49FABA0959B9F0003B322F /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDDocument.nib; sourceTree = "<group>"; };
 		1A49FABB0959B9F4003B322F /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Swedish; path = Swedish.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1A49FABC0959B9F8003B322F /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Swedish; path = Swedish.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -207,6 +217,23 @@
 		1A8B684908142C330028C19F /* DDDocumentWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDocumentWindowController.mm; sourceTree = "<group>"; };
 		1A8F08B408130C020040CAC3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		1A901230096D324800A5AC2D /* Oolite Model.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Oolite Model.icns"; sourceTree = "<group>"; };
+		1AA5471B099B35C500625FF2 /* DDStaticSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDStaticSceneView.h; sourceTree = "<group>"; };
+		1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDStaticSceneView.mm; sourceTree = "<group>"; };
+		1AA54738099B370400625FF2 /* DDAxisReassignDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAxisReassignDialogController.h; sourceTree = "<group>"; };
+		1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDAxisReassignDialogController.mm; sourceTree = "<group>"; };
+		1AA54741099B37E200625FF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDAxisReassignDialog.nib; sourceTree = "<group>"; };
+		1AA5477B099B3C1700625FF2 /* Right Way Around.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Right Way Around.png"; sourceTree = "<group>"; };
+		1AA547D0099B8BF700625FF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDFirstRun.nib; sourceTree = "<group>"; };
+		1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Big Translucent Icon.png"; sourceTree = "<group>"; };
+		1AA547D6099BA0BF00625FF2 /* First-Run Wizard Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "First-Run Wizard Background.png"; sourceTree = "<group>"; };
+		1AA5485D099CB5D600625FF2 /* SmartCrashReportsInstall.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SmartCrashReportsInstall.o; sourceTree = "<group>"; };
+		1AA5485E099CB5D600625FF2 /* SmartCrashReportsInstall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartCrashReportsInstall.h; sourceTree = "<group>"; };
+		1AA54883099CB77100625FF2 /* DDFirstRunController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFirstRunController.h; sourceTree = "<group>"; };
+		1AA54884099CB77100625FF2 /* DDFirstRunController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFirstRunController.m; sourceTree = "<group>"; };
+		1AA548B1099CB91200625FF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDApplication.nib; sourceTree = "<group>"; };
+		1AA548B3099CB91800625FF2 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDApplication.nib; sourceTree = "<group>"; };
+		1AA548BF099CB99600625FF2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
+		1AA548F5099CB9B000625FF2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
 		1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Arrow Tool.tiff"; sourceTree = "<group>"; };
 		1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DisplayListCacheNode.mm; sourceTree = "<group>"; };
 		1ABEC05309485ED500B1E952 /* DisplayListCacheNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayListCacheNode.h; sourceTree = "<group>"; };
@@ -223,7 +250,6 @@
 		2A37F4AEFDCFA73011CA2CEA /* DDDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDocument.h; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4B5FDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDDocument.nib; sourceTree = "<group>"; };
-		2A37F4B7FDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -242,6 +268,9 @@
 				1A18DE20096457E90010CE0B /* Message.framework in Frameworks */,
 				1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */,
 				1A78150309767395001C0020 /* Accelerate.framework in Frameworks */,
+				1AA5485F099CB5D600625FF2 /* SmartCrashReportsInstall.o in Frameworks */,
+				1AA548C0099CB99600625FF2 /* Security.framework in Frameworks */,
+				1AA548F6099CB9B000625FF2 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +285,8 @@
 				1A032044096C10FB0000B217 /* Carbon.framework */,
 				1A18DE1F096457E90010CE0B /* Message.framework */,
 				1A78150209767395001C0020 /* Accelerate.framework */,
+				1AA548BF099CB99600625FF2 /* Security.framework */,
+				1AA548F5099CB9B000625FF2 /* libz.dylib */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -302,6 +333,8 @@
 		1A49FAB40959B9C0003B322F /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				1AA547D6099BA0BF00625FF2 /* First-Run Wizard Background.png */,
+				1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */,
 				1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */,
 				1A901230096D324800A5AC2D /* Oolite Model.icns */,
 				1A09893E098AFBD2007C2F5F /* Lightwave OBJ Model.icns */,
@@ -320,14 +353,16 @@
 		1A6702B9098CF688003BDAD5 /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
+				1AA548B0099CB91200625FF2 /* DDApplication.nib */,
+				1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */,
 				1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */,
-				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
 				2A37F4B4FDCFA73011CA2CEA /* DDDocument.nib */,
 				1A0FFE4D0981EA9F00599E84 /* DDComparatorView.nib */,
 				1A0FFE5B0981EBB200599E84 /* DDCompareDialog.nib */,
 				1A854D1B0984FD1E00B1F25C /* DDTextureBufferVerificationWindow.nib */,
 				1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */,
 				1A8B185C099269EE007265FC /* DDScaleDialog.nib */,
+				1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */,
 			);
 			name = NIBs;
 			sourceTree = "<group>";
@@ -346,6 +381,10 @@
 		1A7D60E0094EDA7A00E9D611 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1A8B67B70957CA6000EC8EDA /* DDApplication.h */,
+				1A8B67B80957CA6000EC8EDA /* DDApplication.mm */,
+				1A0BC4DB096F194500D2B2A7 /* DDApplicationDelegate.h */,
+				1A0BC4DC096F194500D2B2A7 /* DDApplicationDelegate.mm */,
 				2A37F4AEFDCFA73011CA2CEA /* DDDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* DDDocument.mm */,
 				1A8B684808142C330028C19F /* DDDocumentWindowController.h */,
@@ -356,12 +395,14 @@
 				1A8B68120957CC4300EC8EDA /* DDDocumentController.mm */,
 				1A72092A095A98BF00C6896A /* DDInspectorController.h */,
 				1A72092B095A98BF00C6896A /* DDInspectorController.mm */,
-				1A0BC4DB096F194500D2B2A7 /* DDApplicationDelegate.h */,
-				1A0BC4DC096F194500D2B2A7 /* DDApplicationDelegate.mm */,
 				1A0FFE750981EE3100599E84 /* DDCompareDialogController.h */,
 				1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */,
 				1A8B185709926845007265FC /* DDScaleDialogController.h */,
 				1A8B185809926845007265FC /* DDScaleDialogController.mm */,
+				1AA54738099B370400625FF2 /* DDAxisReassignDialogController.h */,
+				1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */,
+				1AA54883099CB77100625FF2 /* DDFirstRunController.h */,
+				1AA54884099CB77100625FF2 /* DDFirstRunController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -377,6 +418,10 @@
 				1A0FFE530981EADC00599E84 /* DDComparatorView.mm */,
 				1A51305C09909B6A00A55ED7 /* DDComparatorGLView.h */,
 				1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */,
+				1AA5471B099B35C500625FF2 /* DDStaticSceneView.h */,
+				1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */,
+				1A8B14B00992175F007265FC /* DDDimensionFormatter.h */,
+				1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -419,6 +464,30 @@
 			name = "Scene Graph";
 			sourceTree = "<group>";
 		};
+		1AA54853099CB57C00625FF2 /* Smart Crash Reports SDK */ = {
+			isa = PBXGroup;
+			children = (
+				1AA5485E099CB5D600625FF2 /* SmartCrashReportsInstall.h */,
+				1AA5485D099CB5D600625FF2 /* SmartCrashReportsInstall.o */,
+			);
+			name = "Smart Crash Reports SDK";
+			path = "../Smart Crash Reports SDK";
+			sourceTree = "<group>";
+		};
+		1AA5485C099CB59D00625FF2 /* Third-party */ = {
+			isa = PBXGroup;
+			children = (
+				1A18DE0C096456D20010CE0B /* UK-NiftyFeatures */,
+				1AA54853099CB57C00625FF2 /* Smart Crash Reports SDK */,
+				1A098882098AECDE007C2F5F /* BS-HOM */,
+				1A50518C098E1E6B0056F45F /* IconFamily.h */,
+				1A50518D098E1E6B0056F45F /* IconFamily.m */,
+				1A5051A7098E1F790056F45F /* NSString+CarbonFSRefCreation.h */,
+				1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */,
+			);
+			name = "Third-party";
+			sourceTree = "<group>";
+		};
 		2A37F4AAFDCFA73011CA2CEA /* Dry Dock */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,19 +510,10 @@
 				1A7D60E3094EDA8200E9D611 /* View */,
 				1A7D60E0094EDA7A00E9D611 /* Controller */,
 				1A7D60E9094EDA9E00E9D611 /* Scene Graph */,
+				1A67FEC5098C86D4003BDAD5 /* Problem Reporter */,
 				1AE7E10B094FA9A2000F6B6E /* DDError.h */,
 				1AE7E10C094FA9A2000F6B6E /* DDError.mm */,
-				1A8B67B70957CA6000EC8EDA /* DDApplication.h */,
-				1A8B67B80957CA6000EC8EDA /* DDApplication.mm */,
-				1A67FEC5098C86D4003BDAD5 /* Problem Reporter */,
-				1A18DE0C096456D20010CE0B /* UK-NiftyFeatures */,
-				1A098882098AECDE007C2F5F /* BS-HOM */,
-				1A50518C098E1E6B0056F45F /* IconFamily.h */,
-				1A50518D098E1E6B0056F45F /* IconFamily.m */,
-				1A5051A7098E1F790056F45F /* NSString+CarbonFSRefCreation.h */,
-				1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */,
-				1A8B14B00992175F007265FC /* DDDimensionFormatter.h */,
-				1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */,
+				1AA5485C099CB59D00625FF2 /* Third-party */,
 			);
 			name = Classes;
 			path = Source;
@@ -479,6 +539,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1AA5477B099B3C1700625FF2 /* Right Way Around.png */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				1AE7E0E0094FA7AA000F6B6E /* Placeholder Texture.png */,
 				8D15AC360486D014006FF6A4 /* Info-DD.plist */,
@@ -565,7 +626,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
-				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
 				8D15AC2E0486D014006FF6A4 /* DDDocument.nib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				1A7D61A6094EE3D300E9D611 /* Localizable.strings in Resources */,
@@ -589,6 +649,12 @@
 				1A6702A8098CF005003BDAD5 /* DDProblemReportManager.nib in Resources */,
 				1A7B6CF2098F82EF004AA6D7 /* Read Me.rtf in Resources */,
 				1A8B185E099269EE007265FC /* DDScaleDialog.nib in Resources */,
+				1AA54975099CC00700625FF2 /* DDAxisReassignDialog.nib in Resources */,
+				1AA5477C099B3C1700625FF2 /* Right Way Around.png in Resources */,
+				1AA547D1099B8BF700625FF2 /* DDFirstRun.nib in Resources */,
+				1AA547D3099B8CC400625FF2 /* Big Translucent Icon.png in Resources */,
+				1AA547D7099BA0BF00625FF2 /* First-Run Wizard Background.png in Resources */,
+				1AA548B2099CB91200625FF2 /* DDApplication.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +706,9 @@
 				1A8B14B20992175F007265FC /* DDDimensionFormatter.mm in Sources */,
 				1A8B15EC099237B4007265FC /* DDMesh+Utilities.mm in Sources */,
 				1A8B185909926845007265FC /* DDScaleDialogController.mm in Sources */,
+				1AA5471D099B35C500625FF2 /* DDStaticSceneView.mm in Sources */,
+				1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */,
+				1AA54885099CB77100625FF2 /* DDFirstRunController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,6 +793,31 @@
 			name = DDScaleDialog.nib;
 			sourceTree = "<group>";
 		};
+		1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1AA547D0099B8BF700625FF2 /* English */,
+			);
+			name = DDFirstRun.nib;
+			sourceTree = "<group>";
+		};
+		1AA548B0099CB91200625FF2 /* DDApplication.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1AA548B1099CB91200625FF2 /* English */,
+				1AA548B3099CB91800625FF2 /* Swedish */,
+			);
+			name = DDApplication.nib;
+			sourceTree = "<group>";
+		};
+		1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1AA54741099B37E200625FF2 /* English */,
+			);
+			name = DDAxisReassignDialog.nib;
+			sourceTree = "<group>";
+		};
 		2A37F4B4FDCFA73011CA2CEA /* DDDocument.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -731,15 +825,6 @@
 				1A49FABA0959B9F0003B322F /* Swedish */,
 			);
 			name = DDDocument.nib;
-			sourceTree = "<group>";
-		};
-		2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2A37F4B7FDCFA73011CA2CEA /* English */,
-				1A49FAB90959B9EC003B322F /* Swedish */,
-			);
-			name = MainMenu.nib;
 			sourceTree = "<group>";
 		};
 		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
