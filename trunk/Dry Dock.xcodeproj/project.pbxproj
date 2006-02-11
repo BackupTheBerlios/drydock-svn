@@ -217,6 +217,7 @@
 		1A8B684908142C330028C19F /* DDDocumentWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDocumentWindowController.mm; sourceTree = "<group>"; };
 		1A8F08B408130C020040CAC3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		1A901230096D324800A5AC2D /* Oolite Model.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Oolite Model.icns"; sourceTree = "<group>"; };
+		1A9934A5099E158000AB2DF5 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDFirstRun.nib; sourceTree = "<group>"; };
 		1AA5471B099B35C500625FF2 /* DDStaticSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDStaticSceneView.h; sourceTree = "<group>"; };
 		1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDStaticSceneView.mm; sourceTree = "<group>"; };
 		1AA54738099B370400625FF2 /* DDAxisReassignDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAxisReassignDialogController.h; sourceTree = "<group>"; };
@@ -797,6 +798,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1AA547D0099B8BF700625FF2 /* English */,
+				1A9934A5099E158000AB2DF5 /* Swedish */,
 			);
 			name = DDFirstRun.nib;
 			sourceTree = "<group>";

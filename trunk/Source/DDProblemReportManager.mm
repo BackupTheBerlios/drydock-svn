@@ -22,6 +22,7 @@
 */
 
 #import "DDProblemReportManager.h"
+#import "DDApplicationDelegate.h"
 #import "Logging.h"
 #import "IconFamily.h"
 
@@ -205,6 +206,7 @@
 	
 	if (nil != _issues)
 	{
+		[[NSApp delegate] inhibitOpenPanel];
 		[self prepareDialog];
 		[self retain];
 		val = YES == [NSApp runModalForWindow:issuesPanel];
@@ -212,6 +214,7 @@
 		[issuesPanel orderOut:self];
 		issuesPanel = nil;
 		[self release];
+		[[NSApp delegate] uninhibitOpenPanel];
 	}
 	
 	return val;

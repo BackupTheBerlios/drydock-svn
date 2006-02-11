@@ -112,3 +112,10 @@
 "Do you wish to continue %@?" = "Vill du %@ ändå?";
 "saving" = "spara";
 "opening" = "öppna";
+
+// Button names
+"OK" = "OK";
+"Cancel" = "Avbryt";
+"Yes" = "Ja";
+"No" = "Nej";
+"Done" = "Klart";

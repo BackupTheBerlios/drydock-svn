@@ -28,16 +28,18 @@
 
 @interface DDFirstRunController: NSObject
 {
-	IBOutlet NSWindow				*firstRunWindow;
-	IBOutlet NSTabView				*firstRunStageTabView;
-	IBOutlet NSMatrix				*firstRunInstallSCRMatrix;
-	IBOutlet NSMatrix				*firstRunCheckForUpdatesMatrix;
-	IBOutlet NSButton				*firstRunContinueButton;
+	IBOutlet NSWindow				*window;
+	IBOutlet NSTabView				*stageTabView;
+	IBOutlet NSMatrix				*installSCRMatrix;
+	IBOutlet NSMatrix				*checkForUpdatesMatrix;
+	IBOutlet NSButton				*continueButton;
+	IBOutlet NSTextField			*authorisationRequiredForSCRField;
 	
+	BOOL							_haveAwoken;
 	BOOL							_runningLastFirstRunPane;
 }
 
-- (IBAction)firstRunNextButtonAction:sender;
-- (IBAction)firstRunQuitButtonAction:sender;
+- (IBAction)nextButtonAction:sender;
+- (IBAction)quitButtonAction:sender;
 
 @end

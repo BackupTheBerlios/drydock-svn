@@ -21,7 +21,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#define ENABLE_TRACE 1
+#define ENABLE_TRACE 0
 
 #import "DDFirstRunController.h"
 #import "Logging.h"
@@ -42,12 +42,16 @@ enum
 // Identifiers for tab view items in first-run wizard
 static NSString *kFirstRunTab_askInstallSCR			= @"install SCR";
 static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
+static NSString *kFirstRunTab_finished				= @"finished";
 
 
 @interface DDFirstRunController (Private)
 
-- (void)runFirstRunWizardPane:(NSString *)inPane isLastPane:(BOOL)inIsLast;
 - (void)doFirstRunIfAppropriate;
+
+- (void)loadWizard;	// Needed if setting things up before running the pane
+- (void)runFirstRunWizardPane:(NSString *)inPane;
+- (void)finishWizard;
 
 @end
 
@@ -56,7 +60,7 @@ static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
 
 - (void)dealloc
 {
-	[firstRunWindow release];
+	[window release];
 	
 	[super dealloc];
 }
@@ -66,8 +70,12 @@ static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
 {
 	TraceEnter();
 	
-	[[NSApp delegate] inhibitOpenPanel];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:NSApp];
+	if (!_haveAwoken)
+	{
+		_haveAwoken = YES;
+		[[NSApp delegate] inhibitOpenPanel];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:NSApp];
+	}
 	
 	TraceExit();
 }
@@ -100,28 +108,21 @@ static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
 	
 	NSUserDefaults			*defaults;
 	unsigned				firstRunMask;
-	unsigned				toRun;
-	unsigned				count = 0;
-	BOOL					installSCR;
-	BOOL					checkForUpdates;
+	unsigned				toRun = 0;
+	BOOL					userResponse;
+	Boolean					authRequired = NO;
+	BOOL					canInstallSCR;
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	defaults = [NSUserDefaults standardUserDefaults];
 	firstRunMask = [defaults integerForKey:@"first run status"];
-	if ([defaults boolForKey:@"first-run test mode"])
-	{
-		firstRunMask = 0;
-	}
 	
 	// Look for first-run actions which have not been performed
-	if (!(firstRunMask & kFirstRunStage_askInstallSCR))
+	canInstallSCR = UnsanitySCR_CanInstall(&authRequired);
+	if (canInstallSCR && ([defaults boolForKey:@"installed SCR"] || !(firstRunMask & kFirstRunStage_askInstallSCR)))
 	{
-		if (UnsanitySCR_CanInstall(NULL))
-		{
-			++count;
-			toRun |= kFirstRunStage_askInstallSCR;
-		}
+		toRun |= kFirstRunStage_askInstallSCR;
 	}
 	
 	if (!(firstRunMask & kFirstRunStage_askCheckForUpdates))
@@ -132,57 +133,66 @@ static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
 			can probably be removed eventually.
 		*/
 		
-		if (nil != [defaults objectForKey:@"UKUpdateChecker:CheckAtStartup"])
+		if (nil == [defaults objectForKey:@"UKUpdateChecker:CheckAtStartup"])
 		{
-			firstRunMask |= kFirstRunStage_askCheckForUpdates;
+			toRun |= kFirstRunStage_askCheckForUpdates;
 		}
 		else
 		{
-			++count;
-			toRun |= kFirstRunStage_askCheckForUpdates;
+			firstRunMask |= kFirstRunStage_askCheckForUpdates;
+			[defaults setInteger:firstRunMask forKey:@"first run status"];
 		}
 	}
 	
 	// Run "Install SCR" pane if required
 	if (toRun & kFirstRunStage_askInstallSCR)
 	{
-		[self runFirstRunWizardPane:kFirstRunTab_askInstallSCR isLastPane:!--count];
-		if (nil != firstRunInstallSCRMatrix)
+		TraceMessage(@"Running Install SCR pane.");
+		
+		[self loadWizard];
+		[authorisationRequiredForSCRField setHidden:!authRequired];
+		[self runFirstRunWizardPane:kFirstRunTab_askInstallSCR];
+		
+		if (nil != installSCRMatrix)
 		{
-			installSCR = [[firstRunInstallSCRMatrix selectedCell] tag];
-			if (installSCR)
+			userResponse = [[installSCRMatrix selectedCell] tag];
+			if (userResponse)
 			{
-				UnsanitySCR_Install(kUnsanitySCR_GlobalInstall | kUnsanitySCR_DoNotPresentInstallUI);
+				UnsanitySCR_Install(kUnsanitySCR_DoNotPresentInstallUI);
 			}
 			
 			// Record the fact that we've done this
 			firstRunMask |= kFirstRunStage_askInstallSCR;
 			[defaults setInteger:firstRunMask forKey:@"first run status"];
-			[defaults synchronize];
+			[defaults setBool:YES forKey:@"installed SCR"];
 		}
 	}
 	
 	// Run "Check for Updates" pane if required
 	if (toRun & kFirstRunStage_askCheckForUpdates)
 	{
-		[self runFirstRunWizardPane:kFirstRunTab_askCheckForUpdates isLastPane:!--count];
-		if (nil != firstRunCheckForUpdatesMatrix)
+		TraceMessage(@"Running Ask for Updates pane.");
+		
+		[self runFirstRunWizardPane:kFirstRunTab_askCheckForUpdates];
+		
+		if (nil != checkForUpdatesMatrix)
 		{
-			checkForUpdates = [[firstRunCheckForUpdatesMatrix selectedCell] tag];
-			[defaults setInteger:checkForUpdates forKey:@"UKUpdateChecker:CheckAtStartup"];
+			userResponse = [[checkForUpdatesMatrix selectedCell] tag];
+			[defaults setInteger:userResponse forKey:@"UKUpdateChecker:CheckAtStartup"];
 			
 			// Record the fact that we've done this
 			firstRunMask |= kFirstRunStage_askCheckForUpdates;
 			[defaults setInteger:firstRunMask forKey:@"first run status"];
-			[defaults synchronize];
 		}
 	}
 	
-	[firstRunWindow release];
-	firstRunWindow = nil;
+	[defaults synchronize];
+	[self finishWizard];
+	
+	TraceMessage(@"First run complete.");
 	
 	[[NSApp delegate] uninhibitOpenPanel];
-	[[NSApp delegate] runOpenPanel];
+	[[NSApp delegate] runOpenPanel];	// FIXME: opens Open panel on first run even if passed an Open Files event.
 	
 	[self release];
 	
@@ -190,29 +200,69 @@ static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
 }
 
 
-- (void)runFirstRunWizardPane:(NSString *)inPane isLastPane:(BOOL)inIsLast
+- (void)runFirstRunWizardPane:(NSString *)inPane
 {
-	TraceEnterMsg(@"Called for %@", inPane);
+	TraceEnterMsg(@"Called for \"%@\"", inPane);
 	
-	if (nil == firstRunWindow)
+	BOOL					OK = YES;
+	
+	if (nil == window)
 	{
 		// Load first run window
-		[NSBundle loadNibNamed:@"DDFirstRun" owner:self];
+		[self loadWizard];
+		if (nil == window) OK = NO;
+	}
+	
+	if (OK)
+	{
+		@try
+		{
+			[stageTabView selectTabViewItemWithIdentifier:inPane];
+		}
+		@catch (id whatever)
+		{
+			OK = NO;
+		}
+	}
+	
+	if (OK)
+	{
+		[NSApp runModalForWindow:window];
 	}
 	
 	TraceExit();
 }
 
 
-- (IBAction)firstRunNextButtonAction:sender
+- (void)loadWizard
 {
-	
+	[NSBundle loadNibNamed:@"DDFirstRun" owner:self];
 }
 
 
-- (IBAction)firstRunQuitButtonAction:sender
+- (void)finishWizard
 {
-	
+	if (nil != window)
+	{
+		[continueButton setTitle:NSLocalizedString(@"Done", NULL)];
+		[self runFirstRunWizardPane:kFirstRunTab_finished];
+		
+		[window orderOut:nil];
+		[window release];
+		window = nil;
+	}
+}
+
+
+- (IBAction)nextButtonAction:sender
+{
+	[NSApp stopModal];
+}
+
+
+- (IBAction)quitButtonAction:sender
+{
+	[NSApp terminate:nil];
 }
 
 @end
