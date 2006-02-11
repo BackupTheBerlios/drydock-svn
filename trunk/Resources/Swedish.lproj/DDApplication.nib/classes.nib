@@ -11,30 +11,13 @@
             }; 
             SUPERCLASS = NSApplication; 
         }, 
-        {
-            ACTIONS = {orderFrontStandardAboutPanel = id; }; 
-            CLASS = DDApplicationDelegate; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
+        {CLASS = DDApplicationDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             CLASS = DDDocumentController; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NSDocumentController; 
         }, 
-        {
-            ACTIONS = {firstRunNextButtonAction = id; firstRunQuitButtonAction = id; }; 
-            CLASS = DDFirstRunController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                firstRunCheckForUpdatesMatrix = NSMatrix; 
-                firstRunContinueButton = NSButton; 
-                firstRunInstallSCRMatrix = NSMatrix; 
-                firstRunStageTabView = NSTabView; 
-                firstRunWindow = NSWindow; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
+        {CLASS = DDFirstRunController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             CLASS = DDInspectorController; 
             LANGUAGE = ObjC; 
