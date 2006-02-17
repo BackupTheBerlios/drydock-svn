@@ -23,6 +23,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>DDDocument</string>
 			<key>NSExportableAs</key>
@@ -45,6 +47,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>DDDocument</string>
 		</dict>
@@ -63,6 +67,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>DDDocument</string>
 		</dict>
@@ -76,7 +82,9 @@
 			<key>CFBundleTypeName</key>
 			<string>Lightwave OBJ Model</string>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>DDDocument</string>
 		</dict>
@@ -91,6 +99,8 @@
 			<string>Lightwave Material Library</string>
 			<key>CFBundleTypeRole</key>
 			<string>None</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -120,11 +130,15 @@
 	<key>CFBundleSignature</key>
 	<string>DryD</string>
 	<key>CFBundleVersion</key>
-	<string>602-1</string>
+	<string>602-2</string>
 	<key>NSMainNibFile</key>
 	<string>DDApplication</string>
 	<key>NSPrincipalClass</key>
 	<string>DDApplication</string>
+	<key>SmartCrashReports_CompanyName</key>
+	<string>Jens Ayton</string>
+	<key>SmartCrashReports_EmailTicket</key>
+	<string>SCR-E5DEF7E7FA</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -247,10 +261,5 @@
 			</dict>
 		</dict>
 	</array>
-	
-	<key>SmartCrashReports_CompanyName</key>
-	<string>Jens Ayton</string>
-	<key>SmartCrashReports_EmailTicket</key>
-	<string>SCR-E5DEF7E7FA</string>
 </dict>
 </plist>

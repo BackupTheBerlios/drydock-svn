@@ -192,7 +192,7 @@ static NSString *kFirstRunTab_finished				= @"finished";
 	TraceMessage(@"First run complete.");
 	
 	[[NSApp delegate] uninhibitOpenPanel];
-	[[NSApp delegate] runOpenPanel];	// FIXME: opens Open panel on first run even if passed an Open Files event.
+	if (0 == [[[NSDocumentController sharedDocumentController] documents] count]) [[NSApp delegate] runOpenPanel];
 	
 	[self release];
 	

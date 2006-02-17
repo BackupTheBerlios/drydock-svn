@@ -26,6 +26,7 @@
 #import "DDMaterial.h"
 #import "DDProblemReportManager.h"
 #import "CocoaExtensions.h"
+#import "DDUtilities.h"
 
 
 // Hard-coded limits from Oolite
@@ -39,7 +40,7 @@ enum
 
 @implementation DDMesh (OoliteDATSupport)
 
-- (id)initWithOoliteTextBasedMesh:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
+- (id)initWithOoliteDAT:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
 	BOOL					OK = YES;
 	NSString				*dataString;
@@ -69,6 +70,8 @@ enum
 	
 	self = [super init];
 	if (nil == self) return nil;
+	
+	_name = [[inFile displayString] retain];
 	
 	dataString = [NSString stringWithContentsOfURL:inFile encoding:NSUTF8StringEncoding error:&error];
 	if (nil == dataString) dataString = [NSString stringWithContentsOfURL:inFile usedEncoding:NULL error:&error];
@@ -346,7 +349,7 @@ enum
 }
 
 
-- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingOoliteTextBasedMeshToURL:(NSURL *)inFile
+- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingOoliteDATToURL:(NSURL *)inFile
 {
 	NSEnumerator			*materialEnum;
 	DDMaterial				*material;
@@ -370,7 +373,7 @@ enum
 	materialCount = [_materials count];
 	if (kMaxDATMaterials < materialCount)
 	{
-		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u faces; the selected format allows no more than %u.", materialCount, kMaxDATMaterials];
+		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u materials; the selected format allows no more than %u.", materialCount, kMaxDATMaterials];
 	}
 	
 	// Check for invalid texture names
@@ -389,7 +392,7 @@ enum
 }
 
 
-- (BOOL)writeOoliteTextBasedMeshToURL:(NSURL *)inFile error:(NSError **)outError
+- (BOOL)writeOoliteDATToURL:(NSURL *)inFile issues:(DDProblemReportManager *)ioManager
 {
 	BOOL					OK =YES;
 	NSError					*error = nil;
@@ -403,8 +406,6 @@ enum
 	DDMeshFaceData			*face;
 	NSString				*texName;
 	DDMaterial				*material;
-	
-	if (NULL != outError) *outError = nil;
 	
 	if (_hasNonTriangles) [self triangulate];
 	
@@ -429,12 +430,12 @@ enum
 	if (nil == texNameString) texNameString = @"none";
 	
 	// Write header comment
-	[dataString appendFormat:  @"//	Written by Dry Dock on %@\n"
+	[dataString appendFormat:  @"//	Written by %@ on %@\n"
 								"//	\n"
 								"//	Model dimensions: %g x %g x %g (w x h x l)\n"
 								"//	Textures used: %@\n"
 								"\n",
-								dateString,
+								ApplicationNameAndVersionString(), dateString,
 								[self length], [self height], [self length],
 								texNameString];
 	
@@ -483,12 +484,13 @@ enum
 	// Finish up
 	if (OK)
 	{
-		OK = [dataString writeToURL:inFile atomically:YES encoding:NSUTF8StringEncoding error:outError];
+		OK = [dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding error:&error];
 	}
 	
 	if (!OK)
 	{
-		if (NULL != outError) *outError = error;
+		if (nil != error) [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReason]];
+		else [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
 	}
 	return OK;
 }

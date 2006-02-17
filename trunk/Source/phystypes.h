@@ -321,6 +321,13 @@ public:
 								ApproxUnit().glQuickNormal();
 							}
 	
+	inline const Vector		&CleanZeros() GCC_ATTR((always_inline))
+							{
+								if (-0.0 == x) x = 0.0;
+								if (-0.0 == y) y = 0.0;
+								if (-0.0 == z) z = 0.0;
+							}
+	
 	CFStringRef				CopyDescription(void);
 	
 	#ifdef NSMaximumStringLength

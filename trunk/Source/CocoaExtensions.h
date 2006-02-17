@@ -26,7 +26,7 @@
 
 @interface NSURL (CocoaExtensions)
 
-// Returns the display name of the file if a file:// URL, the absolute URL string otherwise.
+// Returns the display name of the file if a file:// URL, the last component of the URL otherwise.
 - (NSString *)displayString;
 
 @end

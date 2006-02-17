@@ -27,6 +27,8 @@
 #import "BS-HOM.h"
 #import "DDProblemReportManager.h"
 #import "CocoaExtensions.h"
+#import "DDUtilities.h"
+#import "DDError.h"
 
 
 #define LOG_MATERIAL_ATTRIBUTES		0
@@ -61,7 +63,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 
 
 // A pretty good overview of OBJ files is at http://netghost.narod.ru/gff/graphics/summary/waveobj.htm
-- (id)initWithOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
+- (id)initWithLightwaveOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
 	BOOL					OK = YES;
 	NSMutableArray			*lines;
@@ -254,6 +256,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 								if (0 == intVal)
 								{
 									[ioIssues addStopIssueWithKey:@"invalidVertexIndex" localizedFormat:@"Face line %u specifies an invalid vertex index %@.", faceIdx, objVal];
+									index = 0;
 									OK = NO;
 								}
 							}
@@ -264,6 +267,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 								if (vertexIdx <= index || index < 0)
 								{
 									[ioIssues addStopIssueWithKey:@"vertexRange" localizedFormat:@"Face line %u specifies a vertex index of %i, but there are only %u vertices in the document.", faceIdx, intVal, vertexIdx];
+									index = 0;
 									OK = NO;
 								}
 								face->verts[fvIdx] = index;
@@ -294,6 +298,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 												[ioIssues addNoteIssueWithKey:@"UVSuppress" localizedFormat:@"Supressing further warnings about U/V indices."];
 											}
 										}
+										index = 0;
 										OK = NO;
 									}
 								}
@@ -317,6 +322,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 												[ioIssues addNoteIssueWithKey:@"UVSuppress" localizedFormat:@"Supressing further warnings about U/V indices."];
 											}
 										}
+										index = 0;
 										OK = NO;
 									}
 								}
@@ -324,7 +330,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 								if (OK)
 								{
 									face->tex_s[fvIdx] = uv[index].u;
-									face->tex_t[fvIdx] = 1.0 - uv[index].v;
+									face->tex_t[fvIdx] = uv[index].v;
 								}
 								else
 								{
@@ -359,6 +365,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 												[ioIssues addNoteIssueWithKey:@"normalSuppress" localizedFormat:@"Supressing further warnings about normal indices."];
 											}
 										}
+										index = 0;
 										OK = NO;
 									}
 								}
@@ -382,6 +389,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 												[ioIssues addNoteIssueWithKey:@"normalSuppress" localizedFormat:@"Supressing further warnings about normal indices."];
 											}
 										}
+										index = 0;
 										OK = NO;
 									}
 								}
@@ -692,6 +700,268 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	return result;
 }
 
+
+- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingLightwaveOBJToURL:(NSURL *)inFile
+{
+	// No issues to check for at this time. OBJ is the most expressive format supported.
+}
+
+
+- (BOOL)writeLightwaveOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager
+{
+	BOOL					OK = YES;
+	NSError					*error = nil;
+	NSMutableString			*dataString;
+	NSDateFormatter			*formatter;
+	NSString				*dateString;
+	NSString				*mtlName;
+	NSURL					*mtlURL;
+	unsigned				i, j, faceVerts, count, ni, ti;
+	NSMutableArray			*texCoords;
+	NSMutableDictionary		*texCoordsRev;
+	NSMutableArray			*normals;
+	NSMutableDictionary		*normalsRev;
+	UV						uv;
+	Vector					normal;
+	NSValue					*value;
+	NSNumber				*index;
+	NSMutableDictionary		*materialToFaceArray;
+	NSMutableArray			*facesForMaterial;
+	id						materialKey;
+	NSEnumerator			*materialEnumerator;
+	DDMeshFaceData			*currentFace;
+	NSAutoreleasePool		*pool;
+	NSArray					*materialNames;
+	DDMaterial				*material;
+	
+	// Build material library name. For "Foo.obj" or "Foo", use "Foo.mtl"; for "Bar.baz", use "Bar.baz.mtl".
+	mtlName = [[inFile path] lastPathComponent];
+	if ([[mtlName lowercaseString] hasSuffix:@".obj"])
+	{
+		mtlName = [mtlName substringToIndex:[mtlName length] - 4];
+	}
+	mtlName = [mtlName stringByAppendingString:@".mtl"];
+	
+	// Get formatted date string for header comment
+	formatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y-%m-%d" allowNaturalLanguage:NO];	// ISO date format
+	dateString = [formatter stringFromDate:[NSDate date]];
+	[formatter release];
+	NSString *version = ApplicationNameAndVersionString();
+	
+	pool = [[NSAutoreleasePool alloc] init];
+	
+	// Write header comment
+	dataString = [NSMutableString string];
+	[dataString appendFormat:  @"# Written by %@ on %@\n"
+								"# \n"
+								"# Model dimensions: %g x %g x %g (w x h x l)\n"
+								"# %i vertices, %i faces\n"
+								"\n",
+								version, dateString,
+								[self length], [self height], [self length],
+								_vertexCount, _faceCount];
+	
+	// Write material library and object name
+	[dataString appendFormat:@"mtllib %@\no %@\n", mtlName, [self name]];
+	
+	// Write vertices
+	[dataString appendString:@"\n# Vertices:\n"];
+	for (i = 0; i != _vertexCount; ++i)
+	{
+		[dataString appendFormat:@"v %f %f %f\n", _vertices[i].x, _vertices[i].y, _vertices[i].z];
+	}
+	
+	/*	Write texture co-ordinates. To avoid duplicates, we create an NSArray of UV structs in
+		NSValues, and a dictionary mapping each such NSValue to an array index (as an NSNumber).
+	*/
+	texCoords = [[NSMutableArray alloc] init];
+	texCoordsRev = [NSMutableDictionary dictionary];
+	count = 0;
+	for (i = 0; i != _faceCount; ++i)
+	{
+		faceVerts = _faces[i].vertexCount;
+		for (j = 0; j != faceVerts; ++j)
+		{
+			uv.u = _faces[i].tex_s[j];
+			uv.v = _faces[i].tex_t[j];
+			value = [[NSValue alloc] initWithBytes:&uv objCType:@encode(UV)];
+			
+			index = [texCoordsRev objectForKey:value];
+			if (NULL == index)
+			{
+				// Previously unseen u/v pair
+				[texCoords addObject:value];
+				[texCoordsRev setObject:[NSNumber numberWithInt:count++] forKey:value];
+			}
+			[value release];
+		}
+	}
+	// Actually write the co-ords
+	[dataString appendString:@"\n# Texture co-ordinates:\n"];
+	for (i = 0; i != count; ++i)
+	{
+		value = [texCoords objectAtIndex:i];
+		[value getValue:&uv];
+		
+		[dataString appendFormat:@"vt %f %f\n", uv.u, 1.0 - uv.v];
+	}
+	[texCoords release];
+	texCoords = nil;
+	
+	// Write normals. Same logic as for texture co-ords, only using a Vector.
+	normals = [[NSMutableArray alloc] init];
+	normalsRev = [NSMutableDictionary dictionary];
+	count = 0;
+	for (i = 0; i != _faceCount; ++i)
+	{
+		faceVerts = _faces[i].vertexCount;
+		for (j = 0; j != faceVerts; ++j)
+		{
+			normal = _faces[i].normal;
+			normal.CleanZeros();
+			value = [[NSValue alloc] initWithBytes:&normal objCType:@encode(Vector)];
+			
+			index = [normalsRev objectForKey:value];
+			if (NULL == index)
+			{
+				// Previously unseen u/v pair
+				[normals addObject:value];
+				[normalsRev setObject:[NSNumber numberWithInt:count++] forKey:value];
+			}
+			[value release];
+		}
+	}
+	[dataString appendString:@"\n# Normals:\n"];
+	// Actually write the co-ords
+	for (i = 0; i != count; ++i)
+	{
+		value = [normals objectAtIndex:i];
+		[value getValue:&normal];
+		
+		[dataString appendFormat:@"vn %f %f %f\n", normal.x, normal.y, normal.z];
+	}
+	[normals release];
+	normals = nil;
+	
+	/*	Sort faces by texture. Basic approach: create a dictionary keyed by material name, with
+		mutable arrays as the values. These arrays are populated with indices into _faces, as
+		NSNumbers.
+	*/
+	materialToFaceArray = [NSMutableDictionary dictionary];
+	for (i = 0; i != _faceCount; ++i)
+	{
+		materialKey = [_faces[i].material displayName];
+		if (nil == materialKey) materialKey = [NSNull null];
+		facesForMaterial = [materialToFaceArray objectForKey:materialKey];
+		if (nil == facesForMaterial)
+		{
+			facesForMaterial = [NSMutableArray array];
+			[materialToFaceArray setObject:facesForMaterial forKey:materialKey];
+		}
+		[facesForMaterial addObject:[NSNumber numberWithInt:i]];
+	}
+	
+	// Write faces with no texture, if any
+	facesForMaterial = [materialToFaceArray objectForKey:[NSNull null]];
+	if (nil != facesForMaterial)
+	{
+		[dataString appendString:@"\n# Untextured faces:\ng untextured"];
+		count = [facesForMaterial count];
+		for (i = 0; i != count; ++i)
+		{
+			index = [facesForMaterial objectAtIndex:i];
+			currentFace = &_faces[[index intValue]];
+			faceVerts = currentFace->vertexCount;
+			normal = currentFace->normal;
+			normal.CleanZeros();
+			value = [[NSValue alloc] initWithBytes:&normal objCType:@encode(Vector)];
+			ni = [[normalsRev objectForKey:value] intValue];
+			[value release];
+			
+			[dataString appendString:@"\nf"];
+			for (j = 0; j != faceVerts; ++j)
+			{
+				[dataString appendFormat:@" %i//%i", currentFace->verts[j] + 1, ni + 1];
+			}
+		}
+		[dataString appendString:@"\n"];
+		
+		[materialToFaceArray removeObjectForKey:[NSNull null]];
+	}
+	// Write faces for named textures
+	for (materialEnumerator = [materialToFaceArray keyEnumerator]; materialKey = [materialEnumerator nextObject]; )
+	{
+		facesForMaterial = [materialToFaceArray objectForKey:materialKey];
+		count = [facesForMaterial count];
+		[dataString appendFormat:@"\n# Faces with texture %@:\ng %@\nusemtl %@", materialKey, materialKey, materialKey];
+		for (i = 0; i != count; ++i)
+		{
+			index = [facesForMaterial objectAtIndex:i];
+			currentFace = &_faces[[index intValue]];
+			faceVerts = currentFace->vertexCount;
+			normal = currentFace->normal;
+			normal.CleanZeros();
+			value = [[NSValue alloc] initWithBytes:&normal objCType:@encode(Vector)];
+			ni = [[normalsRev objectForKey:value] intValue];
+			[value release];
+			
+			[dataString appendString:@"\nf"];
+			for (j = 0; j != faceVerts; ++j)
+			{
+				uv.u = currentFace->tex_s[j];
+				uv.v = currentFace->tex_t[j];
+				value = [[NSValue alloc] initWithBytes:&uv objCType:@encode(UV)];
+				ti = [[texCoordsRev objectForKey:value] intValue];
+				[value release];				
+				[dataString appendFormat:@" %i/%i/%i", currentFace->verts[j] + 1, ti + 1, ni + 1];
+			}
+		}
+		[dataString appendString:@"\n"];
+	}
+	
+	// Write OBJ file
+	if (![dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding error:&error])
+	{
+		if (nil != error) [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReason]];
+		else [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
+		return NO;
+	}
+	
+	materialNames = [[materialToFaceArray allKeys] retain];
+	[pool release];
+	[materialNames autorelease];
+	count = [materialNames count];
+	
+	// Create material library file
+	dataString = [NSMutableString string];
+	[dataString appendFormat:  @"# Written by %@ on %@\n"
+								"# \n"
+								"# %i materials\n"
+								"\n",
+								version, dateString,
+								count];
+	
+	for (i = 0; i != count; ++i)
+	{
+		materialKey = [materialNames objectAtIndex:i];
+		material = [_materials objectForKey:materialKey];
+		[dataString appendFormat:  @"newmtl %@\n"
+									"map_Kd %@\n\n",
+									materialKey,
+									[material diffuseMapName]];
+	}
+	
+	// Write MTL file
+	mtlURL = [NSURL URLWithString:mtlName relativeToURL:inFinalLocation];
+	if (![dataString writeToURL:mtlURL atomically:YES encoding:NSUTF8StringEncoding error:&error])
+	{
+		if (nil != error) [ioManager addWarningIssueWithKey:@"mtllib_write_failed" localizedFormat:@"The material library for the document could not be saved. %@", [error localizedFailureReason]];
+		else [ioManager addWarningIssueWithKey:@"mtllib_write_failed" localizedFormat:@"The material library for the document could not be saved, because an unknown error occured."];
+	}
+	
+	return YES;
+}
+
 @end
 
 
@@ -737,7 +1007,7 @@ static UV ObjUVToUV(NSString *inUV)
 	if (2 == [components count])
 	{
 		result.u = [[components objectAtIndex:0] floatValue];
-		result.v = [[components objectAtIndex:1] floatValue];
+		result.v = 1.0 - [[components objectAtIndex:1] floatValue];
 	}
 	
 	return result;

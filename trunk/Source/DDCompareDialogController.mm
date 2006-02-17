@@ -121,11 +121,11 @@
 		
 		if (UTTypeEqual(utiDAT, (CFStringRef)fileUTI))
 		{
-			compareMesh = [[DDMesh alloc] initWithOoliteTextBasedMesh:fileURL issues:issues];
+			compareMesh = [[DDMesh alloc] initWithOoliteDAT:fileURL issues:issues];
 		}
 		else if (UTTypeEqual(utiOBJ, (CFStringRef)fileUTI))
 		{
-			compareMesh = [[DDMesh alloc] initWithOBJ:fileURL issues:issues];
+			compareMesh = [[DDMesh alloc] initWithLightwaveOBJ:fileURL issues:issues];
 		}
 		else
 		{

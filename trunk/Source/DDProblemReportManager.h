@@ -79,4 +79,6 @@ typedef enum
 - (IBAction)cancelAction:sender;
 - (IBAction)helpAction:sender;
 
+- (void)clear;
+
 @end

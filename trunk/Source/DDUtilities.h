@@ -1,8 +1,9 @@
 /*
-	CocoaExtensions.m
+	DDUtilities.h
 	Dry Dock for Oolite
-	Miscellaneous extensions to Cocoa classes.
 	$Id$
+	
+	Miscellanous stuff.
 	
 	Copyright © 2006 Jens Ayton
 
@@ -22,64 +23,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import "CocoaExtensions.h"
+#import <Foundation/Foundation.h>
 
 
-@implementation NSURL (CocoaExtensions)
-
-- (NSString *)displayString
-{
-	NSString				*filePath;
-	NSString				*fileName;
-	
-	if ([self isFileURL])
-	{
-		filePath = [self path];
-		fileName = [[NSFileManager defaultManager] displayNameAtPath:filePath];
-		if (nil == fileName)
-		{
-			fileName = [filePath lastPathComponent];
-		}
-	}
-	else
-	{
-		filePath = [self path];
-		if (nil != filePath)
-		{
-			fileName = [[filePath lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		}
-		else
-		{
-			fileName = [self absoluteString];
-		}
-	}
-	
-	return fileName;
-}
-
-@end
-
-
-@implementation NSFileManager (CocoaExtensions)
-
-- (NSString *)utiForItemAtPath:(NSString *)inPath
-{
-	FSRef					fsRef;
-	NSURL					*url;
-	NSString				*result = nil;
-	
-	url = [NSURL fileURLWithPath:inPath];
-	if (nil != url)
-	{
-		if (CFURLGetFSRef((CFURLRef)url, &fsRef))
-		{
-			LSCopyItemAttribute(&fsRef, kLSRolesAll, kLSItemContentType, (CFTypeRef *)&result);
-			[result autorelease];
-		}
-	}
-	
-	return result;
-}
-
-@end
-
+extern NSString *ApplicationNameAndVersionString(void);

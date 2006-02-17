@@ -1,7 +1,6 @@
 /*
-	CocoaExtensions.m
+	DDUtilities.m
 	Dry Dock for Oolite
-	Miscellaneous extensions to Cocoa classes.
 	$Id$
 	
 	Copyright © 2006 Jens Ayton
@@ -22,64 +21,19 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import "CocoaExtensions.h"
+#import "DDUtilities.h"
+#import <Cocoa/Cocoa.h>
 
 
-@implementation NSURL (CocoaExtensions)
-
-- (NSString *)displayString
+NSString *ApplicationNameAndVersionString(void)
 {
-	NSString				*filePath;
-	NSString				*fileName;
+	NSBundle			*mainBundle;
+	NSString			*marketingVersion, *buildVersion;
 	
-	if ([self isFileURL])
-	{
-		filePath = [self path];
-		fileName = [[NSFileManager defaultManager] displayNameAtPath:filePath];
-		if (nil == fileName)
-		{
-			fileName = [filePath lastPathComponent];
-		}
-	}
-	else
-	{
-		filePath = [self path];
-		if (nil != filePath)
-		{
-			fileName = [[filePath lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		}
-		else
-		{
-			fileName = [self absoluteString];
-		}
-	}
+	mainBundle = [NSBundle mainBundle];
 	
-	return fileName;
+	marketingVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+	buildVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+	
+	return [NSString stringWithFormat:@"Dry Dock for Oolite %@ (%@)", marketingVersion, buildVersion];
 }
-
-@end
-
-
-@implementation NSFileManager (CocoaExtensions)
-
-- (NSString *)utiForItemAtPath:(NSString *)inPath
-{
-	FSRef					fsRef;
-	NSURL					*url;
-	NSString				*result = nil;
-	
-	url = [NSURL fileURLWithPath:inPath];
-	if (nil != url)
-	{
-		if (CFURLGetFSRef((CFURLRef)url, &fsRef))
-		{
-			LSCopyItemAttribute(&fsRef, kLSRolesAll, kLSItemContentType, (CFTypeRef *)&result);
-			[result autorelease];
-		}
-	}
-	
-	return result;
-}
-
-@end
-

@@ -29,6 +29,8 @@
 		1A23CD3E098F40CF004A48CD /* DDMesh+GLRendering.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
 		1A23CD8C098F491A004A48CD /* DDMesh+OoliteDATSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
 		1A23CD8D098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */; };
+		1A245C5209A46B9800DC42F4 /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; };
+		1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A24608209A5D39000DC42F4 /* DDUtilities.mm */; };
 		1A442149094C830B000E90C2 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A442148094C830B000E90C2 /* Logging.m */; };
 		1A49F9F00959B235003B322F /* DDLightController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A49F9EE0959B235003B322F /* DDLightController.mm */; };
 		1A50518E098E1E6B0056F45F /* IconFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A50518D098E1E6B0056F45F /* IconFamily.m */; };
@@ -150,6 +152,13 @@
 		1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+GLRendering.mm"; sourceTree = "<group>"; };
 		1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+OoliteDATSupport.mm"; sourceTree = "<group>"; };
 		1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+LightwaveOBJSupport.mm"; sourceTree = "<group>"; };
+		1A245C1009A4676700DC42F4 /* OoliteDAT.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; lineEnding = 0; path = OoliteDAT.l; sourceTree = "<group>"; };
+		1A245C4E09A46B8A00DC42F4 /* OoliteDATLexTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OoliteDATLexTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A245CB109A4727700DC42F4 /* OoliteDATTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OoliteDATTokens.h; sourceTree = "<group>"; };
+		1A245EA909A4C8AF00DC42F4 /* DDDATLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDATLexer.h; sourceTree = "<group>"; };
+		1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDATLexer.m; sourceTree = "<group>"; };
+		1A24608109A5D39000DC42F4 /* DDUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUtilities.h; sourceTree = "<group>"; };
+		1A24608209A5D39000DC42F4 /* DDUtilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDUtilities.mm; sourceTree = "<group>"; };
 		1A442147094C830B000E90C2 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		1A442148094C830B000E90C2 /* Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logging.m; sourceTree = "<group>"; };
 		1A49F9EE0959B235003B322F /* DDLightController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDLightController.mm; sourceTree = "<group>"; };
@@ -260,6 +269,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1A245C4C09A46B8A00DC42F4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -305,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* Dry Dock for Oolite.app */,
+				1A245C4E09A46B8A00DC42F4 /* OoliteDATLexTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,6 +346,17 @@
 				1A18DE10096456D20010CE0B /* UKUpdateChecker.m */,
 			);
 			path = "UK-NiftyFeatures";
+			sourceTree = "<group>";
+		};
+		1A245C0D09A4675100DC42F4 /* Lexers */ = {
+			isa = PBXGroup;
+			children = (
+				1A245C1009A4676700DC42F4 /* OoliteDAT.l */,
+				1A245CB109A4727700DC42F4 /* OoliteDATTokens.h */,
+				1A245EA909A4C8AF00DC42F4 /* DDDATLexer.h */,
+				1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */,
+			);
+			name = Lexers;
 			sourceTree = "<group>";
 		};
 		1A49FAB40959B9C0003B322F /* Icons */ = {
@@ -512,6 +540,7 @@
 				1A7D60E0094EDA7A00E9D611 /* Controller */,
 				1A7D60E9094EDA9E00E9D611 /* Scene Graph */,
 				1A67FEC5098C86D4003BDAD5 /* Problem Reporter */,
+				1A245C0D09A4675100DC42F4 /* Lexers */,
 				1AE7E10B094FA9A2000F6B6E /* DDError.h */,
 				1AE7E10C094FA9A2000F6B6E /* DDError.mm */,
 				1AA5485C099CB59D00625FF2 /* Third-party */,
@@ -532,6 +561,8 @@
 				1A72083B095A8C8C00C6896A /* MathsUtils.h */,
 				1A67034E098D81C2003BDAD5 /* CocoaExtensions.h */,
 				1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */,
+				1A24608109A5D39000DC42F4 /* DDUtilities.h */,
+				1A24608209A5D39000DC42F4 /* DDUtilities.mm */,
 			);
 			name = "Other Sources";
 			path = Source;
@@ -566,6 +597,30 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1A245C4D09A46B8A00DC42F4 /* OoliteDATLexTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A245C7209A46BF500DC42F4 /* Build configuration list for PBXNativeTarget "OoliteDATLexTest" */;
+			buildPhases = (
+				1A245C4B09A46B8A00DC42F4 /* Sources */,
+				1A245C4C09A46B8A00DC42F4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = OoliteDATLexTest;
+				ZERO_LINK = YES;
+			};
+			dependencies = (
+			);
+			name = OoliteDATLexTest;
+			productName = OoliteDATLexTest;
+			productReference = 1A245C4E09A46B8A00DC42F4 /* OoliteDATLexTest */;
+			productType = "com.apple.product-type.tool";
+		};
 		8D15AC270486D014006FF6A4 /* Dry Dock */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AAC876508F293CC004A6AD2 /* Build configuration list for PBXNativeTarget "Dry Dock" */;
@@ -617,6 +672,7 @@
 			projectDirPath = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* Dry Dock */,
+				1A245C4D09A46B8A00DC42F4 /* OoliteDATLexTest */,
 			);
 		};
 /* End PBXProject section */
@@ -662,6 +718,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1A245C4B09A46B8A00DC42F4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A245C5209A46B9800DC42F4 /* OoliteDAT.l in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -710,6 +774,7 @@
 				1AA5471D099B35C500625FF2 /* DDStaticSceneView.mm in Sources */,
 				1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */,
 				1AA54885099CB77100625FF2 /* DDFirstRunController.m in Sources */,
+				1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,6 +906,68 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1A245C7309A46BF500DC42F4 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
+				INSTALL_PATH = "$(HOME)/bin";
+				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
+				LEX_SUPPRESS_DEFAULT_RULE = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = OoliteDATLexTest;
+			};
+			name = Development;
+		};
+		1A245C7409A46BF500DC42F4 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
+				INSTALL_PATH = "$(HOME)/bin";
+				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
+				LEX_SUPPRESS_DEFAULT_RULE = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = OoliteDATLexTest;
+			};
+			name = Deployment;
+		};
+		1A245C7509A46BF500DC42F4 /* Debug-optimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
+				INSTALL_PATH = "$(HOME)/bin";
+				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
+				LEX_SUPPRESS_DEFAULT_RULE = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = OoliteDATLexTest;
+			};
+			name = "Debug-optimized";
+		};
+		1A245C7609A46BF500DC42F4 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
+				INSTALL_PATH = "$(HOME)/bin";
+				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
+				LEX_SUPPRESS_DEFAULT_RULE = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = OoliteDATLexTest;
+			};
+			name = Default;
+		};
 		1A49F9F80959B318003B322F /* Debug-optimized */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1012,6 +1139,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1A245C7209A46BF500DC42F4 /* Build configuration list for PBXNativeTarget "OoliteDATLexTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A245C7309A46BF500DC42F4 /* Development */,
+				1A245C7409A46BF500DC42F4 /* Deployment */,
+				1A245C7509A46BF500DC42F4 /* Debug-optimized */,
+				1A245C7609A46BF500DC42F4 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
 		1AAC876508F293CC004A6AD2 /* Build configuration list for PBXNativeTarget "Dry Dock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

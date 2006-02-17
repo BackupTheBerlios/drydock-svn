@@ -307,6 +307,13 @@
 }
 
 
+- (void)clear
+{
+	[_issues removeAllObjects];
+	[tableView reloadData];
+}
+
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<%@ %p>{issues = %@}", [self className], self, _issues];

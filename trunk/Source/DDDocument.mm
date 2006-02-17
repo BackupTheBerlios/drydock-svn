@@ -104,12 +104,12 @@
 	{
 		if ([typeName isEqual:@"Oolite Model"])
 		{
-			_mesh = [[DDMesh alloc] initWithOoliteTextBasedMesh:absoluteURL issues:problemManager];
+			_mesh = [[DDMesh alloc] initWithOoliteDAT:absoluteURL issues:problemManager];
 			success = (nil != _mesh);
 		}
 		else if ([typeName isEqual:@"Lightwave OBJ Model"])
 		{
-			_mesh = [[DDMesh alloc] initWithOBJ:absoluteURL issues:problemManager];
+			_mesh = [[DDMesh alloc] initWithLightwaveOBJ:absoluteURL issues:problemManager];
 			success = (nil != _mesh);
 		}
 		else
@@ -156,40 +156,57 @@
 }
 
 
-- (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+- (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError
 {
-	BOOL					success = NO;
-	OSType					type = 0;
-	FSRef					file;
-	FSCatalogInfo			catInfo;
-	FileInfo				*info;
+	BOOL					OK = NO;
 	DDProblemReportManager	*problemManager;
 	
 	if (NULL != outError) *outError = nil;
 	if (nil == _mesh) return NO;
+	
+	// Auto-saving and split files like OBJ won’t go well together… revisit this. Should possibly
+	// return Dry Dock Document from autosavingFileType when implemented.
+	if (NSAutosaveOperation == saveOperation) return NO;
 	
 	problemManager = [[DDProblemReportManager alloc] init];
 	
 	//@try
 	NS_DURING
 	{
-		if ([typeName isEqual:@"org.aegidian.oolite.mesh"])
+		if ([typeName isEqual:@"Oolite Model"])
 		{
-			[_mesh gatherIssues:problemManager withWritingOoliteTextBasedMeshToURL:absoluteURL];
-			if ([problemManager showReportApplicationModal])
+			[_mesh gatherIssues:problemManager withWritingOoliteDATToURL:absoluteURL];
+			OK = [problemManager showReportApplicationModal];
+			if (OK)
 			{
-				success = [_mesh writeOoliteTextBasedMeshToURL:absoluteURL error:outError];
-				type = 'OoDa';
+				[problemManager clear];
+				OK = [_mesh writeOoliteDATToURL:absoluteURL issues:problemManager];
+				[problemManager showReportApplicationModal];
 			}
-			else
+			if (!OK)
+			{
+				if (NULL != outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
+			}
+		}
+		else if ([typeName isEqual:@"Lightwave OBJ Model"])
+		{
+			[_mesh gatherIssues:problemManager withWritingLightwaveOBJToURL:absoluteURL];
+			OK = [problemManager showReportApplicationModal];
+			if (OK)
+			{
+				[problemManager clear];
+				OK = [_mesh writeLightwaveOBJToURL:absoluteURL finalLocationURL:absoluteOriginalContentsURL issues:problemManager];
+				[problemManager showReportApplicationModal];
+			}
+			if (!OK)
 			{
 				if (NULL != outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 			}
 		}
 		else
 		{
-			NSLog(@"Can't write to file %@ of type %@.", absoluteURL, typeName);
-			success = NO;
+			NSLog(@"Can't write to file %@ of unknown type %@.", absoluteURL, typeName);
+			OK = NO;
 		}
 	}
 	//@catch (id localException)
@@ -212,26 +229,38 @@
 	}
 	NS_ENDHANDLER
 	
-	// Set type code
-	if (success && 0 != type && [absoluteURL isFileURL])
-	{
-		success = CFURLGetFSRef((CFURLRef)absoluteURL, &file);
-		if (success) success = !FSGetCatalogInfo(&file, kFSCatInfoFinderInfo, &catInfo, NULL, NULL, NULL);
-		if (success)
-		{
-			info = (FileInfo *)catInfo.finderInfo;
-			info->fileType = type;
-			info->fileCreator = 'DryD';
-			
-			FSSetCatalogInfo(&file, kFSCatInfoFinderInfo, &catInfo);
-		}
-		
-		success = YES;	// Failure to set type code is non-fatal
-	}
-	
 	[problemManager release];
 	
-	return success;
+	return OK;
+}
+
+
+- (NSDictionary *)fileAttributesToWriteToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError
+{
+	NSMutableDictionary		*result;
+	OSType					type = 0;
+	
+	result = [[super fileAttributesToWriteToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation originalContentsURL:absoluteOriginalContentsURL error:outError] mutableCopy];
+	if (nil == result) result = [[NSMutableArray alloc] init];
+	
+	if ([typeName isEqual:@"Oolite Model"])
+	{
+		type = 'OoDa';
+	}
+	else if ([typeName isEqual:@"Lightwave OBJ Model"])
+	{
+	//	type = 'OBJ ';
+		type = 'TEXT';
+	}
+	else if ([typeName isEqual:@"Meshwork Model"])
+	{
+		type = 'Mesh';
+	}
+	
+	[result setObject:[NSNumber numberWithUnsignedLong:'DryD'] forKey:NSFileHFSCreatorCode];
+	if (0 != type) [result setObject:[NSNumber numberWithUnsignedLong:type] forKey:NSFileHFSTypeCode];
+	
+	return [result autorelease];
 }
 
 

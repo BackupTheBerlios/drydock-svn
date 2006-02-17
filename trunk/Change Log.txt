@@ -1,4 +1,7 @@
 0.07 (v602-2)
+	• Added OBJ export support.
+	• As side effect of testing OBJ export, fixed potential crasher in OBJ import (malformed files
+	  could specify out-of-range indices which weren’t corrected properly).
 	• Added Smart Crash Reports support – if SCR is installed and Dry Dock crashes, the option is
 	  given to mail me the crash log. The option is provided to install SCR the first time you run
 	  Dry Dock. If you say no, you won’t be asked again. If you say yes, you will be asked again if
@@ -7,6 +10,7 @@
 	• First-run “wizard” added. Asks previously-mentioned question regarding Smart Crash Reports,
 	  and (for first-time users) takes over the responsiblity of asking about version checks more
 	  elegantly than the old alert.
+	• Changed automatic check-for-update frequency from once every ten days to once every two days.
 
 0.06 (v602-1)
 	• Compare dialog implemented.

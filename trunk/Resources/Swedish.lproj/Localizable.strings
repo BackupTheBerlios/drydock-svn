@@ -53,7 +53,7 @@
 "The document contains multiple material library references. Currently, only one material library is supported. Ignoring reference to material library \"%@\"." = "Dokumentet inehåller flera hänvisningar till materialbibliotek. I nuläget stöder Torrdockan endast ett materialbibliotek. Hänvisningen till materialbiblioteket ”%@” ignoreras.";
 "The document contains lines of unknown type \"%@\", which will be ignored." = "Dokumentet inehåller rader av okänd typ, ”%@”, vilka kommer att ignoreras.";
 "The document contains lines of type \"%@\" (%@), which will be ignored." = "Dokumentet inehåller rader av type ”%@” (%@), vilka kommer att ignoreras.";
-"No material library could be loaded from %@. %@" = "Inget materialbibliotek kunde läsas från %@.";
+"No material library could be loaded from %@. %@" = "Materialbiblioteket “%@” kunde inte läsas in.";
 "Face line %u specifies an invalid vertex index %@." = "Polygonrad %u anger ogiltigt punktindex %@.";
 "Face line %u specifies an invalid U/V index %@." = "Polygonrad %u anger ogiltigt U/V-index %@.";
 "Face line %u specifies an invalid normal index %@." = "Polygonrad %u anger ogiltigt normalindex %@.";
@@ -64,6 +64,19 @@
 "This document contains %u vertices; the selected format allows no more than %u." = "Dokumentet inehåller %u punkter, men det valda filformatet stöder inte fler än %u.";
 "This document contains %u materials; the selected format allows no more than %u." = "Dokumentet inehåller %u material, men det valda filformatet stöder inte fler än %u.";
 "The document could not be opened, because the file type could not be recognised." = "Dokumentet kunde inte öppnas då filtypen inte känns igen.";
+"Parse error on line %u: expected %@, got %@." = "Tolkningsfel på rad %u: väntade %@, fann %@.";
+"The document could not be saved. %@" = "Dokumentet kunde inte sparas. %@";
+"The document could not be saved, because an unknown error occured." = "Dokumentet kunde inte sparas, då ett oväntat fel inträffade.";
+"The material library for the document could not be saved. %@" = "Dokumentets materialbibliotek kunde inte sparas. %@";
+"The material library for the document could not be saved, because an unknown error occured." = "Dokumentets materialbibliotek kunde inte sparas, då ett oväntat fel inträffade.";
+
+"end of file" = "filslut";
+"end of line" = "radslut";
+"integer" = "heltal";
+"number" = "nummer";
+"name" = "namn";
+"\"%@\"" = "”%@”";
+"%@" = "%@…";
 
 // Unsupported OBJ line types
 "OBJ_LINE vp" = "punkt i parameterrymd";

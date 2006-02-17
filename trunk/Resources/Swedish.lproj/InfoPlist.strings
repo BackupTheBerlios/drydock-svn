@@ -3,7 +3,7 @@
 CFBundleName = "Torrdockan";
 CFBundleDisplayName = "Torrdockan för Oolite";
 NSHumanReadableCopyright = "©2006 Jens Ayton";
-CFBundleShortVersionString = "0.06";
+CFBundleShortVersionString = "0.07";
 
 "Dry Dock Document" = "Torrdockan-dokument";
 "Oolite Model" = "Oolite-modell";
