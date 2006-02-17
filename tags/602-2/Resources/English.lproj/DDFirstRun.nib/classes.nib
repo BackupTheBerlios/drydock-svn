@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {nextButtonAction = id; quitButtonAction = id; }; 
+            CLASS = DDFirstRunController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                authorisationRequiredForSCRField = NSTextField; 
+                checkForUpdatesMatrix = NSMatrix; 
+                continueButton = NSButton; 
+                installSCRMatrix = NSMatrix; 
+                stageTabView = NSTabView; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
