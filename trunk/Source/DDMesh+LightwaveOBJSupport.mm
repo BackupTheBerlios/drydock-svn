@@ -63,6 +63,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 
 
 // A pretty good overview of OBJ files is at http://netghost.narod.ru/gff/graphics/summary/waveobj.htm
+// FIXME this code will choke on files using \ to escape newlines. I’ll fix this when doing the flex-based parser.
 - (id)initWithLightwaveOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
 	BOOL					OK = YES;
@@ -92,10 +93,12 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	Vector					normal;
 	NSMutableSet			*ignoredTypes = nil;
 	NSError					*error;
-	BOOL					warnedAboutNoNormals = NO;
 	unsigned				badUVWarnings = 0;
 	unsigned				badNormalWarnings = 0;
 	NSAutoreleasePool		*pool = nil;
+	BOOL					warnedAboutNoNormals = NO;
+	BOOL					warnedAboutCall = NO;
+	BOOL					warnedAboutShellScript = NO;
 	
 	self = [super init];
 	if (nil == self) return nil;
@@ -434,6 +437,24 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 				// Group Name; ignore
 				//LogMessage(@"Ignoring group: \"%@\"", params);
 			}
+			else if ([keyword isEqual:@"call"])
+			{
+				// External file inclusion
+				if (!warnedAboutCall)
+				{
+					warnedAboutCall = YES;
+					[ioIssues addNoteIssueWithKey:@"OBJCall" localizedFormat:@"The document contains one or more \"calls\" of external files. This feature is not supported by Dry Dock at present."];
+				}
+			}
+			else if ([keyword isEqual:@"csh"])
+			{
+				// Shell script call
+				if (!warnedAboutShellScript)
+				{
+					warnedAboutShellScript = YES;
+					[ioIssues addNoteIssueWithKey:@"OBJShellScript" localizedFormat:@"The document contains one or more shell script commands. For security reasons, this feature is not supported by Dry Dock."];
+				}
+			}
 			else
 			{
 				if (![ignoredTypes containsObject:keyword])
@@ -734,13 +755,17 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	NSArray					*materialNames;
 	DDMaterial				*material;
 	
-	// Build material library name. For "Foo.obj" or "Foo", use "Foo.mtl"; for "Bar.baz", use "Bar.baz.mtl".
+	/*	Build material library name. For “Foo.obj” or “Foo”, use “Foo.mtl”; for “Bar.baz”, use
+		“Bar.baz.mtl”. Material library names can’t contain spaces (OBJ allows multiple material
+		library names separated by space), so replace them with underscores.
+	*/
 	mtlName = [[inFile path] lastPathComponent];
 	if ([[mtlName lowercaseString] hasSuffix:@".obj"])
 	{
 		mtlName = [mtlName substringToIndex:[mtlName length] - 4];
 	}
 	mtlName = [mtlName stringByAppendingString:@".mtl"];
+	mtlName = [[mtlName componentsSeparatedByString:@" "] componentsJoinedByString:@"_"];
 	
 	// Get formatted date string for header comment
 	formatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y-%m-%d" allowNaturalLanguage:NO];	// ISO date format

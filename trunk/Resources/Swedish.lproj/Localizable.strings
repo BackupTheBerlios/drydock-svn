@@ -69,6 +69,8 @@
 "The document could not be saved, because an unknown error occured." = "Dokumentet kunde inte sparas, då ett oväntat fel inträffade.";
 "The material library for the document could not be saved. %@" = "Dokumentets materialbibliotek kunde inte sparas. %@";
 "The material library for the document could not be saved, because an unknown error occured." = "Dokumentets materialbibliotek kunde inte sparas, då ett oväntat fel inträffade.";
+"The document contains one or more \"calls\" of external files. This feature is not supported by Dry Dock at present." = "Dokumentet inehåller ett eller fler anrop av externa filer. Denna funktion stöds för närvarande inte av Torrdockan.";
+"The document contains one or more shell script commands. For security reasons, this feature is not supported by Dry Dock." = "Dokumentet inehåller ett eller fler anrop av program. Av säkerhetsskäl stöds denna funtion inte av Torrdockan.";
 
 "end of file" = "filslut";
 "end of line" = "radslut";
@@ -102,10 +104,20 @@
 "OBJ_LINE c_interp" = "färgövergång";
 "OBJ_LINE d_interp" = "genomskinlighetsövergång";
 "OBJ_LINE lod" = "detaljnivå";
-"OBJ_LINE shadow_obj" = "skuggning";
-"OBJ_LINE trace_obj" = "ray tracing"; // ??
+"OBJ_LINE shadow_obj" = "utbytesobjekt för skuggning";
+"OBJ_LINE trace_obj" = "utbytesobjekt för ray tracing"; // ??
 "OBJ_LINE ctech" = "kurvnärmevärdesteknik";
 "OBJ_LINE stech" = "ytnärmevärdesteknik";
+"OBJ_LINE maplib" = "texturbibliotek";
+"OBJ_LINE usemap" = "textur att använda";
+
+// The following OBJ types are explicitly depracated
+"OBJ_LINE fo" = "polygonkant";
+"OBJ_LINE bsp" = "B-spline-yta";
+"OBJ_LINE bzp" = "Bézier-yta";
+"OBJ_LINE cdc" = "Catmull-Rom-kurva";
+"OBJ_LINE cdp" = "Catmull-Rom-yta";
+"OBJ_LINE res" = "ytupplösning";
 
 // UKFeedbackProvider stuff
 "FEEDBACK_EMAIL" = "UMHMLDIZEYNZ@spammotel.com";
