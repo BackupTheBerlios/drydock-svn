@@ -55,19 +55,26 @@ void LogMessage_(NSString *inFormat, const char *inFile, const char *inFunction,
 	formatted = [[NSString alloc] initWithFormat:inFormat arguments:args];
 	va_end(args);
 	
-	#if LOGGING_SHOW_FUNCTION
-		#if LOGGING_SHOW_FILE_AND_LINE
-			annotated = [NSString stringWithFormat:@"%s (%s:%u): %@", inFunction, inFile, inLine, formatted];
+	if (NULL == inFile && NULL == inFunction)
+	{
+		annotated = formatted;
+	}
+	else
+	{
+		#if LOGGING_SHOW_FUNCTION
+			#if LOGGING_SHOW_FILE_AND_LINE
+				annotated = [NSString stringWithFormat:@"%s (%s:%u): %@", inFunction, inFile, inLine, formatted];
+			#else
+				annotated = [NSString stringWithFormat:@"%s: %@", inFunction, formatted];
+			#endif
 		#else
-			annotated = [NSString stringWithFormat:@"%s: %@", inFunction, formatted];
+			#if LOGGING_SHOW_FILE_AND_LINE
+				annotated = [NSString stringWithFormat:@"%s:%u: %@", inFile, inLine, formatted];
+			#else
+				annotated = formatted;
+			#endif
 		#endif
-	#else
-		#if LOGGING_SHOW_FILE_AND_LINE
-			annotated = [NSString stringWithFormat:@"%s:%u: %@", inFile, inLine, formatted];
-		#else
-			annotated = formatted;
-		#endif
-	#endif
+	}
 	
 	if (0 != sIndent)
 	{

@@ -77,15 +77,25 @@ void LogOutdent(void);
 #endif
 
 
+#if __OBJC__
 #if ENABLE_TRACE
 #define TraceMessage		LogMessage
 #define TraceIndent			LogIndent
 #define TraceOutdent		LogOutdent
+
+#define TraceEnterMsg(...)	TraceMessage(__VA_ARGS__); TraceIndent(); @try { do{} while (0)
+#define TraceEnter()		TraceEnterMsg(@"Called. {")
+#define TraceExit()			} @finally { TraceOutdent(); LogMessage_(@"}", NULL, NULL, 0); } do {} while (0)
 #else
 #define TraceMessage(...)	do {} while (0)
 #define TraceIndent()		do {} while (0)
 #define TraceOutdent()		do {} while (0)
-#endif	/* TraceOutdent */
+
+#define TraceEnterMsg(...)	do {} while (0)
+#define TraceEnter()		do {} while (0)
+#define TraceExit()			do {} while (0)
+#endif	/* ENABLE_TRACE */
+#endif	/* __OBJC__ */
 
 #else	/* ENABLE_LOGGING */
 
@@ -93,15 +103,11 @@ void LogOutdent(void);
 #define LogIndent()			do {} while (0)
 #define LogOutdent()		do {} while (0)
 
+#if __OBJC__
 #define TraceMessage(...)	do {} while (0)
 #define TraceIndent()		do {} while (0)
 #define TraceOutdent()		do {} while (0)
+#endif	/* __OBJC__ */
 
 #endif /* ENABLE_LOGGING */
-
-#define TraceEnter()		do { TraceMessage((LOG_STRING_TYPE)CFSTR("Called.")); TraceIndent(); } while (0)
-#define TraceEnterMsg(...)	do { TraceMessage(__VA_ARGS__); TraceIndent(); } while (0)
-#define TraceExit()			TraceOutdent()
-#define TraceReturn(...)	do { TraceExit(); return __VA_ARGS__ ; } while (0)
-
 #endif /* INCLUDED_LOGGING_h */
