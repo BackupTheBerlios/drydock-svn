@@ -21,11 +21,14 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define ENABLE_TRACE 0
+
 #import "DDSceneView.h"
 #import "DDLightController.h"
 #import "Logging.h"
 #import "GLUtilities.h"
 #import "SceneNode.h"
+#import "DDPantherCompatibility.h"
 
 NSString *kNotificationDDSceneViewSceneChanged = @"de.berlios.drydock kNotificationDDSceneViewSceneChanged";
 NSString *kNotificationDDSceneViewCameraOrLightChanged = @"de.berlios.drydock kNotificationDDSceneViewCameraOrLightChanged";
@@ -54,7 +57,6 @@ static const GLuint kAttributes[] =
 static const GLuint kFallbackAttributes[] =
 {
 	NSOpenGLPFAWindow,
-	NSOpenGLPFAAccelerated,
 	NSOpenGLPFADoubleBuffer,
 	NSOpenGLPFAColorSize, 24,
 	NSOpenGLPFAAlphaSize, 8,
@@ -81,8 +83,7 @@ static const GLuint kFallbackAttributes[] =
 
 - (id) initWithFrame:(NSRect)frame
 {
-	TraceMessage(@"Initing GL view.");
-	TraceIndent();
+	TraceEnter();
 	
 	NSOpenGLPixelFormat		*fmt;
 	
@@ -102,9 +103,9 @@ static const GLuint kFallbackAttributes[] =
 	
 	self = [super initWithFrame:frame pixelFormat:[fmt autorelease]];
 	
-	TraceOutdent();
-	
 	return self;
+	
+	TraceExit();
 }
 
 
@@ -191,8 +192,7 @@ static const GLuint kFallbackAttributes[] =
 
 - (void)prepareOpenGL
 {
-	TraceMessage(@"Preparing OpenGL context.");
-	TraceIndent();
+	TraceEnter();
 	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClearDepth(1.0);
@@ -221,7 +221,7 @@ static const GLuint kFallbackAttributes[] =
 	
 	LogGLErrors();
 	
-	TraceOutdent();
+	TraceExit();
 }
 
 
@@ -233,10 +233,9 @@ static const GLuint kFallbackAttributes[] =
 
 - (void)drawRect:(NSRect)inRect
 {
-	SceneNode				*sceneRoot;
+	TraceEnter();
 	
-	TraceMessage(@"Drawing.");
-	TraceIndent();
+	SceneNode				*sceneRoot;
 	
 	if (inRect.size.width != _oldSize.width || inRect.size.height != _oldSize.height)
 	{
@@ -275,10 +274,11 @@ static const GLuint kFallbackAttributes[] =
 		LogMessage(@"Exception \"%@\" rendering.", ex);
 	}
 	
+	glFlush();
 	[[self openGLContext] flushBuffer];
 	LogGLErrors();
 	
-	TraceOutdent();
+	TraceExit();
 }
 
 

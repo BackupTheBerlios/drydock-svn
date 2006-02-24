@@ -127,6 +127,9 @@
 // Tiger Required alert strings
 "Dry Dock requires Mac OS X 10.4 or later." = "Torrdockan för Oolite kräver Mac OS X 10.4 eller senare.";
 "Dry Dock uses certain features specific to Mac OS X 10.4. If you feel this is a problem, please e-mail a request that this change." = "Torrdockan använder vissa funktioner som är nya i Mac OS X 10.4. Om detta är ett problem för dig, e-posta och be om en förändring.";
+"Dry Dock requires Mac OS X 10.3.9 or later." = "Torrdockan för Oolite kräver Mac OS X 10.3.9 eller senare.";
+"It is not possible to use Dry Dock on versions of Mac OS X prior to Mac OS X 10.3.9." = "Det går inte att använda Torrdockan för Oolite med versioner av Mac OS X tidigare än Mac OS X 10.3.9.";
+"Upgrading to Mac OS X 10.3.9 from Mac OS X 10.3.%u is free, and provides a variety of security and stability improvements." = "Att uppgradera från Mac OS X 10.3.%u till Mac OS X 10.3.9 är gratis, och medför diverse förrbättringar för säkerhet och stabilitet.";
 
 // Problem Report Manager strings
 "An issue arose while attempting to %@:" = "Ett problem uppstod vid försöket att %@:";

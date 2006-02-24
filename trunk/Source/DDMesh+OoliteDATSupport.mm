@@ -21,12 +21,15 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define ENABLE_TRACE 0
+
 #import "DDMesh.h"
 #import "Logging.h"
 #import "DDMaterial.h"
 #import "DDProblemReportManager.h"
 #import "CocoaExtensions.h"
 #import "DDUtilities.h"
+#import "DDPantherCompatibility.h"
 
 
 // Hard-coded limits from Oolite
@@ -42,6 +45,8 @@ enum
 
 - (id)initWithOoliteDAT:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
+	TraceEnterMsg(@"Called for %@", inFile);
+	
 	BOOL					OK = YES;
 	NSString				*dataString;
 	NSMutableArray			*lines;
@@ -71,18 +76,24 @@ enum
 	self = [super init];
 	if (nil == self) return nil;
 	
+//	[NSException raise:NSGenericException format:@"This is a long and pointless string. Loooooong. And very very pointless. As pointless as a pointless and long thing. A thing which is long and has no point, other than being long."];
+	
+	TraceMessage(@"Loading file.");
+	
 	_name = [[inFile displayString] retain];
 	
-	dataString = [NSString stringWithContentsOfURL:inFile encoding:NSUTF8StringEncoding error:&error];
-	if (nil == dataString) dataString = [NSString stringWithContentsOfURL:inFile usedEncoding:NULL error:&error];
+	dataString = [NSString stringWithContentsOfURL:inFile encoding:NSUTF8StringEncoding errorCompat:NULL];
+	if (nil == dataString) dataString = [NSString stringWithContentsOfURL:inFile usedEncoding:NULL errorCompat:&error];
 	if (nil == dataString)
 	{
 		OK = NO;
-		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReason] : @""];
+		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReasonCompat] : @""];
+		TraceMessage(@"** Loading failed.");
 	}
 	
 	if (OK)
 	{
+		TraceMessage(@"Formatting data.");
 		lines = [NSMutableArray arrayWithArray:[dataString componentsSeparatedByString:@"\n"]];
 		lineCount = [lines count];
 		
@@ -106,18 +117,28 @@ enum
 	// Get number of vertices
 	if (OK)
 	{
+		TraceMessage(@"Reading NVERTS.");
 		[scanner setScanLocation:0];
 		if (![scanner scanString:@"NVERTS" intoString:NULL]) OK = NO;
 		if (![scanner scanInt:&vertexCount]) OK = NO;
-		if (!OK) [ioIssues addStopIssueWithKey:@"noDATNVERTS" localizedFormat:@"The required NVERTS line could not be found."];
+		if (!OK)
+		{
+			[ioIssues addStopIssueWithKey:@"noDATNVERTS" localizedFormat:@"The required NVERTS line could not be found."];
+			TraceMessage(@"** Failed to find \"NVERTS\".");
+		}
 	}
 	
 	// Get number of faces
 	if (OK)
 	{
+		TraceMessage(@"Reading NFACES.");
 		if (![scanner scanString:@"NFACES" intoString:NULL]) OK = NO;
 		if (![scanner scanInt:&faceCount]) OK = NO;
-		if (!OK) [ioIssues addStopIssueWithKey:@"noDATNFACES" localizedFormat:@"The required NFACES line could not be found."];
+		if (!OK)
+		{
+			[ioIssues addStopIssueWithKey:@"noDATNFACES" localizedFormat:@"The required NFACES line could not be found."];
+			TraceMessage(@"** Failed to find \"NFACES\".");
+		}
 	}
 	
 	xMin = INFINITY;
@@ -134,9 +155,14 @@ enum
 		vertices = (Vector *)malloc(sizeof(Vector) * vertexCount);
 		if (NULL == vertices) OK = NO;
 		
-		if (OK && ![scanner scanString:@"VERTEX" intoString:NULL]) OK = NO;
+		if (OK && ![scanner scanString:@"VERTEX" intoString:NULL])
+		{
+			OK = NO;
+			TraceMessage(@"** Failed to find \"VERTEX\".");
+		}
 		if (OK)
 		{
+			TraceMessage(@"Loading %u vertices.", vertexCount);
 			for (i = 0; i != vertexCount; ++i)
 			{
 				if (![scanner scanFloat:&x] ||
@@ -163,7 +189,11 @@ enum
 				if (rMax < r) rMax = r;
 			}
 		}
-		if (!OK) [ioIssues addStopIssueWithKey:@"noVertexDataLoaded" localizedFormat:@"Vertex data could not be read for vertex line %u.", i + 1];
+		if (!OK)
+		{
+			[ioIssues addStopIssueWithKey:@"noVertexDataLoaded" localizedFormat:@"Vertex data could not be read for vertex line %u.", i + 1];
+			TraceMessage(@"** Vertex loading failed at vertex index %u.", i + 1);
+		}
 	}
 	
 	// Load faces
@@ -173,9 +203,14 @@ enum
 		faces = (DDMeshFaceData *)malloc(sizeof(DDMeshFaceData) * faceCount);
 		if (NULL == faces) OK = NO;
 		
-		if (OK && ![scanner scanString:@"FACES" intoString:NULL]) OK = NO;
+		if (OK && ![scanner scanString:@"FACES" intoString:NULL])
+		{
+			OK = NO;
+			TraceMessage(@"** Failed to find \"FACES\".");
+		}
 		if (OK)
 		{
+			TraceMessage(@"Reading %u faces.", faceCount);
 			for (i = 0; i != faceCount; ++i)
 			{
 				int				r, g, b;
@@ -186,6 +221,7 @@ enum
 					![scanner scanInt:&b])
 				{
 					[ioIssues addStopIssueWithKey:@"noColorLoaded" localizedFormat:@"Colour data could not be read for face line %u.", i + 1];
+					TraceMessage(@"** Failed to read colour for face index %u.", i + 1);
 					OK = NO;
 					break;
 				}
@@ -206,6 +242,7 @@ enum
 					![scanner scanFloat:&z])
 				{
 					[ioIssues addStopIssueWithKey:@"noNormalLoaded" localizedFormat:@"Normal data could not be read for face line %u.", i + 1];
+					TraceMessage(@"** Failed to read normal for face index %u.", i + 1);
 					OK = NO;
 					break;
 				}
@@ -216,6 +253,7 @@ enum
 				if (![scanner scanInt:&faceVerts])
 				{
 					[ioIssues addStopIssueWithKey:@"noVertexCountLoaded" localizedFormat:@"Vertex count could not be read for face line %u.", i + 1];
+					TraceMessage(@"** Failed to read vertex count for face index %u.", i + 1);
 					OK = NO;
 					break;
 				}
@@ -225,6 +263,7 @@ enum
 					if (faceVerts < 3 || kMaxVertsPerFace < faceVerts)
 					{
 						[ioIssues addStopIssueWithKey:@"vertexCountRange" localizedFormat:@"Invalid vertex count (%u) for face line %u. Each face must have at least 3 and no more than %u vertices.", vertexCount, i + 1, kMaxVertsPerFace];
+						TraceMessage(@"** Vertex count (%u) out of range for face index %u.", faceVerts, i + 1);
 						OK = NO;
 						break;
 					}
@@ -239,12 +278,14 @@ enum
 					if (![scanner scanInt:&index])
 					{
 						[ioIssues addStopIssueWithKey:@"noVertexDataLoaded" localizedFormat:@"Vertex data could not be read for face line %u.", i + 1];
+						TraceMessage(@"** Failed to read vertex index %u for face index %u.", j + 1, i + 1);
 						OK = NO;
 						break;
 					}
 					if (index < 0 || vertexCount <= index)
 					{
 						[ioIssues addStopIssueWithKey:@"vertexRange" localizedFormat:@"Face line %u specifies a vertex index of %u, but there are only %u vertices in the document.", i + 1, index + 1, vertexCount];
+						TraceMessage(@"** Out-of-range vertex index (%U) for face index %u.", index, i + 1);
 						OK = NO;
 						break;
 					}
@@ -264,15 +305,22 @@ enum
 		materials = [NSMutableDictionary dictionary];
 		if (nil == materials) OK = NO;
 		
-		if (OK && ![scanner scanString:@"TEXTURES" intoString:NULL]) OK = NO;
+		// TODO: allow loading of untextured DATs. Save it for flex-based loader.
+		if (OK && ![scanner scanString:@"TEXTURES" intoString:NULL])
+		{
+			OK = NO;
+			TraceMessage(@"** Failed to find \"TEXTURES\".");
+		}
 		if (OK)
 		{
+			TraceMessage(@"Reading %u texture lines.", faceCount);
 			for (i = 0; i != faceCount; ++i)
 			{
 				[scanner scanCharactersFromSet:whiteSpaceAndNL intoString:NULL];
 				if (![scanner scanUpToCharactersFromSet:[NSCharacterSet whitespaceCharacterSet] intoString:&texFileName])
 				{
 					[ioIssues addStopIssueWithKey:@"noTextureNameLoaded" localizedFormat:@"Texture name could not be read for face line %u.", i + 1];
+					TraceMessage(@"** Failed to read texture name for face index %u.", i + 1);
 					OK = NO;
 					break;
 				}
@@ -283,6 +331,7 @@ enum
 					material = [DDMaterial materialWithName:texFileName relativeTo:inFile issues:ioIssues];
 					if (nil == material)
 					{
+						TraceMessage(@"** Failed to create material for face index %u.", i + 1);
 						OK = NO;
 						break;
 					}
@@ -296,6 +345,7 @@ enum
 					![scanner scanFloat:&max_t])
 				{
 					[ioIssues addStopIssueWithKey:@"noTextureScaleLoaded" localizedFormat:@"Texture scale could not be read for texture line %u.", i + 1];
+					TraceMessage(@"** Failed to read texture scale for face index %u.", i + 1);
 					OK = NO;
 					break;
 				}
@@ -307,6 +357,7 @@ enum
 						![scanner scanFloat:&t])
 					{
 						[ioIssues addStopIssueWithKey:@"noUVLoaded" localizedFormat:@"U/V pair could not be read for texture line %u.", i + 1];
+						TraceMessage(@"** Failed to read u/v pair for vertex %u of face index %u.", j + 1, i + 1);
 						OK = NO;
 						break;
 					}
@@ -346,6 +397,7 @@ enum
 	}
 	
 	return self;
+	TraceExit();
 }
 
 
@@ -413,7 +465,7 @@ enum
 	
 	// Get formatted date string for header comment
 	formatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y-%m-%d" allowNaturalLanguage:NO];	// ISO date format
-	dateString = [formatter stringFromDate:[NSDate date]];
+	dateString = [formatter stringForObjectValue:[NSDate date]];
 	[formatter release];
 	
 	// Build texture list string
@@ -484,12 +536,12 @@ enum
 	// Finish up
 	if (OK)
 	{
-		OK = [dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding error:&error];
+		OK = [dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding errorCompat:&error];
 	}
 	
 	if (!OK)
 	{
-		if (nil != error) [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReason]];
+		if (nil != error) [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
 		else [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
 	}
 	return OK;

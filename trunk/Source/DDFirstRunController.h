@@ -25,6 +25,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class UKUpdateChecker;
+
 
 @interface DDFirstRunController: NSObject
 {
@@ -34,6 +36,7 @@
 	IBOutlet NSMatrix				*checkForUpdatesMatrix;
 	IBOutlet NSButton				*continueButton;
 	IBOutlet NSTextField			*authorisationRequiredForSCRField;
+	IBOutlet UKUpdateChecker		*updateChecker;
 	
 	BOOL							_haveAwoken;
 	BOOL							_runningLastFirstRunPane;

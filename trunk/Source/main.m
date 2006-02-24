@@ -28,7 +28,7 @@ static int VersionCheck(void)
 	int						result;
 	OSStatus				err;
 	long					version;
-	CFStringRef				errStr, explStr;
+	CFStringRef				errStr, explStr, tempStr;
 	AlertStdCFStringAlertParamRec alertParam =
 							{
 								kStdCFStringAlertVersionOne,
@@ -45,14 +45,23 @@ static int VersionCheck(void)
 	DialogRef				alert = NULL;
 	
 	err = Gestalt(gestaltSystemVersion, &version);
-	if (err || version < 0x1040)
+	if (err || version < 0x1039)
 	{
 		result = EXIT_FAILURE;
 		if (err) NSLog(@"Version check: error %i from Gestalt(), treating as pre-Tiger system.", (int)err);
 		else NSLog(@"gestaltSystemVersion = %.4X", version);
 		
-		errStr = CFCopyLocalizedString(CFSTR("Dry Dock requires Mac OS X 10.4 or later."), NULL);
-		explStr = CFCopyLocalizedString(CFSTR("Dry Dock uses certain features specific to Mac OS X 10.4. If you feel this is a problem, please e-mail a request that this change."), NULL);
+		errStr = CFCopyLocalizedString(CFSTR("Dry Dock requires Mac OS X 10.3.9 or later."), NULL);
+		if (version < 0x1039)
+		{
+			explStr = CFCopyLocalizedString(CFSTR("It is not possible to use Dry Dock on versions of Mac OS X prior to Mac OS X 10.3.9."), NULL);
+		}
+		else
+		{
+			tempStr = CFCopyLocalizedString(CFSTR("Upgrading to Mac OS X 10.3.9 from Mac OS X 10.3.%u is free, and provides a variety of security and stability improvements."), NULL);
+			explStr = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, tempStr, version & 0xF);
+			CFRelease(tempStr);
+		}
 		
 		err = CreateStandardAlert(kAlertStopAlert, errStr, explStr, &alertParam, &alert);
 		if (!err) err = RunStandardAlert(alert, NULL, NULL);

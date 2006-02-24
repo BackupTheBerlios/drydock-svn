@@ -1,3 +1,6 @@
+0.08
+	••• TODO: fix first-run/neuter UKUpdateChecker
+
 0.07 (v602-2)
 	• Added OBJ export support.
 	• As side effect of testing OBJ export, fixed potential crasher in OBJ import (malformed files

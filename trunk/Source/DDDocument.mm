@@ -21,6 +21,8 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define ENABLE_TRACE 0
+
 #import "DDDocument.h"
 #import "DDDocumentWindowController.h"
 #import "DDMesh.h"
@@ -71,22 +73,10 @@
 }
 
 
-- (void)windowControllerDidLoadNib:(NSWindowController *) aController
-{
-    [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
-}
-
-
-- (NSData *)dataRepresentationOfType:(NSString *)aType
-{
-    // Insert code here to write your document from the given data.  You can also choose to override -fileWrapperRepresentationOfType: or -writeToFile:ofType: instead.
-    return nil;
-}
-
-
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
+	TraceEnterMsg(@"Called with absoluteURL=%@, typeName=\"%@\"", absoluteURL, typeName);
+	
 	BOOL					success;
 	DDProblemReportManager	*problemManager;
 	
@@ -138,14 +128,19 @@
 	NS_ENDHANDLER
 	
 	success = [problemManager showReportApplicationModal];
-	if (!success) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
+	if (!success && NULL != outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 	
 	[problemManager release];
 	
-	if (success && nil == _mesh) success = NO;
+	if (success && nil == _mesh)
+	{
+		TraceMessage(@"Document loading failed.");
+		success = NO;
+	}
 	
 	if (success)
 	{
+		TraceMessage(@"Document successfully loaded.");
 		_name = [_mesh name];
 		if (nil == _name) [self setNameFromURL:absoluteURL];
 		
@@ -153,11 +148,15 @@
 	}
 	
     return success;
+	TraceExit();
 }
 
 
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError
 {
+	TraceEnterMsg(@"Called with absoluteOriginalContentsURL=%@, absoluteURL=%@, typeName=\"%@\"",
+					absoluteOriginalContentsURL, absoluteURL, typeName);
+	
 	BOOL					OK = NO;
 	DDProblemReportManager	*problemManager;
 	
@@ -166,7 +165,7 @@
 	
 	// Auto-saving and split files like OBJ won’t go well together… revisit this. Should possibly
 	// return Dry Dock Document from autosavingFileType when implemented.
-	if (NSAutosaveOperation == saveOperation) return NO;
+	if (NSAutosaveOperation == (int)saveOperation) return NO;
 	
 	problemManager = [[DDProblemReportManager alloc] init];
 	
@@ -232,15 +231,25 @@
 	[problemManager release];
 	
 	return OK;
+	TraceExit();
 }
 
 
 - (NSDictionary *)fileAttributesToWriteToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError
 {
+	TraceEnterMsg(@"Called with typeName=\"%@\"", typeName);
+	
 	NSMutableDictionary		*result;
 	OSType					type = 0;
 	
-	result = [[super fileAttributesToWriteToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation originalContentsURL:absoluteOriginalContentsURL error:outError] mutableCopy];
+	if ([NSDocument instancesRespondToSelector:@selector(fileAttributesToWriteToURL:ofType:forSaveOperation:originalContentsURL:error:)])
+	{
+		result = [[super fileAttributesToWriteToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation originalContentsURL:absoluteOriginalContentsURL error:outError] mutableCopy];
+	}
+	else if ([absoluteURL isFileURL] && NSAutosaveOperation != (int)saveOperation)
+	{
+		result = [[self fileAttributesToWriteToFile:[absoluteURL path] ofType:typeName saveOperation:saveOperation] mutableCopy];
+	}
 	if (nil == result) result = [[NSMutableArray alloc] init];
 	
 	if ([typeName isEqual:@"Oolite Model"])
@@ -257,10 +266,65 @@
 		type = 'Mesh';
 	}
 	
-	[result setObject:[NSNumber numberWithUnsignedLong:'DryD'] forKey:NSFileHFSCreatorCode];
+	if (NSSaveOperation != saveOperation) [result setObject:[NSNumber numberWithUnsignedLong:'DryD'] forKey:NSFileHFSCreatorCode];
 	if (0 != type) [result setObject:[NSNumber numberWithUnsignedLong:type] forKey:NSFileHFSTypeCode];
 	
+	TraceMessage(@"Returning %@", result);
 	return [result autorelease];
+	TraceExit();
+}
+
+
+// Panther compatibility methods
+- (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)typeName
+{
+	TraceEnterMsg(@"Called with fileName=\"%@\", typeName=\"%@\"",
+					fileName, typeName);
+	
+	BOOL					result;
+	
+	result = [self readFromURL:[NSURL fileURLWithPath:fileName] ofType:typeName error:NULL];
+	
+	return result;
+	TraceExit();
+}
+
+
+- (BOOL)writeToFile:(NSString *)fullDocumentPath ofType:(NSString *)documentTypeName originalFile:(NSString *)fullOriginalDocumentPath saveOperation:(NSSaveOperationType)saveOperationType
+{
+	TraceEnterMsg(@"Called with fullOriginalDocumentPath=\"%@\", fullDocumentPath=\"%@\", documentTypeName=\"%@\"",
+					fullOriginalDocumentPath, fullDocumentPath, documentTypeName);
+	
+	BOOL					result;
+	
+	result = [self writeToURL:[NSURL fileURLWithPath:fullDocumentPath]
+					   ofType:documentTypeName
+			 forSaveOperation:saveOperationType
+		  originalContentsURL:[NSURL fileURLWithPath:fullOriginalDocumentPath]
+						error:NULL];
+	
+	return result;
+	TraceExit();
+}
+
+
+- (NSDictionary *)fileAttributesToWriteToFile:(NSString *)fullDocumentPath ofType:(NSString *)documentTypeName saveOperation:(NSSaveOperationType)saveOperationType
+{
+	TraceEnterMsg(@"Called with fullDocumentPath\"%@\", documentTypeName=\"%@\"",
+					fullDocumentPath, documentTypeName);
+	
+	NSDictionary			*result;
+	NSURL					*url;
+	
+	url = [NSURL fileURLWithPath:fullDocumentPath];
+	result = [self fileAttributesToWriteToURL:url
+									   ofType:documentTypeName
+							 forSaveOperation:saveOperationType
+						  originalContentsURL:url
+										error:NULL];
+	
+	return result;
+	TraceExit();
 }
 
 
@@ -343,12 +407,12 @@
 		_mesh = newMesh;
 		[_controller setMesh:_mesh];
 		[_mesh performSelector:inMessage];
-	}
+	}/*
 	else
 	{
 		error = [DDError errorWithCode:kDDErrorAllocationFailed];
 		[self presentError:error modalForWindow:[self windowForSheet] delegate:nil didPresentSelector:NULL contextInfo:NULL];
-	}
+	}*/
 }
 
 

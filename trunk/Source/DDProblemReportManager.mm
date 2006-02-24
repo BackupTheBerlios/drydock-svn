@@ -21,6 +21,8 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define ENABLE_TRACE 0
+
 #import "DDProblemReportManager.h"
 #import "DDApplicationDelegate.h"
 #import "Logging.h"
@@ -38,6 +40,8 @@
 
 - (void)dealloc
 {
+	TraceEnter();
+	
 	[_issues release];
 	[_noteImage release];
 	[_warnImage release];
@@ -45,11 +49,15 @@
 	if (NULL != _heights) free(_heights);
 	
 	[super dealloc];
+	
+	TraceExit();
 }
 
 
 - (void)addIssue:(DDProblemReportIssue *)inIssue
 {
+	TraceEnterMsg(@"Called with %@", inIssue);
+	
 	IssueType			type;
 	
 	if (nil != inIssue)
@@ -61,11 +69,15 @@
 	
 	type = [inIssue type];
 	if (_highestType < type) _highestType = type;
+	
+	TraceExit();
 }
 
 
 - (void)addNoteIssueWithKey:(NSString *)inKey localizedFormat:(NSString *)inFormat, ...
 {
+	TraceEnter();
+	
 	va_list				args;
 	id					result;
 	DDProblemReportIssue *issue;
@@ -76,11 +88,15 @@
 	
 	[self addIssue:issue];
 	[issue release];
+	
+	TraceExit();
 }
 
 
 - (void)addWarningIssueWithKey:(NSString *)inKey localizedFormat:(NSString *)inFormat, ...
 {
+	TraceEnter();
+	
 	va_list				args;
 	id					result;
 	DDProblemReportIssue *issue;
@@ -91,11 +107,15 @@
 	
 	[self addIssue:issue];
 	[issue release];
+	
+	TraceExit();
 }
 
 
 - (void)addStopIssueWithKey:(NSString *)inKey localizedFormat:(NSString *)inFormat, ...
 {
+	TraceEnter();
+	
 	va_list				args;
 	id					result;
 	DDProblemReportIssue *issue;
@@ -106,6 +126,8 @@
 	
 	[self addIssue:issue];
 	[issue release];
+	
+	TraceExit();
 }
 
 
@@ -117,6 +139,8 @@
 
 - (void)prepareDialog
 {
+	TraceEnter();
+	
 	NSString				*string, *contextString1, *contextString2;
 	unsigned				count;
 	NSSize					iconSize = {32, 32};
@@ -197,11 +221,15 @@
 	[layoutProxyTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
 	
 	[tableView reloadData];
+	
+	TraceExit();
 }
 
 
 - (BOOL)showReportApplicationModal
 {
+	TraceEnter();
+	
 	int					val = YES;
 	
 	if (nil != _issues)
@@ -218,17 +246,22 @@
 	}
 	
 	return val;
+	TraceExit();
 }
 
 
 - (void)runReportModalForWindow:(NSWindow *)inWindow modalDelegate:(id)inDelegate isDoneSelector:(SEL)inSelector
 {
+	TraceEnter();
+	
 	BOOL result;
 	result = [self showReportApplicationModal];
 	if (nil != inDelegate && NULL != inSelector)
 	{
 		[inDelegate performSelector:inSelector withObject:self withObject:(id)result];
 	}
+	
+	TraceExit();
 }
 
 
@@ -309,8 +342,24 @@
 
 - (void)clear
 {
-	[_issues removeAllObjects];
+	[_issues release];
+	_issues = nil;
 	[tableView reloadData];
+}
+
+
+- (void)mergeIssues:(DDProblemReportManager *)inSource
+{
+	if (nil == _issues)
+	{
+		_issues = inSource->_issues;
+		inSource->_issues = nil;
+	}
+	else
+	{
+		[_issues addObjectsFromArray:inSource->_issues];
+	}
+	[inSource clear];
 }
 
 

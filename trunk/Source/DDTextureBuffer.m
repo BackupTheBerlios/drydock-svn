@@ -24,9 +24,13 @@
 #define ENABLE_TRACE 0
 
 #import "DDTextureBuffer.h"
+#import "DDUtilities.h"
 #import "Logging.h"
 #import "MathsUtils.h"
 #import <Accelerate/Accelerate.h>
+#import <QuickTime/QuickTime.h>
+#import "DDErrorDescription.h"
+#import "DDProblemReportManager.h"
 
 
 #if __BIG_ENDIAN__
@@ -36,26 +40,16 @@
 #endif
 
 
-/*	If 1, use high-quality NSImage scaling for mip-maps. If 0, use bilinear scaling.
-	Should always be 1; bi-linear is here for testing purposes.
-*/
-#define USE_NSIMAGE_TO_SCALE	1
-#define USE_ALTIVEC_SCALING		0
-
-
 static NSMutableDictionary		*sCache = nil;
 
-static void Swizzle_RGBA_ARGB(char *inBuffer, unsigned inPixelCount);
-
-#if !USE_NSIMAGE_TO_SCALE
-static void ScaleDown(restrict char *inSrc, restrict char *inDst, unsigned inWidth, unsigned inHeight);
-#endif
+static unsigned GetMaxTextureSize(void);
 
 
 @interface DDTextureBuffer(Private)
 
-+ (id)textureWithImage:(NSImage *)inImage key:(id)inKey;
-- (id)initWithImage:(NSImage *)inImage key:(id)inKey;
+- (id)initWithURL:(NSURL *)inURL key:(id)inKey issues:(DDProblemReportManager *)ioIssues;
+- (BOOL)loadNSImage:(NSImage *)inImage issues:(DDProblemReportManager *)ioIssues;
+- (BOOL)loadFSRef:(FSRef *)inFile issues:(DDProblemReportManager *)ioIssues;
 
 #if USE_TEXTURE_VERIFICATION_WINDOW
 - (void)makeTextureVerificationWindowWithImage:(NSImage *)inImage;
@@ -67,208 +61,181 @@ static void ScaleDown(restrict char *inSrc, restrict char *inDst, unsigned inWid
 @implementation DDTextureBuffer
 
 
-+ (id)textureWithImage:(NSImage *)inImage key:(id)inKey
-{
-	DDTextureBuffer				*result;
-	
-	TraceMessage(@"Called.");
-	TraceIndent();
-	
-	assert(nil == [sCache objectForKey:inKey]);
-	
-	result = [[[self alloc] initWithImage:inImage key:inKey] autorelease];
-	if (nil == sCache) sCache = [[NSMutableDictionary alloc] init];
-	[sCache setObject:result forKey:inKey];
-	
-	TraceOutdent();
-	return result;
-}
-
-+ (id)textureWithFile:(NSURL *)inFile
++ (id)textureWithFile:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
 	DDTextureBuffer				*result;
 	NSImage						*image;
 	
-	TraceMessage(@"Called for %@.", [inFile absoluteURL]);
-	TraceIndent();
+	TraceEnterMsg(@"Called for %@. {", [inFile absoluteURL]);
 	
 	result = [sCache objectForKey:inFile];
 	if (nil == result)
 	{
-		image = [[NSImage alloc] initByReferencingURL:inFile];
-		if ([image isValid])
-		{
-			result = [self textureWithImage:image key:inFile];
-			result->_file = [inFile retain];
-		}
+		result = [[self alloc] initWithURL:inFile key:[inFile absoluteURL] issues:ioIssues];
 	}
 	else
 	{
-	//	LogMessage(@"Using cached texture %@.", result);
+		TraceMessage(@"Using cached texture %@.", result);
 	}
 	
-	TraceOutdent();
 	return result;
+	TraceExit();
 }
 
 
-+ (id)placeholderTexture
++ (id)placeholderTextureWithIssues:(DDProblemReportManager *)ioIssues
 {
-	DDTextureBuffer				*result;
-	NSImage						*image;
+	TraceEnter();
 	
-	TraceMessage(@"Called.");
-	TraceIndent();
+	DDTextureBuffer				*result;
+	NSURL						*url;
 	
 	result = [sCache objectForKey:@"placeholder"];
 	if (nil == result)
 	{
-		image = [NSImage imageNamed:@"Placeholder Texture"];
-		if ([image isValid])
-		{
-			result = [self textureWithImage:image key:@"placeholder"];
-		}
+		url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Placeholder Texture" ofType:@"png"]];
+		result = [[self alloc] initWithURL:url key:@"placeholder" issues:ioIssues];
 	}
 	else
 	{
-	//	LogMessage(@"Using cached texture %@.", result);
+		TraceMessage(@"Using cached texture %@.", result);
 	}
 	
-	TraceOutdent();
 	return result;
+	TraceExit();
 }
 
 
-- (id)initWithImage:(NSImage *)inImage key:(id)inKey
+- (id)initWithURL:(NSURL *)inURL key:(id)inKey issues:(DDProblemReportManager *)ioIssues
 {
+	TraceEnterMsg(@"Called with key=%@ {", inKey);
+	
 	BOOL					OK = YES;
-	NSArray					*reps;
-	NSEnumerator			*repEnum;
-	id						rep;
-	NSGraphicsContext		*nsContext, *savedContext;
-	CGContextRef			cgContext = NULL;
-	CGColorSpaceRef			colorSpace = NULL;
-	NSRect					srcRect = {{0, 0}, {0, 0}}, dstRect;
-	char					*data, *nextData;
-	unsigned				w, h;
-	NSImage					*dstImage;
-	NSBitmapImageRep		*dstRep;
-	NSDictionary			*attrs;
+	NSImage					*image = nil;
+	FSRef					fsRef;
 	
-	TraceMessage(@"Called.");
-	TraceIndent();
-	
-	assert(nil != inImage);
+	assert(nil != inURL);
+	assert(nil == [sCache objectForKey:inURL]);
 	
 	self = [super init];
-	if (nil != self)
+	if (nil == self) OK = NO;
+	
+	if (OK)
 	{
 		_key = [inKey retain];
-	
-		for (repEnum = [[inImage representations] objectEnumerator]; rep = [repEnum nextObject]; )
-		{
-			if ([rep isKindOfClass:[NSBitmapImageRep class]]) break;
-		}
 		
-		if (nil != rep)
-		{
-			srcRect.size.width = [rep pixelsWide];
-			srcRect.size.height = [rep pixelsHigh];
-		}
-		else
-		{
-			srcRect.size = [inImage size];
-		}
-		_width = w = RoundUpToPowerOf2((uint16_t)srcRect.size.width);
-		_height = h = RoundUpToPowerOf2((uint16_t)srcRect.size.height);
-		
-		data = (char *)malloc(w * h * 4 * 4 / 3); // 4 / 3 ratio provides space for mipmaps
-		if (NULL == data) OK = NO;
-		_data = data;
-		
-		[inImage setSize:srcRect.size];
-		srcRect.origin = NSMakePoint(0, 0);
-	
-		#if USE_TEXTURE_VERIFICATION_WINDOW
-			[self makeTextureVerificationWindowWithImage:inImage];
-		#endif
-		
-		#if USE_NSIMAGE_TO_SCALE
-			savedContext = [[NSGraphicsContext currentContext] retain];
-			while (1 < w && 1 < h && OK)
-			{
-				dstRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:(unsigned char **)&data pixelsWide:w pixelsHigh:h bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:w * 4 bitsPerPixel:0];
-				if (nil == dstRep) OK = NO;
-				
-				if (OK)
-				{
-					attrs = [NSDictionary dictionaryWithObject:dstRep forKey:NSGraphicsContextDestinationAttributeName];
-					nsContext = [NSGraphicsContext graphicsContextWithAttributes:attrs];
-					if (nil == nsContext) OK = NO;
-				}
-				
-				if (OK)
-				{
-					[nsContext setImageInterpolation:NSImageInterpolationHigh];
-					[NSGraphicsContext setCurrentContext:nsContext];
-					
-					dstRect = NSMakeRect(0, 0, w, h);
-					[inImage drawInRect:dstRect fromRect:srcRect operation:NSCompositeCopy fraction:1.0];
-				}
-				
-				data += w * h * 4;
-				
-				w /= 2;
-				h /= 2;
-			}
-			
-			Swizzle_RGBA_ARGB(_data, _width * _height * 4 / 3);
-			[NSGraphicsContext setCurrentContext:[savedContext autorelease]];
-		#else
-			// Draw largest mip level with NSImage
-			savedContext = [[NSGraphicsContext currentContext] retain];
-			dstRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:(unsigned char **)&data pixelsWide:w pixelsHigh:h bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:w * 4 bitsPerPixel:0];
-			if (nil == dstRep) OK = NO;
-			
-			if (OK)
-			{
-				attrs = [NSDictionary dictionaryWithObject:dstRep forKey:NSGraphicsContextDestinationAttributeName];
-				nsContext = [NSGraphicsContext graphicsContextWithAttributes:attrs];
-				if (nil == nsContext) OK = NO;
-			}
-			
-			if (OK)
-			{
-				[nsContext setImageInterpolation:NSImageInterpolationHigh];
-				[NSGraphicsContext setCurrentContext:nsContext];
-				
-				dstRect = NSMakeRect(0, 0, w, h);
-				[inImage drawInRect:dstRect fromRect:srcRect operation:NSCompositeCopy fraction:1.0];
-			}
-			[NSGraphicsContext setCurrentContext:[savedContext autorelease]];
-			Swizzle_RGBA_ARGB(_data, _width * _height);
-			
-			// Generate mip-maps using linear interpolator
-			while (1 < w && 1 < h)
-			{
-				nextData = data + w * h * 4;
-				ScaleDown(data, nextData, w, h);
-				data = nextData;
-				w /= 2;
-				h /= 2;
-			}
-		#endif
+		OK = CFURLGetFSRef((CFURLRef)inURL, &fsRef);
+		if (OK) OK = [self loadFSRef:&fsRef issues:ioIssues];
 	}
-	if (colorSpace) CFRelease(colorSpace);
 	
 	if (!OK)
 	{
+		TraceMessage(@"Failed to load texture %@.", inKey);
 		[self release];
 		self = nil;
 	}
 	
-	TraceOutdent();
 	return self;
+	
+	TraceExit();
+}
+
+
+- (BOOL)loadFSRef:(FSRef *)inFile issues:(DDProblemReportManager *)ioIssues
+{
+	TraceEnter();
+	
+	OSStatus				err;
+	FSSpec					spec;
+	ComponentInstance		importer = NULL;
+	Rect					bounds;
+	unsigned				w, h;
+	BOOL					errDescribed = NO;
+	CGImageRef				image = NULL;
+	char					*data, *nextData;
+	size_t					dataSize;
+	CGContextRef			context = NULL;
+	CGColorSpaceRef			colorSpace = NULL;
+	
+	// Open an importer component for the file
+	err = FSGetCatalogInfo(inFile, kFSCatInfoNone, NULL, NULL, &spec, NULL);
+	if (!err) err = GetGraphicsImporterForFile(&spec, &importer);
+	
+	// Find the output dimensions
+	if (!err) err = GraphicsImportGetNaturalBounds(importer, &bounds);
+	if (!err)
+	{
+		if (bounds.left < bounds.right) _width = bounds.right - bounds.left;
+		else _width = bounds.left - bounds.right;
+		if (bounds.top < bounds.bottom) _height = bounds.bottom - bounds.top;
+		else _height = bounds.top - bounds.bottom;
+		
+		w = RoundUpToPowerOf2(_width);
+		h = RoundUpToPowerOf2(_height);
+		
+		if (w != _width || h != _height)
+		{
+			[ioIssues addWarningIssueWithKey:@"textureNotPowerOfTwo" localizedFormat:@"The texture %@ does not have power-of-two dimensions. It has been rescaled from %u x %u pixels to %u x %u pixels.", _key, _width, _height, w, h];
+			_width = w;
+			_height = h;
+		}
+	}
+	
+	// Import image
+	if (!err) err = GraphicsImportCreateCGImage(importer, &image, kGraphicsImportCreateCGImageUsingCurrentSettings);
+	if (NULL != importer) CloseComponent(importer);
+	
+	// Set up buffer
+	if (!err)
+	{
+		dataSize = w * h * 4 * 4 / 3;
+		data = malloc(dataSize); // 4 / 3 ratio provides space for mipmaps
+		if (NULL == data)
+		{
+			err = memFullErr;
+			errDescribed = YES;
+			TraceMessage(@"Failed to allocate %u-byte buffer.", dataSize);
+			[ioIssues addWarningIssueWithKey:@"textureFileNotLoadedMemory" localizedFormat:@"The texture %@ could not be loaded, because there is not enough memory.", _key];
+		}
+		_data = data;
+	}
+	
+	// Draw image at each mip level
+	if (!err)
+	{
+		colorSpace = CGColorSpaceCreateDeviceRGB();
+		while (1 < w && 1 < h && !err)
+		{
+			context = CGBitmapContextCreate(data, w, h, 8, w * 4, colorSpace, kCGImageAlphaPremultipliedFirst);
+			if (NULL == context)
+			{
+				LogMessage(@"No CG context.");
+				err = coreFoundationUnknownErr;
+			}
+			
+			CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+			CGContextDrawImage(context, CGRectMake(0, 0, w, h), image);
+			
+			CFRelease(context);
+			
+			data += w * h * 4;
+			
+			w /= 2;
+			h /= 2;
+		}
+		if (NULL != colorSpace) CFRelease(colorSpace);
+	}
+	
+	if (NULL != image) CGImageRelease(image);
+	
+	if (err && !errDescribed)
+	{
+		[ioIssues addWarningIssueWithKey:@"textureFileNotLoadedOSErr" localizedFormat:@"The texture %@ could not be loaded, because an error of type %@ occured.", _key, OSStatusErrorNSString(err)];
+		errDescribed = YES;
+	}
+	
+	return !err;
+	TraceExit();
 }
 
 
@@ -298,8 +265,9 @@ static void ScaleDown(restrict char *inSrc, restrict char *inDst, unsigned inWid
 	GLint				wrapMode;
 	GLint				magFilter;
 	GLint				level;
-	unsigned			w, h;
+	unsigned			w, h, max;
 	char				*data;
+	BOOL				scaledDown = NO;
 	
 	glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 1);
 	
@@ -309,14 +277,25 @@ static void ScaleDown(restrict char *inSrc, restrict char *inDst, unsigned inWid
 	data = (char *)_data;
 	level = 0;
 	
+	max = GetMaxTextureSize();
+	
 	while (w && h)
 	{
-		glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, w, h, 0, GL_BGRA, ARGB_IMAGE_TYPE, data);
+		if (w <= max && h <= max)
+		{
+			glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, w, h, 0, GL_BGRA, ARGB_IMAGE_TYPE, data);
+			++level;
+		}
+		else scaledDown = YES;
 		
 		data += w * h * 4;
-		++level;
 		w /= 2;
 		h /= 2;
+	}
+	
+	if (scaledDown)
+	{
+		LogMessage(@"Texture %@ scaled down.", self);
 	}
 	
 	if ([@"placeholder" isEqual:_key])
@@ -349,356 +328,23 @@ static void ScaleDown(restrict char *inSrc, restrict char *inDst, unsigned inWid
 	return [NSString stringWithFormat:@"<%@ %p>{%dx%d pixels, %@}", [self className], self, _width, _height, _key];
 }
 
-
-#if USE_TEXTURE_VERIFICATION_WINDOW
-- (void)makeTextureVerificationWindowWithImage:(NSImage *)inImage
-{
-	NSSize				size;
-	
-	TraceMessage(@"Called.");
-	
-	[NSBundle loadNibNamed:@"DDTextureBufferVerificationWindow" owner:self];
-	
-	size = [inImage size];
-	size.height += 28;
-	[window setContentSize:size];
-	[view setImage:inImage];
-	[imageDesc setObjectValue:[inImage description]];
-	[window orderFront:self];
-}
-#endif
-
 @end
 
 
-#if __ppc__
-// PPC systems love explicit paralellism and use of lots of registers.
-static void Swizzle_RGBA_ARGB_AltiVec(char *inBuffer, unsigned inPixelCount);
-
-
-static inline BOOL HaveAltivec(void)
+static unsigned GetMaxTextureSize(void)
 {
-	OSErr				err;
-	long				response;
-	static uint8_t		answer;
+	GLint				result;
+	NSNumber			*override;
+	GLint				value;
 	
-	if (0 == answer)
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &result);
+	
+	override = [[NSUserDefaults standardUserDefaults] objectForKey:@"texture maximum size"];
+	if (nil != override)
 	{
-		err = Gestalt(gestaltPowerPCProcessorFeatures, &response);
-		answer = (!err && (response & (1 << gestaltPowerPCHasVectorInstructions))) ? 2 : 1;
+		value = [override intValue];
+		if (value < result) result = value;
 	}
-	return answer - 1;
+	
+	return result;
 }
-
-
-static void Swizzle_RGBA_ARGB(char *inBuffer, unsigned inPixelCount)
-{
-	__builtin_prefetch(inBuffer, 1, 0);
-	
-	uint32_t			*pix;
-	uint32_t			curr0, curr1, curr2, curr3, curr4, curr5, curr6, curr7,
-						rgb0, rgb1, rgb2, rgb3, rgb4, rgb5, rgb6, rgb7,
-						a0, a1, a2, a3, a4, a5, a6, a7;
-	unsigned			loopCount;
-	
-	/*if (HaveAltivec())
-	{
-		Swizzle_RGBA_ARGB_AltiVec(inBuffer, inPixelCount);
-		return;
-	}*/
-	
-	loopCount = inPixelCount / 8;
-	pix = (uint32_t *)inBuffer;
-	do
-	{
-		curr0 = pix[0];
-		curr1 = pix[1];
-		curr2 = pix[2];
-		curr3 = pix[3];
-		curr4 = pix[4];
-		curr5 = pix[5];
-		curr6 = pix[6];
-		curr7 = pix[7];
-		
-		a0 = (curr0 & 0xFF) << 24;
-		a1 = (curr1 & 0xFF) << 24;
-		a2 = (curr2 & 0xFF) << 24;
-		a3 = (curr3 & 0xFF) << 24;
-		a4 = (curr4 & 0xFF) << 24;
-		a5 = (curr5 & 0xFF) << 24;
-		a6 = (curr6 & 0xFF) << 24;
-		a7 = (curr7 & 0xFF) << 24;
-		rgb0 = curr0 >> 8;
-		rgb1 = curr1 >> 8;
-		rgb2 = curr2 >> 8;
-		rgb3 = curr3 >> 8;
-		rgb4 = curr4 >> 8;
-		rgb5 = curr5 >> 8;
-		rgb6 = curr6 >> 8;
-		rgb7 = curr7 >> 8;
-		
-		pix[0] = a0 | rgb0;
-		pix[1] = a1 | rgb1;
-		pix[2] = a2 | rgb2;
-		pix[3] = a3 | rgb3;
-		pix[4] = a4 | rgb4;
-		pix[5] = a5 | rgb5;
-		pix[6] = a6 | rgb6;
-		pix[7] = a7 | rgb7;
-		pix += 8;
-	} while (--loopCount);
-	
-	// Handle odd pixels at end
-	loopCount = inPixelCount % 8;
-	while (loopCount--)
-	{
-		curr0 = *pix;
-		
-		a0 = (curr0 & 0xFF) << 24;
-		rgb0 = curr0 >> 8;
-		
-		*pix++ = a0 | rgb0;
-	}
-}
-
-
-typedef union
-{
-	uint8_t				bytes[16];
-	vUInt8				vec;
-} VecBytesU8;
-
-
-static void Swizzle_RGBA_ARGB_AltiVec(char *inBuffer, unsigned inPixelCount)
-{
-	vec_dststt(inBuffer, 256, 0);
-	
-	vUInt32				*pix;
-	vUInt32				curr0, curr1, curr2, curr3;
-	VecBytesU8			permBytes =
-						{
-							3, 0, 1, 2,
-							7, 4, 5, 6,
-							11, 8, 9, 10,
-							15, 12, 13, 14
-						};
-	vUInt8				permMask = permBytes.vec;
-	unsigned			loopCount;
-	uint32_t			*pixS;
-	uint32_t			currS, rgb, a;
-	
-	pix = (vUInt32 *)inBuffer;
-	loopCount = inPixelCount / 16;
-	do
-	{
-		curr0 = pix[0];
-		curr1 = pix[1];
-		curr2 = pix[2];
-		curr3 = pix[3];
-		
-		// Note: second parameter is unused
-		pix[0] = vec_perm(curr0, curr0, permMask);
-		pix[1] = vec_perm(curr1, curr1, permMask);
-		pix[2] = vec_perm(curr2, curr2, permMask);
-		pix[3] = vec_perm(curr3, curr3, permMask);
-		
-		pix += 4;
-		
-	} while (--loopCount);
-	
-	pixS = (uint32_t *)pix;
-	loopCount = inPixelCount % 16;
-	while (loopCount--)
-	{
-		currS = *pixS;
-		
-		a = (currS & 0xFF) << 24;
-		rgb = currS >> 8;
-		
-		*pixS++ = a | rgb;
-	}
-}
-
-#else
-// x86 systems, however, don’t do too well with explicit loop unrolling.
-
-static void Swizzle_RGBA_ARGB(char *inBuffer, unsigned inPixelCount)
-{
-	__builtin_prefetch(inBuffer, 1, 0);
-	
-	uint32_t			*pix;
-	uint32_t			curr, rgb, a;
-	
-	assert(0 != inPixelCount);
-	
-	pix = (uint32_t *)inBuffer;
-	do
-	{
-		curr = *pix;
-		
-		a = (curr & 0xFF) << 24;
-		rgb = curr >> 8;
-		
-		*pix++ = a | rgb;
-	} while (--inPixelCount);
-}
-
-#endif
-
-
-#if !USE_NSIMAGE_TO_SCALE
-#if USE_ALTIVEC_SCALING
-static void ScaleDown_Altivec(restrict char *inSrc, restrict char *inDst, unsigned inWidth, unsigned inHeight);
-#endif
-
-
-static void ScaleDown(restrict char *inSrc, restrict char *inDst, unsigned inWidth, unsigned inHeight)
-{
-	__builtin_prefetch(inSrc, 1, 0);
-	__builtin_prefetch(inDst, 0, 1);
-	
-	#if USE_ALTIVEC_SCALING
-	if (HaveAltivec() && 8 <= inWidth)
-	{
-		ScaleDown_Altivec(inSrc, inDst, inWidth, inHeight);
-		return;
-	}
-	#endif
-	
-	assert(NULL != inSrc && NULL != inDst && 0 != inWidth && 0 != inHeight);
-	assert(!(inWidth & 1) && !(inHeight & 1));	// Source dimensions must be even
-	
-	uint32_t				*oddSrc, *evenSrc,
-							*dst;
-	uint32_t				px0, px1, px2, px3;
-	uint32_t				rb,	// Red and blue channels
-							ga;	// Green and alpha chans
-	unsigned				w, h;
-	
-	oddSrc = (uint32_t *)inSrc;
-	evenSrc = oddSrc + inWidth;
-	dst = (uint32_t *)inDst;
-	
-	h = inHeight / 2;
-	do
-	{
-		w = inWidth / 2;
-		do
-		{
-			px0 = *oddSrc++;
-			px1 = *oddSrc++;
-			px2 = *evenSrc++;
-			px3 = *evenSrc++;
-			
-			rb = (px0 & 0xFF00FF00) >> 2;
-			ga = px0 & 0x00FF00FF;
-			rb += (px1 & 0xFF00FF00) >> 2;
-			ga += px1 & 0x00FF00FF;
-			rb += (px2 & 0xFF00FF00) >> 2;
-			ga += px2 & 0x00FF00FF;
-			rb += (px3 & 0xFF00FF00) >> 2;
-			ga += px3 & 0x00FF00FF;
-			
-			*dst++ = (rb & 0xFF00FF00) | ((ga >> 2) & 0x00FF00FF);
-		} while (--w);
-		oddSrc += inWidth;
-		evenSrc += inWidth;
-	} while (--h);
-}
-
-
-#if USE_ALTIVEC_SCALING
-/*
-	Strategy: read four vectors, write one. In order to be able to add them together and not lose
-	bits, use an intermediate two vectors of 16-bits per channel.
-	
-	Original data layout:
-	Odd row:	[r0 g0 b0 a0 r1 g1 b1 a1 r2 g2 b2 a2 r3 g3 b3 a3] [r4 g4 b4 a4 r5 g5 b5 a5 r6 g6 b6 a6 r7 g7 b7 a7]
-	Even row:	[r8 g8 b8 a8 r9 g9 b9 a9 rA gA bA aA rB gB bB aB] [rC gC bC aC rD gD bD aD rE gE bE aE rF gF bF aF]
-	
-	Calculation layout:
-				[ 0 r0  0 g0  0 b0  0 a0  0 r2  0 g2  0 b2  0 a2]
-				[ 0 r1  0 g1  0 b1  0 a1  0 r3  0 g3  0 b3  0 a3]
-				[ 0 r8  0 g8  0 b8  0 a8  0 rA  0 gA  0 bA  0 aA]
-				[ 0 r9  0 g9  0 b9  0 a9  0 rB  0 gB  0 bB  0 aB]
-	
-	To create the calculation layout, we use vec_perm. We use the permutation vector to provide the
-	zero byte. The permutation vector to select the first and third pixels of a source vector is:
-				[ 0 16  0 17  0 18  0 19  0 24  0 25  0 26  0 27]
-	and for the second and fourth pixels:
-				[ 0 20  0 21  0 22  0 23  0 28  0 29  0 30  0 31]
-	
-	Output pixel 0 is the average of pixels 0, 1, 8 and 9. Output pixel 1 is input pixels 2, 3, A and B.
-	Thus the interleaved peromutations above let us sum the vectors to produced two mixed 10-bit-per
-	channel pixels padded to two bytes per channel. Two such vectors can then be shifted and permuted
-	into the final output, with the following permutation vector:
-				[ 1  3  5  7  9 11 13 15 17 19 21 23 25 27 29 31]
-	
-	Currently slightly broken. Not fixed since the NSImage route is better on Macs anyway.
-*/
-static void ScaleDown_Altivec(restrict char *inSrc, restrict char *inDst, unsigned inWidth, unsigned inHeight)
-{
-	vec_dstt(inSrc, 256, 0);
-	vec_dststt(inDst, 256, 1);
-	
-	assert(!((uintptr_t)inSrc % 16) && !((uintptr_t)inDst % 16) && !(inWidth % 8));
-	
-	vUInt16					*oddSrc, *evenSrc,
-							*dst;
-	vUInt16					src0, src1;
-	vUInt16					calc0, calc1, calc2, calc3,
-							sum0, sum1, sumTemp;
-	unsigned				w, h;
-	const VecBytesU8		permOddPixels = { 0, 16, 0, 17, 0, 18, 0, 19, 0, 24, 0, 25, 0, 26, 0, 27 };
-	const VecBytesU8		permEvenPixels = { 0, 20, 0, 21, 0, 22, 0, 23, 0, 28, 0, 29, 0, 30, 31 };
-	const VecBytesU8		permCombinePix = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31 };
-	const vUInt8			two = vec_splat_u8(2);
-	
-	oddSrc = (vUInt16 *)inSrc;
-	evenSrc = oddSrc + inWidth / 4;
-	dst = (vUInt16 *)inDst;
-	
-	h = inHeight / 2;
-	do
-	{
-		w = inWidth / 8;
-		do
-		{
-			// Load pixels 0..3 and 8..B (see description comment above)
-			src0 = *oddSrc++;
-			src1 = *evenSrc++;
-			
-			calc0 = vec_perm(permOddPixels.vec, src0, permOddPixels.vec);
-			calc1 = vec_perm(permEvenPixels.vec, src0, permEvenPixels.vec);
-			calc2 = vec_perm(permOddPixels.vec, src1, permOddPixels.vec);
-			calc3 = vec_perm(permEvenPixels.vec, src1, permEvenPixels.vec);
-			
-			sum0 = vec_add(calc0, calc1);
-			sumTemp = vec_add(calc2, calc3);
-			sum0 = vec_add(sum0, sumTemp);
-			
-			// Load pixels 4..7 and C..F
-			src0 = *oddSrc++;
-			src1 = *evenSrc++;
-			
-			calc0 = vec_perm(permOddPixels.vec, src0, permOddPixels.vec);
-			calc1 = vec_perm(permEvenPixels.vec, src0, permEvenPixels.vec);
-			calc2 = vec_perm(permOddPixels.vec, src1, permOddPixels.vec);
-			calc3 = vec_perm(permEvenPixels.vec, src1, permEvenPixels.vec);
-			
-			sum1 = vec_add(calc0, calc1);
-			sumTemp = vec_add(calc2, calc3);
-			sum1 = vec_add(sum1, sumTemp);
-			
-			sum0 = vec_srl(sum0, two);
-			sum1 = vec_srl(sum1, two);
-			sumTemp = vec_perm(sum0, sum1, permCombinePix.vec);
-			*dst++ = sumTemp;
-		} while (--w);
-		oddSrc += inWidth / 4;
-		evenSrc += inWidth / 4;
-	} while (--h);
-}
-
-#endif
-#endif

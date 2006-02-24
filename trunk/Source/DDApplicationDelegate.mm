@@ -21,6 +21,8 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define ENABLE_TRACE 0
+
 #import "DDApplicationDelegate.h"
 #import "Logging.h"
 #import <Carbon/Carbon.h>
@@ -37,23 +39,33 @@
 
 - (void)runOpenPanel
 {
+	TraceEnter();
+	
 	if (!_openPanelInhibit)
 	{
 		[self inhibitOpenPanel];
 		[[NSDocumentController sharedDocumentController] openDocument:nil];
 		[self uninhibitOpenPanel];
 	}
+	
+	TraceExit();
 }
 
 
 - (void)inhibitOpenPanel
 {
+	TraceEnter();
+	
 	++_openPanelInhibit;
+	
+	TraceExit();
 }
 
 
 - (void)uninhibitOpenPanel
 {
+	TraceEnter();
+	
 	if (0 == _openPanelInhibit)
 	{
 		LogMessage(@"Attempt to set Open panel inhibit count to -1!");
@@ -61,6 +73,8 @@
 	}
 	
 	--_openPanelInhibit;
+	
+	TraceExit();
 }
 
 @end

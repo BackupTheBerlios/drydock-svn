@@ -35,7 +35,7 @@ NSString *kDDErrorDomain			= @"de.berlios.drydock ErrorDomain";
 }
 
 
-- (NSString *)localizedRecoverySuggestion
+- (NSString *)localizedRecoverySuggestionCompat
 {
 	NSString				*result;
 	
@@ -46,7 +46,7 @@ NSString *kDDErrorDomain			= @"de.berlios.drydock ErrorDomain";
 			break;
 		
 		default:
-			result = [super localizedRecoverySuggestion];
+			result = [super localizedRecoverySuggestionCompat];
 	}
 	
 	return result;

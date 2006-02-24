@@ -119,11 +119,11 @@
 		fileURL = [[inSheet URLs] objectAtIndex:0];
 		fileUTI = [[NSFileManager defaultManager] utiForItemAtPath:filePath];
 		
-		if (UTTypeEqual(utiDAT, (CFStringRef)fileUTI))
+		if (nil != fileUTI && UTTypeEqual(utiDAT, (CFStringRef)fileUTI))
 		{
 			compareMesh = [[DDMesh alloc] initWithOoliteDAT:fileURL issues:issues];
 		}
-		else if (UTTypeEqual(utiOBJ, (CFStringRef)fileUTI))
+		else if (nil != fileUTI && UTTypeEqual(utiOBJ, (CFStringRef)fileUTI))
 		{
 			compareMesh = [[DDMesh alloc] initWithLightwaveOBJ:fileURL issues:issues];
 		}

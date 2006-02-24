@@ -159,7 +159,7 @@
 			break;
 	}
 	
-	return [NSString stringWithFormat:@"<%@, %p>{%s, %@, \"%@\"}", [self className], self, typeString, _key, _string];
+	return [NSString stringWithFormat:@"<%@ %p>{%s, %@, \"%@\"}", [self className], self, typeString, _key, _string];
 }
 
 @end

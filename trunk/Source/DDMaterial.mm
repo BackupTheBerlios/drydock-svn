@@ -41,32 +41,28 @@
 
 + (id)materialWithName:(NSString *)inName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues
 {
-	TraceMessage(@"Called.");
-	TraceIndent();
+	TraceEnter();
 	
-	id result = [[[self alloc] initWithName:inName relativeTo:inBaseFile issues:ioIssues] autorelease];
+	return [[[self alloc] initWithName:inName relativeTo:inBaseFile issues:ioIssues] autorelease];
 	
-	TraceOutdent();
-	
-	return result;
+	TraceExit();
 }
 
 
 + (id)materialWithFile:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
-	TraceMessage(@"Called.");
-	TraceIndent();
+	TraceEnter();
 	
-	id result = [[[self alloc] initWithFile:inFile issues:ioIssues] autorelease];
+	return [[[self alloc] initWithFile:inFile issues:ioIssues] autorelease];
 	
-	TraceOutdent();
-	
-	return result;
+	TraceExit();
 }
 
 
 - (id)initWithName:(NSString *)inName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues
 {
+	TraceEnterMsg(@"Called for %@ relative to %@.", inName, inBaseFile);
+	
 	DDTextureBuffer			*texture;
 	NSURL					*url;
 	static NSBundle			*oolite = nil;
@@ -74,22 +70,19 @@
 	OSStatus				err;
 	NSString				*path;
 	
-	TraceMessage(@"Called for %@ relative to %@.", inName, inBaseFile);
-	TraceIndent();
-	
 	_texFileName = [inName retain];
 	
 	// Look for texture in same folder as base file
 	TraceMessage(@"Looking in same folder");
 	url = [NSURL URLWithString:inName relativeToURL:inBaseFile];
-	texture = [DDTextureBuffer textureWithFile:url];
+	texture = [DDTextureBuffer textureWithFile:url issues:ioIssues];
 	
 	if (nil == texture)
 	{
 		// Try in base/Textures/file
 		TraceMessage(@"Looking in Textures/");
 		url = [NSURL URLWithString:[@"Textures" stringByAppendingPathComponent:inName] relativeToURL:inBaseFile];
-		texture = [DDTextureBuffer textureWithFile:url];
+		texture = [DDTextureBuffer textureWithFile:url issues:ioIssues];
 	}
 	
 	if (nil == texture)
@@ -98,7 +91,7 @@
 		url = [NSURL URLWithString:[[@".." stringByAppendingPathComponent:@"Textures"] stringByAppendingPathComponent:inName] relativeToURL:inBaseFile];
 		url = [url standardizedURL];
 		TraceMessage(@"Looking in ../Textures/ (%@)", url);
-		texture = [DDTextureBuffer textureWithFile:url];
+		texture = [DDTextureBuffer textureWithFile:url issues:ioIssues];
 	}
 	
 	if (nil == texture)
@@ -106,13 +99,18 @@
 		// Find Oolite bundle if we haven’t already
 		if (nil == oolite)
 		{
+			TraceMessage(@"Looking for Oolite.");
 			err = LSFindApplicationForInfo('Ool8', (CFStringRef)@"org.aegidian.oolite", NULL, NULL, (CFURLRef *)&ooliteURL);
 			if (noErr == err && [ooliteURL isFileURL])
 			{
-			//	LogMessage(@"Oolite found at %@", [ooliteURL path]);
+				TraceMessage(@"Oolite found at %@", [ooliteURL path]);
 				oolite = [[NSBundle alloc] initWithPath:[ooliteURL path]];
+				[ooliteURL release];
 			}
-			[ooliteURL release];
+			else
+			{
+				TraceMessage(@"Oolite not found.");
+			}
 		}
 		
 		if (nil != oolite)
@@ -120,25 +118,26 @@
 			// Try in [oolite]/Contents/Resources/Textures/file
 			TraceMessage(@"Looking in [oolite]/Contents/Resources/Textures/");
 			path = [oolite pathForResource:inName ofType:nil inDirectory:@"Textures"];
-			if (nil != path) texture = [DDTextureBuffer textureWithFile:[NSURL fileURLWithPath:path]];
+			if (nil != path) texture = [DDTextureBuffer textureWithFile:[NSURL fileURLWithPath:path] issues:ioIssues];
 			
 			if (nil == texture)
 			{
 				// Try in $OOLITE/Contents/Resources/file (because development builds don’t have a Textures subfolder)
 				TraceMessage(@"Looking in [oolite]/Contents/Textures/");
 				path = [oolite pathForResource:inName ofType:nil];
-				if (nil != path) texture = [DDTextureBuffer textureWithFile:[NSURL fileURLWithPath:path]];
+				if (nil != path) texture = [DDTextureBuffer textureWithFile:[NSURL fileURLWithPath:path] issues:ioIssues];
 			}
 		}
 	}
 	
 	if (nil == texture)
 	{
-		[ioIssues addNoteIssueWithKey:@"textureNotFound" localizedFormat:@"No texture named \"%@\" could be found, using fallback texture.", inName];
 		TraceMessage(@"Not found, using placeholder.");
-		texture = [DDTextureBuffer placeholderTexture];
+		[ioIssues addNoteIssueWithKey:@"textureNotFound" localizedFormat:@"No texture named \"%@\" could be found, using fallback texture.", inName];
+		texture = [DDTextureBuffer placeholderTextureWithIssues:ioIssues];
 		if (nil == texture)
 		{
+			TraceMessage(@"Couldn't load placeholder, using nil material.");
 			[self release];
 			self = nil;
 		}
@@ -152,18 +151,19 @@
 	
 	if (nil == self)
 	{
+		TraceMessage(@"Reporting texture load failure.");
 		[ioIssues addStopIssueWithKey:@"fallbackTextureNotLoaded" localizedFormat:@"The fallback texture could not be loaded. This probably indicates a memory problem."];
 	}
 	
-	TraceOutdent();
-	
 	return self;
+	
+	TraceExit();
 }
 
 
 + (id)placeholderMaterialForFileName:(NSString *)inName
 {
-	DDMaterial *result = [[[self alloc] initWithTexture:[DDTextureBuffer placeholderTexture]] autorelease];
+	DDMaterial *result = [[[self alloc] initWithTexture:[DDTextureBuffer placeholderTextureWithIssues:nil]] autorelease];
 	[result setDisplayName:@"Placeholder"];
 	result->_texFileName = [inName retain];
 	return result;
@@ -172,13 +172,12 @@
 
 - (id)initWithFile:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
+	TraceEnter();
+	
 	DDTextureBuffer			*texture;
 	
-	TraceMessage(@"Called.");
-	TraceIndent();
-	
-	texture = [DDTextureBuffer textureWithFile:inFile];
-	if (nil == texture) texture = [DDTextureBuffer placeholderTexture];
+	texture = [DDTextureBuffer textureWithFile:inFile issues:ioIssues];
+	if (nil == texture) texture = [DDTextureBuffer placeholderTextureWithIssues:ioIssues];
 	
 	if (nil != texture)
 	{
@@ -191,17 +190,15 @@
 		[ioIssues addStopIssueWithKey:@"noTextureDataLoaded" localizedFormat:@"No texture data could be loaded from %@.", [inFile displayString]];
 	}
 	
-	TraceOutdent();
-	
 	return self;
+	TraceExit();
 }
 
 
 // Designated initialiser
 - (id)initWithTexture:(DDTextureBuffer *)inTexture;
 {
-	TraceMessage(@"Called.");
-	TraceIndent();
+	TraceEnter();
 	
 	self = [super init];
 	if (nil != self)
@@ -209,16 +206,15 @@
 		_texture = [inTexture retain];
 	}
 	
-	TraceOutdent();
-	
 	return self;
+	
+	TraceExit();
 }
 
 
 - (void)dealloc
 {
-	TraceMessage(@"Called.");
-	TraceIndent();
+	TraceEnter();
 	
 	[_texture release];
 	[_displayName autorelease];
@@ -226,21 +222,19 @@
 	
 	[super dealloc];
 	
-	TraceOutdent();
+	TraceExit();
 }
 
 
 - (id)copyWithZone:(NSZone *)inZone
 {
-	TraceMessage(@"Called.");
-	TraceIndent();
+	TraceEnter();
 	
 	DDMaterial *result = [[DDMaterial allocWithZone:inZone] initWithTexture:_texture];
 	[result setDisplayName:_displayName];
 	
-	TraceOutdent();
-	
 	return result;
+	TraceExit();
 }
 
 

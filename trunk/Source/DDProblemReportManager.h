@@ -69,6 +69,8 @@ typedef enum
 - (void)addWarningIssueWithKey:(NSString *)inKey localizedFormat:(NSString *)inFormat, ...;
 - (void)addStopIssueWithKey:(NSString *)inKey localizedFormat:(NSString *)inFormat, ...;
 
+- (void)mergeIssues:(DDProblemReportManager *)inSource;
+
 - (void)setContext:(ProblemReportContext)inContext;
 
 // isDoneSelector should have the signature -(void)problemReport:(DDProblemReportManager*)inManager doneWithResult:(BOOL)inResult;

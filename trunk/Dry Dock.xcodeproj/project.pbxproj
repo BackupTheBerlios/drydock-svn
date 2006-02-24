@@ -31,12 +31,17 @@
 		1A23CD8D098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */; };
 		1A245C5209A46B9800DC42F4 /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; };
 		1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A24608209A5D39000DC42F4 /* DDUtilities.mm */; };
+		1A2740B609A89E7A0031F97B /* DDPantherCompatibility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */; };
+		1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
 		1A442149094C830B000E90C2 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A442148094C830B000E90C2 /* Logging.m */; };
 		1A49F9F00959B235003B322F /* DDLightController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A49F9EE0959B235003B322F /* DDLightController.mm */; };
 		1A50518E098E1E6B0056F45F /* IconFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A50518D098E1E6B0056F45F /* IconFamily.m */; };
 		1A5051A8098E1F790056F45F /* NSString+CarbonFSRefCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */; };
 		1A512F16099090A600A55ED7 /* DDSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A512F15099090A600A55ED7 /* DDSceneView.mm */; };
 		1A51305E09909B6A00A55ED7 /* DDComparatorGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */; };
+		1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A543C1D09AD0087006B751A /* QuickTime.framework */; };
+		1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
+		1A543C6E09AD0A3E006B751A /* DDErrorDescription.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A543C6C09AD0A3E006B751A /* DDErrorDescription.h */; };
 		1A65C6280957A43E006990D5 /* DDMaterial.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A65C6270957A43E006990D5 /* DDMaterial.mm */; };
 		1A6702A8098CF005003BDAD5 /* DDProblemReportManager.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */; };
 		1A670350098D81C2003BDAD5 /* CocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */; };
@@ -71,11 +76,8 @@
 		1AA547D1099B8BF700625FF2 /* DDFirstRun.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */; };
 		1AA547D3099B8CC400625FF2 /* Big Translucent Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */; };
 		1AA547D7099BA0BF00625FF2 /* First-Run Wizard Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547D6099BA0BF00625FF2 /* First-Run Wizard Background.png */; };
-		1AA5485F099CB5D600625FF2 /* SmartCrashReportsInstall.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA5485D099CB5D600625FF2 /* SmartCrashReportsInstall.o */; };
 		1AA54885099CB77100625FF2 /* DDFirstRunController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54884099CB77100625FF2 /* DDFirstRunController.m */; };
 		1AA548B2099CB91200625FF2 /* DDApplication.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA548B0099CB91200625FF2 /* DDApplication.nib */; };
-		1AA548C0099CB99600625FF2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA548BF099CB99600625FF2 /* Security.framework */; };
-		1AA548F6099CB9B000625FF2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA548F5099CB9B000625FF2 /* libz.dylib */; };
 		1AA54975099CC00700625FF2 /* DDAxisReassignDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */; };
 		1AA79C0909896FEA00A1810B /* Arrow Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */; };
 		1ABEC05409485ED500B1E952 /* DisplayListCacheNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */; };
@@ -116,6 +118,20 @@
 			name = Deployment;
 		};
 /* End PBXBuildStyle section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1A27427C09A8B9110031F97B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */,
+				1A543C6E09AD0A3E006B751A /* DDErrorDescription.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -159,6 +175,9 @@
 		1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDATLexer.m; sourceTree = "<group>"; };
 		1A24608109A5D39000DC42F4 /* DDUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUtilities.h; sourceTree = "<group>"; };
 		1A24608209A5D39000DC42F4 /* DDUtilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDUtilities.mm; sourceTree = "<group>"; };
+		1A2740B409A89E7A0031F97B /* DDPantherCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPantherCompatibility.h; sourceTree = "<group>"; };
+		1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDPantherCompatibility.mm; sourceTree = "<group>"; };
+		1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSmartCrashReportsInstall.dylib; path = "Smart Crash Reports SDK/libSmartCrashReportsInstall.dylib"; sourceTree = SOURCE_ROOT; };
 		1A442147094C830B000E90C2 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		1A442148094C830B000E90C2 /* Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logging.m; sourceTree = "<group>"; };
 		1A49F9EE0959B235003B322F /* DDLightController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDLightController.mm; sourceTree = "<group>"; };
@@ -175,6 +194,9 @@
 		1A512F15099090A600A55ED7 /* DDSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDSceneView.mm; sourceTree = "<group>"; };
 		1A51305C09909B6A00A55ED7 /* DDComparatorGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDComparatorGLView.h; sourceTree = "<group>"; };
 		1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDComparatorGLView.mm; sourceTree = "<group>"; };
+		1A543C1D09AD0087006B751A /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
+		1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDErrorDescription.mm; sourceTree = "<group>"; };
+		1A543C6C09AD0A3E006B751A /* DDErrorDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDErrorDescription.h; sourceTree = "<group>"; };
 		1A65C6270957A43E006990D5 /* DDMaterial.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDMaterial.mm; sourceTree = "<group>"; };
 		1A6702A7098CF005003BDAD5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDProblemReportManager.nib; sourceTree = "<group>"; };
 		1A6702A9098CF011003BDAD5 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDProblemReportManager.nib; sourceTree = "<group>"; };
@@ -208,7 +230,6 @@
 		1A80AA9E09470DF0006AF8F5 /* AxisNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxisNode.h; sourceTree = "<group>"; };
 		1A80AADB09470F12006AF8F5 /* GLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLUtilities.h; sourceTree = "<group>"; };
 		1A80AADC09470F12006AF8F5 /* GLUtilities.cp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLUtilities.cp; sourceTree = "<group>"; };
-		1A854D1C0984FD1E00B1F25C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDTextureBufferVerificationWindow.nib; sourceTree = "<group>"; };
 		1A8B14B00992175F007265FC /* DDDimensionFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDimensionFormatter.h; sourceTree = "<group>"; };
 		1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDimensionFormatter.mm; sourceTree = "<group>"; };
 		1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+Utilities.mm"; sourceTree = "<group>"; };
@@ -242,8 +263,6 @@
 		1AA54884099CB77100625FF2 /* DDFirstRunController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFirstRunController.m; sourceTree = "<group>"; };
 		1AA548B1099CB91200625FF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDApplication.nib; sourceTree = "<group>"; };
 		1AA548B3099CB91800625FF2 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDApplication.nib; sourceTree = "<group>"; };
-		1AA548BF099CB99600625FF2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
-		1AA548F5099CB9B000625FF2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
 		1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Arrow Tool.tiff"; sourceTree = "<group>"; };
 		1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DisplayListCacheNode.mm; sourceTree = "<group>"; };
 		1ABEC05309485ED500B1E952 /* DisplayListCacheNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayListCacheNode.h; sourceTree = "<group>"; };
@@ -285,9 +304,7 @@
 				1A18DE20096457E90010CE0B /* Message.framework in Frameworks */,
 				1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */,
 				1A78150309767395001C0020 /* Accelerate.framework in Frameworks */,
-				1AA5485F099CB5D600625FF2 /* SmartCrashReportsInstall.o in Frameworks */,
-				1AA548C0099CB99600625FF2 /* Security.framework in Frameworks */,
-				1AA548F6099CB9B000625FF2 /* libz.dylib in Frameworks */,
+				1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,13 +314,12 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A543C1D09AD0087006B751A /* QuickTime.framework */,
 				1A8F08B408130C020040CAC3 /* OpenGL.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
 				1A032044096C10FB0000B217 /* Carbon.framework */,
 				1A18DE1F096457E90010CE0B /* Message.framework */,
 				1A78150209767395001C0020 /* Accelerate.framework */,
-				1AA548BF099CB99600625FF2 /* Security.framework */,
-				1AA548F5099CB9B000625FF2 /* libz.dylib */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -388,7 +404,6 @@
 				2A37F4B4FDCFA73011CA2CEA /* DDDocument.nib */,
 				1A0FFE4D0981EA9F00599E84 /* DDComparatorView.nib */,
 				1A0FFE5B0981EBB200599E84 /* DDCompareDialog.nib */,
-				1A854D1B0984FD1E00B1F25C /* DDTextureBufferVerificationWindow.nib */,
 				1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */,
 				1A8B185C099269EE007265FC /* DDScaleDialog.nib */,
 				1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */,
@@ -506,6 +521,7 @@
 		1AA5485C099CB59D00625FF2 /* Third-party */ = {
 			isa = PBXGroup;
 			children = (
+				1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */,
 				1A18DE0C096456D20010CE0B /* UK-NiftyFeatures */,
 				1AA54853099CB57C00625FF2 /* Smart Crash Reports SDK */,
 				1A098882098AECDE007C2F5F /* BS-HOM */,
@@ -552,6 +568,8 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1A543C6C09AD0A3E006B751A /* DDErrorDescription.h */,
+				1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */,
 				1A80AA1109470BC2006AF8F5 /* phystypes.h */,
 				1A80AA1209470BC2006AF8F5 /* phystypes.cp */,
 				32DBCF750370BD2300C91783 /* Dry Dock_Prefix.pch */,
@@ -563,6 +581,8 @@
 				1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */,
 				1A24608109A5D39000DC42F4 /* DDUtilities.h */,
 				1A24608209A5D39000DC42F4 /* DDUtilities.mm */,
+				1A2740B409A89E7A0031F97B /* DDPantherCompatibility.h */,
+				1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */,
 			);
 			name = "Other Sources";
 			path = Source;
@@ -628,6 +648,7 @@
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
+				1A27427C09A8B9110031F97B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -775,6 +796,8 @@
 				1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */,
 				1AA54885099CB77100625FF2 /* DDFirstRunController.m in Sources */,
 				1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */,
+				1A2740B609A89E7A0031F97B /* DDPantherCompatibility.mm in Sources */,
+				1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -840,14 +863,6 @@
 				1A49FABC0959B9F8003B322F /* Swedish */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		1A854D1B0984FD1E00B1F25C /* DDTextureBufferVerificationWindow.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1A854D1C0984FD1E00B1F25C /* English */,
-			);
-			name = DDTextureBufferVerificationWindow.nib;
 			sourceTree = "<group>";
 		};
 		1A8B185C099269EE007265FC /* DDScaleDialog.nib */ = {
@@ -954,7 +969,104 @@
 			};
 			name = "Debug-optimized";
 		};
-		1A245C7609A46BF500DC42F4 /* Default */ = {
+		1A27407909A77C350031F97B /* Development-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
+				INFOPLIST_FILE = "Resources/Info-DD.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS)";
+				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				ONLY_LINK_ESSENTIAL_SYMBOLS = NO;
+				OTHER_CFLAGS = "-DPHYS_NO_VECTORISE_PPC";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				PRODUCT_NAME = "Dry Dock for Oolite";
+				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
+				STRIP_INSTALLED_PRODUCT = NO;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = "Development-Panther";
+		};
+		1A27407A09A77C350031F97B /* Development-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
+				INSTALL_PATH = "$(HOME)/bin";
+				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
+				LEX_SUPPRESS_DEFAULT_RULE = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = OoliteDATLexTest;
+			};
+			name = "Development-Panther";
+		};
+		1A27407B09A77C350031F97B /* Development-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_STRICT_ALIASING = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				KEEP_PRIVATE_EXTERNS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOS10.3.9.sdk/;
+			};
+			name = "Development-Panther";
+		};
+		1A27436509A8C4FC0031F97B /* Debug-optimized-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = ppc;
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
+				INFOPLIST_FILE = "Resources/Info-DD.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS)";
+				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				OTHER_CFLAGS = (
+					"-DENABLE_LOGGING=1",
+					"-DPHYS_NO_VECTORISE_PPC",
+				);
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				PRODUCT_NAME = "Dry Dock for Oolite";
+				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT_ppc = /Developer/SDKs/MacOSX10.3.9.sdk;
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Debug-optimized-Panther";
+		};
+		1A27436609A8C4FC0031F97B /* Debug-optimized-Panther */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -966,7 +1078,25 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = OoliteDATLexTest;
 			};
-			name = Default;
+			name = "Debug-optimized-Panther";
+		};
+		1A27436709A8C4FC0031F97B /* Debug-optimized-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				GCC_DEBUGGING_SYMBOLS = default;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_STRICT_ALIASING = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
+				PREBINDING = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = debugging;
+			};
+			name = "Debug-optimized-Panther";
 		};
 		1A49F9F80959B318003B322F /* Debug-optimized */ = {
 			isa = XCBuildConfiguration;
@@ -988,6 +1118,7 @@
 				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS)";
 				OTHER_CFLAGS = (
 					"-DENABLE_LOGGING=1",
 					"-DPHYS_NO_VECTORISE_PPC",
@@ -1011,7 +1142,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = debugging;
 			};
@@ -1036,6 +1166,7 @@
 				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS)";
 				ONLY_LINK_ESSENTIAL_SYMBOLS = NO;
 				OTHER_CFLAGS = "-DPHYS_NO_VECTORISE_PPC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
@@ -1064,6 +1195,7 @@
 				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS)";
 				OTHER_CFLAGS = (
 					"-DNDEBUG",
 					"-DPHYS_NO_VECTORISE_PPC",
@@ -1074,25 +1206,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Deployment;
-		};
-		1AAC876808F293CC004A6AD2 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_FAST_OBJC_DISPATCH = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OBJC_CALL_CXX_CDTORS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
-				INFOPLIST_FILE = "Resources/Info-DD.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_CFLAGS = "-DPHYS_NO_VECTORISE_PPC";
-				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
-				PRODUCT_NAME = "Dry Dock for Oolite";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Default;
 		};
 		1AAC876A08F293CC004A6AD2 /* Development */ = {
 			isa = XCBuildConfiguration;
@@ -1106,7 +1219,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Development;
 		};
@@ -1119,22 +1231,8 @@
 				KEEP_PRIVATE_EXTERNS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Deployment;
-		};
-		1AAC876C08F293CC004A6AD2 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_FAST_MATH = YES;
-				GCC_STRICT_ALIASING = YES;
-				GCC_THREADSAFE_STATICS = NO;
-				KEEP_PRIVATE_EXTERNS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-			};
-			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1143,34 +1241,37 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A245C7309A46BF500DC42F4 /* Development */,
+				1A27407A09A77C350031F97B /* Development-Panther */,
 				1A245C7409A46BF500DC42F4 /* Deployment */,
 				1A245C7509A46BF500DC42F4 /* Debug-optimized */,
-				1A245C7609A46BF500DC42F4 /* Default */,
+				1A27436609A8C4FC0031F97B /* Debug-optimized-Panther */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Development;
 		};
 		1AAC876508F293CC004A6AD2 /* Build configuration list for PBXNativeTarget "Dry Dock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1AAC876608F293CC004A6AD2 /* Development */,
+				1A27407909A77C350031F97B /* Development-Panther */,
 				1AAC876708F293CC004A6AD2 /* Deployment */,
 				1A49F9F80959B318003B322F /* Debug-optimized */,
-				1AAC876808F293CC004A6AD2 /* Default */,
+				1A27436509A8C4FC0031F97B /* Debug-optimized-Panther */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Development;
 		};
 		1AAC876908F293CC004A6AD2 /* Build configuration list for PBXProject "Dry Dock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1AAC876A08F293CC004A6AD2 /* Development */,
+				1A27407B09A77C350031F97B /* Development-Panther */,
 				1AAC876B08F293CC004A6AD2 /* Deployment */,
 				1A49F9F90959B318003B322F /* Debug-optimized */,
-				1AAC876C08F293CC004A6AD2 /* Default */,
+				1A27436709A8C4FC0031F97B /* Debug-optimized-Panther */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Development;
 		};
 /* End XCConfigurationList section */
 	};

@@ -17,7 +17,21 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSDocumentController; 
         }, 
-        {CLASS = DDFirstRunController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {nextButtonAction = id; quitButtonAction = id; }; 
+            CLASS = DDFirstRunController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                authorisationRequiredForSCRField = NSTextField; 
+                checkForUpdatesMatrix = NSMatrix; 
+                continueButton = NSButton; 
+                installSCRMatrix = NSMatrix; 
+                stageTabView = NSTabView; 
+                updateChecker = UKUpdateChecker; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {
             CLASS = DDInspectorController; 
             LANGUAGE = ObjC; 

@@ -25,7 +25,8 @@
 //		2004-03-19	witness	Documented.
 // -----------------------------------------------------------------------------
 
--(void) awakeFromNib
+// -(void) awakeFromNib
+- (void)doLaunchStuff
 {
 	NSNumber	*   doCheck = [[NSUserDefaults standardUserDefaults] objectForKey: @"UKUpdateChecker:CheckAtStartup"];
 	NSString	*   appName = [[NSFileManager defaultManager] displayNameAtPath: [[NSBundle mainBundle] bundlePath]]; 

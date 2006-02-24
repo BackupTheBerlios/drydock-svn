@@ -26,4 +26,13 @@
 #import <Foundation/Foundation.h>
 
 
+#define TIGER_OR_LATER (!TARGET_CPU_PPC || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4))
+
+
 extern NSString *ApplicationNameAndVersionString(void);
+
+#if TIGER_OR_LATER
+	#define TigerOrLater() 1
+#else
+	FOUNDATION_EXPORT BOOL TigerOrLater(void);
+#endif

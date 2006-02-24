@@ -11,12 +11,12 @@
 		<integer>14</integer>
 	</array>
 	<key>IBOldestOS</key>
-	<integer>4</integer>
+	<integer>3</integer>
 	<key>IBOpenObjects</key>
 	<array>
 		<integer>7</integer>
 	</array>
 	<key>IBSystem Version</key>
-	<string>8G32</string>
+	<string>8H14</string>
 </dict>
 </plist>

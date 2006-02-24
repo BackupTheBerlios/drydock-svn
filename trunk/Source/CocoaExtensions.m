@@ -23,6 +23,7 @@
 */
 
 #import "CocoaExtensions.h"
+#import "DDPantherCompatibility.h"
 
 
 @implementation NSURL (CocoaExtensions)
@@ -68,7 +69,7 @@
 	NSURL					*url;
 	NSString				*result = nil;
 	
-	url = [NSURL fileURLWithPath:inPath];
+	/*url = [NSURL fileURLWithPath:inPath];
 	if (nil != url)
 	{
 		if (CFURLGetFSRef((CFURLRef)url, &fsRef))
@@ -76,7 +77,7 @@
 			LSCopyItemAttribute(&fsRef, kLSRolesAll, kLSItemContentType, (CFTypeRef *)&result);
 			[result autorelease];
 		}
-	}
+	}*/
 	
 	return result;
 }

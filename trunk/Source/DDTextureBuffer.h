@@ -23,7 +23,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define USE_TEXTURE_VERIFICATION_WINDOW		0
+@class DDProblemReportManager;
 
 
 @interface DDTextureBuffer: NSObject
@@ -32,16 +32,10 @@
 	void					*_data;
 	id						_key;
 	NSURL					*_file;
-	
-	#if USE_TEXTURE_VERIFICATION_WINDOW
-	IBOutlet NSWindow		*window;
-	IBOutlet NSImageView	*view;
-	IBOutlet NSTextField	*imageDesc;
-	#endif
 }
 
-+ (id)textureWithFile:(NSURL *)inFile;
-+ (id)placeholderTexture;
++ (id)textureWithFile:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
++ (id)placeholderTextureWithIssues:(DDProblemReportManager *)ioIssues;
 
 - (void)setUpCurrentTexture;
 

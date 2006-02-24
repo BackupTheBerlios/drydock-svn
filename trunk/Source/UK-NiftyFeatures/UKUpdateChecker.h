@@ -62,6 +62,8 @@
 	IBOutlet NSButton*		prefsButton;		// Optional button in the preferences window for turning "check at startup" on/off.
 }
 
+- (void)doLaunchStuff;
+
 // Action for the "check for updates" menu item:
 -(IBAction)		checkForUpdates: (id)sender;
 

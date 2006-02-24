@@ -66,6 +66,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 // FIXME this code will choke on files using \ to escape newlines. I’ll fix this when doing the flex-based parser.
 - (id)initWithLightwaveOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
+	TraceEnterMsg(@"Called for %@", inFile);
+	
 	BOOL					OK = YES;
 	NSMutableArray			*lines;
 	NSArray					*line;
@@ -108,7 +110,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	lines = [self objTokenize:inFile error:&error];
 	if (!lines)
 	{
-		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReason] : @""];
+		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReasonCompat] : @""];
 		OK = NO;
 	}
 	
@@ -516,11 +518,14 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	}
 	
 	return self;
+	TraceExit();
 }
 
 
 - (NSMutableArray *)objTokenize:(NSURL *)inFile error:(NSError **)outError
 {
+	TraceEnterMsg(@"Called for %@", inFile);
+	
 	BOOL					OK = YES;
 	NSString				*dataString, *line;
 	NSMutableArray			*lines;
@@ -531,8 +536,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	
 	if (NULL != outError) *outError = nil;
 	
-	dataString = [NSString stringWithContentsOfURL:inFile encoding:NSUTF8StringEncoding error:outError];
-	if (nil == dataString) dataString = [NSString stringWithContentsOfURL:inFile usedEncoding:NULL error:outError];
+	dataString = [NSString stringWithContentsOfURL:inFile encoding:NSUTF8StringEncoding errorCompat:outError];
+	if (nil == dataString) dataString = [NSString stringWithContentsOfURL:inFile usedEncoding:NULL errorCompat:outError];
 	if (nil == dataString)
 	{
 		OK = NO;
@@ -580,11 +585,14 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	
 	if (!OK) lines = nil;
 	return lines;
+	TraceExit();
 }
 
 
 - (NSDictionary *)loadObjMaterialLibraryNamed:(NSString *)inString relativeTo:(NSURL *)inBase issues:(DDProblemReportManager *)ioIssues
 {
+	TraceEnterMsg(@"Called for %@", inFile);
+	
 	BOOL					OK = YES;
 	NSURL					*url;
 	NSMutableArray			*lines;
@@ -602,7 +610,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	if (nil == lines)
 	{
 		OK = NO;
-		[ioIssues addNoteIssueWithKey:@"noMaterialLibraryLoaded" localizedFormat:@"No material library could be loaded from %@. %@", inString, error ? [error localizedFailureReason] : @""];
+		[ioIssues addNoteIssueWithKey:@"noMaterialLibraryLoaded" localizedFormat:@"No material library could be loaded from %@. %@", inString, error ? [error localizedFailureReasonCompat] : @""];
 	}
 	
 	if (OK)
@@ -719,6 +727,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	}
 	
 	return result;
+	TraceExit();
 }
 
 
@@ -769,7 +778,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	
 	// Get formatted date string for header comment
 	formatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y-%m-%d" allowNaturalLanguage:NO];	// ISO date format
-	dateString = [formatter stringFromDate:[NSDate date]];
+	dateString = [formatter stringForObjectValue:[NSDate date]];
 	[formatter release];
 	NSString *version = ApplicationNameAndVersionString();
 	
@@ -945,9 +954,9 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	}
 	
 	// Write OBJ file
-	if (![dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding error:&error])
+	if (![dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding errorCompat:&error])
 	{
-		if (nil != error) [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReason]];
+		if (nil != error) [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
 		else [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
 		return NO;
 	}
@@ -978,9 +987,9 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	
 	// Write MTL file
 	mtlURL = [NSURL URLWithString:mtlName relativeToURL:inFinalLocation];
-	if (![dataString writeToURL:mtlURL atomically:YES encoding:NSUTF8StringEncoding error:&error])
+	if (![dataString writeToURL:mtlURL atomically:YES encoding:NSUTF8StringEncoding errorCompat:&error])
 	{
-		if (nil != error) [ioManager addWarningIssueWithKey:@"mtllib_write_failed" localizedFormat:@"The material library for the document could not be saved. %@", [error localizedFailureReason]];
+		if (nil != error) [ioManager addWarningIssueWithKey:@"mtllib_write_failed" localizedFormat:@"The material library for the document could not be saved. %@", [error localizedFailureReasonCompat]];
 		else [ioManager addWarningIssueWithKey:@"mtllib_write_failed" localizedFormat:@"The material library for the document could not be saved, because an unknown error occured."];
 	}
 	
@@ -992,6 +1001,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 
 static NSColor *ObjColorToNSColor(NSString *inColor)
 {
+	TraceEnter();
+	
 	NSArray				*components;
 	float				r, g, b;
 	
@@ -1003,11 +1014,14 @@ static NSColor *ObjColorToNSColor(NSString *inColor)
 	b = [[components objectAtIndex:2] floatValue];
 	
 	return [NSColor colorWithDeviceRed:r green:g blue:b alpha:1];
+	TraceExit();
 }
 
 
 static Vector ObjVertexToVector(NSString *inVertex)
 {
+	TraceEnter();
+	
 	NSArray				*components;
 	Vector				result;
 	
@@ -1020,11 +1034,14 @@ static Vector ObjVertexToVector(NSString *inVertex)
 	}
 	
 	return result;
+	TraceExit();
 }
 
 
 static UV ObjUVToUV(NSString *inUV)
 {
+	TraceEnter();
+	
 	NSArray				*components;
 	UV					result = {0, 0};
 	
@@ -1036,11 +1053,14 @@ static UV ObjUVToUV(NSString *inUV)
 	}
 	
 	return result;
+	TraceExit();
 }
 
 
 static NSArray *ObjFaceToArrayOfArrays(NSString *inData)
 {
+	TraceEnter();
+	
 	NSArray				*verts;
 	NSMutableArray		*result;
 	unsigned			i, vertCount;
@@ -1057,11 +1077,14 @@ static NSArray *ObjFaceToArrayOfArrays(NSString *inData)
 	}
 	
 	return result;
+	TraceExit();
 }
 
 
 static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSMutableDictionary *ioLibrary, NSURL *inBaseURL, DDProblemReportManager *ioIssues)
 {
+	TraceEnterMsg(@"Called for %@", inName);
+	
 	DDMaterial			*result;
 	NSDictionary		*definition;
 	id					key;
@@ -1090,4 +1113,5 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	}
 	
 	return result;
+	TraceExit();
 }
