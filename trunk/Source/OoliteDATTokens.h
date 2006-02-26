@@ -17,9 +17,17 @@ enum
 };
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern int OoliteDAT_yylex(void);
 extern void OoliteDAT_SetInputFile(FILE *inFile);
 extern int OoliteDAT_LineNumber(void);
 extern char *OoliteDAT_yytext;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif	/* INCLUDED_OOLITEDATTOKENS_h */

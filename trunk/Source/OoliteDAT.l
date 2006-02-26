@@ -39,7 +39,7 @@ string			[[:alpha:]][^ \n\t,#]*
 {separator}				
 {comment}				
 
-{integer}				{ return KOoliteDatToken_INTEGER; }
+{positive}				{ return KOoliteDatToken_INTEGER; }
 {real}					{ return KOoliteDatToken_REAL; }
 {string}				{ return KOoliteDatToken_STRING; }
 

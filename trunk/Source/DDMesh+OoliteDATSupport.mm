@@ -21,7 +21,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#define ENABLE_TRACE 0
+#define ENABLE_TRACE 1
 
 #import "DDMesh.h"
 #import "Logging.h"
@@ -30,6 +30,7 @@
 #import "CocoaExtensions.h"
 #import "DDUtilities.h"
 #import "DDPantherCompatibility.h"
+#import "DDDATLexer.h"
 
 
 // Hard-coded limits from Oolite
@@ -48,28 +49,28 @@ enum
 	TraceEnterMsg(@"Called for %@", inFile);
 	
 	BOOL					OK = YES;
-	NSString				*dataString;
-	NSMutableArray			*lines;
-	NSArray					*parts;
-	NSString				*line;
 	unsigned				i, j, lineCount;
 	NSScanner				*scanner = nil;
-	int						vertexCount, faceCount;
+	unsigned				vertexCount, faceCount;
 	Vector					*vertices = NULL;
 	DDMeshFaceData			*faces = NULL;
 	float					x, y, z;
-	int						faceVerts;
+	unsigned				faceVerts;
 	float					xMin = 0, xMax = 0,
 							yMin = 0, yMax = 0,
 							zMin = 0, zMax = 0,
 							rMax = 0, r;
-	NSMutableDictionary		*materials;
+	NSMutableDictionary		*materials = nil;
 	NSURL					*texURL;
 	NSCharacterSet			*whiteSpaceAndNL, *whiteSpace;
 	NSString				*texFileName;
 	DDMaterial				*material;
 	float					s, t, max_s, max_t;
 	NSError					*error;
+	DDDATLexer				*lexer;
+	NSString				*tokString;
+	int						tok;
+	BOOL					readTextures;
 	
 	assert(nil != inFile && nil != ioIssues);
 	
@@ -79,65 +80,42 @@ enum
 //	[NSException raise:NSGenericException format:@"This is a long and pointless string. Loooooong. And very very pointless. As pointless as a pointless and long thing. A thing which is long and has no point, other than being long."];
 	
 	TraceMessage(@"Loading file.");
-	
 	_name = [[inFile displayString] retain];
-	
-	dataString = [NSString stringWithContentsOfURL:inFile encoding:NSUTF8StringEncoding errorCompat:NULL];
-	if (nil == dataString) dataString = [NSString stringWithContentsOfURL:inFile usedEncoding:NULL errorCompat:&error];
-	if (nil == dataString)
-	{
-		OK = NO;
-		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReasonCompat] : @""];
-		TraceMessage(@"** Loading failed.");
-	}
-	
-	if (OK)
-	{
-		TraceMessage(@"Formatting data.");
-		lines = [NSMutableArray arrayWithArray:[dataString componentsSeparatedByString:@"\n"]];
-		lineCount = [lines count];
+	lexer = [[DDDATLexer alloc] initWithURL:inFile issues:ioIssues];
+	OK = (nil != lexer);
+	[lexer skipLineBreaks];
 		
-		// strip out comments and commas between values
-		for (i = 0; i != lineCount; ++i)
-		{
-			line = [lines objectAtIndex:i];
-			parts = [line componentsSeparatedByString:@"#"];
-			line = [parts objectAtIndex:0];
-			parts = [line componentsSeparatedByString:@"//"];
-			line = [parts objectAtIndex:0];
-			line = [[line componentsSeparatedByString:@","] componentsJoinedByString:@" "];
-			
-			[lines replaceObjectAtIndex:i withObject:line];
-		}
-		
-		dataString = [lines componentsJoinedByString:@"\n"];
-		scanner = [NSScanner scannerWithString:dataString];
-	}
-	
 	// Get number of vertices
 	if (OK)
 	{
-		TraceMessage(@"Reading NVERTS.");
-		[scanner setScanLocation:0];
-		if (![scanner scanString:@"NVERTS" intoString:NULL]) OK = NO;
-		if (![scanner scanInt:&vertexCount]) OK = NO;
+		OK = (KOoliteDatToken_NVERTS == [lexer nextToken:NULL]);
+		if (OK) OK = [lexer readInteger:&vertexCount] && [lexer passAtLeastOneLineBreak];
+		
 		if (!OK)
 		{
 			[ioIssues addStopIssueWithKey:@"noDATNVERTS" localizedFormat:@"The required NVERTS line could not be found."];
 			TraceMessage(@"** Failed to find \"NVERTS\".");
+		}
+		else if (kMaxDATVertices < vertexCount)
+		{
+			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOolite" localizedFormat:@"This document has %u vertices. It will not be possible to open it with Oolite, which has a limit of %u vertices.", vertexCount, kMaxDATVertices];
 		}
 	}
 	
 	// Get number of faces
 	if (OK)
 	{
-		TraceMessage(@"Reading NFACES.");
-		if (![scanner scanString:@"NFACES" intoString:NULL]) OK = NO;
-		if (![scanner scanInt:&faceCount]) OK = NO;
+		OK = (KOoliteDatToken_NFACES == [lexer nextToken:NULL]);
+		if (OK) OK = [lexer readInteger:&faceCount] && [lexer passAtLeastOneLineBreak];
+		
 		if (!OK)
 		{
 			[ioIssues addStopIssueWithKey:@"noDATNFACES" localizedFormat:@"The required NFACES line could not be found."];
 			TraceMessage(@"** Failed to find \"NFACES\".");
+		}
+		else if (kMaxDATFaces < faceCount)
+		{
+			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOolite" localizedFormat:@"This document has %u faces. It will not be possible to open it with Oolite, which has a limit of %u faces.", faceCount, kMaxDATFaces];
 		}
 	}
 	
@@ -147,47 +125,52 @@ enum
 	yMax = -INFINITY;
 	zMin = INFINITY;
 	zMax = -INFINITY;
+	if (OK && (vertexCount < 3 || faceCount < 1))
+	{
+		OK = NO;
+		[ioIssues addStopIssueWithKey:@"insufficientParts" localizedFormat:@"The document is invalid; Oolite DAT documents must contain at least three vertices and one face."];
+	}
 	
 	// Load vertices
-	if (vertexCount < 3 || 0xFFFF < vertexCount) OK = NO;
+	if (OK) OK = (KOoliteDatToken_VERTEX_SECTION == [lexer nextToken:NULL]);
 	if (OK)
 	{
-		vertices = (Vector *)malloc(sizeof(Vector) * vertexCount);
-		if (NULL == vertices) OK = NO;
-		
-		if (OK && ![scanner scanString:@"VERTEX" intoString:NULL])
+		vertices = (Vector *)calloc(sizeof(Vector), vertexCount);
+		if (NULL == vertices)
 		{
 			OK = NO;
-			TraceMessage(@"** Failed to find \"VERTEX\".");
+			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
 		}
-		if (OK)
+	}
+	if (OK)
+	{
+		TraceMessage(@"Loading %u vertices.", vertexCount);
+		for (i = 0; i != vertexCount; ++i)
 		{
-			TraceMessage(@"Loading %u vertices.", vertexCount);
-			for (i = 0; i != vertexCount; ++i)
+			if (![lexer readReal:&x] ||
+				![lexer readReal:&y] ||
+				![lexer readReal:&z])
 			{
-				if (![scanner scanFloat:&x] ||
-					![scanner scanFloat:&y] ||
-					![scanner scanFloat:&z])
-				{
-					OK = NO;
-					break;
-				}
-				
-				x = -x;		// Dunno why, but it does the right thing.
-				
-				vertices[i].Set(x, y, z);
-				
-				// Maintain bounds
-				if (x < xMin) xMin = x;
-				if (xMax < x) xMax = x;
-				if (y < yMin) yMin = y;
-				if (yMax < y) yMax = y;
-				if (z < zMin) zMin = z;
-				if (zMax < z) zMax = z;
-				
-				r = vertices[i].Magnitude();
-				if (rMax < r) rMax = r;
+				OK = NO;
+				break;
 			}
+			
+			x = -x;		// Dunno why, but it does the right thing.
+			
+			vertices[i].Set(x, y, z);
+			
+			// Maintain bounds
+			if (x < xMin) xMin = x;
+			if (xMax < x) xMax = x;
+			if (y < yMin) yMin = y;
+			if (yMax < y) yMax = y;
+			if (z < zMin) zMin = z;
+			if (zMax < z) zMax = z;
+			
+			r = vertices[i].Magnitude();
+			if (rMax < r) rMax = r;
+			
+			OK = [lexer passAtLeastOneLineBreak];
 		}
 		if (!OK)
 		{
@@ -197,28 +180,27 @@ enum
 	}
 	
 	// Load faces
-	if (faceCount < 1) OK = NO;
+	if (OK) OK = (KOoliteDatToken_FACES_SECTION == [lexer nextToken:NULL]);
 	if (OK)
 	{
-		faces = (DDMeshFaceData *)malloc(sizeof(DDMeshFaceData) * faceCount);
-		if (NULL == faces) OK = NO;
-		
-		if (OK && ![scanner scanString:@"FACES" intoString:NULL])
+		faces = (DDMeshFaceData *)calloc(sizeof(DDMeshFaceData), faceCount);
+		if (NULL == faces)
 		{
 			OK = NO;
-			TraceMessage(@"** Failed to find \"FACES\".");
+			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
 		}
+		
 		if (OK)
 		{
 			TraceMessage(@"Reading %u faces.", faceCount);
 			for (i = 0; i != faceCount; ++i)
 			{
-				int				r, g, b;
+				unsigned		r, g, b;
 				
 				// read colour
-				if (![scanner scanInt:&r] ||
-					![scanner scanInt:&g] ||
-					![scanner scanInt:&b])
+				if (![lexer readInteger:&r] ||
+					![lexer readInteger:&g] ||
+					![lexer readInteger:&b])
 				{
 					[ioIssues addStopIssueWithKey:@"noColorLoaded" localizedFormat:@"Colour data could not be read for face line %u.", i + 1];
 					TraceMessage(@"** Failed to read colour for face index %u.", i + 1);
@@ -226,20 +208,17 @@ enum
 					break;
 				}
 				
-				if (r < 0) r = 0;
 				if (255 < r) r = 255;
 				faces[i].color[0] = r;
-				if (g < 0) g = 0;
 				if (255 < g) g = 255;
 				faces[i].color[1] = g;
-				if (b < 0) b = 0;
 				if (255 < b) b = 255;
 				faces[i].color[2] = b;
 				
 				// Read normal
-				if (![scanner scanFloat:&x] ||
-					![scanner scanFloat:&y] ||
-					![scanner scanFloat:&z])
+				if (![lexer readReal:&x] ||
+					![lexer readReal:&y] ||
+					![lexer readReal:&z])
 				{
 					[ioIssues addStopIssueWithKey:@"noNormalLoaded" localizedFormat:@"Normal data could not be read for face line %u.", i + 1];
 					TraceMessage(@"** Failed to read normal for face index %u.", i + 1);
@@ -250,7 +229,7 @@ enum
 				faces[i].normal.Set(-x, y, z);
 				
 				// Read vertex count
-				if (![scanner scanInt:&faceVerts])
+				if (![lexer readInteger:&faceVerts])
 				{
 					[ioIssues addStopIssueWithKey:@"noVertexCountLoaded" localizedFormat:@"Vertex count could not be read for face line %u.", i + 1];
 					TraceMessage(@"** Failed to read vertex count for face index %u.", i + 1);
@@ -274,8 +253,8 @@ enum
 				
 				for (j = 0; j != faceVerts; ++j)
 				{
-					int index;
-					if (![scanner scanInt:&index])
+					unsigned index;
+					if (![lexer readInteger:&index])
 					{
 						[ioIssues addStopIssueWithKey:@"noVertexDataLoaded" localizedFormat:@"Vertex data could not be read for face line %u.", i + 1];
 						TraceMessage(@"** Failed to read vertex index %u for face index %u.", j + 1, i + 1);
@@ -291,6 +270,8 @@ enum
 					}
 					faces[i].verts[j] = index;
 				}
+				
+				if (OK) OK = [lexer passAtLeastOneLineBreak];
 				if (!OK) break;
 			}
 		}
@@ -299,75 +280,114 @@ enum
 	// Load textures
 	if (OK)
 	{
-		whiteSpaceAndNL = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-		whiteSpace = [NSCharacterSet whitespaceCharacterSet];
-		
-		materials = [NSMutableDictionary dictionary];
-		if (nil == materials) OK = NO;
-		
-		// TODO: allow loading of untextured DATs. Save it for flex-based loader.
-		if (OK && ![scanner scanString:@"TEXTURES" intoString:NULL])
+		readTextures = NO;
+		tok = [lexer nextTokenDesc:&tokString];
+		if (KOoliteDatToken_EOF == tok)
+		{
+			[ioIssues addWarningIssueWithKey:@"vertexRange" localizedFormat:@"The document is missing an END line. This is not serious, but should be fixed by resaving the document."];
+		}
+		else if (KOoliteDatToken_TEXTURES_SECTION == tok)
+		{
+			readTextures = YES;
+		}
+		else if (KOoliteDatToken_END_SECTION == tok)
+		{
+			// Do nothing
+		}
+		else
 		{
 			OK = NO;
-			TraceMessage(@"** Failed to find \"TEXTURES\".");
+			[ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), NSLocalizedString(@"TEXTURES or END", NULL), tokString];
 		}
-		if (OK)
+		
+		if (OK && !readTextures)
 		{
-			TraceMessage(@"Reading %u texture lines.", faceCount);
-			for (i = 0; i != faceCount; ++i)
+			[ioIssues addNoteIssueWithKey:@"noTextures" localizedFormat:@"The document does not specify any textures or u/v co-ordinates."];
+		}
+		
+		if (readTextures)
+		{
+			materials = [NSMutableDictionary dictionary];
+			if (nil == materials) OK = NO;
+			
+			if (OK)
 			{
-				[scanner scanCharactersFromSet:whiteSpaceAndNL intoString:NULL];
-				if (![scanner scanUpToCharactersFromSet:[NSCharacterSet whitespaceCharacterSet] intoString:&texFileName])
+				TraceMessage(@"Reading %u texture lines.", faceCount);
+				for (i = 0; i != faceCount; ++i)
 				{
-					[ioIssues addStopIssueWithKey:@"noTextureNameLoaded" localizedFormat:@"Texture name could not be read for face line %u.", i + 1];
-					TraceMessage(@"** Failed to read texture name for face index %u.", i + 1);
-					OK = NO;
-					break;
-				}
-				
-				material = [materials objectForKey:texFileName];
-				if (nil == material)
-				{
-					material = [DDMaterial materialWithName:texFileName relativeTo:inFile issues:ioIssues];
+					if (![lexer readString:&texFileName])
+					{
+						[ioIssues addStopIssueWithKey:@"noTextureNameLoaded" localizedFormat:@"Texture name could not be read for face line %u.", i + 1];
+						TraceMessage(@"** Failed to read texture name for face index %u.", i + 1);
+						OK = NO;
+						break;
+					}
+					
+					material = [materials objectForKey:texFileName];
 					if (nil == material)
 					{
-						TraceMessage(@"** Failed to create material for face index %u.", i + 1);
-						OK = NO;
-						break;
+						material = [DDMaterial materialWithName:texFileName relativeTo:inFile issues:ioIssues];
+						if (nil == material)
+						{
+							TraceMessage(@"** Failed to create material for face index %u.", i + 1);
+							OK = NO;
+							break;
+						}
+						[materials setObject:material forKey:texFileName];
 					}
-					[materials setObject:material forKey:texFileName];
-				}
-				
-				faces[i].material = material;
-				
-				// Read texture scale
-				if (![scanner scanFloat:&max_s] ||
-					![scanner scanFloat:&max_t])
-				{
-					[ioIssues addStopIssueWithKey:@"noTextureScaleLoaded" localizedFormat:@"Texture scale could not be read for texture line %u.", i + 1];
-					TraceMessage(@"** Failed to read texture scale for face index %u.", i + 1);
-					OK = NO;
-					break;
-				}
-				
-				// Read s/t co-ordinates for each vertex
-				for (j = 0; j != faces[i].vertexCount; ++j)
-				{
-					if (![scanner scanFloat:&s] ||
-						![scanner scanFloat:&t])
+					
+					faces[i].material = material;
+					
+					// Read texture scale
+					if (![lexer readReal:&max_s] ||
+						![lexer readReal:&max_t])
 					{
-						[ioIssues addStopIssueWithKey:@"noUVLoaded" localizedFormat:@"U/V pair could not be read for texture line %u.", i + 1];
-						TraceMessage(@"** Failed to read u/v pair for vertex %u of face index %u.", j + 1, i + 1);
+						[ioIssues addStopIssueWithKey:@"noTextureScaleLoaded" localizedFormat:@"Texture scale could not be read for texture line %u.", i + 1];
+						TraceMessage(@"** Failed to read texture scale for face index %u.", i + 1);
 						OK = NO;
 						break;
 					}
-					faces[i].tex_s[j] = s / max_s;
-					faces[i].tex_t[j] = t / max_t;
+					
+					// Read s/t co-ordinates for each vertex
+					for (j = 0; j != faces[i].vertexCount; ++j)
+					{
+						if (![lexer readReal:&s] ||
+							![lexer readReal:&t])
+						{
+							[ioIssues addStopIssueWithKey:@"noUVLoaded" localizedFormat:@"U/V pair could not be read for texture line %u.", i + 1];
+							TraceMessage(@"** Failed to read u/v pair for vertex %u of face index %u.", j + 1, i + 1);
+							OK = NO;
+							break;
+						}
+						faces[i].tex_s[j] = s / max_s;
+						faces[i].tex_t[j] = t / max_t;
+					}
+					if (OK) OK = [lexer passAtLeastOneLineBreak];
+					if (!OK) break;
 				}
-				if (!OK) break;
 			}
 		}
 	}
+	
+	// Look for END
+	if (OK && readTextures)
+	{
+		tok = [lexer nextToken:NULL];
+		if (KOoliteDatToken_EOF == tok)
+		{
+			[ioIssues addWarningIssueWithKey:@"vertexRange" localizedFormat:@"The document is missing an END line. This is not serious, but should be fixed by resaving the document."];
+		}
+		else if (KOoliteDatToken_END_SECTION == tok)
+		{
+			// Do nothing
+		}
+		else
+		{
+			[ioIssues addWarningIssueWithKey:@"missedData" localizedFormat:@"The document continues beyond where it was expected to end. It may be of a newer format."];
+		}
+	}
+	
+	[lexer release];
 	
 	if (OK)
 	{
