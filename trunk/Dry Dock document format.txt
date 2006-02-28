@@ -1,0 +1,102 @@
+Dry Dock Document Format
+
+OVERVIEW
+This document describes Dry Dock’s custom document format. It does not cover
+other formats handled by Dry Dock. Nor does it cover Apple’s property list
+formats, or the zlib/deflate compression format. Understanding these topics is
+necessary for a full understanding of the Dry Dock document format. The format
+is intended to be a complete representation of a Dry Dock document; it is not
+intended to be a general interchange format, but is documented here because
+undocumented file formats suck.
+
+The Dry Dock document format consists of a simple compression wrapper
+containing a property list. The compression wrapper consists of a cookie, a
+size value specifying the size of the uncompressed property list, and the data
+itself compressed with zlib/deflate. There is no gzip header.
+
+The cookie in the compression wrapper consists of the four-octet sequence
+0x44, 0x72, 0x79, 0x44 (ASCII: “DryD”). The size value is a 32-bit quantity in
+little-endian byte order (least significant octet first). The compressed data
+is in the format of zlib’s compress() function. Dry Dock uses zlib compression
+level 9, unless the “debug format drydock documents” preference value is set to
+true, in which case level 0 (no compression) is used.
+
+The primary content of the file is in the property list contained in the
+compressed section of the file. This may be in any property list format
+supported by the operating system. Dry Dock generates binary format property
+lists, unless the  “debug format drydock documents” preference value is set to
+true, in which case XML format is used. The rest of this document concerns the
+contents of the property list.
+
+PROPERTY LIST
+The root element of the property list is a dictionary. It always contains an
+element labeled “format”, which is an integer used for compatibility testing.
+Currently the value is 1. If future versions of Dry Dock generate documents
+which are not backwards-compatible – for instance, using a different method to
+stor vertex data – this value will be incremented. If the value of format is
+not recognised, it can be assumed that the data in the document is not
+recoverable.
+
+The root element may contain an optional element labelled “generator”. This is
+a string containing the name and version number of the application which wrote
+the document. While optional, it is strongly reccomended that any third-party
+software generating Dry Dock documents write this value to assist in debugging
+compatibility issues.
+
+The root element should also contain a dictionary element labelled “root mesh”.
+The contents of this dictionary are described under MESHES below. The root mesh
+is the primary mesh of an Oolite entity. Subentities, exhaust plumes etc. will
+be specified by as yet undefined elements.
+
+MESHES
+Future versions of Dry Dock will generate documents containing multiple meshes.
+The format will be the same as for the root mesh. The current format of the
+root mesh is described below.
+
+Each mesh is contained in a dictionary. This dictionary will be referred to as
+the root element of the mesh; it should be noted that this is not the same as
+the root element of the document. Currently six elements are defined within the
+root element of a mesh.
+
+The “name” element is a string specifying the display name of the mesh.
+
+The “source file” element is a string containing the URL of the file the mesh
+was imported from.
+
+The “vertices” and “normals” elements are data elements containing arrays of
+vectors. Each vector is represented as three 32-bit floating-point numbers in
+little-endian format, in the order x, y, z. The X co-ordinates are flipped
+relative to Oolite’s usage. The number of vectors in each array is the number
+of octets in the array divided by twelve, rounded down (although the remainder
+should, of course, be zero).
+
+The “materials” element is an array of material dictionaries for the mesh. Each
+material for a given mesh must have a different name. The format of material
+dictionaries is specified under MATERIALS below.
+
+The “faces” element is an array of face dictionaries. Each face dictionary
+contains at least three elements. The “material” element is an index into the
+mesh’s “materials” array. The “normal” element is an index into the mesh’s
+“normals” array. The “vertices” element is an array of at least three vertex
+dictionaries. (Currently, Dry Dock is limited to at most 16 vertices per face.)
+Each vertex dictionary contains three elements: “vertex” is an index into the
+mesh’s “vertices” array, and “u” and “v” are floating-point texture
+co-ordinates in the range [0..1].
+
+It is expected that future versions of Dry Dock will switch to using an array
+of texture co-ordinates instead of storing them per vertex. In this case, the
+array will be stored as a data element “texture co-ordinates” in the mesh,
+along the lines of the current “vertices” and “normals” arrays but with only
+two little-endian floats per entry. “vertices” entries for faces will then
+contain a “texture co-ordinates” entry which is an integer integer into this
+array. This change will not increment the root “format” element, as the overall
+file will still be partially readable by older versions of Dry Dock.
+
+MATERIALS
+Material dictionaries currently contain up to two elements. The “name” element
+specifies the name of the material and must be unique within the mesh, although
+different meshes in the document may use materials of the same name. The
+“diffuse map” element specifies the file name of the image to use as the
+diffuse map/colour map for the material. If the name and diffuse map name of
+a material are identical (as happens when importing an Oolite DAT document),
+only “diffuse map” will be specified.

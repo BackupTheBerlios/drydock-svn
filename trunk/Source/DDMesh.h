@@ -71,6 +71,7 @@ typedef struct DDMeshFaceData
 	float					_rMax;
 	
 	NSString				*_name;
+	NSURL					*_sourceFile;
 	
 	BOOL					_hasNonTriangles;
 }

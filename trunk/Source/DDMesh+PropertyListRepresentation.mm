@@ -21,7 +21,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#define ENABLE_TRACE 1
+#define ENABLE_TRACE 0
 
 #import "DDMesh.h"
 #import "Logging.h"
@@ -62,16 +62,21 @@ static void ByteSwap4Array(void *ioBuffer, size_t inCount);
 	
 	BOOL					OK = YES;
 	NSMutableDictionary		*result;
-	NSMutableDictionary		*materials;
+	NSMutableArray			*materialsArray;
 	DDMaterial				*material;
-	unsigned				i;
+	unsigned				i, j;
 	NSEnumerator			*materialEnumerator;
 	NSString				*name;
 	id						plist;
 	NSData					*vertexData = nil, *normalData = nil;
 	size_t					verticesSize, normalsSize;
+	DDMeshFaceData			*face;
+	NSMutableArray			*facesArray;
+	NSMutableDictionary		*faceDict;
+	NSMutableArray			*faceVerts;
+	NSMutableDictionary		*vertDict;
 	
-	result = [[NSMutableDictionary alloc] initWithCapacity:4];
+	result = [[NSMutableDictionary alloc] initWithCapacity:6];
 	if (nil == result)
 	{
 		OK = NO;
@@ -79,14 +84,15 @@ static void ByteSwap4Array(void *ioBuffer, size_t inCount);
 	}
 	
 	if (nil != _name) [result setObject:_name forKey:@"name"];
+	if (nil != _sourceFile) [result setObject:_sourceFile forKey:@"source file"];
 	
 	// Add materials
 	if (OK)
 	{
 		if (0 != _materialCount)
 		{
-			materials = [[NSMutableDictionary alloc] initWithCapacity:_materialCount];
-			if (nil == materials)
+			materialsArray = [[NSMutableArray alloc] initWithCapacity:_materialCount];
+			if (nil == NSMutableArray)
 			{
 				OK = NO;
 				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage."];
@@ -101,11 +107,11 @@ static void ByteSwap4Array(void *ioBuffer, size_t inCount);
 					OK = NO;
 					break;
 				}
-				[materials setObject:plist forKey:[material name]];
+				[NSMutableArray addObject:plist];
 			}
 			
-			if (OK) [result setObject:materials forKey:@"materials"];
-			[materials release];
+			if (OK) [result setObject:NSMutableArray forKey:@"materials"];
+			[NSMutableArray release];
 		}
 	}
 	
@@ -155,6 +161,48 @@ static void ByteSwap4Array(void *ioBuffer, size_t inCount);
 	{
 		[result setObject:vertexData forKey:@"vertices"];
 		[result setObject:normalData forKey:@"normals"];
+	}
+	
+	// Add faces
+	if (OK)
+	{
+		face = _faces;
+		facesArray = [[NSMutableArray alloc] initWithCapacity:_faceCount];
+		if (nil == facesArray)
+		{
+			OK = NO;
+			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage."];
+		}
+		
+		i = _faceCount;
+		while (i-- && OK)
+		{
+			faceVerts = [[NSMutableArray alloc] initWithCapacity:face->vertexCount];
+			if (nil == faceVerts)
+			{
+				OK = NO;
+				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage."];
+			}
+			if (!OK) break;
+			
+			for (j = 0; j != face->vertexCount; ++j)
+			{
+				[faceVerts addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+										[NSNumber numberWithInt:face->verts[j]], @"vertex",
+										[NSNumber numberWithFloat:face->tex_s[j]], @"u",
+										[NSNumber numberWithFloat:face->tex_t[j]], @"v",
+										nil]];
+			}
+			
+			[facesArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+										[NSNumber numberWithInt:face->normal], @"normal",
+										[NSNumber numberWithInt:face->material], @"material",
+										faceVerts, @"vertices",
+										nil]];
+			[faceVerts release];
+			face++;
+		}
+		if (OK) [result setObject:facesArray forKey:@"faces"];
 	}
 	
 	if (!OK)

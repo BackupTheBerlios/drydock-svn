@@ -1,11 +1,11 @@
 /*
-	DDErrorDescription.h
+	NSData+Deflate.h
 	Dry Dock for Oolite
 	$Id$
 	
-	Provide descriptions of various error codes.
+	Category adding zlib/deflate compression to NSData.
 	
-	Copyright © 2005-2006 Jens Ayton
+	Copyright © 2006 Jens Ayton
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the “Software”), to deal in the Software without
@@ -24,10 +24,23 @@
 */
 
 #import <Foundation/Foundation.h>
-#import <errno.h>
 
-FOUNDATION_EXPORT NSString *OSStatusErrorNSString(OSStatus inCode);
-FOUNDATION_EXPORT NSString *FourCharCodeToNSString(FourCharCode inCode);
-FOUNDATION_EXPORT NSString *ErrnoToNSString(int inErrno);
-#define ErrnoAsNSString() ErrnoToNSString(errno)
-FOUNDATION_EXPORT NSString *ZLibErrorToNSString(int inCode);
+typedef enum
+{
+	kInflateSuccess,
+	kInflateParamError,
+	kInflatePrefixMismatch,
+	kInflateAllocationFailure,
+	kInflateDecompressionFailure
+} NSData_InflateResult;
+
+
+@interface NSData (Deflate)
+
+- (NSData *)deflatedData;
+- (NSData_InflateResult)inflatedData:(NSData **)outData outputSize:(size_t)inSize;
+
+- (NSData *)deflatedDataPrefixedWith:(NSData *)inPrefix level:(int)inLevel;
+- (NSData_InflateResult)inflatedData:(NSData **)outData outputSize:(size_t)inSize ifPrefixedWith:(NSData *)inPrefix;
+
+@end

@@ -21,7 +21,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#define ENABLE_TRACE 1
+#define ENABLE_TRACE 0
 
 #import "DDTextureBuffer.h"
 #import "DDUtilities.h"

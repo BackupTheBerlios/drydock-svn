@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A032044096C10FB0000B217 /* Carbon.framework */; };
+		1A085A0109B46B1400FFD056 /* NSData+Deflate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */; };
+		1A085A0209B46B1400FFD056 /* NSData+Deflate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A085A0009B46B1400FFD056 /* NSData+Deflate.m */; };
+		1A085A5309B4718300FFD056 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A085A5209B4718300FFD056 /* libz.dylib */; };
 		1A098873098AEC11007C2F5F /* BSTrampoline.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098872098AEC11007C2F5F /* BSTrampoline.m */; };
 		1A098889098AED78007C2F5F /* BS-HOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098888098AED78007C2F5F /* BS-HOM.m */; };
 		1A09893F098AFBD2007C2F5F /* Lightwave OBJ Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A09893E098AFBD2007C2F5F /* Lightwave OBJ Model.icns */; };
@@ -137,6 +140,7 @@
 				1A57040309B12B9400E0E17D /* DDPropertyListRepresentation.h in CopyFiles */,
 				1A5705EB09B1D10F00E0E17D /* DDNormalSet.h in CopyFiles */,
 				1A5707A709B255C700E0E17D /* DDMaterialSet.h in CopyFiles */,
+				1A085A0109B46B1400FFD056 /* NSData+Deflate.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +151,9 @@
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1A032044096C10FB0000B217 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		1A0322A8096C3D890000B217 /* Change Log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Change Log.txt"; sourceTree = "<group>"; };
+		1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Deflate.h"; sourceTree = "<group>"; };
+		1A085A0009B46B1400FFD056 /* NSData+Deflate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Deflate.m"; sourceTree = "<group>"; };
+		1A085A5209B4718300FFD056 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
 		1A098871098AEC11007C2F5F /* BSTrampoline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSTrampoline.h; sourceTree = "<group>"; };
 		1A098872098AEC11007C2F5F /* BSTrampoline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSTrampoline.m; sourceTree = "<group>"; };
 		1A098887098AED78007C2F5F /* BS-HOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BS-HOM.h"; sourceTree = "<group>"; };
@@ -320,6 +327,7 @@
 				1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */,
 				1A78150309767395001C0020 /* Accelerate.framework in Frameworks */,
 				1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */,
+				1A085A5309B4718300FFD056 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +343,7 @@
 				1A032044096C10FB0000B217 /* Carbon.framework */,
 				1A18DE1F096457E90010CE0B /* Message.framework */,
 				1A78150209767395001C0020 /* Accelerate.framework */,
+				1A085A5209B4718300FFD056 /* libz.dylib */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -355,6 +364,20 @@
 				1A245C4E09A46B8A00DC42F4 /* OoliteDATLexTest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1A085A0509B46B1C00FFD056 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				1A7D60E9094EDA9E00E9D611 /* Scene Graph */,
+				1A67FEC5098C86D4003BDAD5 /* Problem Reporter */,
+				1A245C0D09A4675100DC42F4 /* Lexers */,
+				1AE7E10B094FA9A2000F6B6E /* DDError.h */,
+				1AE7E10C094FA9A2000F6B6E /* DDError.mm */,
+				1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */,
+				1A085A0009B46B1400FFD056 /* NSData+Deflate.m */,
+			);
+			name = Other;
 			sourceTree = "<group>";
 		};
 		1A098882098AECDE007C2F5F /* BS-HOM */ = {
@@ -575,11 +598,7 @@
 				1A7D60E6094EDA9700E9D611 /* Model */,
 				1A7D60E3094EDA8200E9D611 /* View */,
 				1A7D60E0094EDA7A00E9D611 /* Controller */,
-				1A7D60E9094EDA9E00E9D611 /* Scene Graph */,
-				1A67FEC5098C86D4003BDAD5 /* Problem Reporter */,
-				1A245C0D09A4675100DC42F4 /* Lexers */,
-				1AE7E10B094FA9A2000F6B6E /* DDError.h */,
-				1AE7E10C094FA9A2000F6B6E /* DDError.mm */,
+				1A085A0509B46B1C00FFD056 /* Other */,
 				1AA5485C099CB59D00625FF2 /* Third-party */,
 			);
 			name = Classes;
@@ -824,6 +843,7 @@
 				1A5703DA09B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm in Sources */,
 				1A5705EC09B1D10F00E0E17D /* DDNormalSet.mm in Sources */,
 				1A5707A809B255C700E0E17D /* DDMaterialSet.mm in Sources */,
+				1A085A0209B46B1400FFD056 /* NSData+Deflate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

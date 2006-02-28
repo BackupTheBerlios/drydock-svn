@@ -23,6 +23,7 @@
 
 #import "DDErrorDescription.h"
 #import <Carbon/Carbon.h>
+#import <zlib.h>
 
 
 #define CASE(foo) case foo: return @#foo
@@ -195,5 +196,29 @@ NSString *ErrnoToNSString(int inErrno)
 		}
 	#endif
 	
-	if (nil == result) result = [NSString stringWithFormat:@"%i", (int)inErrno];
+	return [NSString stringWithFormat:@"%i", (int)inErrno];
+}
+
+
+NSString *ZLibErrorToNSString(int inCode)
+{
+	#ifndef NDEBUG
+		switch (inCode)
+		{
+			CASE(Z_OK);
+			CASE(Z_STREAM_END);
+			CASE(Z_NEED_DICT);
+			case Z_ERRNO:
+				if (0 != errno) return ErrnoAsNSString();
+				else return @"Z_ERRNO";
+			
+			CASE(Z_STREAM_ERROR);
+			CASE(Z_DATA_ERROR);
+			CASE(Z_MEM_ERROR);
+			CASE(Z_BUF_ERROR);
+			CASE(Z_VERSION_ERROR);
+		}
+	#endif
+	
+	return [NSString stringWithFormat:@"%i", (int)inCode];
 }
