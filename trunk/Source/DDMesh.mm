@@ -271,6 +271,7 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	}
 	
 	newFaces = (DDMeshFaceData *)malloc(sizeof(DDMeshFaceData) * total);
+	j = 0;
 	for (i = 0; i != count; ++i)
 	{
 		if (_faces[i].vertexCount == 3)

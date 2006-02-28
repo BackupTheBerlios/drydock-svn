@@ -131,8 +131,6 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 	
 	[nameField setObjectValue:[[self document] modelName]];
 	[self updateDimensionFields];
-	[verticesField setIntValue:[_mesh vertexCount]];
-	[facesField setIntValue:[_mesh faceCount]];
 	
 	[glView setObjectSize:_objectRadius];
 	
@@ -210,6 +208,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 - (void)sceneModified:notification
 {
 	[self setNeedsDisplay];
+	[self updateDimensionFields];
 }
 
 
@@ -335,6 +334,8 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 	[lengthField setFloatValue:l];
 	[breadthField setFloatValue:w];
 	[heightField setFloatValue:h];
+	[verticesField setIntValue:[_mesh vertexCount]];
+	[facesField setIntValue:[_mesh faceCount]];
 }
 
 

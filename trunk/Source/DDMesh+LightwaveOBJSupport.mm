@@ -165,7 +165,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 				if (nil == materialLibrary)
 				{
 					materialLibrary = [[self loadObjMaterialLibraryNamed:params relativeTo:inFile issues:ioIssues] retain];
-					materials = [[DDMaterialSet alloc] initWithCapacity:[materialLibrary count]];
+					if (nil != materialLibrary) materials = [[DDMaterialSet alloc] initWithCapacity:[materialLibrary count]];
 				}
 				else
 				{
@@ -439,7 +439,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 			else if ([keyword isEqual:@"usemtl"])
 			{
 				// Use Material
-				if (nil == materials) materials = [DDMaterialSet setWithCapacity:1];
+				if (nil == materials) materials = [[DDMaterialSet alloc] initWithCapacity:1];
 				currentMaterial = [materials indexForName:params];
 				if (NSNotFound == currentMaterial)
 				{

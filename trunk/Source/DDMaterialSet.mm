@@ -106,7 +106,13 @@
 	NSNumber			*index;
 	int					result;
 	
-	if (count == max) [NSException raise:NSRangeException format:@"Overflow in DDNormalSet of capacity %u.", max];
+	if (count == max)
+	{
+		LogMessage(@"Growing DDMaterialSet.");
+		max *= 2;
+		array = (DDMaterial **)realloc(array, sizeof (DDMaterial *) * max);
+		if (nil == array) [NSException raise:NSMallocException format:@"%s: failed to grow a DDMaterialSet (out of memory).", __FUNCTION__];
+	}
 	result = [self indexForName:[inMaterial name]];
 	if (nil != result)
 	{
@@ -130,7 +136,7 @@
 	
 	if (0 == max)
 	{
-		[NSException raise:NSGenericException format:@"Attempt to read DDNormalSet twice."];
+		[NSException raise:NSGenericException format:@"%s: attempt to read DDNormalSet twice.", __FUNCTION__];
 	}
 	
 	*outArray = (DDMaterial **)realloc(array, count * sizeof(DDMaterial *));
