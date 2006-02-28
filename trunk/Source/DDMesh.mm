@@ -21,12 +21,16 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define ENABLE_TRACE 1
+
 #import "DDMesh.h"
 #import "Logging.h"
 #import "DDMaterial.h"
 #import "BS-HOM.h"
 #import "DDProblemReportManager.h"
 #import "CocoaExtensions.h"
+#import "DDNormalSet.h"
+#import "DDUtilities.h"
 
 
 NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMeshModified";
@@ -43,17 +47,19 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 
 - (id)initAsCopyOf:(DDMesh *)inMesh
 {
+	TraceEnter();
+	
 	BOOL				OK = YES;
 	Vector				*vertices = NULL;
+	Vector				*normals = NULL;
 	DDMeshFaceData		*faces = NULL;
-	NSDictionary		*materials = nil;
-	NSDictionary		*materialsByURL = nil;
+	DDMaterial			**materials = NULL;
 	unsigned			i, materialCount;
 	id					*keys, *values;
 	NSArray				*keyArray;
 	id					key;
 	NSZone				*zone;
-	size_t				vertsSize, facesSize;
+	size_t				vertsSize, facesSize, normalsSize, materialsSize;
 	
 	self = [super init];
 	if (nil == self) OK = NO;
@@ -63,70 +69,41 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	if (OK)
 	{
 		vertsSize = sizeof(Vector) * inMesh->_vertexCount;
+		normalsSize = sizeof(Vector) * inMesh->_normalCount;
 		facesSize = sizeof(DDMeshFaceData) * inMesh->_faceCount;
+		materialsSize = sizeof(DDMaterial *) * inMesh->_materialCount;
 		
 		vertices = (Vector *)malloc(vertsSize);
+		normals = (Vector *)malloc(normalsSize);
 		faces = (DDMeshFaceData *)malloc(facesSize);
+		materials = (DDMaterial **)malloc(materialsSize);
 		
-		OK = nil != vertices && nil != faces;
+		OK = NULL != vertices && NULL != normals && NULL != faces && NULL != materials;
 	}
 	
 	if (OK)
 	{
 		// Copy materials
-		materialCount = [inMesh->_materials count];
-		if (0 != materialCount)
+		for (i = 0; i != inMesh->_materialCount; ++i)
 		{
-			keys = (id *)alloca(materialCount * sizeof(id));
-			values = (id *)alloca(materialCount * sizeof(id));
-			keyArray = [inMesh->_materials allKeys];
-			
-			for (i = 0; i != materialCount; ++i)
-			{
-				key = [keyArray objectAtIndex:i];
-				keys[i] = [key copy];
-				values[i] = [[inMesh->_materials objectForKey:key] copy];
-			}
-			@try
-			{
-				materials = [NSDictionary dictionaryWithObjects:values forKeys:keys count:materialCount];
-			}
-			@catch (id whatever) {}
-			if (nil == materials) OK = NO;
-			
-			if (OK)
-			{
-				// Create material-URL-to-material mapping
-				for (i = 0; i != materialCount; ++i)
-				{
-					[keys[i] release];
-					key = [values[i] diffuseMapURL];
-					if (nil == key) key = [NSNull null];
-					keys[i] = [key copy];
-				}
-				@try
-				{
-					materialsByURL = [NSDictionary dictionaryWithObjects:values forKeys:keys count:materialCount];
-				}
-				@catch (id whatever) {}
-				if (nil == materialsByURL) OK = NO;
-			}
-			
-			for (i = 0; i != materialCount; ++i)
-			{
-				[keys[i] release];
-				[values[i] release];
-			}
+			materials[i] = [inMesh->_materials[i] copyWithZone:zone];
 		}
 	}
 	
 	if (OK)
 	{
 		bcopy(inMesh->_vertices, vertices, vertsSize);
+		bcopy(inMesh->_normals, normals, normalsSize);
 		bcopy(inMesh->_faces, faces, facesSize);
+		_vertices = vertices;
+		_normals = normals;
+		_faces = faces;
+		_materials = materials;
 		
 		_vertexCount = inMesh->_vertexCount;
+		_normalCount = inMesh->_normalCount;
 		_faceCount = inMesh->_faceCount;
+		_materialCount = inMesh->_materialCount;
 		_xMin = inMesh->_xMin;
 		_xMax = inMesh->_xMax;
 		_yMin = inMesh->_yMin;
@@ -136,45 +113,48 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 		_rMax = inMesh->_rMax;
 		_hasNonTriangles = inMesh->_hasNonTriangles;
 		_name = [inMesh->_name copyWithZone:zone];
-		
-		// Go over faces, replacing material references
-		for (i = 0; i != _faceCount; ++i)
-		{
-			key = [faces[i].material diffuseMapURL];
-			if (nil == key) key = [NSNull null];
-			faces[i].material = [materialsByURL objectForKey:key];
-		}
-	}
-	
-	if (OK)
-	{
-		_vertices = vertices;
-		_faces = faces;
-		_materials = [materials retain];
 	}
 	
 	if (!OK)
 	{
 		if (vertices) free(vertices);
+		_vertices = NULL;
+		if (normals) free(normals);
+		_normals = NULL;
 		if (faces) free(faces);
+		_faces = NULL;
+		if (materials) free(materials);
+		_materials = NULL;
+		
 		[self release];
 		self = nil;
 	}
 	
 	return self;
+	TraceExit();
 }
 
 
 - (void)dealloc
 {
+	TraceEnter();
+	
 	if (NULL != _vertices) free(_vertices);
+	if (NULL != _normals) free(_normals);
 	if (NULL != _faces) free(_faces);
-	[_materials release];
+	if (NULL != _materials)
+	{
+		for (int i = 0; i != _materialCount; ++i)
+		{
+			[_materials[i] release];
+		}
+	}
 	[_name release];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:nil name:kNotificationDDMeshModified object:self];
 	
 	[super dealloc];
+	TraceExit();
 }
 
 
@@ -189,12 +169,15 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 
 - (void)recalculateNormals
 {
+	TraceEnter();
+	
 	// Calculate new normal for each face.
 	unsigned				i;
-	DDMeshFaceData		*face;
+	DDMeshFaceData			*face;
 	Vector					v0, v1, v2,
 							a, b,
 							n;
+	DDNormalSet				*normals;
 	
 	/*
 		Calculation is as follows:
@@ -203,6 +186,8 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 		Take cross product and normalise. (n)
 	*/
 	
+	free(_normals);
+	normals = [DDNormalSet setWithCapacity:_faceCount];
 	face = _faces;
 	for (i = 0; i != _faceCount; ++i)
 	{
@@ -215,17 +200,22 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 		
 		n = (a % b);
 		
-		face->normal = n.Normalize();
+		face->normal = [normals indexForVector:n];
 		
 		++face;
 	}
+	[normals getArray:&_normals andCount:&_normalCount];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
+	
+	TraceExit();
 }
 
 
 - (void)reverseWinding
 {
+	TraceEnter();
+	
 	// Reverse winding direction by changing the order of vertices in each face.
 	unsigned				i, j, faceVerts;
 	DDMeshFaceData		*face;
@@ -258,11 +248,15 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
+	
+	TraceExit();
 }
 
 
 - (void)triangulate
 {
+	TraceEnter();
+	
 	unsigned			i, j, k, count, total, subCount;
 	DDMeshFaceData		*newFaces;
 	
@@ -319,11 +313,15 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	_hasNonTriangles = NO;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
+	
+	TraceExit();
 }
 
 
 - (void)flipX
 {
+	TraceEnter();
+	
 	// Negate X co-ordinate of each vertex, and each face normal, and also X extremes
 	unsigned			i;
 	float				temp;
@@ -332,9 +330,9 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	{
 		_vertices[i].x *= -1.0;
 	}
-	for (i = 0; i != _faceCount; ++i)
+	for (i = 0; i != _normalCount; ++i)
 	{
-		_faces[i].normal.x *= -1.0;
+		_normals[i].x *= -1.0;
 	}
 	
 	temp = _xMax;
@@ -342,11 +340,15 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	_xMax = -temp;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
+	
+	TraceExit();
 }
 
 
 - (void)flipY
 {
+	TraceEnter();
+	
 	// Negate Y co-ordinate of each vertex, and each face normal, and also Y extremes
 	unsigned			i;
 	float				temp;
@@ -355,9 +357,9 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	{
 		_vertices[i].y *= -1.0;
 	}
-	for (i = 0; i != _faceCount; ++i)
+	for (i = 0; i != _normalCount; ++i)
 	{
-		_faces[i].normal.y *= -1.0;
+		_normals[i].y *= -1.0;
 	}
 	
 	temp = _yMax;
@@ -365,11 +367,15 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	_yMax = -temp;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
+	
+	TraceExit();
 }
 
 
 - (void)flipZ
 {
+	TraceEnter();
+	
 	// Negate Z co-ordinate of each vertex, and each face normal, and also Z extremes
 	unsigned			i;
 	float				temp;
@@ -378,9 +384,9 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	{
 		_vertices[i].z *= -1.0;
 	}
-	for (i = 0; i != _faceCount; ++i)
+	for (i = 0; i != _normalCount; ++i)
 	{
-		_faces[i].normal.z *= -1.0;
+		_normals[i].z *= -1.0;
 	}
 	
 	temp = _zMax;
@@ -388,13 +394,17 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	_zMax = -temp;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
+	
+	TraceExit();
 }
 
 
 - (void)recenter
 {
+	TraceEnter();
+	
 	unsigned			i;
-	Vector				v, centre;
+	Vector				v, centre(0, 0, 0);
 	float				r;
 	
 	// Average all the vertices together
@@ -404,23 +414,16 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	}
 	centre /= _vertexCount;
 	
-	// Shift all the vertices over, and recalculate extremes
+	// Shift all the vertices over, and recalculate rMax
 	_rMax = 0;
-	_xMin = INFINITY; _xMax = -INFINITY;
-	_yMin = INFINITY; _yMax = -INFINITY;
-	_zMin = INFINITY; _zMax = -INFINITY;
+	_xMin -= centre.x; _xMax -= centre.x;
+	_yMin -= centre.y; _yMax -= centre.y;
+	_zMin -= centre.z; _zMax -= centre.z;
 	
 	for (i = 0; i != _vertexCount; ++i)
 	{
 		v = _vertices[i] - centre;
 		_vertices[i] = v;
-		
-		if (v.x < _xMin) _xMin = v.x;
-		if (_xMax < v.x) _xMax = v.x;
-		if (v.y < _yMin) _yMin = v.y;
-		if (_yMax < v.y) _yMax = v.y;
-		if (v.z < _zMin) _zMin = v.z;
-		if (_zMax < v.z) _zMax = v.z;
 		
 		r = v.SquareMagnitude();
 		if (_rMax < r) _rMax = r;
@@ -429,11 +432,15 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	_rMax = sqrt(_rMax);
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
+	
+	TraceExit();
 }
 
 
 - (void)scaleX:(float)inX y:(float)inY z:(float)inZ
 {
+	TraceEnter();
+	
 	unsigned			i;
 	float				r;
 	
@@ -460,12 +467,8 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 	_zMax *= inZ;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
-}
-
-
-- (NSString *)description
-{
-	return [NSString stringWithFormat:@"<%@ %p>{\"%@\", %u vertices, %u faces}", [self className], self, _name ?: @"", _vertexCount, _faceCount];
+	
+	TraceExit();
 }
 
 
@@ -514,6 +517,12 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock kNotificationDDMesh
 - (NSString *)name
 {
 	return _name;
+}
+
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ %p>{\"%@\", %u vertices, %u normals, %u faces}", [self className], self, _name ?: @"", _vertexCount, _normalCount, _faceCount];
 }
 
 @end

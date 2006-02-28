@@ -22,10 +22,12 @@
 */
 
 #import <Cocoa/Cocoa.h>
+#import "DDPropertyListRepresentation.h"
+
 @class DDMesh, DDDocumentWindowController;
 
 
-@interface DDDocument: NSDocument
+@interface DDDocument: NSDocument <DDPropertyListRepresentation>
 {
 	DDMesh							*_mesh;
 	DDDocumentWindowController		*_controller;

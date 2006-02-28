@@ -31,6 +31,8 @@
 #import "DDUtilities.h"
 #import "DDPantherCompatibility.h"
 #import "DDDATLexer.h"
+#import "DDNormalSet.h"
+#import "DDMaterialSet.h"
 
 
 // Hard-coded limits from Oolite
@@ -51,7 +53,7 @@ enum
 	BOOL					OK = YES;
 	unsigned				i, j, lineCount;
 	NSScanner				*scanner = nil;
-	unsigned				vertexCount, faceCount;
+	unsigned				vertexCount, faceCount, materialCount;
 	Vector					*vertices = NULL;
 	DDMeshFaceData			*faces = NULL;
 	float					x, y, z;
@@ -60,7 +62,8 @@ enum
 							yMin = 0, yMax = 0,
 							zMin = 0, zMax = 0,
 							rMax = 0, r;
-	NSMutableDictionary		*materials = nil;
+	NSMutableDictionary		*materialDict = nil;
+	DDMaterialSet			*materials = nil;
 	NSURL					*texURL;
 	NSCharacterSet			*whiteSpaceAndNL, *whiteSpace;
 	NSString				*texFileName;
@@ -71,6 +74,7 @@ enum
 	NSString				*tokString;
 	int						tok;
 	BOOL					readTextures;
+	DDNormalSet				*normals;
 	
 	assert(nil != inFile && nil != ioIssues);
 	
@@ -157,7 +161,7 @@ enum
 			
 			x = -x;		// Dunno why, but it does the right thing.
 			
-			vertices[i].Set(x, y, z);
+			vertices[i].Set(x, y, z).CleanZeros();
 			
 			// Maintain bounds
 			if (x < xMin) xMin = x;
@@ -184,7 +188,8 @@ enum
 	if (OK)
 	{
 		faces = (DDMeshFaceData *)calloc(sizeof(DDMeshFaceData), faceCount);
-		if (NULL == faces)
+		normals = [DDNormalSet setWithCapacity:faceCount];
+		if (NULL == faces || nil == normals)
 		{
 			OK = NO;
 			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
@@ -226,7 +231,7 @@ enum
 					break;
 				}
 				
-				faces[i].normal.Set(-x, y, z);
+				faces[i].normal = [normals indexForVector:Vector(-x, y, z)];
 				
 				// Read vertex count
 				if (![lexer readInteger:&faceVerts])
@@ -307,8 +312,13 @@ enum
 		
 		if (readTextures)
 		{
-			materials = [NSMutableDictionary dictionary];
-			if (nil == materials) OK = NO;
+			materials = [DDMaterialSet setWithCapacity:faceCount];
+			materialDict = [NSMutableDictionary dictionaryWithCapacity:faceCount];
+			if (nil == materials || nil == materialDict)
+			{
+				OK = NO;
+				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
+			}
 			
 			if (OK)
 			{
@@ -323,20 +333,20 @@ enum
 						break;
 					}
 					
-					material = [materials objectForKey:texFileName];
-					if (nil == material)
+					faces[i].material = [materials indexForName:texFileName];
+					if (NSNotFound == faces[i].material)
 					{
-						material = [DDMaterial materialWithName:texFileName relativeTo:inFile issues:ioIssues];
+						material = [DDMaterial materialWithName:texFileName];
+						[material setDiffuseMap:texFileName relativeTo:inFile issues:ioIssues];
 						if (nil == material)
 						{
 							TraceMessage(@"** Failed to create material for face index %u.", i + 1);
 							OK = NO;
+							[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
 							break;
 						}
-						[materials setObject:material forKey:texFileName];
+						faces[i].material = [materials addMaterial:material];
 					}
-					
-					faces[i].material = material;
 					
 					// Read texture scale
 					if (![lexer readReal:&max_s] ||
@@ -367,6 +377,18 @@ enum
 				}
 			}
 		}
+		else if (OK)
+		{
+			// Create a dummy material. All the faces will have material index 0 because we calloc()ed the array.
+			_materialCount = 1;
+			_materials = (DDMaterial **)calloc(sizeof(DDMaterial *), 1);
+			if (NULL != _materials) _materials[0] = [DDMaterial materialWithName:@"$untextured"];
+			if (NULL == _materials || nil == _materials[0])
+			{
+				OK = NO;
+				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
+			}
+		}
 	}
 	
 	// Look for END
@@ -394,8 +416,12 @@ enum
 		_vertexCount = vertexCount;
 		_vertices = vertices;
 		
+		[normals getArray:&_normals andCount:&_normalCount];
+		
 		_faceCount = faceCount;
 		_faces = faces;
+		
+		if (nil != materials) [materials getArray:&_materials andCount:&_materialCount];
 		
 		_xMin = xMin;
 		_xMax = xMax;
@@ -404,13 +430,12 @@ enum
 		_zMin = zMin;
 		_zMax = zMax;
 		_rMax = rMax;
-		
-		_materials = [materials retain];
 	}
 	else
 	{
-		free(vertices);
-		free(faces);
+		if (NULL != vertices) free(vertices);
+		if (NULL != normals) free(normals);
+		if (NULL != faces) free(faces);
 		
 		[self release];
 		self = nil;
@@ -423,11 +448,11 @@ enum
 
 - (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingOoliteDATToURL:(NSURL *)inFile
 {
-	NSEnumerator			*materialEnum;
 	DDMaterial				*material;
 	NSString				*name;
 	NSCharacterSet			*whiteSpace, *miscChars;
 	unsigned				materialCount;
+	int						i;
 	
 	if (_hasNonTriangles)
 	{
@@ -442,8 +467,7 @@ enum
 	{
 		[ioManager addStopIssueWithKey:@"tooManyFaces" localizedFormat:@"This document contains %u faces; the selected format allows no more than %u.", _faceCount, kMaxDATFaces];
 	}
-	materialCount = [_materials count];
-	if (kMaxDATMaterials < materialCount)
+	if (kMaxDATMaterials < _materialCount)
 	{
 		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u materials; the selected format allows no more than %u.", materialCount, kMaxDATMaterials];
 	}
@@ -451,9 +475,10 @@ enum
 	// Check for invalid texture names
 	whiteSpace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
 	miscChars = [NSCharacterSet characterSetWithCharactersInString:@",#"];
-	for (materialEnum = [_materials objectEnumerator]; material = [materialEnum nextObject]; )
+	for (i = 0; i != _materialCount; ++i)
 	{
-		name = [material keyName];
+		material = _materials[i];
+		name = [material name];
 		if ([name rangeOfCharacterFromSet:whiteSpace].length != 0
 			|| [name rangeOfCharacterFromSet:miscChars].length != 0
 			|| [name rangeOfString:@"//"].length != 0)
@@ -478,6 +503,7 @@ enum
 	DDMeshFaceData			*face;
 	NSString				*texName;
 	DDMaterial				*material;
+	Vector					normal;
 	
 	if (_hasNonTriangles) [self triangulate];
 	
@@ -489,9 +515,9 @@ enum
 	[formatter release];
 	
 	// Build texture list string
-	for (texEnum = [_materials objectEnumerator]; material = [texEnum nextObject]; )
+	for (i = 0; i != _materialCount; ++i)
 	{
-		texName = [material keyName];
+		texName = [_materials[i] name];
 		if (nil != texName)
 		{
 			if (nil == texNameString) texNameString = [texName mutableCopy];
@@ -526,9 +552,10 @@ enum
 	{
 		face = _faces + i;
 		faceVerts = face->vertexCount;
+		normal = _normals[face->normal];
 		
 		[dataString appendFormat:@"\n%u,%u,%u,\t%10f,%10f,%10f,\t%u",
-			face->color[0], face->color[1], face->color[2], -face->normal.x, face->normal.y, face->normal.z, faceVerts];
+			face->color[0], face->color[1], face->color[2], -normal.x, normal.y, normal.z, faceVerts];
 		
 		for (j = 0; j != faceVerts; ++j)
 		{
@@ -544,7 +571,7 @@ enum
 		faceVerts = face->vertexCount;
 		
 		// Really ought to build material pointer -> UTF8String CFDictionary
-		[dataString appendFormat:@"\n%-16s\t1.0 1.0   ", [[face->material keyName] UTF8String]];
+		[dataString appendFormat:@"\n%-16s\t1.0 1.0   ", [[_materials[face->material] diffuseMapName] UTF8String]];
 		
 		for (j = 0; j != faceVerts; ++j)
 		{
@@ -557,12 +584,11 @@ enum
 	if (OK)
 	{
 		OK = [dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding errorCompat:&error];
-	}
-	
-	if (!OK)
-	{
-		if (nil != error) [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
-		else [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
+		if (!OK)
+		{
+			if (nil != error) [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
+			else [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
+		}
 	}
 	return OK;
 }

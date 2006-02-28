@@ -32,6 +32,7 @@
 
 // "Issue" strings
 "A memory allocation failed. This may be due to a memory shortage or a faulty input file." = "En minnestilldelning misslyckades. Detta kan bero på minnesbrist eller på ett fel i filen.";
+"A memory allocation failed. This is probably due to a memory shortage" = "En minnestilldelning misslyckades. Detta beror förmodligen på minnesbrist.";
 "This document contains non-triangular faces. In order to save it in the selected format, Dry Dock will triangulate it." = "Dokumentet innehåller icke-triangulära sidor. För at spare det i det valda formatet kommer Torrdockan att omvandle det till trianglar.";
 "This document contains a texture named \"%@\". The specified format does not support texture names containing spaces, commas, line breaks, \"#\" or \"//\"." = "Dokumentet inehaller en textur vid namn ”%@”. Det valda filformatet tillåter inte texturnamn som inehåller mellanslag, kommatecken, radbrytningar, ”#” eller ”//”.";
 "No data could be loaded from %@. %@" = "Ingen data kunde läsas från %@.";

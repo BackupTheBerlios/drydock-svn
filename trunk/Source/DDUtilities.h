@@ -24,6 +24,7 @@
 */
 
 #import <Foundation/Foundation.h>
+#import <stdint.h>
 
 
 #define TIGER_OR_LATER (!TARGET_CPU_PPC || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4))
@@ -35,4 +36,13 @@ extern NSString *ApplicationNameAndVersionString(void);
 	#define TigerOrLater() 1
 #else
 	FOUNDATION_EXPORT BOOL TigerOrLater(void);
+#endif
+
+
+#if (UINTPTR_MAX == UINT32_MAX)
+#define numberWithPointer numberWithUnsignedLong
+#elif (UINTPTR_MAX == UINT64_MAX)
+#define numberWithPointer numberWithUnsignedLongLong
+#else
+#error Need to define numberWithPointer!
 #endif

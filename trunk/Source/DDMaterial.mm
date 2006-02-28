@@ -39,29 +39,34 @@
 
 @implementation DDMaterial
 
-+ (id)materialWithName:(NSString *)inName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues
++ (id)materialWithName:(NSString *)inName
 {
 	TraceEnter();
 	
-	return [[[self alloc] initWithName:inName relativeTo:inBaseFile issues:ioIssues] autorelease];
+	return [[[self alloc] initWithName:inName] autorelease];
 	
 	TraceExit();
 }
 
 
-+ (id)materialWithFile:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
+- (id)initWithName:(NSString *)inName
 {
-	TraceEnter();
+	TraceEnterMsg(@"Called with name=\"%@\" {", inName);
 	
-	return [[[self alloc] initWithFile:inFile issues:ioIssues] autorelease];
+	self = [super init];
+	if (nil != self)
+	{
+		_name = [inName copy];
+	}
 	
+	return self;
 	TraceExit();
 }
 
 
-- (id)initWithName:(NSString *)inName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues
+- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues
 {
-	TraceEnterMsg(@"Called for %@ relative to %@.", inName, inBaseFile);
+	TraceEnterMsg(@"Called for %@ relative to %@.", inFileName, inBaseFile);
 	
 	DDTextureBuffer			*texture;
 	NSURL					*url;
@@ -70,25 +75,23 @@
 	OSStatus				err;
 	NSString				*path;
 	
-	_texFileName = [inName retain];
-	
 	// Look for texture in same folder as base file
 	TraceMessage(@"Looking in same folder");
-	url = [NSURL URLWithString:inName relativeToURL:inBaseFile];
+	url = [NSURL URLWithString:inFileName relativeToURL:inBaseFile];
 	texture = [DDTextureBuffer textureWithFile:url issues:ioIssues];
 	
 	if (nil == texture)
 	{
 		// Try in base/Textures/file
 		TraceMessage(@"Looking in Textures/");
-		url = [NSURL URLWithString:[@"Textures" stringByAppendingPathComponent:inName] relativeToURL:inBaseFile];
+		url = [NSURL URLWithString:[@"Textures" stringByAppendingPathComponent:inFileName] relativeToURL:inBaseFile];
 		texture = [DDTextureBuffer textureWithFile:url issues:ioIssues];
 	}
 	
 	if (nil == texture)
 	{
 		// Try in base/../Textures/file
-		url = [NSURL URLWithString:[[@".." stringByAppendingPathComponent:@"Textures"] stringByAppendingPathComponent:inName] relativeToURL:inBaseFile];
+		url = [NSURL URLWithString:[[@".." stringByAppendingPathComponent:@"Textures"] stringByAppendingPathComponent:inFileName] relativeToURL:inBaseFile];
 		url = [url standardizedURL];
 		TraceMessage(@"Looking in ../Textures/ (%@)", url);
 		texture = [DDTextureBuffer textureWithFile:url issues:ioIssues];
@@ -117,14 +120,14 @@
 		{
 			// Try in [oolite]/Contents/Resources/Textures/file
 			TraceMessage(@"Looking in [oolite]/Contents/Resources/Textures/");
-			path = [oolite pathForResource:inName ofType:nil inDirectory:@"Textures"];
+			path = [oolite pathForResource:inFileName ofType:nil inDirectory:@"Textures"];
 			if (nil != path) texture = [DDTextureBuffer textureWithFile:[NSURL fileURLWithPath:path] issues:ioIssues];
 			
 			if (nil == texture)
 			{
 				// Try in $OOLITE/Contents/Resources/file (because development builds don’t have a Textures subfolder)
 				TraceMessage(@"Looking in [oolite]/Contents/Textures/");
-				path = [oolite pathForResource:inName ofType:nil];
+				path = [oolite pathForResource:inFileName ofType:nil];
 				if (nil != path) texture = [DDTextureBuffer textureWithFile:[NSURL fileURLWithPath:path] issues:ioIssues];
 			}
 		}
@@ -133,7 +136,7 @@
 	if (nil == texture)
 	{
 		TraceMessage(@"Not found, using placeholder.");
-		[ioIssues addNoteIssueWithKey:@"textureNotFound" localizedFormat:@"No texture named \"%@\" could be found, using fallback texture.", inName];
+		[ioIssues addNoteIssueWithKey:@"textureNotFound" localizedFormat:@"No texture named \"%@\" could be found, using fallback texture.", inFileName];
 		texture = [DDTextureBuffer placeholderTextureWithIssues:ioIssues];
 		if (nil == texture)
 		{
@@ -145,68 +148,12 @@
 	
 	if (nil != texture)
 	{
-		[self setDisplayName:inName];
-		self = [self initWithTexture:texture];
+		[_diffuseTexture release];
+		[_diffuseMapName release];
+		_diffuseMapName = [inFileName copy];
+		_diffuseTexture = [texture retain];
+		_diffuseGLName = 0;
 	}
-	
-	if (nil == self)
-	{
-		TraceMessage(@"Reporting texture load failure.");
-		[ioIssues addStopIssueWithKey:@"fallbackTextureNotLoaded" localizedFormat:@"The fallback texture could not be loaded. This probably indicates a memory problem."];
-	}
-	
-	return self;
-	
-	TraceExit();
-}
-
-
-+ (id)placeholderMaterialForFileName:(NSString *)inName
-{
-	DDMaterial *result = [[[self alloc] initWithTexture:[DDTextureBuffer placeholderTextureWithIssues:nil]] autorelease];
-	[result setDisplayName:@"Placeholder"];
-	result->_texFileName = [inName retain];
-	return result;
-}
-
-
-- (id)initWithFile:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
-{
-	TraceEnter();
-	
-	DDTextureBuffer			*texture;
-	
-	texture = [DDTextureBuffer textureWithFile:inFile issues:ioIssues];
-	if (nil == texture) texture = [DDTextureBuffer placeholderTextureWithIssues:ioIssues];
-	
-	if (nil != texture)
-	{
-		self = [self initWithTexture:texture];
-	}
-	else
-	{
-		[self release];
-		self = nil;
-		[ioIssues addStopIssueWithKey:@"noTextureDataLoaded" localizedFormat:@"No texture data could be loaded from %@.", [inFile displayString]];
-	}
-	
-	return self;
-	TraceExit();
-}
-
-
-// Designated initialiser
-- (id)initWithTexture:(DDTextureBuffer *)inTexture;
-{
-	TraceEnter();
-	
-	self = [super init];
-	if (nil != self)
-	{
-		_texture = [inTexture retain];
-	}
-	
-	return self;
 	
 	TraceExit();
 }
@@ -216,9 +163,9 @@
 {
 	TraceEnter();
 	
-	[_texture release];
-	[_displayName autorelease];
-	[_texFileName autorelease];
+	[_name release];
+	[_diffuseMapName autorelease];
+	[_diffuseTexture autorelease];
 	
 	[super dealloc];
 	
@@ -230,47 +177,37 @@
 {
 	TraceEnter();
 	
-	DDMaterial *result = [[DDMaterial allocWithZone:inZone] initWithTexture:_texture];
-	[result setDisplayName:_displayName];
+	DDMaterial *result = [[DDMaterial allocWithZone:inZone] initWithName:_name];
+	result->_diffuseMapName = [_diffuseMapName copyWithZone:inZone];
+	result->_diffuseTexture = [_diffuseTexture retain];
 	
 	return result;
 	TraceExit();
 }
 
 
-- (void)setDisplayName:(NSString *)inName
+- (void)setName:(NSString *)inName
 {
-	[_displayName autorelease];
-	_displayName = [inName retain];
+	[_name autorelease];
+	_name = [inName retain];
 }
 
 
-- (NSString *)displayName
+- (NSString *)name
 {
-	return _displayName;
+	return _name;
 }
 
 
 - (NSURL *)diffuseMapURL
 {
-	return [_texture file];
+	return [_diffuseTexture file];
 }
 
 
 - (NSString *)diffuseMapName
 {
-	return _texFileName;
-}
-
-
-- (NSString *)keyName
-{
-	NSString *result;
-	
-	result = [self diffuseMapName];
-	if (nil == result) result = [self displayName];
-	
-	return result;
+	return _diffuseMapName;
 }
 
 
@@ -281,23 +218,61 @@
 	GLint				level;
 	unsigned			w, h;
 	
-	if (0 == _texName)
+	if (nil == _diffuseTexture)
+	{
+		_diffuseTexture = [DDTextureBuffer placeholderTextureWithIssues:nil];
+	}
+	
+	if (0 == _diffuseGLName)
 	{
 		// Set up GL texture
-		glGenTextures(1, &_texName);
-		glBindTexture(GL_TEXTURE_2D, _texName);
-		[_texture setUpCurrentTexture];
+		glGenTextures(1, &_diffuseGLName);
+		glBindTexture(GL_TEXTURE_2D, _diffuseGLName);
+		[_diffuseTexture setUpCurrentTexture];
 	}
 	else
 	{
-		glBindTexture(GL_TEXTURE_2D, _texName);
+		glBindTexture(GL_TEXTURE_2D, _diffuseGLName);
 	}
+}
+
+
+- (id)initWithPropertyListRepresentation:(id)inPList issues:(DDProblemReportManager *)ioIssues
+{
+}
+
+
+- (void)gatherIssuesWithGeneratingPropertyListRepresentation:(DDProblemReportManager *)ioManager
+{
+	// Nothing to do.
+}
+
+
+- (id)propertyListRepresentationWithIssues:(DDProblemReportManager *)ioIssues
+{
+	TraceEnter();
+	
+	NSMutableDictionary	*result;
+	
+	result = [[NSMutableDictionary alloc] initWithCapacity:2];
+	if (nil == result)
+	{
+		[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage."];
+		return nil;
+	}
+	
+	if (nil != _diffuseMapName) [result setObject:_diffuseMapName forKey:@"diffuse map"];
+	if (nil != _name && ![_diffuseMapName isEqual:_name]) [result setObject:_name forKey:@"name"];
+	
+	return result;
+	
+	TraceExit();
 }
 
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ %p>{\"%@\", texName=%u, texture=%@}", [self className], self, _displayName, _texName, _texture];
+	return [NSString stringWithFormat:@"<%@ %p>{\"%@\", diffuse map=%@}", [self className], self, _name, _diffuseTexture];
 }
 
 @end

@@ -108,15 +108,16 @@ public:
 								return v[inIndex];
 							}
 	
-	inline void				Set(const Scalar inX, const Scalar inY = 0, const Scalar inZ = 0) GCC_ATTR((always_inline))
+	inline Vector			&Set(const Scalar inX, const Scalar inY = 0, const Scalar inZ = 0) GCC_ATTR((always_inline))
 							{
 								x = inX;
 								y = inY;
 								z = inZ;
+								return *this;
 							}
 	
 	#if PHYS_RANDOMIZE_URANDOMLIB
-	inline void				Randomize(void) GCC_ATTR((always_inline))
+	inline Vector			&Randomize(void) GCC_ATTR((always_inline))
 							{
 								x = PRNG.DUniform_m1_1();
 								y = PRNG.DUniform_m1_1();
@@ -125,9 +126,10 @@ public:
 								Normalize();
 								
 								*this *= PRNG.DUniform_m1_1();
+								return *this;
 							}
 	#else
-	inline void				Randomize(void) GCC_ATTR((always_inline))
+	inline Vector			&Randomize(void) GCC_ATTR((always_inline))
 							{
 								x = random() / (float)RAND_MAX;
 								y = random() / (float)RAND_MAX;
@@ -135,7 +137,8 @@ public:
 								
 								Normalize();
 								
-								*this *= random() / (float)RAND_MAX;;
+								*this *= random() / (float)RAND_MAX;
+								return *this;
 							}
 	#endif
 	
@@ -277,7 +280,7 @@ public:
 								return *this / this->Magnitude();
 							}
 	
-	inline const Vector		&Normalize() GCC_ATTR((always_inline))
+	inline Vector			&Normalize() GCC_ATTR((always_inline))
 							{
 								*this /= this->Magnitude();
 								return *this;
@@ -289,7 +292,7 @@ public:
 								return *this * this->ApproxReciprocalMagnitude();
 							}
 	
-	inline const Vector		&ApproxNormalize() GCC_ATTR((always_inline))
+	inline Vector			&ApproxNormalize() GCC_ATTR((always_inline))
 							{
 								*this *= this->ApproxReciprocalMagnitude();
 								return *this;
@@ -321,11 +324,12 @@ public:
 								ApproxUnit().glQuickNormal();
 							}
 	
-	inline const Vector		&CleanZeros() GCC_ATTR((always_inline))
+	inline Vector			&CleanZeros() GCC_ATTR((always_inline))
 							{
 								if (-0.0 == x) x = 0.0;
 								if (-0.0 == y) y = 0.0;
 								if (-0.0 == z) z = 0.0;
+								return *this;
 							}
 	
 	CFStringRef				CopyDescription(void);

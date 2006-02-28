@@ -1,9 +1,11 @@
 /*
-	DDMaterial.h
+	DDErrorDescription.h
 	Dry Dock for Oolite
 	$Id$
 	
-	Copyright © 2006 Jens Ayton
+	Provide descriptions of various error codes.
+	
+	Copyright © 2005-2006 Jens Ayton
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the “Software”), to deal in the Software without
@@ -22,32 +24,9 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "DDPropertyListRepresentation.h"
+#import <errno.h>
 
-@class DDTextureBuffer;
-@class DDProblemReportManager;
-
-
-@interface DDMaterial: NSObject <NSCopying, DDPropertyListRepresentation>
-{
-	NSString				*_name;
-	
-	NSString				*_diffuseMapName;
-	DDTextureBuffer			*_diffuseTexture;
-	GLuint					_diffuseGLName;
-}
-
-+ (id)materialWithName:(NSString *)inName;
-
-- (id)initWithName:(NSString *)inName;
-
-- (void)setName:(NSString *)inName;
-- (NSString *)name;
-
-- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues;
-- (NSURL *)diffuseMapURL;
-- (NSString *)diffuseMapName;
-
-- (void)makeActive;
-
-@end
+FOUNDATION_EXPORT NSString *OSStatusErrorNSString(OSStatus inCode);
+FOUNDATION_EXPORT NSString *FourCharCodeToNSString(FourCharCode inCode);
+FOUNDATION_EXPORT NSString *ErrnoToNSString(int inErrno);
+#define ErrnoAsNSString() ErrnoToNSString(errno)

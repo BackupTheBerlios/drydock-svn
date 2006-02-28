@@ -73,7 +73,7 @@
 
 - (void)glRenderShaded
 {
-	unsigned				i, j;
+	unsigned				i, j, matIdx;
 	DDMeshFaceData			*face;
 	float					white[4] = { 1, 1, 1, 1 };
 	DDMaterial				*currentMaterial = nil;
@@ -83,7 +83,8 @@
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, white);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, white);
 	
-	currentMaterial = _faces[0].material;
+	matIdx = _faces[0].material;
+	currentMaterial = _materials[matIdx];
 	[currentMaterial makeActive];
 	
 	face = _faces;
@@ -92,13 +93,14 @@
 		// Render with one GL_POLYGON per face
 		for (i = 0; i != _faceCount; ++i)
 		{
-			if (face->material != currentMaterial)
+			if (face->material != matIdx)
 			{
-				currentMaterial = face->material;
+				matIdx = face->material;
+				currentMaterial = _materials[matIdx];
 				[currentMaterial makeActive];
 			}
 			glBegin(GL_POLYGON);
-			NORMAL(face->normal);
+			NORMAL(_normals[face->normal]);
 			for (j = 0; j != face->vertexCount; ++j)
 			{
 				glTexCoord2f(face->tex_s[j], face->tex_t[j]);
@@ -114,15 +116,16 @@
 		glBegin(GL_TRIANGLES);
 		for (i = 0; i != _faceCount; ++i)
 		{
-			if (face->material != currentMaterial)
+			if (face->material != matIdx)
 			{
 				glEnd();
-				currentMaterial = face->material;
+				matIdx = face->material;
+				currentMaterial = _materials[matIdx];
 				[currentMaterial makeActive];
 				glBegin(GL_TRIANGLES);
 			}
 			
-			NORMAL(face->normal);
+			NORMAL(_normals[face->normal]);
 			
 			glTexCoord2f(face->tex_s[0], face->tex_t[0]);
 			DRAW(_vertices[face->verts[0]]);
@@ -168,7 +171,7 @@
 		
 		// Draw normal
 		DRAW(c);
-		DRAW((c + normLength * face->normal));
+		DRAW((c + normLength * _normals[face->normal]));
 		
 		++face;
 	}

@@ -1,5 +1,5 @@
 /*
-	DDMaterial.h
+	DDPropertyListRepresentation.h
 	Dry Dock for Oolite
 	$Id$
 	
@@ -21,33 +21,13 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Foundation/Foundation.h>
-#import "DDPropertyListRepresentation.h"
-
-@class DDTextureBuffer;
 @class DDProblemReportManager;
 
 
-@interface DDMaterial: NSObject <NSCopying, DDPropertyListRepresentation>
-{
-	NSString				*_name;
-	
-	NSString				*_diffuseMapName;
-	DDTextureBuffer			*_diffuseTexture;
-	GLuint					_diffuseGLName;
-}
+@protocol DDPropertyListRepresentation
 
-+ (id)materialWithName:(NSString *)inName;
-
-- (id)initWithName:(NSString *)inName;
-
-- (void)setName:(NSString *)inName;
-- (NSString *)name;
-
-- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues;
-- (NSURL *)diffuseMapURL;
-- (NSString *)diffuseMapName;
-
-- (void)makeActive;
+- (id)initWithPropertyListRepresentation:(id)inPList issues:(DDProblemReportManager *)ioIssues;
+- (void)gatherIssuesWithGeneratingPropertyListRepresentation:(DDProblemReportManager *)ioManager;
+- (id)propertyListRepresentationWithIssues:(DDProblemReportManager *)ioIssues;
 
 @end

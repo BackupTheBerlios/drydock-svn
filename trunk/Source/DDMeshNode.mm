@@ -21,6 +21,8 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define ENABLE_TRACE 0
+
 #import "DDMeshNode.h"
 #import "DDMesh.h"
 #import "Logging.h"
@@ -69,6 +71,8 @@
 
 - (void)performRenderWithState:(NSDictionary *)inState dirty:(BOOL)inDirty
 {
+	TraceEnter();
+	
 	BOOL			shading = YES;
 	BOOL			wireframe = NO;
 	BOOL			normals = NO;
@@ -96,6 +100,8 @@
 	if (wireframe)	[_mesh glRenderWireframe];
 	
 	if (normals)	[_mesh glRenderNormals];
+	
+	TraceExit();
 }
 
 

@@ -23,6 +23,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "phystypes.h"
+#import "DDPropertyListRepresentation.h"
 
 @class DDMaterial;
 @class DDProblemReportManager;
@@ -37,13 +38,13 @@ enum
 
 typedef struct DDMeshFaceData
 {
-	Vector					normal;
+	uint32_t				normal;
+	uint32_t				material;
 	GLubyte					color[3],
 							vertexCount;
 	uint32_t				verts[kMaxVertsPerFace];	// Indices
 	float					tex_s[kMaxVertsPerFace],	
 							tex_t[kMaxVertsPerFace];
-	DDMaterial				*material;					// Not retained here; references kept in mesh
 } DDMeshFaceData;
 
 
@@ -52,8 +53,14 @@ typedef struct DDMeshFaceData
 	unsigned				_vertexCount;
 	Vector					*_vertices;
 	
+	unsigned				_normalCount;
+	Vector					*_normals;
+	
 	unsigned				_faceCount;
 	DDMeshFaceData			*_faces;
+	
+	unsigned				_materialCount;
+	DDMaterial				**_materials;
 	
 	// Axis-aligned bounds
 	float					_xMin, _xMax,
@@ -62,8 +69,6 @@ typedef struct DDMeshFaceData
 	
 	// Greatest distance from origin
 	float					_rMax;
-	
-	NSDictionary			*_materials;
 	
 	NSString				*_name;
 	
@@ -126,6 +131,11 @@ typedef struct DDMeshFaceData
 @interface DDMesh (Utilities)
 
 - (SceneNode *)sceneGraphForMesh;
+
+@end
+
+
+@interface DDMesh (PropertyListRepresentation) <DDPropertyListRepresentation>
 
 @end
 

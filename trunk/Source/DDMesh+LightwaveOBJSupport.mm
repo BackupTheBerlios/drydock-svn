@@ -29,6 +29,8 @@
 #import "CocoaExtensions.h"
 #import "DDUtilities.h"
 #import "DDError.h"
+#import "DDNormalSet.h"
+#import "DDMaterialSet.h"
 
 
 #define LOG_MATERIAL_ATTRIBUTES		0
@@ -59,6 +61,13 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 @end
 
 
+@interface DDMaterialSet (LightwaveOBJSupport)
+
+- (unsigned)addMaterialNamed:(NSString *)inName forOBJAttributes:(NSDictionary *)inAttributes relativeTo:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
+
+@end
+
+
 @implementation DDMesh (LightwaveOBJSupport)
 
 
@@ -73,13 +82,12 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	NSArray					*line;
 	NSCharacterSet			*spaceSet;
 	NSRange					range;
-	NSDictionary			*materials = NULL;
 	unsigned				vertexCount, uvCount, normalCount, faceCount;
 	unsigned				vertexIdx = 0, uvIdx = 0, normalIdx = 0, faceIdx = 0;
 	Vector					*vertices = NULL;
 	UV						*uv = NULL;
 	DDMeshFaceData			*faces = NULL, *face;
-	Vector					*normals = NULL;
+	Vector					*normalArray = NULL;
 	NSString				*keyword, *params;
 	float					xMin = INFINITY, xMax = -INFINITY,
 							yMin = INFINITY, yMax = -INFINITY,
@@ -87,11 +95,9 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 							rMax = 0, r;
 	Vector					vec;
 	NSEnumerator			*lineEnum;
-	NSString				*currentMaterial = nil;
 	NSArray					*faceData;
 	NSArray					*vertexData;
 	unsigned				faceVerts, fvIdx;
-	NSMutableDictionary		*usedMaterials = nil;
 	Vector					normal;
 	NSMutableSet			*ignoredTypes = nil;
 	NSError					*error;
@@ -101,11 +107,13 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	BOOL					warnedAboutNoNormals = NO;
 	BOOL					warnedAboutCall = NO;
 	BOOL					warnedAboutShellScript = NO;
+	DDNormalSet				*normals;
+	DDMaterialSet			*materials = nil;
+	NSDictionary			*materialLibrary = nil;
+	int						currentMaterial = NSNotFound;
 	
 	self = [super init];
 	if (nil == self) return nil;
-	
-	usedMaterials = [NSMutableDictionary dictionary];
 	
 	lines = [self objTokenize:inFile error:&error];
 	if (!lines)
@@ -126,15 +134,15 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		
 		vertices = (Vector *)malloc(sizeof(Vector) * vertexCount);
 		uv = (UV *)malloc(sizeof(UV) * uvCount);
-		normals = (Vector *)malloc(sizeof(Vector) * normalCount);
+		normalArray = (Vector *)malloc(sizeof(Vector) * normalCount);
+		normals = [DDNormalSet setWithCapacity:faceCount];
 		faces = (DDMeshFaceData *)malloc(sizeof(DDMeshFaceData) * faceCount);
 		
-		if (!(vertices && uv && normals && faces))
+		if (!(vertices && uv && normalArray && normals && faces))
 		{
 			OK = NO;
 			if (vertices) { free(vertices); vertices = NULL; };
 			if (uv) { free(uv); uv = NULL; };
-			if (normals) { free(normals); normals = NULL; };
 			if (faces) { free(faces); faces = NULL; };
 			
 			if (!OK) [ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
@@ -154,9 +162,10 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 			if ([keyword isEqual:@"mtllib"])
 			{
 				// Material Library
-				if (nil == materials)
+				if (nil == materialLibrary)
 				{
-					materials = [[self loadObjMaterialLibraryNamed:params relativeTo:inFile issues:ioIssues] retain];
+					materialLibrary = [[self loadObjMaterialLibraryNamed:params relativeTo:inFile issues:ioIssues] retain];
+					materials = [[DDMaterialSet alloc] initWithCapacity:[materialLibrary count]];
 				}
 				else
 				{
@@ -169,7 +178,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 				assert(vertexIdx < vertexCount);
 				
 				vec = ObjVertexToVector(params);
-				vertices[vertexIdx++] = vec;
+				vertices[vertexIdx++] = vec.CleanZeros();
 				
 				// Maintain bounds
 				if (vec.x < xMin) xMin = vec.x;
@@ -199,7 +208,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 				
 				vec = ObjVertexToVector(params);
 				//vec = ObjVertexToVector(params).Direction();
-				normals[normalIdx++] = vec;
+				normalArray[normalIdx++] = vec.Normalize().CleanZeros();
 				//LogMessage(@"Normal: %@", vec.Description());
 			}
 			else if ([keyword isEqual:@"f"])
@@ -225,7 +234,13 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 						face = &faces[faceIdx++];
 						
 						face->vertexCount = faceVerts;
-						face->material = ObjLookUpMaterial(currentMaterial, materials, usedMaterials, inFile, ioIssues);
+						
+						if (NSNotFound == currentMaterial)
+						{
+							if (nil == materials) materials = [[DDMaterialSet alloc] initWithCapacity:1];
+							currentMaterial = [materials addMaterial:[DDMaterial materialWithName:@"$untextured"]];
+						}
+						face->material = currentMaterial;
 						
 						for (fvIdx = 0; fvIdx != faceVerts; ++fvIdx)
 						{
@@ -401,7 +416,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 								
 								if (OK)
 								{
-									normal += normals[index];
+									normal += normalArray[index];
 								}
 								else
 								{
@@ -415,7 +430,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 							warnedAboutNoNormals = YES;
 							[ioIssues addWarningIssueWithKey:@"invalidNormal" localizedFormat:@"Some or all faces in the document lack a valid normal specified. This is likely to lead to lighting problems. This issue can be rectified by selecting Recalculate Normals from the Tools menu."];
 						}
-						face->normal = normal.Direction();
+						face->normal = [normals indexForVector:normal];
 					}
 				}
 				
@@ -424,8 +439,12 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 			else if ([keyword isEqual:@"usemtl"])
 			{
 				// Use Material
-				[currentMaterial release];
-				currentMaterial = [params retain];
+				if (nil == materials) materials = [DDMaterialSet setWithCapacity:1];
+				currentMaterial = [materials indexForName:params];
+				if (NSNotFound == currentMaterial)
+				{
+					currentMaterial = [materials addMaterialNamed:params forOBJAttributes:[materialLibrary objectForKey:params] relativeTo:inFile issues:ioIssues];
+				}
 				//LogMessage(@"Using material: \"%@\"", currentMaterial);
 			}
 			else if ([keyword isEqual:@"o"])
@@ -483,20 +502,22 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 			if (!OK) break;
 		}
 	}
-	[materials autorelease];
-	[currentMaterial release];
 	[ignoredTypes release];
 	
 	free(uv);
-	free(normals);
+	free(normalArray);
 	
 	if (OK)
 	{
 		_vertexCount = vertexIdx;
 		_vertices = vertices;
 		
+		[normals getArray:&_normals andCount:&_normalCount];
+		
 		_faceCount = faceIdx;
 		_faces = faces;
+		
+		[materials getArray:&_materials andCount:&_materialCount];
 		
 		_xMin = xMin;
 		_xMax = xMax;
@@ -505,8 +526,6 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		_zMin = zMin;
 		_zMax = zMax;
 		_rMax = rMax;
-		
-		_materials = [usedMaterials retain];
 	}
 	else
 	{
@@ -516,6 +535,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		[self release];
 		self = nil;
 	}
+	[materials release];
 	
 	return self;
 	TraceExit();
@@ -749,10 +769,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	unsigned				i, j, faceVerts, count, ni, ti;
 	NSMutableArray			*texCoords;
 	NSMutableDictionary		*texCoordsRev;
-	NSMutableArray			*normals;
-	NSMutableDictionary		*normalsRev;
 	UV						uv;
-	Vector					normal;
 	NSValue					*value;
 	NSNumber				*index;
 	NSMutableDictionary		*materialToFaceArray;
@@ -842,50 +859,21 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	[texCoords release];
 	texCoords = nil;
 	
-	// Write normals. Same logic as for texture co-ords, only using a Vector.
-	normals = [[NSMutableArray alloc] init];
-	normalsRev = [NSMutableDictionary dictionary];
-	count = 0;
-	for (i = 0; i != _faceCount; ++i)
-	{
-		faceVerts = _faces[i].vertexCount;
-		for (j = 0; j != faceVerts; ++j)
-		{
-			normal = _faces[i].normal;
-			normal.CleanZeros();
-			value = [[NSValue alloc] initWithBytes:&normal objCType:@encode(Vector)];
-			
-			index = [normalsRev objectForKey:value];
-			if (NULL == index)
-			{
-				// Previously unseen u/v pair
-				[normals addObject:value];
-				[normalsRev setObject:[NSNumber numberWithInt:count++] forKey:value];
-			}
-			[value release];
-		}
-	}
+	// Write normals. Assume they’re already uniqued using a DDNormalSet.
 	[dataString appendString:@"\n# Normals:\n"];
-	// Actually write the co-ords
-	for (i = 0; i != count; ++i)
+	for (i = 0; i != _normalCount; ++i)
 	{
-		value = [normals objectAtIndex:i];
-		[value getValue:&normal];
-		
-		[dataString appendFormat:@"vn %f %f %f\n", normal.x, normal.y, normal.z];
+		[dataString appendFormat:@"vn %f %f %f\n", _normals[i].x, _normals[i].y, _normals[i].z];
 	}
-	[normals release];
-	normals = nil;
 	
-	/*	Sort faces by texture. Basic approach: create a dictionary keyed by material name, with
+	/*	Sort faces by texture. Basic approach: create a dictionary keyed by material index, with
 		mutable arrays as the values. These arrays are populated with indices into _faces, as
 		NSNumbers.
 	*/
 	materialToFaceArray = [NSMutableDictionary dictionary];
 	for (i = 0; i != _faceCount; ++i)
 	{
-		materialKey = [_faces[i].material displayName];
-		if (nil == materialKey) materialKey = [NSNull null];
+		materialKey = [NSNumber numberWithUnsignedInt:_faces[i].material];
 		facesForMaterial = [materialToFaceArray objectForKey:materialKey];
 		if (nil == facesForMaterial)
 		{
@@ -895,6 +883,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		[facesForMaterial addObject:[NSNumber numberWithInt:i]];
 	}
 	
+	#if 0
+	// FIXME: possibly ought to look for "$placeholder" material here?
 	// Write faces with no texture, if any
 	facesForMaterial = [materialToFaceArray objectForKey:[NSNull null]];
 	if (nil != facesForMaterial)
@@ -906,22 +896,20 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 			index = [facesForMaterial objectAtIndex:i];
 			currentFace = &_faces[[index intValue]];
 			faceVerts = currentFace->vertexCount;
-			normal = currentFace->normal;
-			normal.CleanZeros();
-			value = [[NSValue alloc] initWithBytes:&normal objCType:@encode(Vector)];
-			ni = [[normalsRev objectForKey:value] intValue];
 			[value release];
+			ni = currentFace->normal + 1;
 			
 			[dataString appendString:@"\nf"];
 			for (j = 0; j != faceVerts; ++j)
 			{
-				[dataString appendFormat:@" %i//%i", currentFace->verts[j] + 1, ni + 1];
+				[dataString appendFormat:@" %i//%i", currentFace->verts[j] + 1, ni];
 			}
 		}
 		[dataString appendString:@"\n"];
 		
 		[materialToFaceArray removeObjectForKey:[NSNull null]];
 	}
+	#endif
 	// Write faces for named textures
 	for (materialEnumerator = [materialToFaceArray keyEnumerator]; materialKey = [materialEnumerator nextObject]; )
 	{
@@ -933,10 +921,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 			index = [facesForMaterial objectAtIndex:i];
 			currentFace = &_faces[[index intValue]];
 			faceVerts = currentFace->vertexCount;
-			normal = currentFace->normal;
-			normal.CleanZeros();
-			value = [[NSValue alloc] initWithBytes:&normal objCType:@encode(Vector)];
-			ni = [[normalsRev objectForKey:value] intValue];
+			ni = currentFace->normal + 1;
 			[value release];
 			
 			[dataString appendString:@"\nf"];
@@ -945,9 +930,9 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 				uv.u = currentFace->tex_s[j];
 				uv.v = currentFace->tex_t[j];
 				value = [[NSValue alloc] initWithBytes:&uv objCType:@encode(UV)];
-				ti = [[texCoordsRev objectForKey:value] intValue];
+				ti = [[texCoordsRev objectForKey:value] intValue] + 1;
 				[value release];				
-				[dataString appendFormat:@" %i/%i/%i", currentFace->verts[j] + 1, ti + 1, ni + 1];
+				[dataString appendFormat:@" %i/%i/%i", currentFace->verts[j] + 1, ti, ni];
 			}
 		}
 		[dataString appendString:@"\n"];
@@ -956,8 +941,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	// Write OBJ file
 	if (![dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding errorCompat:&error])
 	{
-		if (nil != error) [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
-		else [ioManager addStopIssueWithKey:@"write_failed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
+		if (nil != error) [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
+		else [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
 		return NO;
 	}
 	
@@ -978,19 +963,25 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	for (i = 0; i != count; ++i)
 	{
 		materialKey = [materialNames objectAtIndex:i];
-		material = [_materials objectForKey:materialKey];
-		[dataString appendFormat:  @"newmtl %@\n"
+		for (j = 0; j != _materialCount; ++j)
+		{
+			if ([[_materials[i] name] isEqual:materialKey])
+			{
+				[dataString appendFormat:  @"newmtl %@\n"
 									"map_Kd %@\n\n",
 									materialKey,
-									[material diffuseMapName]];
+									[_materials[i] diffuseMapName]];
+				break;
+			}
+		}
 	}
 	
 	// Write MTL file
 	mtlURL = [NSURL URLWithString:mtlName relativeToURL:inFinalLocation];
 	if (![dataString writeToURL:mtlURL atomically:YES encoding:NSUTF8StringEncoding errorCompat:&error])
 	{
-		if (nil != error) [ioManager addWarningIssueWithKey:@"mtllib_write_failed" localizedFormat:@"The material library for the document could not be saved. %@", [error localizedFailureReasonCompat]];
-		else [ioManager addWarningIssueWithKey:@"mtllib_write_failed" localizedFormat:@"The material library for the document could not be saved, because an unknown error occured."];
+		if (nil != error) [ioManager addWarningIssueWithKey:@"mtllibWriteFailed" localizedFormat:@"The material library for the document could not be saved. %@", [error localizedFailureReasonCompat]];
+		else [ioManager addWarningIssueWithKey:@"mtllibWriteFailed" localizedFormat:@"The material library for the document could not be saved, because an unknown error occured."];
 	}
 	
 	return YES;
@@ -1081,37 +1072,20 @@ static NSArray *ObjFaceToArrayOfArrays(NSString *inData)
 }
 
 
-static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSMutableDictionary *ioLibrary, NSURL *inBaseURL, DDProblemReportManager *ioIssues)
+@implementation DDMaterialSet (LightwaveOBJSupport)
+
+- (unsigned)addMaterialNamed:(NSString *)inName forOBJAttributes:(NSDictionary *)inAttributes relativeTo:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
-	TraceEnterMsg(@"Called for %@", inName);
+	NSString			*diffuseName;
+	DDMaterial			*material;
 	
-	DDMaterial			*result;
-	NSDictionary		*definition;
-	id					key;
-	
-	key = inName;
-	if (nil == key) key = [NSNull null];
-	
-	result = [ioLibrary objectForKey:key];
-	if (nil == result)
+	material = [DDMaterial materialWithName:inName];
+	diffuseName = [inAttributes objectForKey:@"diffuse map name"];
+	if (nil != diffuseName)
 	{
-		definition = [inDefs objectForKey:key];
-		if (nil != definition)
-		{
-			@try
-			{
-				result = [DDMaterial materialWithName:[definition objectForKey:@"diffuse map name"] relativeTo:inBaseURL issues:ioIssues];
-			}
-			@catch (id whatever) {}
-		}
-		if (nil == result) result = [DDMaterial placeholderMaterialForFileName:inName];
-		if (nil != result)
-		{
-			[result setDisplayName:inName];
-			[ioLibrary setObject:result forKey:key];
-		}
+		[material setDiffuseMap:diffuseName relativeTo:inFile issues:ioIssues];
 	}
-	
-	return result;
-	TraceExit();
+	return [self addMaterial:material];
 }
+
+@end

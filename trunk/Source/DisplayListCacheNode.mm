@@ -21,6 +21,8 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define ENABLE_TRACE 0
+
 #import "DisplayListCacheNode.h"
 #import "Logging.h"
 
@@ -75,6 +77,8 @@
 
 - (void)renderWithState:(NSDictionary *)inState
 {
+	TraceEnter();
+	
 	NSOpenGLContext		*currentContext;
 	
 	currentContext = [NSOpenGLContext currentContext];
@@ -104,6 +108,8 @@
 		#endif
 		glCallList(listName);
 	}
+	
+	TraceExit();
 }
 
 @end

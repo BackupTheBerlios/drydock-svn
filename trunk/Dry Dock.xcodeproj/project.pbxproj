@@ -43,6 +43,12 @@
 		1A51305E09909B6A00A55ED7 /* DDComparatorGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */; };
 		1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A543C1D09AD0087006B751A /* QuickTime.framework */; };
 		1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
+		1A5703DA09B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */; };
+		1A57040309B12B9400E0E17D /* DDPropertyListRepresentation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A57040209B12B9400E0E17D /* DDPropertyListRepresentation.h */; };
+		1A5705EB09B1D10F00E0E17D /* DDNormalSet.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A5705E909B1D10F00E0E17D /* DDNormalSet.h */; };
+		1A5705EC09B1D10F00E0E17D /* DDNormalSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */; };
+		1A5707A709B255C700E0E17D /* DDMaterialSet.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A5707A509B255C700E0E17D /* DDMaterialSet.h */; };
+		1A5707A809B255C700E0E17D /* DDMaterialSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5707A609B255C700E0E17D /* DDMaterialSet.mm */; };
 		1A65C6280957A43E006990D5 /* DDMaterial.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A65C6270957A43E006990D5 /* DDMaterial.mm */; };
 		1A6702A8098CF005003BDAD5 /* DDProblemReportManager.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */; };
 		1A670350098D81C2003BDAD5 /* CocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */; };
@@ -128,6 +134,9 @@
 			dstSubfolderSpec = 10;
 			files = (
 				1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */,
+				1A57040309B12B9400E0E17D /* DDPropertyListRepresentation.h in CopyFiles */,
+				1A5705EB09B1D10F00E0E17D /* DDNormalSet.h in CopyFiles */,
+				1A5707A709B255C700E0E17D /* DDMaterialSet.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +206,12 @@
 		1A543C1D09AD0087006B751A /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDErrorDescription.mm; sourceTree = "<group>"; };
 		1A543C6C09AD0A3E006B751A /* DDErrorDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDErrorDescription.h; sourceTree = "<group>"; };
+		1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+PropertyListRepresentation.mm"; sourceTree = "<group>"; };
+		1A57040209B12B9400E0E17D /* DDPropertyListRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPropertyListRepresentation.h; sourceTree = "<group>"; };
+		1A5705E909B1D10F00E0E17D /* DDNormalSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDNormalSet.h; sourceTree = "<group>"; };
+		1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDNormalSet.mm; sourceTree = "<group>"; };
+		1A5707A509B255C700E0E17D /* DDMaterialSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMaterialSet.h; sourceTree = "<group>"; };
+		1A5707A609B255C700E0E17D /* DDMaterialSet.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDMaterialSet.mm; sourceTree = "<group>"; };
 		1A65C6270957A43E006990D5 /* DDMaterial.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDMaterial.mm; sourceTree = "<group>"; };
 		1A6702A7098CF005003BDAD5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDProblemReportManager.nib; sourceTree = "<group>"; };
 		1A6702A9098CF011003BDAD5 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDProblemReportManager.nib; sourceTree = "<group>"; };
@@ -473,16 +488,22 @@
 		1A7D60E6094EDA9700E9D611 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1A57040209B12B9400E0E17D /* DDPropertyListRepresentation.h */,
 				1A7D60EF094EDACB00E9D611 /* DDMesh.h */,
 				1A7D60F0094EDACB00E9D611 /* DDMesh.mm */,
 				1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */,
 				1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */,
 				1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */,
 				1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */,
+				1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */,
 				1AE7DFB7094F95FE000F6B6E /* DDMaterial.h */,
 				1A65C6270957A43E006990D5 /* DDMaterial.mm */,
 				1A7207CC095A8A6900C6896A /* DDTextureBuffer.h */,
 				1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */,
+				1A5705E909B1D10F00E0E17D /* DDNormalSet.h */,
+				1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */,
+				1A5707A509B255C700E0E17D /* DDMaterialSet.h */,
+				1A5707A609B255C700E0E17D /* DDMaterialSet.mm */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -800,6 +821,9 @@
 				1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */,
 				1A1D51E409AFB4B30090D751 /* OoliteDAT.l in Sources */,
 				1A1D51E509AFB4B40090D751 /* DDDATLexer.m in Sources */,
+				1A5703DA09B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm in Sources */,
+				1A5705EC09B1D10F00E0E17D /* DDNormalSet.mm in Sources */,
+				1A5707A809B255C700E0E17D /* DDMaterialSet.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

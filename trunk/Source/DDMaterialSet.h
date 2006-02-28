@@ -1,9 +1,11 @@
 /*
-	DDMaterial.h
+	DDMaterialSet.h
 	Dry Dock for Oolite
 	$Id$
 	
 	Copyright © 2006 Jens Ayton
+	
+	Like a DDNormalSet, but for Material pointers.
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the “Software”), to deal in the Software without
@@ -22,32 +24,24 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "DDPropertyListRepresentation.h"
 
-@class DDTextureBuffer;
-@class DDProblemReportManager;
+@class DDMaterial;
 
 
-@interface DDMaterial: NSObject <NSCopying, DDPropertyListRepresentation>
+@interface DDMaterialSet: NSObject
 {
-	NSString				*_name;
-	
-	NSString				*_diffuseMapName;
-	DDTextureBuffer			*_diffuseTexture;
-	GLuint					_diffuseGLName;
+	NSMutableDictionary			*rev;
+	DDMaterial					**array;
+	unsigned					count, max;
 }
 
-+ (id)materialWithName:(NSString *)inName;
++ (id)setWithCapacity:(unsigned)inCapacity;
+- (id)initWithCapacity:(unsigned)inCapacity;
 
-- (id)initWithName:(NSString *)inName;
+- (int)indexForName:(NSString *)inName;
+- (int)addMaterial:(DDMaterial *)inMaterial;
 
-- (void)setName:(NSString *)inName;
-- (NSString *)name;
-
-- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues;
-- (NSURL *)diffuseMapURL;
-- (NSString *)diffuseMapName;
-
-- (void)makeActive;
+// Once this is called, the set becomes unusable (gets a capacity of zero).
+- (void)getArray:(DDMaterial ***)outArray andCount:(unsigned *)outCount;
 
 @end
