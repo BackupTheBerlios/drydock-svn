@@ -25,7 +25,7 @@
 
 @class DDPreviewView;
 @class SceneNode, DDMeshNode, SimpleTag;
-@class DDMesh;
+@class DDMesh, DDModelDocument;
 @class DDDimensionFormatter;
 
 
@@ -43,17 +43,10 @@ enum
 	IBOutlet NSView					*leftView,
 									*rightView;
 	IBOutlet DDPreviewView			*glView;
-	IBOutlet NSTextField			*nameField;
-	IBOutlet NSTextField			*lengthField;
-	IBOutlet NSTextField			*breadthField;
-	IBOutlet NSTextField			*heightField;
-	IBOutlet NSTextField			*verticesField;
-	IBOutlet NSTextField			*facesField;
 	IBOutlet NSOutlineView			*outlineView;
 	IBOutlet NSMatrix				*toolMatrix;
-	IBOutlet DDDimensionFormatter	*formatter;
 	
-	DDMesh							*_mesh;
+	DDModelDocument					*_modelDocument;
 	
 	SceneNode						*_sceneRoot;
 	SimpleTag						*_showWireframeTag,
@@ -74,7 +67,7 @@ enum
 
 - (void)setNeedsDisplay;
 
-- (void)setMesh:(DDMesh *)inMesh;
+- (void)setModelDocument:(DDModelDocument *)inMesh;
 
 - (BOOL)showWireframe;
 - (void)setShowWireframe:(BOOL)inFlag;

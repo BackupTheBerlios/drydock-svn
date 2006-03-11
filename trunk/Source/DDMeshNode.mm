@@ -128,4 +128,25 @@
 	[self becomeDirty];
 }
 
+
+- (NSString *)name
+{
+	NSString				*myName;
+	
+	myName = [super name];
+	
+	if (nil != _mesh)
+	{
+		myName = [NSString stringWithFormat:@"%@: %@", myName, [_mesh name]];
+	}
+	
+	return myName;
+}
+
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ %p>{\"%@\", vertices=%u, faces=%u, childCount=%u, tags=%@}", [self className], self, [self name]?:@"", [_mesh vertexCount], [_mesh faceCount], [self numberOfChildren], tags];
+}
+
 @end

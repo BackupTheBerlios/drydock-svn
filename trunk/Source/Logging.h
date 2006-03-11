@@ -24,90 +24,105 @@
 #ifndef INCLUDED_LOGGING_h
 #define INCLUDED_LOGGING_h
 
+#ifdef ENABLE_LOGGING_OVERRIDE
+	#ifdef ENABLE_LOGGING
+		#undef ENABLE_LOGGING
+	#endif
+	#define ENABLE_LOGGING ENABLE_LOGGING_OVERRIDE
+#endif
+
 #ifndef ENABLE_LOGGING
-#define ENABLE_LOGGING	!defined(NDEBUG)
+	#define ENABLE_LOGGING	!defined(NDEBUG)
 #endif
 
 // TraceMessage() is disabled by default; intended for observing call hierarchies
+#ifdef ENABLE_TRACE_OVERRIDE
+	#ifdef ENABLE_TRACE
+		#undef ENABLE_TRACE
+	#endif
+	#define ENABLE_TRACE ENABLE_TRACE_OVERRIDE
+#endif
+
 #ifndef ENABLE_TRACE
-#define ENABLE_TRACE	0
+	#define ENABLE_TRACE	0
 #endif
 
 #if ENABLE_LOGGING
-#ifndef LOGGING_SHOW_FUNCTION
-#define LOGGING_SHOW_FUNCTION		1
-#endif
-#ifndef LOGGING_SHOW_FILE_AND_LINE
-#define LOGGING_SHOW_FILE_AND_LINE	0
-#endif
-
-#if __cplusplus
-extern "C" {
-#endif
-
-#if __OBJC__
-#import <Foundation/Foundation.h>
-#define LOG_STRING_TYPE		NSString *
-#else
-#include <CoreFoundation/CoreFoundation.h>
-#define LOG_STRING_TYPE		CFStringRef
-#endif	/*__OBJC__ */
-
-void LogMessage_(LOG_STRING_TYPE inFormat, const char *inFile, const char *inFunction, int inLine, ...);
-
-#if LOGGING_SHOW_FUNCTION
-	#if LOGGING_SHOW_FILE_AND_LINE
-		#define LogMessage(format, ...) LogMessage_(format, __FILE__, __PRETTY_FUNCTION__, __LINE__, ## __VA_ARGS__)
-	#else
-		#define LogMessage(format, ...) LogMessage_(format, NULL, __PRETTY_FUNCTION__, 0, ## __VA_ARGS__)
+	#ifndef LOGGING_SHOW_FUNCTION
+		#define LOGGING_SHOW_FUNCTION		1
 	#endif
-#else
-	#if LOGGING_SHOW_FILE_AND_LINE
-		#define LogMessage(format, ...) LogMessage_(format, __FILE__, NULL, __LINE__, ## __VA_ARGS__)
-	#else
-		#define LogMessage(format, ...) LogMessage_(format, NULL, NULL, 0, ## __VA_ARGS__)
+	#ifndef LOGGING_SHOW_FILE_AND_LINE
+		#define LOGGING_SHOW_FILE_AND_LINE	0
 	#endif
-#endif	/* LOGGING_SHOW_FUNCTION */
+	
+	#if __cplusplus
+		extern "C" {
+	#endif
 
-void LogIndent(void);
-void LogOutdent(void);
+	#if __OBJC__
+		#import <Foundation/Foundation.h>
+		#define LOG_STRING_TYPE		NSString *
+	#else
+		#include <CoreFoundation/CoreFoundation.h>
+		#define LOG_STRING_TYPE		CFStringRef
+	#endif	/*__OBJC__ */
+	
+	void LogMessage_(LOG_STRING_TYPE inFormat, const char *inFile, const char *inFunction, int inLine, ...);
+	
+	#if LOGGING_SHOW_FUNCTION
+		#if LOGGING_SHOW_FILE_AND_LINE
+			#define LogMessage(format, ...) LogMessage_(format, __FILE__, __PRETTY_FUNCTION__, __LINE__, ## __VA_ARGS__)
+		#else
+			#define LogMessage(format, ...) LogMessage_(format, NULL, __PRETTY_FUNCTION__, 0, ## __VA_ARGS__)
+		#endif
+	#else
+		#if LOGGING_SHOW_FILE_AND_LINE
+			#define LogMessage(format, ...) LogMessage_(format, __FILE__, NULL, __LINE__, ## __VA_ARGS__)
+		#else
+			#define LogMessage(format, ...) LogMessage_(format, NULL, NULL, 0, ## __VA_ARGS__)
+		#endif
+	#endif	/* LOGGING_SHOW_FUNCTION */
+	
+	void LogIndent(void);
+	void LogOutdent(void);
+	
+	#if __cplusplus
+		}
+	#endif
+	
+	
+	#if __OBJC__
+		#if ENABLE_TRACE
+			#define TraceMessage		LogMessage
+			#define TraceIndent			LogIndent
+			#define TraceOutdent		LogOutdent
 
-#if __cplusplus
-}
-#endif
+			#define TraceEnterMsg(...)	TraceMessage(__VA_ARGS__); TraceIndent(); @try { do{} while (0)
+			#define TraceEnter()		TraceEnterMsg(@"Called. {")
+			#define TraceExit()			} @finally { TraceOutdent(); LogMessage_(@"}", NULL, NULL, 0); } do {} while (0)
+		#else
+			#define TraceMessage(...)	do {} while (0)
+			#define TraceIndent()		do {} while (0)
+			#define TraceOutdent()		do {} while (0)
 
-
-#if __OBJC__
-#if ENABLE_TRACE
-#define TraceMessage		LogMessage
-#define TraceIndent			LogIndent
-#define TraceOutdent		LogOutdent
-
-#define TraceEnterMsg(...)	TraceMessage(__VA_ARGS__); TraceIndent(); @try { do{} while (0)
-#define TraceEnter()		TraceEnterMsg(@"Called. {")
-#define TraceExit()			} @finally { TraceOutdent(); LogMessage_(@"}", NULL, NULL, 0); } do {} while (0)
-#else
-#define TraceMessage(...)	do {} while (0)
-#define TraceIndent()		do {} while (0)
-#define TraceOutdent()		do {} while (0)
-
-#define TraceEnterMsg(...)	do {} while (0)
-#define TraceEnter()		do {} while (0)
-#define TraceExit()			do {} while (0)
-#endif	/* ENABLE_TRACE */
-#endif	/* __OBJC__ */
-
+			#define TraceEnterMsg(...)	do {} while (0)
+			#define TraceEnter()		do {} while (0)
+			#define TraceExit()			do {} while (0)
+		#endif	/* ENABLE_TRACE */
+	#endif	/* __OBJC__ */
+	
 #else	/* ENABLE_LOGGING */
-
-#define LogMessage(...)		do {} while (0)
-#define LogIndent()			do {} while (0)
-#define LogOutdent()		do {} while (0)
-
-#if __OBJC__
-#define TraceMessage(...)	do {} while (0)
-#define TraceIndent()		do {} while (0)
-#define TraceOutdent()		do {} while (0)
-#endif	/* __OBJC__ */
-
+	
+	#define LogMessage(...)		do {} while (0)
+	#define LogIndent()			do {} while (0)
+	#define LogOutdent()		do {} while (0)
+	
+	#if __OBJC__
+	#define TraceMessage(...)	do {} while (0)
+	#define TraceIndent()		do {} while (0)
+	#define TraceOutdent()		do {} while (0)
+	#endif	/* __OBJC__ */
+	
 #endif /* ENABLE_LOGGING */
+
 #endif /* INCLUDED_LOGGING_h */

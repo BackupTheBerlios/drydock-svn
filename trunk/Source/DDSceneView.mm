@@ -237,14 +237,17 @@ static const GLuint kFallbackAttributes[] =
 	
 	SceneNode				*sceneRoot;
 	
-	if (inRect.size.width != _oldSize.width || inRect.size.height != _oldSize.height)
+	if (inRect.size.width != _oldSize.width || inRect.size.height != _oldSize.height || _z != _oldZ)
 	{
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glViewport(0, 0, (GLsizei)inRect.size.width, (GLsizei)inRect.size.height);
-		gluPerspective(45.0f, inRect.size.width / inRect.size.height, 0.1f, 5000.0f);
+		float near = 0.2f;
+		if (near < -3000.0f - _z) near = -3000.0f - _z;
+		gluPerspective(45.0f, inRect.size.width / inRect.size.height, near, 3000.0f - _z);
 		_oldSize.width = inRect.size.width;
 		_oldSize.height = inRect.size.height;
+		_oldZ = _z;
 		glMatrixMode(GL_MODELVIEW);
 	}
 	
@@ -534,6 +537,13 @@ static const GLuint kFallbackAttributes[] =
 	result.Normalize();
 	
 	return result;
+}
+
+
+- (BOOL)shouldBeTreatedAsInkEvent:(NSEvent *)theEvent
+{
+	// Don’t use write-anywhere (i.e., be an “instant mouser”)
+	return NO;
 }
 
 @end

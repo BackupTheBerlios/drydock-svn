@@ -37,4 +37,10 @@
 	
 }
 
+
+- (BOOL)shouldBeTreatedAsInkEvent:(NSEvent *)theEvent
+{
+	return YES;
+}
+
 @end

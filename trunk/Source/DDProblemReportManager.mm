@@ -279,7 +279,100 @@
 
 - (IBAction)helpAction:sender
 {
+	NSString				*anchor = nil;
+	NSIndexSet				*selection;
+	unsigned int			index;
+	DDProblemReportIssue	*issue;
+	OSStatus				err;
+	static NSString			*helpBookName = nil;
 	
+	// Find first selected row
+	selection = [tableView selectedRowIndexes];
+	index = [selection firstIndex];
+	
+	if (((unsigned int)NSNotFound) != index)
+	{
+		// Create anchor string
+		issue = [_issues objectAtIndex:index];
+		anchor = [issue key];
+		if (nil != anchor) anchor = [@"problem-" stringByAppendingString:anchor];
+	}
+	
+	if (nil == helpBookName)
+	{
+		helpBookName = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleHelpBookName"] retain];
+	}
+	
+	err = AHGotoPage((CFStringRef)helpBookName, (CFStringRef)@"html/reference-errors.html", (CFStringRef)anchor);
+	if (noErr != err) LogMessage(@"Error %i trying to look up help anchor \"%@\".", err, anchor);
+}
+
+
+- (IBAction)copy:sender
+{
+	NSIndexSet				*selection;
+	unsigned int			index;
+	DDProblemReportIssue	*issue;
+	OSStatus				err;
+	NSMutableString			*string;
+	NSString				*type;
+	unsigned				count = 0;
+	NSPasteboard			*pBoard;
+	
+	// Find selected rows
+	selection = [tableView selectedRowIndexes];
+	if (nil != selection)
+	{
+		string = [NSMutableString string];
+		
+		for (index = [selection firstIndex];
+			((unsigned int)NSNotFound) != index;
+			index = [selection indexGreaterThanIndex:index])
+		{
+			issue = [_issues objectAtIndex:index];
+			switch ([issue type])
+			{
+				case kNoteIssueType:
+					type = @"Note";
+					break;
+				
+				case kWarningIssueType:
+					type = @"Warning";
+					break;
+				
+				case kStopIssueType:
+					type = @"Error";
+					break;
+				
+				default:
+					type = [NSString stringWithFormat:@"%u", [issue type]];
+			}
+			[string appendFormat:@"%s[%@ %@]: %@\n", count++ ? "\n" : "", type, [issue key], [issue string]];
+		}
+	}
+	
+	if (0 != count)
+	{
+		pBoard = [NSPasteboard generalPasteboard];
+		[pBoard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+		if (![pBoard setString:string forType:NSStringPboardType]) count = 0;
+	}
+	
+	if (0 == count) AlertSoundPlay();
+}
+
+
+- (BOOL)validateMenuItem:(id <NSMenuItem>)inItem
+{
+	SEL						action;
+	
+	action = [inItem action];
+	if (action == @selector(copy:))
+	{
+		return 0 != [tableView numberOfSelectedRows];
+	}
+	
+	return [super validateMenuItem:inItem];
 }
 
 

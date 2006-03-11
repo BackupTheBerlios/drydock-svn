@@ -239,6 +239,40 @@
 
 - (id)initWithPropertyListRepresentation:(id)inPList issues:(DDProblemReportManager *)ioIssues
 {
+	TraceEnter();
+	
+	BOOL						OK = YES;
+	NSDictionary				*dict;
+	id							object;
+	
+	if (![inPList isKindOfClass:[NSDictionary class]])
+	{
+		OK = NO;
+		LogMessage(@"Input %@ is not a dictionary.", inPList);
+		[ioIssues addStopIssueWithKey:@"notValidDryDock" localizedFormat:@"This is not a valid Dry Dock document. %@", @""];
+	}
+	
+	if (OK)
+	{
+		dict = inPList;
+		
+		object = [dict objectForKey:@"name"];
+		if ([object isKindOfClass:[NSString class]]) _name = [object copy];
+		object = [dict objectForKey:@"diffuse map"];
+		if ([object isKindOfClass:[NSString class]]) _diffuseMapName = [object copy];
+		
+		if (nil == _name) _name = [_diffuseMapName copy];
+		else if (nil == _diffuseMapName) _diffuseMapName = [_name copy];
+	}
+	
+	
+	if (!OK)
+	{
+		[self release];
+		self = nil;
+	}
+	return self;
+	TraceExit();
 }
 
 

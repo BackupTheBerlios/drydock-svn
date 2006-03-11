@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+ "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<title>Referens</title>
+<meta name="keywords" content="fel, diagnostik, varning, meddelande, problem, obj, dat" />
+<meta name="description" content="Beskrivningar av fel- och varningsmeddelanden som Torrdockan kan ge upphov till." />
+
+<link rel="stylesheet" title="Style Sheet" type="text/css" media="screen" href="../css/stylesheet.css" />
+
+<meta name="author" content="Jens Ayton" />
+<link rev="made" title="Mail Jens" href="mailto: Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;" />
+<meta name="copyright" content="© 2006 Jens Ayton. All rights reserved." />
+
+</head>
+<body>
+
+<div id="help-banner">
+<a name="reference-errors" href="../index.html">Torrdockan Hjälp</a>
+&gt; <a href="reference.html">Referens</a>
+</div>
+
+<div id="content"><h1>Fel och varningar</h1>
+<p>Många kommandon i Torrdockan kan ge upphov till fel, varningar eller anmärkningar, som
+presenteras med dialogrutan “Problemrapport” som visas härunder.</p>
+
+<div class="image-main">
+<img src="../images/problem-report.png" alt="Problemrapport-dialogrutan." width="550" height="341" />
+<p>Figur 1. En typisk Problemrapport-dialogruta.</p>
+</div>
+
+<p>Denna hjälpsida presenterar exempel på de vanligaste felen som kan uppstå, samt förklarar varför
+de inträffar.</p>
+
+<!-- Doesn’t work properly in Tiger.
+<div class="tip"><div class="label">Tips!</div>
+Du kan slå upp ett felmedelande i Hjälp genom att markera det i dialogrutan Felrapport och clicka på
+hjälpknappen i nedre vänstra hörnet.</div>
+-->
+
+<p>Om hjälpsidan inte ger tillräcklig information för att lösa problemet, kan du välja att skicka en
+felrapport eller be om hjälp <a href="mailto:Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;">via
+e-post</a>. Notera i så fall att du kan markera ett eller flera meddelanden i dialogrutan
+Problemrapport och kopiera dem (med kommandot <span class="command-name">Kopiera</span> i
+<span class="command-name">Redigera</span>-menyn).</p>
+
+
+
+<!-- AppleSegStart="Referens - Fel och varningar: varningar och anmärkningar" -->
+<!-- AppleSegDescription="Beskrivningar av Torrdockans vanligaste varningar och anmärkningar." -->
+
+<h2>Varningar och anmärkningar</h2>
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-nonTriangularFaces"></a>
+Dokumentet innehåller icke-triangulära sidor. För att spara det i det valda formatet kommer Torrdockan
+att omvandla det till trianglar.</div>
+
+<p>Meddelandet framförs när du sparar i Oolite DAT-format, om dokumentet innehåller polygon med fler
+än tre punkter. On du väljer att fortsätta kommer dokumentet omvandlas till trianglar innan det
+sparas. Detta motsvarar kommandot <span class="command-name">Omvandla till trianglar</span> i menyn
+<span class="command-name">Verktyg</span>.</div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-textureNotFound"></a>
+Ingen textur vid namn ”Min textur” kunde hittas; alternativtextur används i stället.</div>
+
+<p>När ett dokument öppnas, letar Torrdockan efter texturer på flera platser:</p>
+
+<ol>
+	<li> I samma mapp som dokumentet.</li>
+	<li> I en mapp vid namn ”Textures” i samma mapp som dokumentet.</li>
+	<li> I en mapp vid namn ”Textures” i den mapp, som innehåller mappen med dokumentet.</li>
+	<li> Inuti programmet Oolite, om det kan finnas.</li>
+</ol>
+
+<p>Om en textur inte kan hittas i någon av dessa platser visas ovanstående meddelande, och
+Torrdockan använder alternativtexturen, som är ett grått schackrutemönster.<p>
+
+<div class="image-main">
+<img src="../../../Placeholder Texture.png" alt="Alternativtexturen." width="256" height="256" />
+<p>Figur 2. Alternativtexturen.</p>
+</div>
+
+<p>Notera att Torrdockan minns texturens namn, och om du sparar dokumentet och öppnar det igen
+kommer Torrdockan än en gång leta efter den rätta texturen. Med andra ord skadas
+inte dokumentet utan visas bara felaktigt.</p>
+</div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-multipleMaterialLibraries"></a>
+Dokumentet innehåller flera hänvisningar till materialbibliotek. I nuläget stöder Torrdockan endast
+ett materialbibliotek. Hänvisningen till materialbiblioteket ”Andra materialbibliotek” ignoreras.</div>
+
+<p>Lightwave OBJ-dokument anger materialegenskaper, som texturer, i externa filer som kallas
+”materialbibliotek” (och som använder filändelsen ”.mtl”). Varje OBJ-dokument kan hänvisa till noll
+eller fler materialbibliotek. Torrdockan stöder dock i nuläget endast ett materialbibliotek.
+Meddelandet ovan visas därför om du försöker öppna ett OBJ-dokument som hänvisar till flera. Det går
+bra att öppna dokumentet, men vissa texturer kan komma att saknas. Det verkar inte troligt att denna
+begränsning blir ett problem när man arbetar med modeller för Oolite, men om det visar sig vara det,
+kan du begära åtgärd <a href="mailto:Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;">via
+e-post</a>.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-unknownOBJLineType"></a>
+<a name="problem-ignoredOBJLineType"></a>
+<a name="problem-OBJCall"></a>
+<a name="problem-OBJShellScript"></a>
+Dokumentet innehåller rader av typ ”cstype” (typ av parametrisk kurva/yta), vilka kommer att
+ignoreras.</div>
+
+<p>Lightwave OBJ-dokument kan innehålla diverse olika typer av geometrisk data som Torrdockan i
+nuläget inte kan hantera, såsom välvda ytor och hänvisningar till andra OBJ-filer. Om du behöver
+stöd för en viss funktion, kan du begära detta <a
+href="mailto:Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;">via e-post</a>. Bifoga gärna
+exempelfiler.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-textureNotPowerOfTwo"></a>
+Texturen ”Min textur” har mått som inte är tvåpotenser. Den har skalats om från 200 × 200
+bildpunkter till 256 × 256 bildpunkter.</div>
+
+<p>Som Oolite (och de flesta 3D-spel), kräver Torrdockan att texturer har sidor vars längd i
+bildpunkter (pixlar) är en tvåpotens. Liksom Oolite kan Torrdockan skala om texturer om nödvändigt
+för att uppnå detta. Att skala upp texturer slösar dock på minne (både vanligt minne och grafikminne),
+så texturer bör ändras så att detta inte behövs. För Oolite rekommenderas att texturer över 512 × 512
+bildpunkter inte används, och att 256 × 256 punkter används om möjligt. Notera att två texturer på
+256 × 256 punkter tillsammans använder hälften så mycket minne som en 512 × 512-textur!</p>
+
+<p>Notera också att olika grafikkort har olika storleksbegränsningar. Torrdockan skalar om nödvändigt
+ner texturer till den största storlek som anges av grafikkortet. Oolite saknar dock för närvarande
+denna funktion.</p></div>
+
+<!-- AppleSegEnd -->
+
+
+
+<!-- AppleSegStart="Referens - Fel och varningar: felmeddelanden" -->
+<!-- AppleSegDescription="Beskrivningar av Torrdockans vanligaste felmeddelanden." -->
+
+<h2>Felmeddelanden</h2>
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-allocFailed"></a>
+En minnestilldelning misslyckades. Detta beror förmodligen på minnesbrist.</div>
+<div class="problem-quote">
+<a name="problem-textureFileNotLoadedMemory"></a>
+Texturen ”Min textur” kunde inte läsas in, eftersom det fanns för lite minne.</div>
+
+<p>Meddelandet innebär att Torrdockan bad systemet om minne, men inget kunde tillhandahållas. Detta
+innebär oftast att både det fysiska minnet och huvudhårddisken (startskivan) är fulla. Du bör skapa
+utrymme på skivan genom att avlägsna onödiga filer och tömma Papperskorgen, samt frigöra minne genom
+att stänga dokument och program.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-noDataLoaded"></a>
+Ingen data kunde läsas från ”Mitt dokument”.</div>
+
+<p>Meddelandet innebär att inläsningen av ett dokument misslyckades. Detta kan hända av diverse
+olika anledningar, som att filen försvinner innan Torrdockan försöker öppna den, eller att skivan
+med filen är skadad. I allmänhet betyder det inte att det är fel på filens innehåll. Beroende på det
+specifika problemet kan ett ytterligare förtydligande anges.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-noDATNVERTS"></a>
+<a name="problem-noDATNFACES"></a>
+<a name="problem-insufficientParts"></a>
+<a name="problem-noVertexDataLoaded"></a>
+<a name="problem-noColorLoaded"></a>
+<a name="problem-noTextureNameLoaded"></a>
+<a name="problem-noTextureScaleLoaded"></a>
+<a name="problem-noUVLoaded"></a>
+Punktdata kunde inte läsas för punkt 37.</div>
+
+<div class="problem-quote">
+<a name="problem-invalidVertexIndex"></a>
+<a name="problem-invalidNormalIndex"></a>
+<a name="problem-invalidUVIndex"></a>
+<a name="problem-vertexRange"></a>
+<a name="problem-normalIndexRange"></a>
+<a name="problem-UVIndexRange"></a>
+Polygon 10 anger punktindex 25, men det finns bara 24 punkter i dokumentet.</div>
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-vertexCountRange"></a>
+Ogiltigt punkttal (2) för polygon 84. Varje sida måste ha minst tre och högst 16 punkter.</div>
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-parseError"></a>
+Tolkningsfel på rad 56: väntade heltal, fann filslut.</div>
+
+<p>Dessa felmeddelanden beror på olika fel som kan påträffas vid läsning av Oolite DAT- eller
+Lightwave OBJ-dokument. Såvida du inte redigerat filen i fråga i en textredigerare är skillnaden
+mellan de olika felmeddelandena oviktig; alla innebär att dokumentet är ogiltigt.</p></div>
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-tooManyVertices"></a>
+<a name="problem-tooManyFaces"></a>
+<a name="problem-tooManyMaterials"></a>
+Dokumentet innehåller 602 polygon, men det valda filformatet stöder inte fler än 512.</div>
+
+<p>Meddelandet visas om du försöker spara ett dokument i Oolite DAT-format som är för avancerat för
+att Oolite skall kunna öppna det. Du måste minska komplexiteten genom att förenkla modellen eller
+bryta den i delar som sammanfogas genom underenhetssystemet.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-invalidTextureName"></a>
+Dokumentet innehåller en textur vid namn ”Min textur”. Det valda filformatet tillåter inte texturnamn
+som innehåller mellanslag, kommatecken, radbrytningar, ”#” eller ”//”.</div>
+
+<p>Detta fel kan uppstå när du försöker spara ett dokument i Oolite DAT-format. Formatet har
+begränsningar på möjliga filnamn för texturer, vilka klargörs i meddelandet. För att undvika problem
+rekommenderas filnamn som består av små bokstäver, siffror, bindestreck och
+understrykningsstreck.</p></div>
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-writeFailed"></a>
+Dokumentet kunde inte sparas.</div>
+
+<div class="problem-quote">
+<a name="problem-mtllibWriteFailed"></a>
+Dokumentets materialbibliotek kunde inte sparas.</div>
+
+<p>Dessa felmeddelanden innebär att något gick fel när ett dokument skulle skrivas till en skiva,
+till exempel för att du inte har behörighet att skriva filer till den angivna platsen eller för att
+skivan är full. Det innebär inte något problem med att skapa filens innehåll; det bör vara möjligt
+att spara dokumentet på en annan plats eller en annan skiva. Beroende på det specifika problemet kan
+ett ytterligare förtydligande anges.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-textureFileNotLoadedOSErr"></a>
+Texturen ”Min textur” kunde inte läsas in, eftersom ett fel av typ -42 uppstod.</div>
+
+<p>Detta felmeddelande innebär att en textur inte kunde läsas in, vilket kan ske av diverse olika
+anledningar, som att filen försvinner innan Torrdockan försöker öppna den, eller att texturen är av
+okänd typ. (Torrdockan använder Quicktime för att läsa in texturer och stöder därmed ett stort antal
+format. Det rekommenderade filformatet för texturer är dock PNG.)</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-notValidDryDock"></a>
+Dokumentet är inte ett giltigt Torrdockan-dokument.</div>
+<div class="problem-quote"><a name="problem-outOfDateDryDock"></a>
+Dokumentet förefaller komma från en senare version av Torrdockan; det har ett inkompatibelt format.</div>
+
+<p>Dessa felmeddelanden innebär att filen ser ut som ett Torrdockan-dokument, men inte kan läsas som
+ett sådant.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-documentTooComplex"></a>
+Dokumentet är för komplext för att läsas in av Torrdockan. Torrdockan kan inte hantera modeller med
+fler än 65534 polygon, men dokumentet innehåller 100273.</div>
+
+<p>Torrdockan är avsedd för relativt enkla modeller. Oolite klarar inte att läsa in modeller med
+fler än 320 punkter, 512 polygon eller 8 material. Torrdockan utökar begränsningen något till 65534
+av varje. Notera att flera olika modeller kan sammanfogas genom systemet med underenheter.</p></div>
+
+<!-- AppleSegEnd -->
+
+</body>
+</html>

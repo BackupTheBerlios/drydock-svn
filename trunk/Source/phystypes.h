@@ -68,6 +68,7 @@ class					Matrix;
 
 
 #pragma cpp_extensions on
+
 class Vector
 // 3D, hetrogenous-co-ordinate vector
 {
@@ -305,7 +306,11 @@ public:
 	
 	inline void				glVertex(void) const GCC_ATTR((always_inline))
 							{
-								glVertex3f(x, y, z);
+								#if PHYS_DOUBLE_PRECISION
+									glVertex3d(x, y, z);
+								#else
+									glVertex3f(x, y, z);
+								#endif
 							}
 	
 	inline void				glLight(GLenum inLight) const GCC_ATTR((always_inline))
@@ -395,6 +400,306 @@ inline Scalar operator<=(Vector a, Scalar b)
 
 inline Scalar operator>=(Vector a, Scalar b) GCC_ATTR((always_inline));
 inline Scalar operator>=(Vector a, Scalar b)
+{
+	return a.Magnitude() >= b;
+}
+
+
+class Vector2
+// 2D, hetrogenous-co-ordinate vector
+{
+public:
+	union
+	{
+		Scalar					v[2];
+		struct
+		{
+			Scalar					x, y;
+		};
+	};
+	
+	inline					Vector2() GCC_ATTR((always_inline)) {}
+	inline					Vector2(const Scalar inVals[2]) GCC_ATTR((always_inline))
+							{
+								x = inVals[0];
+								y = inVals[1];
+							}
+	inline					Vector2(Scalar inX, Scalar inY) GCC_ATTR((always_inline))
+							{
+								x = inX;
+								y = inY;
+							}
+						
+	inline Scalar			&operator[](const unsigned long inIndex) GCC_ATTR((always_inline))
+							{
+								return v[inIndex];
+							}
+	
+	inline const Scalar		&operator[](const unsigned long inIndex) const GCC_ATTR((always_inline))
+							{
+								return v[inIndex];
+							}
+	
+	inline Vector2			&Set(const Scalar inX, const Scalar inY = 0) GCC_ATTR((always_inline))
+							{
+								x = inX;
+								y = inY;
+								return *this;
+							}
+	
+	#if PHYS_RANDOMIZE_URANDOMLIB
+	inline Vector2			&Randomize(void) GCC_ATTR((always_inline))
+							{
+								x = PRNG.DUniform_m1_1();
+								y = PRNG.DUniform_m1_1();
+								
+								Normalize();
+								
+								*this *= PRNG.DUniform_m1_1();
+								return *this;
+							}
+	#else
+	inline Vector2			&Randomize(void) GCC_ATTR((always_inline))
+							{
+								x = random() / (float)RAND_MAX;
+								y = random() / (float)RAND_MAX;
+								
+								Normalize();
+								
+								*this *= random() / (float)RAND_MAX;
+								return *this;
+							}
+	#endif
+	
+	inline const Vector2	operator-() const GCC_ATTR((always_inline))
+							// Negation
+							{
+								return Vector2(-x, -y);
+							}
+	
+	inline const Vector2	&operator=(const Vector2 &inVector) GCC_ATTR((always_inline))
+							{
+								this->x = inVector.x;
+								this->y = inVector.y;
+								return *this;
+							}
+	
+	inline const Vector2	&operator+=(const Vector2 &inVector) GCC_ATTR((always_inline))
+							{
+								this->x += inVector.x;
+								this->y += inVector.y;
+								return *this;
+							}
+						
+	inline const Vector2	&operator-=(const Vector2 &inVector) GCC_ATTR((always_inline))
+							{
+								this->x -= inVector.x;
+								this->y -= inVector.y;
+								return *this;
+							}
+	
+	inline const Vector2	&operator*=(const Scalar inScalar) GCC_ATTR((always_inline))
+							{
+								this->x *= inScalar;
+								this->y *= inScalar;
+								return *this;
+							}
+	
+	inline const Vector2	&operator/=(Scalar inScalar) GCC_ATTR((always_inline))
+							{
+								inScalar = 1.0 / inScalar;
+								this->x *= inScalar;
+								this->y *= inScalar;
+								return *this;
+							}
+	
+	inline const Vector2	operator+(const Vector2 &inVector) const GCC_ATTR((always_inline))
+							{
+								return Vector2(this->x + inVector.x, this->y + inVector.y);
+							}
+	
+	inline const Vector2	operator-(const Vector2 &inVector) const GCC_ATTR((always_inline))
+							{
+								return Vector2(this->x - inVector.x, this->y - inVector.y);
+							}
+	
+	inline const Vector2	operator*(const Scalar inScalar) const GCC_ATTR((always_inline))
+							// vector * scalar
+							{
+								return Vector2(this->x * inScalar, this->y * inScalar);
+							}
+	
+	friend inline const Vector2 operator*(const Scalar inScalar, const Vector2 &inVector) GCC_ATTR((always_inline))
+							// scalar * vector
+							{
+								return inVector * inScalar;
+							}
+	
+	inline const Vector2	operator/(Scalar inScalar) const GCC_ATTR((always_inline))
+							{
+								inScalar = 1.0 / inScalar;
+								return Vector2(this->x * inScalar, this->y * inScalar);
+							}
+	
+	inline const Scalar		operator*(Vector2 &inVector) const GCC_ATTR((always_inline))
+							// scalar (dot) product
+							{
+								return this->x * inVector.x + this->y * inVector.y;
+							}
+	
+	inline const bool		operator==(Vector2 &inVector) const GCC_ATTR((always_inline))
+							{
+								return	(fabs(this->x - inVector.x) < kPhysComparisonMargin) &&
+										(fabs(this->y - inVector.y) < kPhysComparisonMargin);
+							}
+	
+	inline const bool		operator!=(Vector2 &inVector) const GCC_ATTR((always_inline))
+							{
+								return	(fabs(this->x - inVector.x) >= kPhysComparisonMargin) ||
+										(fabs(this->y - inVector.y) >= kPhysComparisonMargin);
+							}
+	
+	inline const Scalar		SquareMagnitude() const GCC_ATTR((always_inline))
+							{
+								return x * x + y * y;
+							}
+	
+	inline const Scalar		Magnitude() const GCC_ATTR((always_inline))
+							{
+								return sqrt(this->SquareMagnitude());
+							}
+	
+	inline const Scalar		ReciprocalMagnitude() const GCC_ATTR((always_inline))
+							{
+								return 1.0f/this->Magnitude();
+							}
+	
+	inline const Scalar		ApproxReciprocalMagnitude() const GCC_ATTR((always_inline))
+							{
+								#if __ppc__
+									return __frsqrte(this->SquareMagnitude());
+								#else
+									return sqrtf(this->SquareMagnitude());
+								#endif
+							}
+	
+	inline const Vector2	Direction() const GCC_ATTR((always_inline))
+							// Return a unit vector pointing in the same direction
+							{
+								return *this / this->Magnitude();
+							}
+	
+	inline Vector2			&Normalize() GCC_ATTR((always_inline))
+							{
+								*this /= this->Magnitude();
+								return *this;
+							}
+	
+	inline const Vector2	ApproxUnit() const GCC_ATTR((always_inline))
+							// Return an approximately unit vector pointing in the same direction
+							{
+								return *this * this->ApproxReciprocalMagnitude();
+							}
+	
+	inline Vector2			&ApproxNormalize() GCC_ATTR((always_inline))
+							{
+								*this *= this->ApproxReciprocalMagnitude();
+								return *this;
+							}
+	
+	inline void				glDraw(void) const GCC_ATTR((always_inline))
+							{
+								glVertex();
+							}
+	
+	inline void				glVertex(void) const GCC_ATTR((always_inline))
+							{
+								#if PHYS_DOUBLE_PRECISION
+									glVertex2d(x, y);
+								#else
+									glVertex2f(x, y);
+								#endif
+							}
+	
+	inline void				glTexCoord(void) const GCC_ATTR((always_inline))
+							{
+								#if PHYS_DOUBLE_PRECISION
+									glTexCoord2d(x, y);
+								#else
+									glTexCoord2f(x, y);
+								#endif
+							}
+	
+	inline Vector2			&CleanZeros() GCC_ATTR((always_inline))
+							{
+								if (-0.0 == x) x = 0.0;
+								if (-0.0 == y) y = 0.0;
+								return *this;
+							}
+	
+	CFStringRef				CopyDescription(void);
+	
+	#ifdef NSMaximumStringLength
+	inline NSString			*Description(void) GCC_ATTR((always_inline))
+							{
+								NSString *result = (NSString *)CopyDescription();
+								return [result autorelease];
+							}
+	#endif
+};
+
+
+inline Scalar operator<(Scalar a, Vector2 b) GCC_ATTR((always_inline));
+inline Scalar operator<(Scalar a, Vector2 b)
+{
+	return a < b.Magnitude();
+}
+
+
+inline Scalar operator>(Scalar a, Vector2 b) GCC_ATTR((always_inline));
+inline Scalar operator>(Scalar a, Vector2 b)
+{
+	return a > b.Magnitude();
+}
+
+
+inline Scalar operator<=(Scalar a, Vector2 b) GCC_ATTR((always_inline));
+inline Scalar operator<=(Scalar a, Vector2 b)
+{
+	return a <= b.Magnitude();
+}
+
+
+inline Scalar operator>=(Scalar a, Vector2 b) GCC_ATTR((always_inline));
+inline Scalar operator>=(Scalar a, Vector2 b)
+{
+	return a >= b.Magnitude();
+}
+
+
+inline Scalar operator<(Vector2 a, Scalar b) GCC_ATTR((always_inline));
+inline Scalar operator<(Vector2 a, Scalar b)
+{
+	return a.Magnitude() < b;
+}
+
+
+inline Scalar operator>(Vector2 a, Scalar b) GCC_ATTR((always_inline));
+inline Scalar operator>(Vector2 a, Scalar b)
+{
+	return a.Magnitude() > b;
+}
+
+
+inline Scalar operator<=(Vector2 a, Scalar b) GCC_ATTR((always_inline));
+inline Scalar operator<=(Vector2 a, Scalar b)
+{
+	return a.Magnitude() <= b;
+}
+
+
+inline Scalar operator>=(Vector2 a, Scalar b) GCC_ATTR((always_inline));
+inline Scalar operator>=(Vector2 a, Scalar b)
 {
 	return a.Magnitude() >= b;
 }

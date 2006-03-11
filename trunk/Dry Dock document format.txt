@@ -43,6 +43,9 @@ the document. While optional, it is strongly reccomended that any third-party
 software generating Dry Dock documents write this value to assist in debugging
 compatibility issues.
 
+The root element may contain an optional element labelled “modification date”.
+This is a date specifying when the file was written.
+
 The root element should also contain a dictionary element labelled “root mesh”.
 The contents of this dictionary are described under MESHES below. The root mesh
 is the primary mesh of an Oolite entity. Subentities, exhaust plumes etc. will
@@ -55,8 +58,8 @@ root mesh is described below.
 
 Each mesh is contained in a dictionary. This dictionary will be referred to as
 the root element of the mesh; it should be noted that this is not the same as
-the root element of the document. Currently six elements are defined within the
-root element of a mesh.
+the root element of the document. Currently seven elements are defined within
+the root element of a mesh.
 
 The “name” element is a string specifying the display name of the mesh.
 
@@ -70,6 +73,10 @@ relative to Oolite’s usage. The number of vectors in each array is the number
 of octets in the array divided by twelve, rounded down (although the remainder
 should, of course, be zero).
 
+The “texture co-ordinates” element is similar to the “vertices” and “normals”
+elements, except that it contains an array of two-component (x, y) vectors,
+each taking eight bytes.
+
 The “materials” element is an array of material dictionaries for the mesh. Each
 material for a given mesh must have a different name. The format of material
 dictionaries is specified under MATERIALS below.
@@ -79,18 +86,9 @@ contains at least three elements. The “material” element is an index into th
 mesh’s “materials” array. The “normal” element is an index into the mesh’s
 “normals” array. The “vertices” element is an array of at least three vertex
 dictionaries. (Currently, Dry Dock is limited to at most 16 vertices per face.)
-Each vertex dictionary contains three elements: “vertex” is an index into the
-mesh’s “vertices” array, and “u” and “v” are floating-point texture
-co-ordinates in the range [0..1].
-
-It is expected that future versions of Dry Dock will switch to using an array
-of texture co-ordinates instead of storing them per vertex. In this case, the
-array will be stored as a data element “texture co-ordinates” in the mesh,
-along the lines of the current “vertices” and “normals” arrays but with only
-two little-endian floats per entry. “vertices” entries for faces will then
-contain a “texture co-ordinates” entry which is an integer integer into this
-array. This change will not increment the root “format” element, as the overall
-file will still be partially readable by older versions of Dry Dock.
+Each vertex dictionary contains two elements: “vertex” is an index into the
+mesh’s “vertices” array, and “texture co-ordinates” is an inded into the mesh’s
+“texture co-ordinates” array.
 
 MATERIALS
 Material dictionaries currently contain up to two elements. The “name” element

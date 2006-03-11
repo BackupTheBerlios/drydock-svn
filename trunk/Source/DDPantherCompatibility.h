@@ -79,5 +79,6 @@ FOUNDATION_EXPORT const CFStringRef kLSItemContentType;
 
 // Note: these will always set error to NULL on pre-Tiger systems.
 - (BOOL)writeToURL:(NSURL *)url atomically:(BOOL)useAuxiliaryFile errorCompat:(NSError **)error;
++ (id)dataWithContentsOfURL:(NSURL *)url options:(unsigned)readOptionsMask errorCompat:(NSError **)error;
 
 @end

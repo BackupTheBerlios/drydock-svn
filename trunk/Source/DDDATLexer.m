@@ -31,6 +31,13 @@
 DDDATLexer			*sDDDATLexerActive = nil;
 
 
+#if ENABLE_TRACE
+
+static const char *TokenString(int inToken);
+
+#endif
+
+
 @interface DDDATLexer (Private)
 
 - (void)advance;
@@ -104,7 +111,7 @@ DDDATLexer			*sDDDATLexerActive = nil;
 - (void)advance
 {
 	TraceIndent();
-	TraceMessage(@"Got token %u (%@).", _nextToken, [self describeToken]);
+	TraceMessage(@"Got token %s (%@).", TokenString(_nextToken), [self describeToken]);
 	TraceOutdent();
 	
 	_nextToken = OoliteDAT_yylex();
@@ -276,7 +283,7 @@ DDDATLexer			*sDDDATLexerActive = nil;
 		stringToQuote = [NSString stringWithFormat:NSLocalizedString(@"%@...", NULL), [stringToQuote substringToIndex:100]];
 	}
 	
-	return [NSString stringWithFormat:NSLocalizedString(@"\"%@\"", NULL), stringToQuote];
+	return stringToQuote;//[NSString stringWithFormat:NSLocalizedString(@"\"%@\"", NULL), stringToQuote];
 }
 
 
@@ -286,3 +293,32 @@ DDDATLexer			*sDDDATLexerActive = nil;
 }
 
 @end
+
+
+#if ENABLE_TRACE
+
+static const char *TokenString(int inToken)
+{
+	#define CASE(foo) case KOoliteDatToken_ ## foo: return #foo;
+	
+	switch (inToken)
+	{
+		CASE(EOF);
+		CASE(EOL);
+		CASE(VERTEX_SECTION);
+		CASE(FACES_SECTION);
+		CASE(TEXTURES_SECTION);
+		CASE(END_SECTION);
+		CASE(NVERTS);
+		CASE(NFACES);
+		CASE(INTEGER);
+		CASE(REAL);
+		CASE(STRING);
+		
+		default: return "??";
+	}
+	
+	#undef CASE
+}
+
+#endif

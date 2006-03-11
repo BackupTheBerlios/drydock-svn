@@ -30,56 +30,82 @@
 @class SceneNode;
 
 
+#define USE_SHORT_INDICES		1
+
+#if USE_SHORT_INDICES
+	typedef uint_least16_t		DDMeshIndex;
+#else
+	typedef uint_least32_t		DDMeshIndex;
+#endif
+
+
 enum
 {
-	kMaxVertsPerFace		= 16	// Hard-coded limit from Oolite
+	#if USE_SHORT_INDICES
+		kDDMeshIndexMax			= UINT_LEAST16_MAX - 1,
+		kDDMeshIndexNotFound	= UINT_LEAST16_MAX,
+	#else
+		kDDMeshIndexMax			= UINT_LEAST32_MAX - 1,
+		kDDMeshIndexNotFound	= UINT_LEAST32_MAX,
+	#endif
+	kMaxVertsPerFace			= 16	// Hard-coded limit from Oolite
 };
 
 
 typedef struct DDMeshFaceData
 {
-	uint32_t				normal;
-	uint32_t				material;
-	GLubyte					color[3],
-							vertexCount;
-	uint32_t				verts[kMaxVertsPerFace];	// Indices
-	float					tex_s[kMaxVertsPerFace],	
-							tex_t[kMaxVertsPerFace];
+	DDMeshIndex				normal;
+	DDMeshIndex				material;
+	unsigned				firstVertex;	// Index into _faceVertexIndices and _faceTexCoordIndices
+	uint8_t					vertexCount;
+	uint8_t					reserved[3];
+/*	GLubyte					color[3],
+							vertexCount;*/
+	/*DDMeshIndex				verts[kMaxVertsPerFace];	// Indices
+	DDMeshIndex				texCoords[kMaxVertsPerFace];*/
 } DDMeshFaceData;
 
 
 @interface DDMesh: NSObject<NSCopying>
 {
-	unsigned				_vertexCount;
+	DDMeshIndex				_vertexCount;
 	Vector					*_vertices;
 	
-	unsigned				_normalCount;
+	DDMeshIndex				_normalCount;
 	Vector					*_normals;
 	
-	unsigned				_faceCount;
+	DDMeshIndex				_faceCount;
 	DDMeshFaceData			*_faces;
 	
-	unsigned				_materialCount;
+	DDMeshIndex				_materialCount;
 	DDMaterial				**_materials;
 	
+	DDMeshIndex				_texCoordCount;
+	Vector2					*_texCoords;
+	
+	unsigned				_faceVertexIndexCount;
+	DDMeshIndex				*_faceVertexIndices;
+	DDMeshIndex				*_faceTexCoordIndices;
+	
 	// Axis-aligned bounds
-	float					_xMin, _xMax,
+	Scalar					_xMin, _xMax,
 							_yMin, _yMax,
 							_zMin, _zMax;
 	
 	// Greatest distance from origin
-	float					_rMax;
+	Scalar					_rMax;
 	
 	NSString				*_name;
 	NSURL					*_sourceFile;
 	
 	BOOL					_hasNonTriangles;
+	BOOL					_hasBadPolygons;
 }
 
-- (float)length;
-- (float)width;
-- (float)height;
-- (float)maxR;
+- (Scalar)length;
+- (Scalar)width;
+- (Scalar)height;
+- (Scalar)maxR;
 
 - (unsigned)vertexCount;
 - (unsigned)faceCount;
@@ -93,9 +119,13 @@ typedef struct DDMeshFaceData
 - (void)flipY;
 - (void)flipZ;
 - (void)recenter;
-- (void)scaleX:(float)inX y:(float)inY z:(float)inZ;
+- (void)scaleX:(Scalar)inX y:(Scalar)inY z:(Scalar)inZ;
 
 - (BOOL)hasNonTriangles;
+- (BOOL)hasBadPolygons;		// “Bad polygons” are not coplanar or not convex.
+
+// This is mostly used by loaders and manipulators.
+- (void)findBadPolygonsWithIssues:(DDProblemReportManager *)ioManager;
 
 @end
 

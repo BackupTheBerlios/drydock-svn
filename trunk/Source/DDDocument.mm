@@ -32,8 +32,8 @@
 #import "Logging.h"
 #import "DDScaleDialogController.h"
 #import "DDPantherCompatibility.h"
-#import "NSData+Deflate.h"
 #import "DDUtilities.h"
+#import "DDModelDocument.h"
 
 
 @interface DDDocument(Private)
@@ -41,7 +41,6 @@
 - (void)setNameFromURL:(NSURL *)inURL;
 - (void)undoAction:(NSString *)inName replacingMesh:(DDMesh *)inMesh;
 - (void)setUpMeshReplacingUndoActionNamed:(NSString *)inName;
-- (BOOL)writeDryDockDocumentToURL:(NSURL *)inAbsoluteURL issues:ioIssues;
 
 @end
 
@@ -53,7 +52,7 @@
     self = [super init];
     if (self)
 	{
-		
+		_document = [[DDModelDocument alloc] init];
     }
     return self;
 }
@@ -61,9 +60,8 @@
 
 - (void)dealloc
 {
-	[_mesh autorelease];
-	[_controller autorelease];
-	[_name autorelease];
+	[_document autorelease];
+	[_windowController setModelDocument:nil];
 	
 	[super dealloc];
 }
@@ -71,9 +69,10 @@
 
 - (void)makeWindowControllers
 {
-	_controller = [[DDDocumentWindowController alloc] initWithWindowNibName:@"DDDocument"];
-	[self addWindowController:_controller];
-	[_controller setMesh:_mesh];
+	_windowController = [[DDDocumentWindowController alloc] initWithWindowNibName:@"DDDocument"];
+	[self addWindowController:_windowController];
+	[_windowController release];
+	[_windowController setModelDocument:_document];
 }
 
 
@@ -83,13 +82,9 @@
 	
 	BOOL					success;
 	DDProblemReportManager	*problemManager;
+	DDModelDocument			*document;
 	
 	if (NULL != outError) *outError = nil;
-	
-	[_mesh release];
-	_mesh = nil;
-	[_name release];
-	_name = nil;
 	
 	problemManager = [[DDProblemReportManager alloc] init];
 	[problemManager setContext:kContextOpen];
@@ -98,18 +93,31 @@
 	{
 		if ([typeName isEqual:@"Oolite Model"])
 		{
-			_mesh = [[DDMesh alloc] initWithOoliteDAT:absoluteURL issues:problemManager];
-			success = (nil != _mesh);
+			document = [[DDModelDocument alloc] initWithOoliteDAT:absoluteURL issues:problemManager];
+			success = (nil != document);
 		}
 		else if ([typeName isEqual:@"Lightwave OBJ Model"])
 		{
-			_mesh = [[DDMesh alloc] initWithLightwaveOBJ:absoluteURL issues:problemManager];
-			success = (nil != _mesh);
+			document = [[DDModelDocument alloc] initWithLightwaveOBJ:absoluteURL issues:problemManager];
+			success = (nil != document);
+		}
+		else if ([typeName isEqual:@"Dry Dock Document"])
+		{
+			document = [[DDModelDocument alloc] initWithDryDockDocument:absoluteURL issues:problemManager];
+			success = (nil != document);
 		}
 		else
 		{
+			document = nil;
 			[problemManager addStopIssueWithKey:@"unknownFormat" localizedFormat:@"The document could not be opened, because the file type could not be recognised."];
 		}
+		if (nil != document)
+		{
+			[_document autorelease];
+			_document = document;
+			success = YES;
+		}
+		else success = NO;
 	}
 	//@catch (id localException)
 	NS_HANDLER
@@ -127,6 +135,7 @@
 			desc = [localException description];
 		}
 		
+		success = NO;
 		[problemManager addStopIssueWithKey:@"exception" localizedFormat:@"An uncaught exception occurred. This is almost certainly a programming error; please report it.\n%@", desc];
 	}
 	NS_ENDHANDLER
@@ -136,19 +145,10 @@
 	
 	[problemManager release];
 	
-	if (success && nil == _mesh)
-	{
-		TraceMessage(@"Document loading failed.");
-		success = NO;
-	}
-	
 	if (success)
 	{
 		TraceMessage(@"Document successfully loaded.");
-		_name = [_mesh name];
-		if (nil == _name) [self setNameFromURL:absoluteURL];
-		
-		[_controller setMesh:_mesh];
+		[_windowController setModelDocument:document];
 	}
 	
     return success;
@@ -165,7 +165,6 @@
 	DDProblemReportManager	*problemManager;
 	
 	if (NULL != outError) *outError = nil;
-	if (nil == _mesh) return NO;
 	
 	// Auto-saving and split files like OBJ won’t go well together… revisit this. Should possibly
 	// return Dry Dock Document from autosavingFileType when implemented.
@@ -178,12 +177,12 @@
 	{
 		if ([typeName isEqual:@"Dry Dock Document"])
 		{
-			[self gatherIssuesWithGeneratingPropertyListRepresentation:problemManager];
+			[_document gatherIssuesWithGeneratingPropertyListRepresentation:problemManager];
 			OK = [problemManager showReportApplicationModal];
 			if (OK)
 			{
 				[problemManager clear];
-				OK = [self writeDryDockDocumentToURL:absoluteURL issues:problemManager];
+				OK = [_document writeDryDockDocumentToURL:absoluteURL issues:problemManager];
 				[problemManager showReportApplicationModal];
 			}
 			if (!OK)
@@ -193,12 +192,12 @@
 		}
 		else if ([typeName isEqual:@"Oolite Model"])
 		{
-			[_mesh gatherIssues:problemManager withWritingOoliteDATToURL:absoluteURL];
+			[[_document rootMesh] gatherIssues:problemManager withWritingOoliteDATToURL:absoluteURL];
 			OK = [problemManager showReportApplicationModal];
 			if (OK)
 			{
 				[problemManager clear];
-				OK = [_mesh writeOoliteDATToURL:absoluteURL issues:problemManager];
+				OK = [[_document rootMesh] writeOoliteDATToURL:absoluteURL issues:problemManager];
 				[problemManager showReportApplicationModal];
 			}
 			if (!OK)
@@ -208,12 +207,12 @@
 		}
 		else if ([typeName isEqual:@"Lightwave OBJ Model"])
 		{
-			[_mesh gatherIssues:problemManager withWritingLightwaveOBJToURL:absoluteURL];
+			[[_document rootMesh] gatherIssues:problemManager withWritingLightwaveOBJToURL:absoluteURL];
 			OK = [problemManager showReportApplicationModal];
 			if (OK)
 			{
 				[problemManager clear];
-				OK = [_mesh writeLightwaveOBJToURL:absoluteURL finalLocationURL:absoluteOriginalContentsURL issues:problemManager];
+				OK = [[_document rootMesh] writeLightwaveOBJToURL:absoluteURL finalLocationURL:absoluteOriginalContentsURL issues:problemManager];
 				[problemManager showReportApplicationModal];
 			}
 			if (!OK)
@@ -343,46 +342,6 @@
 }
 
 
-- (NSString *)modelName
-{
-	if (nil == _name) _name = [[self displayName] retain];
-	return [[_name retain] autorelease];
-}
-
-
-- (void)setModelName:(NSString *)inModelName
-{
-	if (_name != inModelName)
-	{
-		[_name release];
-		_name = inModelName;
-	}
-}
-
-
-- (void)setNameFromURL:(NSURL *)inURL
-{
-	NSString				*path;
-	NSString				*displayName;
-	NSString				*rawName;
-	
-	if ([inURL isFileURL])
-	{
-		path = [inURL path];
-		displayName = [[NSFileManager defaultManager] displayNameAtPath:path];
-		rawName = [path lastPathComponent];
-		if ([displayName isEqual:rawName])
-		{
-			_name = [[rawName stringByDeletingPathExtension] retain];
-		}
-		else
-		{
-			_name = [displayName retain];
-		}
-	}
-}
-
-
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
 {
 	[savePanel setTreatsFilePackagesAsDirectories:YES];
@@ -393,9 +352,7 @@
 - (void)undoAction:(NSString *)inName replacingMesh:(DDMesh *)inMesh
 {
 	[self setUpMeshReplacingUndoActionNamed:inName];
-	[_mesh release];
-	_mesh = [inMesh retain];
-	[_controller setMesh:_mesh];
+	[_document setRootMesh:inMesh];
 }
 
 
@@ -404,7 +361,7 @@
 	NSUndoManager			*undoer;
 	
 	undoer = [self undoManager];
-	[[undoer prepareWithInvocationTarget:self] undoAction:inName replacingMesh:_mesh];
+	[[undoer prepareWithInvocationTarget:self] undoAction:inName replacingMesh:[_document rootMesh]];
 	[undoer setActionName:NSLocalizedString(inName, NULL)];
 }
 
@@ -414,14 +371,12 @@
 	DDMesh					*newMesh;
 	NSError					*error;
 	
-	newMesh = [_mesh copy];
+	newMesh = [[_document rootMesh] copy];
 	if (newMesh)
 	{
 		[self setUpMeshReplacingUndoActionNamed:inName];
-		[_mesh release];
-		_mesh = newMesh;
-		[_controller setMesh:_mesh];
-		[_mesh performSelector:inMessage];
+		[_document setRootMesh:newMesh];
+		[newMesh performSelector:inMessage];
 	}/*
 	else
 	{
@@ -441,7 +396,7 @@
 	[undoer registerUndoWithTarget:self selector:inAction object:nil];
 	[undoer setActionName:NSLocalizedString(inName, NULL)];
 	
-	[_mesh performSelector:inMessage];
+	[[_document rootMesh] performSelector:inMessage];
 }
 
 
@@ -485,14 +440,12 @@
 {
 	DDMesh					*newMesh;
 	
-	newMesh = [_mesh copy];
+	newMesh = [[_document rootMesh] copy];
 	if (nil != newMesh)
 	{
 		[self setUpMeshReplacingUndoActionNamed:@"Scale"];
 		[newMesh scaleX:inX y:inY z:inZ];
-		[_mesh release];
-		_mesh = newMesh;
-		[_controller setMesh:_mesh];
+		[_document setRootMesh:newMesh];
 	}
 }
 
@@ -518,7 +471,11 @@
 		
 		if (action == @selector(triangulate:))
 		{
-			enabled = [_mesh hasNonTriangles];
+			enabled = [[_document rootMesh] hasNonTriangles];
+		}
+		else if (action == @selector(doCompareDialog:))
+		{
+			enabled = TigerOrLater();
 		}
 	}
 	
@@ -540,100 +497,7 @@
 
 - (DDMesh *)mesh
 {
-	return _mesh;
-}
-
-
-typedef struct
-{
-	uint8_t				cookie[4];	// 'D', 'r', 'y', 'D'
-	uint32_t			length;		// Decompressed length, little-endian
-} DryDockDocumentHeader;
-
-
-- (id)initWithPropertyListRepresentation:(id)inPList issues:(DDProblemReportManager *)ioIssues
-{
-	
-}
-
-
-- (void)gatherIssuesWithGeneratingPropertyListRepresentation:(DDProblemReportManager *)ioManager
-{
-	return [_mesh gatherIssuesWithGeneratingPropertyListRepresentation:ioManager];
-}
-
-
-- (id)propertyListRepresentationWithIssues:(DDProblemReportManager *)ioIssues
-{
-	TraceEnter();
-	
-	id						plist;
-	
-	plist = [_mesh propertyListRepresentationWithIssues:ioIssues];
-	if (nil == plist) return nil;
-	
-	return [NSDictionary dictionaryWithObjectsAndKeys:
-							plist, @"root mesh",
-							[NSNumber numberWithInt:1], @"format",
-							ApplicationNameAndVersionString(), @"generator",
-							nil];
-	
-	TraceExit();
-}
-
-
-- (BOOL)writeDryDockDocumentToURL:(NSURL *)inAbsoluteURL issues:ioIssues
-{
-	TraceEnter();
-	
-	BOOL					OK = YES;
-	id						plist;
-	NSData					*data;
-	NSString				*errorDesc;
-	NSError					*error;
-	DryDockDocumentHeader	headerBytes = { 'D', 'r', 'y', 'D', 0 };
-	NSData					*header = nil;
-	BOOL					debugFormat;
-	
-	debugFormat = [[NSUserDefaults standardUserDefaults] boolForKey:@"debug format drydock documents"];
-	
-	plist = [self propertyListRepresentationWithIssues:ioIssues];
-	if (nil == plist) OK = NO;
-	
-	if (OK)
-	{
-		data = [NSPropertyListSerialization dataFromPropertyList:plist format:debugFormat ? NSPropertyListXMLFormat_v1_0 : NSPropertyListBinaryFormat_v1_0 errorDescription:&errorDesc];
-		if (nil == data)
-		{
-			OK = NO;
-			[ioIssues addNoteIssueWithKey:@"noConvertToPList" localizedFormat:@"The data generated by the document could not be converted to the required format (%@).", errorDesc];
-		}
-	}
-	
-	if (OK)
-	{
-		headerBytes.length = CFSwapInt32LittleToHost([data length]);
-		header = [NSData dataWithBytes:&headerBytes length:sizeof headerBytes];
-		data = [data deflatedDataPrefixedWith:header level:debugFormat ? 0 : 9];
-		if (nil == header || nil == data)
-		{
-			OK = NO;
-			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage."];
-		}
-	}
-	
-	if (OK)
-	{
-		OK = [data writeToURL:inAbsoluteURL atomically:NO errorCompat:&error];
-		if (!OK)
-		{
-			if (nil != error) [ioIssues addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
-			else [ioIssues addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
-		}
-	}
-	return OK;
-	
-	TraceExit();
+	return [_document rootMesh];
 }
 
 @end

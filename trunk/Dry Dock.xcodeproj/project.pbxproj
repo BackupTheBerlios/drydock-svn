@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A00856A09C176C2007B982D /* DDWizardBackdropView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A00856809C176C2007B982D /* DDWizardBackdropView.h */; };
+		1A00856B09C176C2007B982D /* DDWizardBackdropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00856909C176C2007B982D /* DDWizardBackdropView.m */; };
+		1A0085F609C17EC0007B982D /* DDHeaderGradientView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A0085F409C17EC0007B982D /* DDHeaderGradientView.h */; };
+		1A0085F709C17EC0007B982D /* DDHeaderGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0085F509C17EC0007B982D /* DDHeaderGradientView.m */; };
 		1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A032044096C10FB0000B217 /* Carbon.framework */; };
 		1A085A0109B46B1400FFD056 /* NSData+Deflate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */; };
 		1A085A0209B46B1400FFD056 /* NSData+Deflate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A085A0009B46B1400FFD056 /* NSData+Deflate.m */; };
@@ -18,6 +22,10 @@
 		1A09896D098B08C6007C2F5F /* Faces Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A09896C098B08C6007C2F5F /* Faces Toolbar Item.icns */; };
 		1A098995098B0D31007C2F5F /* Normals Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A098994098B0D31007C2F5F /* Normals Toolbar Item.icns */; };
 		1A0989AE098B106C007C2F5F /* Compare Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A0989AD098B106C007C2F5F /* Compare Toolbar Item.icns */; };
+		1A0B856C09B995760034D90F /* DDExhaustPlumeNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0B856A09B995760034D90F /* DDExhaustPlumeNode.mm */; };
+		1A0B864109B9A3270034D90F /* Exhaust Plume.dat in Resources */ = {isa = PBXBuildFile; fileRef = 1A0B864009B9A3270034D90F /* Exhaust Plume.dat */; };
+		1A0B86B509B9BB380034D90F /* Document Inspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A0B86B309B9BB380034D90F /* Document Inspector.nib */; };
+		1A0B86DE09B9BF7A0034D90F /* DDDocumentInspector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0B86DC09B9BF7A0034D90F /* DDDocumentInspector.mm */; };
 		1A0BC4DD096F194500D2B2A7 /* DDApplicationDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0BC4DC096F194500D2B2A7 /* DDApplicationDelegate.mm */; };
 		1A0FFE4F0981EA9F00599E84 /* DDComparatorView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A0FFE4D0981EA9F00599E84 /* DDComparatorView.nib */; };
 		1A0FFE540981EADC00599E84 /* DDComparatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0FFE530981EADC00599E84 /* DDComparatorView.mm */; };
@@ -34,7 +42,6 @@
 		1A23CD3E098F40CF004A48CD /* DDMesh+GLRendering.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
 		1A23CD8C098F491A004A48CD /* DDMesh+OoliteDATSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
 		1A23CD8D098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */; };
-		1A245C5209A46B9800DC42F4 /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; };
 		1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A24608209A5D39000DC42F4 /* DDUtilities.mm */; };
 		1A2740B609A89E7A0031F97B /* DDPantherCompatibility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */; };
 		1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
@@ -52,13 +59,14 @@
 		1A5705EC09B1D10F00E0E17D /* DDNormalSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */; };
 		1A5707A709B255C700E0E17D /* DDMaterialSet.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A5707A509B255C700E0E17D /* DDMaterialSet.h */; };
 		1A5707A809B255C700E0E17D /* DDMaterialSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5707A609B255C700E0E17D /* DDMaterialSet.mm */; };
+		1A5B112409B9C5B3001558A3 /* DDInspectorPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B112209B9C5B3001558A3 /* DDInspectorPane.mm */; };
+		1A5B138909BA7171001558A3 /* DDInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B138809BA7171001558A3 /* DDInspectorController.m */; };
 		1A65C6280957A43E006990D5 /* DDMaterial.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A65C6270957A43E006990D5 /* DDMaterial.mm */; };
 		1A6702A8098CF005003BDAD5 /* DDProblemReportManager.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */; };
 		1A670350098D81C2003BDAD5 /* CocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */; };
 		1A67FE82098C7FDA003BDAD5 /* DDProblemReportManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FE81098C7FDA003BDAD5 /* DDProblemReportManager.mm */; };
 		1A67FEB6098C85D6003BDAD5 /* DDProblemReportIssue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FEB5098C85D6003BDAD5 /* DDProblemReportIssue.mm */; };
 		1A7207CE095A8A6900C6896A /* DDTextureBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */; settings = {COMPILER_FLAGS = "-force_cpusubtype_ALL -falign-loops=16"; }; };
-		1A72092C095A98BF00C6896A /* DDInspectorController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A72092B095A98BF00C6896A /* DDInspectorController.mm */; };
 		1A78150309767395001C0020 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A78150209767395001C0020 /* Accelerate.framework */; };
 		1A7B6CF2098F82EF004AA6D7 /* Read Me.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */; };
 		1A7D60F1094EDACB00E9D611 /* DDMesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D60F0094EDACB00E9D611 /* DDMesh.mm */; };
@@ -80,12 +88,12 @@
 		1A8B684B08142C330028C19F /* DDDocumentWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B684908142C330028C19F /* DDDocumentWindowController.mm */; };
 		1A8F08B508130C020040CAC3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F08B408130C020040CAC3 /* OpenGL.framework */; };
 		1A901231096D324800A5AC2D /* Oolite Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A901230096D324800A5AC2D /* Oolite Model.icns */; };
+		1AA0E28109BF3F0200CA6EC1 /* Dry Dock Help in Resources */ = {isa = PBXBuildFile; fileRef = 1AA0E27709BF3F0200CA6EC1 /* Dry Dock Help */; };
 		1AA5471D099B35C500625FF2 /* DDStaticSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */; };
 		1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */; };
 		1AA5477C099B3C1700625FF2 /* Right Way Around.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA5477B099B3C1700625FF2 /* Right Way Around.png */; };
 		1AA547D1099B8BF700625FF2 /* DDFirstRun.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */; };
 		1AA547D3099B8CC400625FF2 /* Big Translucent Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */; };
-		1AA547D7099BA0BF00625FF2 /* First-Run Wizard Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547D6099BA0BF00625FF2 /* First-Run Wizard Background.png */; };
 		1AA54885099CB77100625FF2 /* DDFirstRunController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54884099CB77100625FF2 /* DDFirstRunController.m */; };
 		1AA548B2099CB91200625FF2 /* DDApplication.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA548B0099CB91200625FF2 /* DDApplication.nib */; };
 		1AA54975099CC00700625FF2 /* DDAxisReassignDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */; };
@@ -94,9 +102,15 @@
 		1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1377F096894FD006BB3EE /* Dry Dock.icns */; };
 		1ACE7DE30954227B00BF7642 /* Rotate Tool.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7DE20954227B00BF7642 /* Rotate Tool.png */; };
 		1ACE7EF8095438E800BF7642 /* Inspector Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */; };
+		1AE2138309B72FA20064C1ED /* DDTexCoordSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE2138109B72FA20064C1ED /* DDTexCoordSet.mm */; };
+		1AE2138409B72FA20064C1ED /* DDTexCoordSet.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AE2138209B72FA20064C1ED /* DDTexCoordSet.h */; };
+		1AE33C8509BBAA5B00F44436 /* DDFaceVertexBuffer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AE33C8309BBAA5B00F44436 /* DDFaceVertexBuffer.h */; };
+		1AE33C8609BBAA5B00F44436 /* DDFaceVertexBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE33C8409BBAA5B00F44436 /* DDFaceVertexBuffer.mm */; };
 		1AE683C5096CA1BB00622ECC /* Document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AE683C4096CA1BB00622ECC /* Document.icns */; };
 		1AE7E0E1094FA7AA000F6B6E /* Placeholder Texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE7E0E0094FA7AA000F6B6E /* Placeholder Texture.png */; };
 		1AE7E10D094FA9A2000F6B6E /* DDError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE7E10C094FA9A2000F6B6E /* DDError.mm */; };
+		1AF5BEC009B5EA5A0053F435 /* DDModelDocument.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AF5BEBE09B5EA5A0053F435 /* DDModelDocument.h */; };
+		1AF5BEC109B5EA5A0053F435 /* DDModelDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5BEBF09B5EA5A0053F435 /* DDModelDocument.mm */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2E0486D014006FF6A4 /* DDDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* DDDocument.nib */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -141,6 +155,11 @@
 				1A5705EB09B1D10F00E0E17D /* DDNormalSet.h in CopyFiles */,
 				1A5707A709B255C700E0E17D /* DDMaterialSet.h in CopyFiles */,
 				1A085A0109B46B1400FFD056 /* NSData+Deflate.h in CopyFiles */,
+				1AF5BEC009B5EA5A0053F435 /* DDModelDocument.h in CopyFiles */,
+				1AE2138409B72FA20064C1ED /* DDTexCoordSet.h in CopyFiles */,
+				1AE33C8509BBAA5B00F44436 /* DDFaceVertexBuffer.h in CopyFiles */,
+				1A00856A09C176C2007B982D /* DDWizardBackdropView.h in CopyFiles */,
+				1A0085F609C17EC0007B982D /* DDHeaderGradientView.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +168,10 @@
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1A00856809C176C2007B982D /* DDWizardBackdropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDWizardBackdropView.h; sourceTree = "<group>"; };
+		1A00856909C176C2007B982D /* DDWizardBackdropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDWizardBackdropView.m; sourceTree = "<group>"; };
+		1A0085F409C17EC0007B982D /* DDHeaderGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHeaderGradientView.h; sourceTree = "<group>"; };
+		1A0085F509C17EC0007B982D /* DDHeaderGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHeaderGradientView.m; sourceTree = "<group>"; };
 		1A032044096C10FB0000B217 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		1A0322A8096C3D890000B217 /* Change Log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Change Log.txt"; sourceTree = "<group>"; };
 		1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Deflate.h"; sourceTree = "<group>"; };
@@ -163,6 +186,12 @@
 		1A09896C098B08C6007C2F5F /* Faces Toolbar Item.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Faces Toolbar Item.icns"; sourceTree = "<group>"; };
 		1A098994098B0D31007C2F5F /* Normals Toolbar Item.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Normals Toolbar Item.icns"; sourceTree = "<group>"; };
 		1A0989AD098B106C007C2F5F /* Compare Toolbar Item.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Compare Toolbar Item.icns"; sourceTree = "<group>"; };
+		1A0B856A09B995760034D90F /* DDExhaustPlumeNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDExhaustPlumeNode.mm; sourceTree = "<group>"; };
+		1A0B856B09B995760034D90F /* DDExhaustPlumeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDExhaustPlumeNode.h; sourceTree = "<group>"; };
+		1A0B864009B9A3270034D90F /* Exhaust Plume.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Exhaust Plume.dat"; sourceTree = "<group>"; };
+		1A0B86B409B9BB380034D90F /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = "English.lproj/Document Inspector.nib"; sourceTree = "<group>"; };
+		1A0B86DB09B9BF7A0034D90F /* DDDocumentInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDocumentInspector.h; sourceTree = "<group>"; };
+		1A0B86DC09B9BF7A0034D90F /* DDDocumentInspector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDocumentInspector.mm; sourceTree = "<group>"; };
 		1A0BC4DB096F194500D2B2A7 /* DDApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDApplicationDelegate.h; sourceTree = "<group>"; };
 		1A0BC4DC096F194500D2B2A7 /* DDApplicationDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDApplicationDelegate.mm; sourceTree = "<group>"; };
 		1A0FFE4E0981EA9F00599E84 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDComparatorView.nib; sourceTree = "<group>"; };
@@ -185,7 +214,6 @@
 		1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+OoliteDATSupport.mm"; sourceTree = "<group>"; };
 		1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+LightwaveOBJSupport.mm"; sourceTree = "<group>"; };
 		1A245C1009A4676700DC42F4 /* OoliteDAT.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; lineEnding = 0; path = OoliteDAT.l; sourceTree = "<group>"; };
-		1A245C4E09A46B8A00DC42F4 /* OoliteDATLexTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OoliteDATLexTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A245CB109A4727700DC42F4 /* OoliteDATTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OoliteDATTokens.h; sourceTree = "<group>"; };
 		1A245EA909A4C8AF00DC42F4 /* DDDATLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDATLexer.h; sourceTree = "<group>"; };
 		1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDATLexer.m; sourceTree = "<group>"; };
@@ -219,6 +247,9 @@
 		1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDNormalSet.mm; sourceTree = "<group>"; };
 		1A5707A509B255C700E0E17D /* DDMaterialSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMaterialSet.h; sourceTree = "<group>"; };
 		1A5707A609B255C700E0E17D /* DDMaterialSet.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDMaterialSet.mm; sourceTree = "<group>"; };
+		1A5B112209B9C5B3001558A3 /* DDInspectorPane.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDInspectorPane.mm; sourceTree = "<group>"; };
+		1A5B112309B9C5B3001558A3 /* DDInspectorPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInspectorPane.h; sourceTree = "<group>"; };
+		1A5B138809BA7171001558A3 /* DDInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInspectorController.m; sourceTree = "<group>"; };
 		1A65C6270957A43E006990D5 /* DDMaterial.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDMaterial.mm; sourceTree = "<group>"; };
 		1A6702A7098CF005003BDAD5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDProblemReportManager.nib; sourceTree = "<group>"; };
 		1A6702A9098CF011003BDAD5 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDProblemReportManager.nib; sourceTree = "<group>"; };
@@ -232,7 +263,6 @@
 		1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTextureBuffer.m; sourceTree = "<group>"; };
 		1A72083B095A8C8C00C6896A /* MathsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathsUtils.h; sourceTree = "<group>"; };
 		1A72092A095A98BF00C6896A /* DDInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInspectorController.h; sourceTree = "<group>"; };
-		1A72092B095A98BF00C6896A /* DDInspectorController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDInspectorController.mm; sourceTree = "<group>"; };
 		1A78150209767395001C0020 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read Me.rtf"; sourceTree = "<group>"; };
 		1A7D60EF094EDACB00E9D611 /* DDMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMesh.h; sourceTree = "<group>"; };
@@ -270,6 +300,7 @@
 		1A8F08B408130C020040CAC3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		1A901230096D324800A5AC2D /* Oolite Model.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Oolite Model.icns"; sourceTree = "<group>"; };
 		1A9934A5099E158000AB2DF5 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Swedish; path = Swedish.lproj/DDFirstRun.nib; sourceTree = "<group>"; };
+		1AA0E27809BF3F0200CA6EC1 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = "English.lproj/Dry Dock Help"; sourceTree = "<group>"; };
 		1AA5471B099B35C500625FF2 /* DDStaticSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDStaticSceneView.h; sourceTree = "<group>"; };
 		1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDStaticSceneView.mm; sourceTree = "<group>"; };
 		1AA54738099B370400625FF2 /* DDAxisReassignDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAxisReassignDialogController.h; sourceTree = "<group>"; };
@@ -278,7 +309,6 @@
 		1AA5477B099B3C1700625FF2 /* Right Way Around.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Right Way Around.png"; sourceTree = "<group>"; };
 		1AA547D0099B8BF700625FF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDFirstRun.nib; sourceTree = "<group>"; };
 		1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Big Translucent Icon.png"; sourceTree = "<group>"; };
-		1AA547D6099BA0BF00625FF2 /* First-Run Wizard Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "First-Run Wizard Background.png"; sourceTree = "<group>"; };
 		1AA5485D099CB5D600625FF2 /* SmartCrashReportsInstall.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SmartCrashReportsInstall.o; sourceTree = "<group>"; };
 		1AA5485E099CB5D600625FF2 /* SmartCrashReportsInstall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartCrashReportsInstall.h; sourceTree = "<group>"; };
 		1AA54883099CB77100625FF2 /* DDFirstRunController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFirstRunController.h; sourceTree = "<group>"; };
@@ -291,12 +321,19 @@
 		1AC1377F096894FD006BB3EE /* Dry Dock.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Dry Dock.icns"; sourceTree = "<group>"; };
 		1ACE7DE20954227B00BF7642 /* Rotate Tool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rotate Tool.png"; sourceTree = "<group>"; };
 		1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Inspector Toolbar Item.icns"; sourceTree = "<group>"; };
+		1AE2138109B72FA20064C1ED /* DDTexCoordSet.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDTexCoordSet.mm; sourceTree = "<group>"; };
+		1AE2138209B72FA20064C1ED /* DDTexCoordSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTexCoordSet.h; sourceTree = "<group>"; };
+		1AE33C8309BBAA5B00F44436 /* DDFaceVertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFaceVertexBuffer.h; sourceTree = "<group>"; };
+		1AE33C8409BBAA5B00F44436 /* DDFaceVertexBuffer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDFaceVertexBuffer.mm; sourceTree = "<group>"; };
 		1AE683C4096CA1BB00622ECC /* Document.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Document.icns; sourceTree = "<group>"; };
 		1AE7DFB7094F95FE000F6B6E /* DDMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMaterial.h; sourceTree = "<group>"; };
 		1AE7E0E0094FA7AA000F6B6E /* Placeholder Texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Placeholder Texture.png"; sourceTree = "<group>"; };
 		1AE7E10B094FA9A2000F6B6E /* DDError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDError.h; sourceTree = "<group>"; };
 		1AE7E10C094FA9A2000F6B6E /* DDError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDError.mm; sourceTree = "<group>"; };
 		1AF44C5E098BF74E003D2E73 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		1AF5BEBE09B5EA5A0053F435 /* DDModelDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModelDocument.h; sourceTree = "<group>"; };
+		1AF5BEBF09B5EA5A0053F435 /* DDModelDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDModelDocument.mm; sourceTree = "<group>"; };
+		1AFE080209C0F4AB005E3A97 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Swedish; path = "Swedish.lproj/Dry Dock Help"; sourceTree = "<group>"; };
 		2A37F4ACFDCFA73011CA2CEA /* DDDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDocument.mm; sourceTree = "<group>"; };
 		2A37F4AEFDCFA73011CA2CEA /* DDDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDocument.h; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -310,13 +347,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1A245C4C09A46B8A00DC42F4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -361,7 +391,6 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* Dry Dock for Oolite.app */,
-				1A245C4E09A46B8A00DC42F4 /* OoliteDATLexTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -369,6 +398,7 @@
 		1A085A0509B46B1C00FFD056 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				1A5B129B09BA6408001558A3 /* Inspectors */,
 				1A7D60E9094EDA9E00E9D611 /* Scene Graph */,
 				1A67FEC5098C86D4003BDAD5 /* Problem Reporter */,
 				1A245C0D09A4675100DC42F4 /* Lexers */,
@@ -376,6 +406,14 @@
 				1AE7E10C094FA9A2000F6B6E /* DDError.mm */,
 				1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */,
 				1A085A0009B46B1400FFD056 /* NSData+Deflate.m */,
+				1A5705E909B1D10F00E0E17D /* DDNormalSet.h */,
+				1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */,
+				1A5707A509B255C700E0E17D /* DDMaterialSet.h */,
+				1A5707A609B255C700E0E17D /* DDMaterialSet.mm */,
+				1AE2138209B72FA20064C1ED /* DDTexCoordSet.h */,
+				1AE2138109B72FA20064C1ED /* DDTexCoordSet.mm */,
+				1AE33C8309BBAA5B00F44436 /* DDFaceVertexBuffer.h */,
+				1AE33C8409BBAA5B00F44436 /* DDFaceVertexBuffer.mm */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -416,7 +454,6 @@
 		1A49FAB40959B9C0003B322F /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				1AA547D6099BA0BF00625FF2 /* First-Run Wizard Background.png */,
 				1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */,
 				1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */,
 				1A901230096D324800A5AC2D /* Oolite Model.icns */,
@@ -433,9 +470,23 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		1A5B129B09BA6408001558A3 /* Inspectors */ = {
+			isa = PBXGroup;
+			children = (
+				1A72092A095A98BF00C6896A /* DDInspectorController.h */,
+				1A5B138809BA7171001558A3 /* DDInspectorController.m */,
+				1A5B112309B9C5B3001558A3 /* DDInspectorPane.h */,
+				1A5B112209B9C5B3001558A3 /* DDInspectorPane.mm */,
+				1A0B86DB09B9BF7A0034D90F /* DDDocumentInspector.h */,
+				1A0B86DC09B9BF7A0034D90F /* DDDocumentInspector.mm */,
+			);
+			name = Inspectors;
+			sourceTree = "<group>";
+		};
 		1A6702B9098CF688003BDAD5 /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
+				1A0B86B309B9BB380034D90F /* Document Inspector.nib */,
 				1AA548B0099CB91200625FF2 /* DDApplication.nib */,
 				1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */,
 				1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */,
@@ -475,8 +526,6 @@
 				1A49F9EE0959B235003B322F /* DDLightController.mm */,
 				1A8B68110957CC4300EC8EDA /* DDDocumentController.h */,
 				1A8B68120957CC4300EC8EDA /* DDDocumentController.mm */,
-				1A72092A095A98BF00C6896A /* DDInspectorController.h */,
-				1A72092B095A98BF00C6896A /* DDInspectorController.mm */,
 				1A0FFE750981EE3100599E84 /* DDCompareDialogController.h */,
 				1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */,
 				1A8B185709926845007265FC /* DDScaleDialogController.h */,
@@ -504,6 +553,10 @@
 				1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */,
 				1A8B14B00992175F007265FC /* DDDimensionFormatter.h */,
 				1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */,
+				1A00856809C176C2007B982D /* DDWizardBackdropView.h */,
+				1A00856909C176C2007B982D /* DDWizardBackdropView.m */,
+				1A0085F409C17EC0007B982D /* DDHeaderGradientView.h */,
+				1A0085F509C17EC0007B982D /* DDHeaderGradientView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -523,10 +576,8 @@
 				1A65C6270957A43E006990D5 /* DDMaterial.mm */,
 				1A7207CC095A8A6900C6896A /* DDTextureBuffer.h */,
 				1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */,
-				1A5705E909B1D10F00E0E17D /* DDNormalSet.h */,
-				1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */,
-				1A5707A509B255C700E0E17D /* DDMaterialSet.h */,
-				1A5707A609B255C700E0E17D /* DDMaterialSet.mm */,
+				1AF5BEBE09B5EA5A0053F435 /* DDModelDocument.h */,
+				1AF5BEBF09B5EA5A0053F435 /* DDModelDocument.mm */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -548,6 +599,8 @@
 				1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */,
 				1A7D62C1094EF54600E9D611 /* DDMeshNode.h */,
 				1A7D62C2094EF54600E9D611 /* DDMeshNode.mm */,
+				1A0B856B09B995760034D90F /* DDExhaustPlumeNode.h */,
+				1A0B856A09B995760034D90F /* DDExhaustPlumeNode.mm */,
 			);
 			name = "Scene Graph";
 			sourceTree = "<group>";
@@ -631,6 +684,8 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1AA0E27709BF3F0200CA6EC1 /* Dry Dock Help */,
+				1A0B864009B9A3270034D90F /* Exhaust Plume.dat */,
 				1AA5477B099B3C1700625FF2 /* Right Way Around.png */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				1AE7E0E0094FA7AA000F6B6E /* Placeholder Texture.png */,
@@ -657,30 +712,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1A245C4D09A46B8A00DC42F4 /* OoliteDATLexTest */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1A245C7209A46BF500DC42F4 /* Build configuration list for PBXNativeTarget "OoliteDATLexTest" */;
-			buildPhases = (
-				1A245C4B09A46B8A00DC42F4 /* Sources */,
-				1A245C4C09A46B8A00DC42F4 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = "$(HOME)/bin";
-				PREBINDING = NO;
-				PRODUCT_NAME = OoliteDATLexTest;
-				ZERO_LINK = YES;
-			};
-			dependencies = (
-			);
-			name = OoliteDATLexTest;
-			productName = OoliteDATLexTest;
-			productReference = 1A245C4E09A46B8A00DC42F4 /* OoliteDATLexTest */;
-			productType = "com.apple.product-type.tool";
-		};
 		8D15AC270486D014006FF6A4 /* Dry Dock */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AAC876508F293CC004A6AD2 /* Build configuration list for PBXNativeTarget "Dry Dock" */;
@@ -733,7 +764,6 @@
 			projectDirPath = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* Dry Dock */,
-				1A245C4D09A46B8A00DC42F4 /* OoliteDATLexTest */,
 			);
 		};
 /* End PBXProject section */
@@ -771,22 +801,16 @@
 				1AA5477C099B3C1700625FF2 /* Right Way Around.png in Resources */,
 				1AA547D1099B8BF700625FF2 /* DDFirstRun.nib in Resources */,
 				1AA547D3099B8CC400625FF2 /* Big Translucent Icon.png in Resources */,
-				1AA547D7099BA0BF00625FF2 /* First-Run Wizard Background.png in Resources */,
 				1AA548B2099CB91200625FF2 /* DDApplication.nib in Resources */,
+				1A0B864109B9A3270034D90F /* Exhaust Plume.dat in Resources */,
+				1A0B86B509B9BB380034D90F /* Document Inspector.nib in Resources */,
+				1AA0E28109BF3F0200CA6EC1 /* Dry Dock Help in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1A245C4B09A46B8A00DC42F4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A245C5209A46B9800DC42F4 /* OoliteDAT.l in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -811,7 +835,6 @@
 				1A8B68130957CC4300EC8EDA /* DDDocumentController.mm in Sources */,
 				1A49F9F00959B235003B322F /* DDLightController.mm in Sources */,
 				1A7207CE095A8A6900C6896A /* DDTextureBuffer.m in Sources */,
-				1A72092C095A98BF00C6896A /* DDInspectorController.mm in Sources */,
 				1A18DE11096456D20010CE0B /* UKFeedbackProvider.m in Sources */,
 				1A18DE12096456D20010CE0B /* UKUpdateChecker.m in Sources */,
 				1A0BC4DD096F194500D2B2A7 /* DDApplicationDelegate.mm in Sources */,
@@ -844,6 +867,15 @@
 				1A5705EC09B1D10F00E0E17D /* DDNormalSet.mm in Sources */,
 				1A5707A809B255C700E0E17D /* DDMaterialSet.mm in Sources */,
 				1A085A0209B46B1400FFD056 /* NSData+Deflate.m in Sources */,
+				1AF5BEC109B5EA5A0053F435 /* DDModelDocument.mm in Sources */,
+				1AE2138309B72FA20064C1ED /* DDTexCoordSet.mm in Sources */,
+				1A0B856C09B995760034D90F /* DDExhaustPlumeNode.mm in Sources */,
+				1A0B86DE09B9BF7A0034D90F /* DDDocumentInspector.mm in Sources */,
+				1A5B112409B9C5B3001558A3 /* DDInspectorPane.mm in Sources */,
+				1A5B138909BA7171001558A3 /* DDInspectorController.m in Sources */,
+				1AE33C8609BBAA5B00F44436 /* DDFaceVertexBuffer.mm in Sources */,
+				1A00856B09C176C2007B982D /* DDWizardBackdropView.m in Sources */,
+				1A0085F709C17EC0007B982D /* DDHeaderGradientView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -857,6 +889,14 @@
 				1A49FABB0959B9F4003B322F /* Swedish */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1A0B86B309B9BB380034D90F /* Document Inspector.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A0B86B409B9BB380034D90F /* English */,
+			);
+			name = "Document Inspector.nib";
 			sourceTree = "<group>";
 		};
 		1A0FFE4D0981EA9F00599E84 /* DDComparatorView.nib */ = {
@@ -920,6 +960,15 @@
 			name = DDScaleDialog.nib;
 			sourceTree = "<group>";
 		};
+		1AA0E27709BF3F0200CA6EC1 /* Dry Dock Help */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1AA0E27809BF3F0200CA6EC1 /* English */,
+				1AFE080209C0F4AB005E3A97 /* Swedish */,
+			);
+			name = "Dry Dock Help";
+			sourceTree = "<group>";
+		};
 		1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -967,54 +1016,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1A245C7309A46BF500DC42F4 /* Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
-				INSTALL_PATH = "$(HOME)/bin";
-				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
-				LEX_SUPPRESS_DEFAULT_RULE = YES;
-				PREBINDING = NO;
-				PRODUCT_NAME = OoliteDATLexTest;
-			};
-			name = Development;
-		};
-		1A245C7409A46BF500DC42F4 /* Deployment */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
-				INSTALL_PATH = "$(HOME)/bin";
-				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
-				LEX_SUPPRESS_DEFAULT_RULE = YES;
-				PREBINDING = NO;
-				PRODUCT_NAME = OoliteDATLexTest;
-			};
-			name = Deployment;
-		};
-		1A245C7509A46BF500DC42F4 /* Debug-optimized */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
-				INSTALL_PATH = "$(HOME)/bin";
-				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
-				LEX_SUPPRESS_DEFAULT_RULE = YES;
-				PREBINDING = NO;
-				PRODUCT_NAME = OoliteDATLexTest;
-			};
-			name = "Debug-optimized";
-		};
 		1A27407909A77C350031F97B /* Development-Panther */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1044,24 +1045,6 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
-			};
-			name = "Development-Panther";
-		};
-		1A27407A09A77C350031F97B /* Development-Panther */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
-				INSTALL_PATH = "$(HOME)/bin";
-				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
-				LEX_SUPPRESS_DEFAULT_RULE = YES;
-				PREBINDING = NO;
-				PRODUCT_NAME = OoliteDATLexTest;
 			};
 			name = "Development-Panther";
 		};
@@ -1109,20 +1092,6 @@
 				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
 				SDKROOT_ppc = /Developer/SDKs/MacOSX10.3.9.sdk;
 				WRAPPER_EXTENSION = app;
-			};
-			name = "Debug-optimized-Panther";
-		};
-		1A27436609A8C4FC0031F97B /* Debug-optimized-Panther */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PREPROCESSOR_DEFINITIONS = LEX_TEST;
-				INSTALL_PATH = "$(HOME)/bin";
-				LEXFLAGS = "-pp -8 -CFre -POoliteDAT_yy";
-				LEX_SUPPRESS_DEFAULT_RULE = YES;
-				PREBINDING = NO;
-				PRODUCT_NAME = OoliteDATLexTest;
 			};
 			name = "Debug-optimized-Panther";
 		};
@@ -1283,18 +1252,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1A245C7209A46BF500DC42F4 /* Build configuration list for PBXNativeTarget "OoliteDATLexTest" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1A245C7309A46BF500DC42F4 /* Development */,
-				1A27407A09A77C350031F97B /* Development-Panther */,
-				1A245C7409A46BF500DC42F4 /* Deployment */,
-				1A245C7509A46BF500DC42F4 /* Debug-optimized */,
-				1A27436609A8C4FC0031F97B /* Debug-optimized-Panther */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
-		};
 		1AAC876508F293CC004A6AD2 /* Build configuration list for PBXNativeTarget "Dry Dock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

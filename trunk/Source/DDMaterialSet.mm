@@ -77,12 +77,12 @@
 }
 
 
-- (int)indexForName:(NSString *)inName
+- (DDMeshIndex)indexForName:(NSString *)inName
 {
 	TraceEnter();
 	
 	NSNumber			*index;
-	int					result;
+	DDMeshIndex			result;
 	
 	index = [rev objectForKey:inName];
 	if (nil != index)
@@ -91,7 +91,7 @@
 	}
 	else
 	{
-		result = NSNotFound;
+		result = kDDMeshIndexNotFound;
 	}
 	
 	return result;
@@ -99,17 +99,21 @@
 }
 
 
-- (int)addMaterial:(DDMaterial *)inMaterial
+- (DDMeshIndex)addMaterial:(DDMaterial *)inMaterial
 {
 	TraceEnterMsg(@"Called for %@ {", inMaterial);
 	
 	NSNumber			*index;
-	int					result;
+	DDMeshIndex			result;
 	
 	if (count == max)
 	{
 		LogMessage(@"Growing DDMaterialSet.");
-		max *= 2;
+		if (kDDMeshIndexMax == max) [NSException raise:NSRangeException format:@"%s: failed to grow a DDMaterialSet (already at maximum size).", __FUNCTION__];
+		
+		if (kDDMeshIndexMax / 2 < max) max = kDDMeshIndexMax;
+		else max *= 2;
+		
 		array = (DDMaterial **)realloc(array, sizeof (DDMaterial *) * max);
 		if (nil == array) [NSException raise:NSMallocException format:@"%s: failed to grow a DDMaterialSet (out of memory).", __FUNCTION__];
 	}
@@ -130,7 +134,7 @@
 }
 
 
-- (void)getArray:(DDMaterial ***)outArray andCount:(unsigned *)outCount
+- (void)getArray:(DDMaterial ***)outArray andCount:(DDMeshIndex *)outCount
 {
 	TraceEnter();
 	

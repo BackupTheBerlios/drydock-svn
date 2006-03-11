@@ -16,10 +16,11 @@
 digit			[[:digit:]]
 positive		{digit}+
 integer			[+-]?{positive}
-real			{integer}"."{positive}("e"{integer})?
+real			{integer}("."{positive})?("e"{integer})?
 separator		[ \t,]*
 comment			("//"|"#").*
-endOfLine		{separator}?{comment}?"\n"
+lineBreak		("\r\n"|"\r"|"\n")
+endOfLine		{separator}?{comment}?{lineBreak}
 string			[[:alpha:]][^ \n\t,#]*
 
 

@@ -10,18 +10,11 @@
             CLASS = DDDocumentWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                breadthField = NSTextField; 
-                facesField = NSTextField; 
-                formatter = DDDimensionFormatter; 
                 glView = DDPreviewView; 
-                heightField = NSTextField; 
                 leftView = NSView; 
-                lengthField = NSTextField; 
-                nameField = NSTextField; 
                 outlineView = NSOutlineView; 
                 rightView = NSView; 
                 toolMatrix = NSMatrix; 
-                verticesField = NSTextField; 
             }; 
             SUPERCLASS = NSWindowController; 
         }, 

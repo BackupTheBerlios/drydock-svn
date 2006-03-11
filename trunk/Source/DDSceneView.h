@@ -53,6 +53,7 @@ enum
 	
 	Matrix						_transform;
 	GLfloat						_z;
+	GLfloat						_oldZ;
 	
 	SceneNode					*_oldSceneRoot;
 }

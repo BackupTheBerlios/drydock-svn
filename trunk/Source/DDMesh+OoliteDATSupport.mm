@@ -33,6 +33,8 @@
 #import "DDDATLexer.h"
 #import "DDNormalSet.h"
 #import "DDMaterialSet.h"
+#import "DDTexCoordSet.h"
+#import "DDFaceVertexBuffer.h"
 
 
 // Hard-coded limits from Oolite
@@ -57,7 +59,7 @@ enum
 	Vector					*vertices = NULL;
 	DDMeshFaceData			*faces = NULL;
 	float					x, y, z;
-	unsigned				faceVerts;
+	unsigned				faceVertexCount;
 	float					xMin = 0, xMax = 0,
 							yMin = 0, yMax = 0,
 							zMin = 0, zMax = 0,
@@ -75,6 +77,10 @@ enum
 	int						tok;
 	BOOL					readTextures;
 	DDNormalSet				*normals;
+	DDTexCoordSet			*texCoords;
+	DDFaceVertexBuffer		*buffer;
+	DDMeshIndex				faceVertices[kMaxVertsPerFace];
+	DDMeshIndex				faceTexCoords[kMaxVertsPerFace] = {0};
 	
 	assert(nil != inFile && nil != ioIssues);
 	
@@ -84,7 +90,10 @@ enum
 //	[NSException raise:NSGenericException format:@"This is a long and pointless string. Loooooong. And very very pointless. As pointless as a pointless and long thing. A thing which is long and has no point, other than being long."];
 	
 	TraceMessage(@"Loading file.");
-	_name = [[inFile displayString] retain];
+	_name = [inFile displayString];
+	if (NSOrderedSame == [[_name substringFromIndex:[_name length] - 4] caseInsensitiveCompare:@".dat"]) _name = [_name substringToIndex:[_name length] - 4];
+	[_name retain];
+	
 	lexer = [[DDDATLexer alloc] initWithURL:inFile issues:ioIssues];
 	OK = (nil != lexer);
 	[lexer skipLineBreaks];
@@ -100,9 +109,14 @@ enum
 			[ioIssues addStopIssueWithKey:@"noDATNVERTS" localizedFormat:@"The required NVERTS line could not be found."];
 			TraceMessage(@"** Failed to find \"NVERTS\".");
 		}
+		else if (kDDMeshIndexMax < vertexCount)
+		{
+			OK = NO;
+			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"vertices", NULL), vertexCount];
+		}
 		else if (kMaxDATVertices < vertexCount)
 		{
-			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOolite" localizedFormat:@"This document has %u vertices. It will not be possible to open it with Oolite, which has a limit of %u vertices.", vertexCount, kMaxDATVertices];
+			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOolite" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite, which has a limit of %u %@.", vertexCount, NSLocalizedString(@"vertices", NULL), kMaxDATVertices, NSLocalizedString(@"vertices", NULL)];
 		}
 	}
 	
@@ -117,9 +131,14 @@ enum
 			[ioIssues addStopIssueWithKey:@"noDATNFACES" localizedFormat:@"The required NFACES line could not be found."];
 			TraceMessage(@"** Failed to find \"NFACES\".");
 		}
+		else if (kDDMeshIndexMax < faceCount)
+		{
+			OK = NO;
+			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"faces", NULL), faceCount];
+		}
 		else if (kMaxDATFaces < faceCount)
 		{
-			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOolite" localizedFormat:@"This document has %u faces. It will not be possible to open it with Oolite, which has a limit of %u faces.", faceCount, kMaxDATFaces];
+			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOolite" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite, which has a limit of %u faces.", faceCount, NSLocalizedString(@"faces", NULL), kMaxDATFaces, NSLocalizedString(@"faces", NULL)];
 		}
 	}
 	
@@ -136,14 +155,18 @@ enum
 	}
 	
 	// Load vertices
-	if (OK) OK = (KOoliteDatToken_VERTEX_SECTION == [lexer nextToken:NULL]);
+	if (OK)
+	{
+		OK = (KOoliteDatToken_VERTEX_SECTION == [lexer nextToken:&tokString]);
+		if (!OK) [ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), @"VERTEX", tokString];
+	}
 	if (OK)
 	{
 		vertices = (Vector *)calloc(sizeof(Vector), vertexCount);
 		if (NULL == vertices)
 		{
 			OK = NO;
-			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
+			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage"];
 		}
 	}
 	if (OK)
@@ -184,15 +207,22 @@ enum
 	}
 	
 	// Load faces
-	if (OK) OK = (KOoliteDatToken_FACES_SECTION == [lexer nextToken:NULL]);
+	if (OK)
+	{
+		OK = (KOoliteDatToken_FACES_SECTION == [lexer nextToken:&tokString]);
+		if (!OK) [ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), @"FACE", tokString];
+	}
 	if (OK)
 	{
 		faces = (DDMeshFaceData *)calloc(sizeof(DDMeshFaceData), faceCount);
 		normals = [DDNormalSet setWithCapacity:faceCount];
-		if (NULL == faces || nil == normals)
+		texCoords = [DDTexCoordSet setWithCapacity:faceCount];
+		buffer = [DDFaceVertexBuffer bufferForFaceCount:faceCount];
+		
+		if (NULL == faces || nil == normals || nil == texCoords || nil == buffer)
 		{
 			OK = NO;
-			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
+			[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage"];
 		}
 		
 		if (OK)
@@ -213,12 +243,7 @@ enum
 					break;
 				}
 				
-				if (255 < r) r = 255;
-				faces[i].color[0] = r;
-				if (255 < g) g = 255;
-				faces[i].color[1] = g;
-				if (255 < b) b = 255;
-				faces[i].color[2] = b;
+				// Colour is currently ignored.
 				
 				// Read normal
 				if (![lexer readReal:&x] ||
@@ -234,7 +259,7 @@ enum
 				faces[i].normal = [normals indexForVector:Vector(-x, y, z)];
 				
 				// Read vertex count
-				if (![lexer readInteger:&faceVerts])
+				if (![lexer readInteger:&faceVertexCount])
 				{
 					[ioIssues addStopIssueWithKey:@"noVertexCountLoaded" localizedFormat:@"Vertex count could not be read for face line %u.", i + 1];
 					TraceMessage(@"** Failed to read vertex count for face index %u.", i + 1);
@@ -242,21 +267,20 @@ enum
 					break;
 				}
 				
-				if (faceVerts != 3)
+				if (faceVertexCount != 3)
 				{
-					if (faceVerts < 3 || kMaxVertsPerFace < faceVerts)
+					if (faceVertexCount < 3 || kMaxVertsPerFace < faceVertexCount)
 					{
 						[ioIssues addStopIssueWithKey:@"vertexCountRange" localizedFormat:@"Invalid vertex count (%u) for face line %u. Each face must have at least 3 and no more than %u vertices.", vertexCount, i + 1, kMaxVertsPerFace];
-						TraceMessage(@"** Vertex count (%u) out of range for face index %u.", faceVerts, i + 1);
+						TraceMessage(@"** Vertex count (%u) out of range for face index %u.", faceVertexCount, i + 1);
 						OK = NO;
 						break;
 					}
-					_hasNonTriangles = YES;
 				}
 				
-				faces[i].vertexCount = faceVerts;
+				faces[i].vertexCount = faceVertexCount;
 				
-				for (j = 0; j != faceVerts; ++j)
+				for (j = 0; j != faceVertexCount; ++j)
 				{
 					unsigned index;
 					if (![lexer readInteger:&index])
@@ -273,7 +297,13 @@ enum
 						OK = NO;
 						break;
 					}
-					faces[i].verts[j] = index;
+					faceVertices[j] = index;
+				}
+				
+				if (OK)
+				{
+					// Tex co-ords are set to 0 here, and will be filled in later if there’s a TEXTURES section.
+					faces[i].firstVertex = [buffer addVertexIndices:faceVertices texCoordIndices:faceTexCoords count:faceVertexCount];
 				}
 				
 				if (OK) OK = [lexer passAtLeastOneLineBreak];
@@ -317,7 +347,7 @@ enum
 			if (nil == materials || nil == materialDict)
 			{
 				OK = NO;
-				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
+				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage"];
 			}
 			
 			if (OK)
@@ -334,7 +364,7 @@ enum
 					}
 					
 					faces[i].material = [materials indexForName:texFileName];
-					if (NSNotFound == faces[i].material)
+					if (kDDMeshIndexNotFound == faces[i].material)
 					{
 						material = [DDMaterial materialWithName:texFileName];
 						[material setDiffuseMap:texFileName relativeTo:inFile issues:ioIssues];
@@ -342,7 +372,7 @@ enum
 						{
 							TraceMessage(@"** Failed to create material for face index %u.", i + 1);
 							OK = NO;
-							[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
+							[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage"];
 							break;
 						}
 						faces[i].material = [materials addMaterial:material];
@@ -369,10 +399,13 @@ enum
 							OK = NO;
 							break;
 						}
-						faces[i].tex_s[j] = s / max_s;
-						faces[i].tex_t[j] = t / max_t;
+						faceTexCoords[j] = [texCoords indexForVector:Vector2(s / max_s, t / max_t)];
 					}
-					if (OK) OK = [lexer passAtLeastOneLineBreak];
+					if (OK)
+					{
+						[buffer setTexCoordIndices:faceTexCoords startingAt:faces[i].firstVertex count:faces[i].vertexCount];
+						OK = [lexer passAtLeastOneLineBreak];
+					}
 					if (!OK) break;
 				}
 			}
@@ -386,7 +419,7 @@ enum
 			if (NULL == _materials || nil == _materials[0])
 			{
 				OK = NO;
-				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
+				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage"];
 			}
 		}
 	}
@@ -417,6 +450,8 @@ enum
 		_vertices = vertices;
 		
 		[normals getArray:&_normals andCount:&_normalCount];
+		[texCoords getArray:&_texCoords andCount:&_texCoordCount];
+		[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices andCount:&_faceVertexIndexCount];
 		
 		_faceCount = faceCount;
 		_faces = faces;
@@ -430,11 +465,12 @@ enum
 		_zMin = zMin;
 		_zMax = zMax;
 		_rMax = rMax;
+		
+		[self findBadPolygonsWithIssues:ioIssues];
 	}
 	else
 	{
 		if (NULL != vertices) free(vertices);
-		if (NULL != normals) free(normals);
 		if (NULL != faces) free(faces);
 		
 		[self release];
@@ -461,15 +497,15 @@ enum
 	
 	if (kMaxDATVertices < _vertexCount)
 	{
-		[ioManager addStopIssueWithKey:@"tooManyVertices" localizedFormat:@"This document contains %u vertices; the selected format allows no more than %u.", _vertexCount, kMaxDATVertices];
+		[ioManager addStopIssueWithKey:@"tooManyVertices" localizedFormat:@"This document contains %u %@; the selected format allows no more than %u.", _vertexCount, NSLocalizedString(@"vertices", NULL), kMaxDATVertices];
 	}
 	if (kMaxDATFaces < _faceCount)
 	{
-		[ioManager addStopIssueWithKey:@"tooManyFaces" localizedFormat:@"This document contains %u faces; the selected format allows no more than %u.", _faceCount, kMaxDATFaces];
+		[ioManager addStopIssueWithKey:@"tooManyFaces" localizedFormat:@"This document contains %u %@; the selected format allows no more than %u.", _faceCount, NSLocalizedString(@"faces", NULL), kMaxDATFaces];
 	}
 	if (kMaxDATMaterials < _materialCount)
 	{
-		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u materials; the selected format allows no more than %u.", materialCount, kMaxDATMaterials];
+		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u %@; the selected format allows no more than %u.", materialCount, NSLocalizedString(@"materials", NULL), kMaxDATMaterials];
 	}
 	
 	// Check for invalid texture names
@@ -499,11 +535,13 @@ enum
 	NSMutableString			*texNameString = nil;
 	NSEnumerator			*texEnum;
 	NSString				*texKey;
-	unsigned				i, j, faceVerts;
+	unsigned				i, j, faceVertexCount;
 	DDMeshFaceData			*face;
 	NSString				*texName;
 	DDMaterial				*material;
 	Vector					normal;
+	Vector2					texCoords;
+	unsigned				vertIdx;
 	
 	if (_hasNonTriangles) [self triangulate];
 	
@@ -551,15 +589,17 @@ enum
 	for (i = 0; i != _faceCount; ++i)
 	{
 		face = _faces + i;
-		faceVerts = face->vertexCount;
+		faceVertexCount = face->vertexCount;
 		normal = _normals[face->normal];
 		
+		// TODO: use material colour if appropriate
 		[dataString appendFormat:@"\n%u,%u,%u,\t%10f,%10f,%10f,\t%u",
-			face->color[0], face->color[1], face->color[2], -normal.x, normal.y, normal.z, faceVerts];
+			127, 127, 127, -normal.x, normal.y, normal.z, faceVertexCount];
 		
-		for (j = 0; j != faceVerts; ++j)
+		vertIdx = face->firstVertex;
+		for (j = 0; j != faceVertexCount; ++j)
 		{
-			[dataString appendFormat:@",%s%u", j ? "" : "\t", face->verts[j]];
+			[dataString appendFormat:@",%s%u", j ? "" : "\t", _faceTexCoordIndices[vertIdx++]];
 		}
 	}
 	
@@ -568,14 +608,16 @@ enum
 	for (i = 0; i != _faceCount; ++i)
 	{
 		face = _faces + i;
-		faceVerts = face->vertexCount;
+		faceVertexCount = face->vertexCount;
 		
 		// Really ought to build material pointer -> UTF8String CFDictionary
 		[dataString appendFormat:@"\n%-16s\t1.0 1.0   ", [[_materials[face->material] diffuseMapName] UTF8String]];
 		
-		for (j = 0; j != faceVerts; ++j)
+		vertIdx = face->firstVertex;
+		for (j = 0; j != faceVertexCount; ++j)
 		{
-			[dataString appendFormat:@" %f %f", face->tex_s[j], face->tex_t[j]];
+			texCoords = _texCoords[_faceTexCoordIndices[vertIdx++]];
+			[dataString appendFormat:@" %f %f", texCoords.x, texCoords.y];
 		}
 	}
 	[dataString appendString:@"\n\nEND\n"];

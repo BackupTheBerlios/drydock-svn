@@ -24,6 +24,7 @@
 */
 
 #import <Foundation/Foundation.h>
+#import "DDMesh.h"
 
 @class DDMaterial;
 
@@ -32,16 +33,16 @@
 {
 	NSMutableDictionary			*rev;
 	DDMaterial					**array;
-	unsigned					count, max;
+	DDMeshIndex					count, max;
 }
 
 + (id)setWithCapacity:(unsigned)inCapacity;
 - (id)initWithCapacity:(unsigned)inCapacity;
 
-- (int)indexForName:(NSString *)inName;
-- (int)addMaterial:(DDMaterial *)inMaterial;
+- (DDMeshIndex)indexForName:(NSString *)inName;
+- (DDMeshIndex)addMaterial:(DDMaterial *)inMaterial;
 
 // Once this is called, the set becomes unusable (gets a capacity of zero).
-- (void)getArray:(DDMaterial ***)outArray andCount:(unsigned *)outCount;
+- (void)getArray:(DDMaterial ***)outArray andCount:(DDMeshIndex *)outCount;
 
 @end

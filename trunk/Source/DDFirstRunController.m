@@ -33,6 +33,9 @@
 #import <dlfcn.h>
 
 
+#define RUN_PROBLEM_REPORTER_EXAMLE		0
+
+
 /*	The steps of first-run configuration are recorded as a bitmask in user preferences. This allows
 	new steps to be inserted in any sequence, and only new steps will be run for new versions.
 */
@@ -48,16 +51,23 @@ static NSString *kFirstRunTab_askInstallSCR			= @"install SCR";
 static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
 static NSString *kFirstRunTab_finished				= @"finished";
 
-#if TARGET_CPU_PPC
-	static Boolean MySCRCanInstall(Boolean* outOptionalAuthenticationWillBeRequired);
-	static OSStatus MySCRInstall(UInt32 inInstallFlags);
-	static void UnloadSCR(void);
-#else
-	// OS X on non-PPC processors will always be Tiger or later, so we can hard-link SCR
+#if TIGER_OR_LATER
 	#define MySCRCanInstall		UnsanitySCR_CanInstall
 	#define MySCRInstall		UnsanitySCR_Install
 	#define UnloadSCR()			do {} while (0)
+#else
+	static Boolean MySCRCanInstall(Boolean* outOptionalAuthenticationWillBeRequired);
+	static OSStatus MySCRInstall(UInt32 inInstallFlags);
+	static void UnloadSCR(void);
 #endif
+
+
+#if RUN_PROBLEM_REPORTER_EXAMLE
+static void RunProblemReporterExample(void);
+#endif
+
+
+static void RegisterMyHelpBook(void);
 
 
 @interface DDFirstRunController (Private)
@@ -90,6 +100,10 @@ static NSString *kFirstRunTab_finished				= @"finished";
 		_haveAwoken = YES;
 		[[NSApp delegate] inhibitOpenPanel];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:NSApp];
+		
+		// Other stuff that has to be done more or less at loading time:
+		// Register help book. This is necessary for help buttons to work.
+		RegisterMyHelpBook();
 	}
 	
 	TraceExit();
@@ -140,23 +154,14 @@ static NSString *kFirstRunTab_finished				= @"finished";
 		toRun |= kFirstRunStage_askInstallSCR;
 	}
 	
-	if (!(firstRunMask & kFirstRunStage_askCheckForUpdates))
+	if (nil == [defaults objectForKey:@"UKUpdateChecker:CheckAtStartup"])
 	{
-		/*	Check for presence of "UKUpdateChecker:CheckAtStartup" key. This will have been set
-			without the first run status being set if the user has previously run version 0.06.
-			Since 0.06 is an early release with (at the time of writing) 7 downloads, this check
-			can probably be removed eventually.
-		*/
-		
-		if (nil == [defaults objectForKey:@"UKUpdateChecker:CheckAtStartup"])
-		{
-			toRun |= kFirstRunStage_askCheckForUpdates;
-		}
-		else
-		{
-			firstRunMask |= kFirstRunStage_askCheckForUpdates;
-			[defaults setInteger:firstRunMask forKey:@"first run status"];
-		}
+		toRun |= kFirstRunStage_askCheckForUpdates;
+	}
+	else
+	{
+		firstRunMask |= kFirstRunStage_askCheckForUpdates;
+		[defaults setInteger:firstRunMask forKey:@"first run status"];
 	}
 	
 	// Run "Install SCR" pane if required
@@ -209,7 +214,12 @@ static NSString *kFirstRunTab_finished				= @"finished";
 	TraceMessage(@"First run complete.");
 	
 	[[NSApp delegate] uninhibitOpenPanel];
-	if (0 == [[[NSDocumentController sharedDocumentController] documents] count]) [[NSApp delegate] runOpenPanel];
+	
+	#if RUN_PROBLEM_REPORTER_EXAMLE
+		RunProblemReporterExample();
+	#else
+		if (0 == [[[NSDocumentController sharedDocumentController] documents] count]) [[NSApp delegate] runOpenPanel];
+	#endif
 	
 	[self release];
 	[updateChecker doLaunchStuff];
@@ -286,7 +296,7 @@ static NSString *kFirstRunTab_finished				= @"finished";
 @end
 
 
-#if TARGET_CPU_PPC
+#if !TIGER_OR_LATER
 
 typedef enum
 {
@@ -399,3 +409,42 @@ static void UnloadSCR(void)
 }
 
 #endif
+
+
+#if RUN_PROBLEM_REPORTER_EXAMLE
+#import "DDProblemReportManager.h"
+
+
+static void RunProblemReporterExample(void)
+{
+	DDProblemReportManager		*mgr;
+	
+	mgr = [[DDProblemReportManager alloc] init];
+#if 1	// English
+	[mgr addWarningIssueWithKey:@"testWarningMessage" localizedFormat:[NSString stringWithUTF8String:"Things aren’t going too well. You really ought to know about it."]];
+	[mgr addStopIssueWithKey:@"testStopMessage" localizedFormat:[NSString stringWithUTF8String:"Something terrible has happened! I just can’t go on like this."]];
+#else	// Swedish
+	[mgr addWarningIssueWithKey:@"testWarningMessage" localizedFormat:[NSString stringWithUTF8String:"Saker och ting går inte så bra, det skall du veta."]];
+	[mgr addStopIssueWithKey:@"testStopMessage" localizedFormat:[NSString stringWithUTF8String:"Något hemskt har hänt! Jag klarar inte av det här."]];
+#endif
+	[mgr showReportApplicationModal];
+	[mgr release];
+}
+
+#endif
+
+
+static void RegisterMyHelpBook(void)
+{
+	NSURL						*url;
+	FSRef						ref;
+	
+	url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+	if (nil != url)
+	{
+		if (CFURLGetFSRef((CFURLRef)url, &ref))
+		{
+			AHRegisterHelpBook(&ref);
+		}
+	}
+}

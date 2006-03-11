@@ -70,13 +70,13 @@
 }
 
 
-- (unsigned)indexForVector:(Vector)inVector
+- (DDMeshIndex)indexForVector:(Vector)inVector
 {
 	TraceEnter();
 	
 	NSNumber			*index;
 	NSValue				*key;
-	unsigned			result;
+	DDMeshIndex			result;
 	
 	inVector.Normalize().CleanZeros();
 	
@@ -87,8 +87,14 @@
 		// Not found
 		if (count == max)
 		{
-			[key release];
-			[NSException raise:NSRangeException format:@"Overflow in DDNormalSet of capacity %u.", max];
+			LogMessage(@"Growing DDNormalSet.");
+			if (kDDMeshIndexMax == max) [NSException raise:NSRangeException format:@"%s: failed to grow a DDNormalSet (already at maximum size).", __FUNCTION__];
+			
+			if (kDDMeshIndexMax / 2 < max) max = kDDMeshIndexMax;
+			else max *= 2;
+			
+			array = (Vector *)realloc(array, sizeof (Vector) * max);
+			if (nil == array) [NSException raise:NSMallocException format:@"%s: failed to grow a DDNormalSet (out of memory).", __FUNCTION__];
 		}
 		
 		result = count++;
@@ -111,7 +117,7 @@
 }
 
 
-- (void)getArray:(Vector **)outArray andCount:(unsigned *)outCount
+- (void)getArray:(Vector **)outArray andCount:(DDMeshIndex *)outCount
 {
 	TraceEnter();
 	

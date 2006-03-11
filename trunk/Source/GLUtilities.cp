@@ -416,14 +416,17 @@ void EnterWireframeMode(WFModeContext &outContext)
 {
 	outContext.program = glGetHandleARB(GL_PROGRAM_OBJECT_ARB);
 	glGetBooleanv(GL_LIGHTING, &outContext.lighting);
+	glGetBooleanv(GL_TEXTURE_2D, &outContext.texture2D);
 	
 	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 	glUseProgramObjectARB(0);
 }
 
 
 void ExitWireframeMode(const WFModeContext &inContext)
 {
+	if (inContext.texture2D) glEnable(GL_TEXTURE_2D);
 	if (inContext.lighting) glEnable(GL_LIGHTING);
 	if (0 != inContext.program) glUseProgramObjectARB(inContext.program);
 }

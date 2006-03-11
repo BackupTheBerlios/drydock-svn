@@ -31,6 +31,8 @@
 #import "DDError.h"
 #import "DDNormalSet.h"
 #import "DDMaterialSet.h"
+#import "DDTexCoordSet.h"
+#import "DDFaceVertexBuffer.h"
 
 
 #define LOG_MATERIAL_ATTRIBUTES		0
@@ -41,14 +43,9 @@ enum {
 };
 
 
-typedef struct
-{
-	Scalar					u, v;
-} UV;
-
 static NSColor *ObjColorToNSColor(NSString *inColor);
 static Vector ObjVertexToVector(NSString *inVertex);
-static UV ObjUVToUV(NSString *inUV);
+static Vector2 ObjUVToVector2(NSString *inUV);
 static NSArray *ObjFaceToArrayOfArrays(NSString *inData);
 static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSMutableDictionary *ioLibrary, NSURL *inBaseURL, DDProblemReportManager *ioIssues);
 
@@ -85,7 +82,6 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	unsigned				vertexCount, uvCount, normalCount, faceCount;
 	unsigned				vertexIdx = 0, uvIdx = 0, normalIdx = 0, faceIdx = 0;
 	Vector					*vertices = NULL;
-	UV						*uv = NULL;
 	DDMeshFaceData			*faces = NULL, *face;
 	Vector					*normalArray = NULL;
 	NSString				*keyword, *params;
@@ -97,7 +93,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	NSEnumerator			*lineEnum;
 	NSArray					*faceData;
 	NSArray					*vertexData;
-	unsigned				faceVerts, fvIdx;
+	unsigned				faceVertexCount, fvIdx;
 	Vector					normal;
 	NSMutableSet			*ignoredTypes = nil;
 	NSError					*error;
@@ -110,7 +106,12 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	DDNormalSet				*normals;
 	DDMaterialSet			*materials = nil;
 	NSDictionary			*materialLibrary = nil;
-	int						currentMaterial = NSNotFound;
+	DDMeshIndex				currentMaterial = kDDMeshIndexNotFound;
+	Vector2					*uv = NULL;
+	DDTexCoordSet			*texCoords;
+	DDFaceVertexBuffer		*buffer;
+	DDMeshIndex				faceVertices[kMaxVertsPerFace];
+	DDMeshIndex				faceTexCoords[kMaxVertsPerFace];
 	
 	self = [super init];
 	if (nil == self) return nil;
@@ -118,8 +119,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	lines = [self objTokenize:inFile error:&error];
 	if (!lines)
 	{
-		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReasonCompat] : @""];
 		OK = NO;
+		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReasonCompat] : @""];
 	}
 	
 	if (OK)
@@ -130,22 +131,48 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		[[lines countTo:&normalCount] firstObjectEquals:@"vn"];
 		[[lines countTo:&faceCount] firstObjectEquals:@"f"];
 		
-	//	LogMessage(@"Counts: v=%u, vt=%u, vn=%u, f=%u", vertexCount, uvCount, normalCount, faceCount);
+		if (0 == uvCount) uvCount = 1;
+		if (0 == normalCount) normalCount = 1;
 		
+		if (kDDMeshIndexMax < vertexCount)
+		{
+			OK = NO;
+			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"vertices", NULL), vertexCount];
+		}
+		else if (kDDMeshIndexMax < faceCount)
+		{
+			OK = NO;
+			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"faces", NULL), faceCount];
+		}
+		else if (kDDMeshIndexMax < uvCount)
+		{
+			OK = NO;
+			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"texture co-ordinate pairs", NULL), uvCount];
+		}
+		else if (kDDMeshIndexMax < normalCount)
+		{
+			OK = NO;
+			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"normals", NULL), normalCount];
+		}
+	}
+	
+	if (OK)
+	{
 		vertices = (Vector *)malloc(sizeof(Vector) * vertexCount);
-		uv = (UV *)malloc(sizeof(UV) * uvCount);
+		texCoords = [DDTexCoordSet setWithCapacity:uvCount];
+		uv = (Vector2 *)malloc(sizeof(Vector2) * uvCount);
 		normalArray = (Vector *)malloc(sizeof(Vector) * normalCount);
 		normals = [DDNormalSet setWithCapacity:faceCount];
 		faces = (DDMeshFaceData *)malloc(sizeof(DDMeshFaceData) * faceCount);
+		buffer = [DDFaceVertexBuffer bufferForFaceCount:faceCount];
 		
-		if (!(vertices && uv && normalArray && normals && faces))
+		if (!(vertices && texCoords && uv && normalArray && normals && faces && buffer))
 		{
 			OK = NO;
 			if (vertices) { free(vertices); vertices = NULL; };
-			if (uv) { free(uv); uv = NULL; };
 			if (faces) { free(faces); faces = NULL; };
 			
-			if (!OK) [ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This may be due to a memory shortage or a faulty input file."];
+			if (!OK) [ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage"];
 		}
 	}
 	
@@ -197,8 +224,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 				// Vertex Texture (UV map)
 				assert(uvIdx < uvCount);
 				
-				uv[uvIdx] = ObjUVToUV(params);
-				//LogMessage(@"UV: {%g, %g}", uv[uvIdx].u, uv[uvIdx].v);
+				uv[uvIdx] = ObjUVToVector2(params);
+				//LogMessage(@"UV: {%g, %g}", uv[uvIdx].Description());
 				++uvIdx;
 			}
 			else if ([keyword isEqual:@"vn"])
@@ -220,33 +247,32 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 				
 				normal.Set(0);
 				faceData = ObjFaceToArrayOfArrays(params);
-				faceVerts = [faceData count];
-				if (3 <= faceVerts)
+				faceVertexCount = [faceData count];
+				if (3 <= faceVertexCount)
 				{
-					if (kMaxVertsPerFace < faceVerts)
+					if (kMaxVertsPerFace < faceVertexCount)
 					{
 						OK = NO;
-						[ioIssues addStopIssueWithKey:@"vertexCountRange" localizedFormat:@"Invalid vertex count (%u) for face line %u. Each face must have at least 3 and no more than %u vertices.", faceVerts, faceIdx + 1, kMaxVertsPerFace];
+						[ioIssues addStopIssueWithKey:@"vertexCountRange" localizedFormat:@"Invalid vertex count (%u) for face line %u. Each face must have at least 3 and no more than %u vertices.", faceVertexCount, faceIdx + 1, kMaxVertsPerFace];
 					}
 					if (OK)
 					{
-						if (3 < faceVerts) _hasNonTriangles = YES;
 						face = &faces[faceIdx++];
 						
-						face->vertexCount = faceVerts;
+						face->vertexCount = faceVertexCount;
 						
-						if (NSNotFound == currentMaterial)
+						if (kDDMeshIndexNotFound == currentMaterial)
 						{
 							if (nil == materials) materials = [[DDMaterialSet alloc] initWithCapacity:1];
 							currentMaterial = [materials addMaterial:[DDMaterial materialWithName:@"$untextured"]];
 						}
 						face->material = currentMaterial;
 						
-						for (fvIdx = 0; fvIdx != faceVerts; ++fvIdx)
+						for (fvIdx = 0; fvIdx != faceVertexCount; ++fvIdx)
 						{
 							int				intVal, index;
 							Vector			v, vn;
-							UV				vt;
+							Vector2			vt;
 							NSArray			*elements;
 							id				objVal;
 							unsigned		elemCount;
@@ -290,14 +316,21 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 									index = 0;
 									OK = NO;
 								}
-								face->verts[fvIdx] = index;
+								faceVertices[fvIdx] = index;
 							}
 							
 							// Read U/V index
-							if (OK && 2 <= elemCount)
+							if (OK)
 							{
-								objVal = [elements objectAtIndex:1];
-								if (nil == objVal || [@"" isEqual:objVal]) OK = NO;
+								if (2 <= elemCount)
+								{
+									objVal = [elements objectAtIndex:1];
+									if (nil == objVal || [@"" isEqual:objVal]) OK = NO;
+								}
+								else
+								{
+									OK = NO;	// Skip to fallback for no texture co-ords
+								}
 								
 								if (OK)
 								{
@@ -334,7 +367,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 											if (badUVWarnings < kWarningSupressThreshold)
 											{
 												++badUVWarnings;
-												[ioIssues addWarningIssueWithKey:@"UVIndex" localizedFormat:@"Face line %u specifies a U/V index of %i, but there are only %u U/V pairs in the document.", faceIdx, intVal, vertexIdx];
+												[ioIssues addWarningIssueWithKey:@"UVIndexRange" localizedFormat:@"Face line %u specifies a U/V index of %i, but there are only %u U/V pairs in the document.", faceIdx, intVal, vertexIdx];
 											}
 											else if (badUVWarnings == kWarningSupressThreshold)
 											{
@@ -349,13 +382,11 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 								
 								if (OK)
 								{
-									face->tex_s[fvIdx] = uv[index].u;
-									face->tex_t[fvIdx] = uv[index].v;
+									faceTexCoords[fvIdx] = [texCoords indexForVector:uv[index]];
 								}
 								else
 								{
-									face->tex_s[fvIdx] = 0.0;
-									face->tex_t[fvIdx] = 0.0;
+									faceTexCoords[fvIdx] = [texCoords indexForVector:Vector2(0, 0)];
 									OK = YES;	// Lack of U/V index is non-fatal
 								}
 							}
@@ -431,6 +462,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 							[ioIssues addWarningIssueWithKey:@"invalidNormal" localizedFormat:@"Some or all faces in the document lack a valid normal specified. This is likely to lead to lighting problems. This issue can be rectified by selecting Recalculate Normals from the Tools menu."];
 						}
 						face->normal = [normals indexForVector:normal];
+						
+						face->firstVertex = [buffer addVertexIndices:faceVertices texCoordIndices:faceTexCoords count:faceVertexCount];
 					}
 				}
 				
@@ -441,7 +474,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 				// Use Material
 				if (nil == materials) materials = [[DDMaterialSet alloc] initWithCapacity:1];
 				currentMaterial = [materials indexForName:params];
-				if (NSNotFound == currentMaterial)
+				if (kDDMeshIndexNotFound == currentMaterial)
 				{
 					currentMaterial = [materials addMaterialNamed:params forOBJAttributes:[materialLibrary objectForKey:params] relativeTo:inFile issues:ioIssues];
 				}
@@ -518,6 +551,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		_faces = faces;
 		
 		[materials getArray:&_materials andCount:&_materialCount];
+		[texCoords getArray:&_texCoords andCount:&_texCoordCount];
+		[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices andCount:&_faceVertexIndexCount];
 		
 		_xMin = xMin;
 		_xMax = xMax;
@@ -526,6 +561,15 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		_zMin = zMin;
 		_zMax = zMax;
 		_rMax = rMax;
+		
+		if (nil == _name)
+		{
+			_name = [inFile displayString];
+			if (NSOrderedSame == [[_name substringFromIndex:[_name length] - 4] caseInsensitiveCompare:@".obj"]) _name = [_name substringToIndex:[_name length] - 4];
+			[_name retain];
+		}
+		
+		[self findBadPolygonsWithIssues:ioIssues];
 	}
 	else
 	{
@@ -611,7 +655,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 
 - (NSDictionary *)loadObjMaterialLibraryNamed:(NSString *)inString relativeTo:(NSURL *)inBase issues:(DDProblemReportManager *)ioIssues
 {
-	TraceEnterMsg(@"Called for %@", inFile);
+	TraceEnterMsg(@"Called for %@", inString);
 	
 	BOOL					OK = YES;
 	NSURL					*url;
@@ -766,11 +810,9 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	NSString				*dateString;
 	NSString				*mtlName;
 	NSURL					*mtlURL;
-	unsigned				i, j, faceVerts, count, ni, ti;
+	unsigned				i, j, faceVertexCount, count, ni, ti;
 	NSMutableArray			*texCoords;
 	NSMutableDictionary		*texCoordsRev;
-	UV						uv;
-	NSValue					*value;
 	NSNumber				*index;
 	NSMutableDictionary		*materialToFaceArray;
 	NSMutableArray			*facesForMaterial;
@@ -780,6 +822,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	NSAutoreleasePool		*pool;
 	NSArray					*materialNames;
 	DDMaterial				*material;
+	unsigned				vertIdx;
 	
 	/*	Build material library name. For “Foo.obj” or “Foo”, use “Foo.mtl”; for “Bar.baz”, use
 		“Bar.baz.mtl”. Material library names can’t contain spaces (OBJ allows multiple material
@@ -816,51 +859,23 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	[dataString appendFormat:@"mtllib %@\no %@\n", mtlName, [self name]];
 	
 	// Write vertices
-	[dataString appendString:@"\n# Vertices:\n"];
+	[dataString appendFormat:@"\n# Vertices (%u):\n", _vertexCount];
 	for (i = 0; i != _vertexCount; ++i)
 	{
 		[dataString appendFormat:@"v %f %f %f\n", _vertices[i].x, _vertices[i].y, _vertices[i].z];
 	}
 	
-	/*	Write texture co-ordinates. To avoid duplicates, we create an NSArray of UV structs in
-		NSValues, and a dictionary mapping each such NSValue to an array index (as an NSNumber).
-	*/
-	texCoords = [[NSMutableArray alloc] init];
-	texCoordsRev = [NSMutableDictionary dictionary];
-	count = 0;
-	for (i = 0; i != _faceCount; ++i)
+	//	Write texture co-ordinates.
+	[dataString appendFormat:@"\n# Texture co-ordinates (%u):\n", _texCoordCount];
+	for (i = 0; i != _texCoordCount; ++i)
 	{
-		faceVerts = _faces[i].vertexCount;
-		for (j = 0; j != faceVerts; ++j)
-		{
-			uv.u = _faces[i].tex_s[j];
-			uv.v = _faces[i].tex_t[j];
-			value = [[NSValue alloc] initWithBytes:&uv objCType:@encode(UV)];
-			
-			index = [texCoordsRev objectForKey:value];
-			if (NULL == index)
-			{
-				// Previously unseen u/v pair
-				[texCoords addObject:value];
-				[texCoordsRev setObject:[NSNumber numberWithInt:count++] forKey:value];
-			}
-			[value release];
-		}
-	}
-	// Actually write the co-ords
-	[dataString appendString:@"\n# Texture co-ordinates:\n"];
-	for (i = 0; i != count; ++i)
-	{
-		value = [texCoords objectAtIndex:i];
-		[value getValue:&uv];
-		
-		[dataString appendFormat:@"vt %f %f\n", uv.u, 1.0 - uv.v];
+		[dataString appendFormat:@"vt %f %f\n", _texCoords[i].x, _texCoords[i].y];
 	}
 	[texCoords release];
 	texCoords = nil;
 	
-	// Write normals. Assume they’re already uniqued using a DDNormalSet.
-	[dataString appendString:@"\n# Normals:\n"];
+	// Write normals
+	[dataString appendFormat:@"\n# Normals (%u):\n", _normalCount];
 	for (i = 0; i != _normalCount; ++i)
 	{
 		[dataString appendFormat:@"vn %f %f %f\n", _normals[i].x, _normals[i].y, _normals[i].z];
@@ -889,20 +904,21 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	facesForMaterial = [materialToFaceArray objectForKey:[NSNull null]];
 	if (nil != facesForMaterial)
 	{
-		[dataString appendString:@"\n# Untextured faces:\ng untextured"];
 		count = [facesForMaterial count];
+		[dataString appendFormat:@"\n# Untextured faces (%u):\ng untextured", count];
 		for (i = 0; i != count; ++i)
 		{
 			index = [facesForMaterial objectAtIndex:i];
 			currentFace = &_faces[[index intValue]];
-			faceVerts = currentFace->vertexCount;
+			faceVertexCount = currentFace->vertexCount;
 			[value release];
 			ni = currentFace->normal + 1;
+			vertIdx = currentFace->firstVertex;
 			
 			[dataString appendString:@"\nf"];
-			for (j = 0; j != faceVerts; ++j)
+			for (j = 0; j != faceVertexCount; ++j)
 			{
-				[dataString appendFormat:@" %i//%i", currentFace->verts[j] + 1, ni];
+				[dataString appendFormat:@" %i//%i", _faceVertexIndices[vertIdx] + 1, ni];
 			}
 		}
 		[dataString appendString:@"\n"];
@@ -915,24 +931,20 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	{
 		facesForMaterial = [materialToFaceArray objectForKey:materialKey];
 		count = [facesForMaterial count];
-		[dataString appendFormat:@"\n# Faces with texture %@:\ng %@\nusemtl %@", materialKey, materialKey, materialKey];
+		[dataString appendFormat:@"\n# Faces with texture %@ (%u):\ng %@\nusemtl %@", materialKey, count, materialKey, materialKey];
 		for (i = 0; i != count; ++i)
 		{
 			index = [facesForMaterial objectAtIndex:i];
 			currentFace = &_faces[[index intValue]];
-			faceVerts = currentFace->vertexCount;
+			faceVertexCount = currentFace->vertexCount;
 			ni = currentFace->normal + 1;
-			[value release];
+			vertIdx = currentFace->firstVertex;
 			
 			[dataString appendString:@"\nf"];
-			for (j = 0; j != faceVerts; ++j)
-			{
-				uv.u = currentFace->tex_s[j];
-				uv.v = currentFace->tex_t[j];
-				value = [[NSValue alloc] initWithBytes:&uv objCType:@encode(UV)];
-				ti = [[texCoordsRev objectForKey:value] intValue] + 1;
-				[value release];				
-				[dataString appendFormat:@" %i/%i/%i", currentFace->verts[j] + 1, ti, ni];
+			for (j = 0; j != faceVertexCount; ++j)
+			{			
+				[dataString appendFormat:@" %i/%i/%i", _faceVertexIndices[vertIdx] + 1, _faceTexCoordIndices[vertIdx] + 1, ni];
+				++vertIdx;
 			}
 		}
 		[dataString appendString:@"\n"];
@@ -1029,18 +1041,18 @@ static Vector ObjVertexToVector(NSString *inVertex)
 }
 
 
-static UV ObjUVToUV(NSString *inUV)
+static Vector2 ObjUVToVector2(NSString *inUV)
 {
 	TraceEnter();
 	
 	NSArray				*components;
-	UV					result = {0, 0};
+	Vector2				result(0, 0);
 	
 	components = [inUV componentsSeparatedByString:@" "];
 	if (2 == [components count])
 	{
-		result.u = [[components objectAtIndex:0] floatValue];
-		result.v = 1.0 - [[components objectAtIndex:1] floatValue];
+		result.x = [[components objectAtIndex:0] floatValue];
+		result.y = 1.0 - [[components objectAtIndex:1] floatValue];
 	}
 	
 	return result;

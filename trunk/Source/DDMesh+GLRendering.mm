@@ -30,8 +30,9 @@
 #import <OpenGL/CGLMacro.h>
 
 
-#define DRAW(vec)	glVertex3f(vec.x, vec.y, vec.z)
-#define NORMAL(vec)	glNormal3f(vec.x, vec.y, vec.z)
+#define DRAW(vec)		do { Vector v = (vec); glVertex3f(v.x, v.y, v.z); } while (0)
+#define NORMAL(vec)		do { Vector v = (vec); glNormal3f(v.x, v.y, v.z); } while (0)
+#define TEXCOORDS(vec2)	do { Vector2 v = (vec2); glTexCoord2f(v.x, v.y); } while (0)
 
 
 @implementation DDMesh (GLRendering)
@@ -39,8 +40,10 @@
 - (void)glRenderWireframe
 {
 	WFModeContext			wfmc;
-	unsigned				i, j;
+	unsigned				i;
+	uint8_t					j;
 	DDMeshFaceData			*face;
+	unsigned				vertIdx;
 	
 	CGL_MACRO_DECLARE_VARIABLES();
 	
@@ -51,9 +54,10 @@
 	for (i = 0; i != _faceCount; ++i)
 	{
 		glBegin(GL_LINE_LOOP);
+		vertIdx = face->firstVertex;
 		for (j = 0; j != face->vertexCount; ++j)
 		{
-			DRAW(_vertices[face->verts[j]]);
+			DRAW(_vertices[_faceVertexIndices[vertIdx++]]);
 		}
 		glEnd();
 		face++;
@@ -77,6 +81,9 @@
 	DDMeshFaceData			*face;
 	float					white[4] = { 1, 1, 1, 1 };
 	DDMaterial				*currentMaterial = nil;
+	Vector					*vertex, *normal;
+	Vector2					*texCoords;
+	unsigned				vertIdx;
 	
 	CGL_MACRO_DECLARE_VARIABLES();
 	
@@ -100,11 +107,15 @@
 				[currentMaterial makeActive];
 			}
 			glBegin(GL_POLYGON);
-			NORMAL(_normals[face->normal]);
+			normal = &_normals[face->normal];
+			NORMAL(*normal);
+			
+			vertIdx = face->firstVertex;
 			for (j = 0; j != face->vertexCount; ++j)
 			{
-				glTexCoord2f(face->tex_s[j], face->tex_t[j]);
-				DRAW(_vertices[face->verts[j]]);
+				TEXCOORDS(_texCoords[_faceTexCoordIndices[vertIdx]]);
+				DRAW(_vertices[_faceVertexIndices[vertIdx]]);
+				++vertIdx;
 			}
 			glEnd();
 			++face;
@@ -125,14 +136,19 @@
 				glBegin(GL_TRIANGLES);
 			}
 			
-			NORMAL(_normals[face->normal]);
+			normal = &_normals[face->normal];
+			NORMAL(*normal);
 			
-			glTexCoord2f(face->tex_s[0], face->tex_t[0]);
-			DRAW(_vertices[face->verts[0]]);
-			glTexCoord2f(face->tex_s[1], face->tex_t[1]);
-			DRAW(_vertices[face->verts[1]]);
-			glTexCoord2f(face->tex_s[2], face->tex_t[2]);
-			DRAW(_vertices[face->verts[2]]);
+			vertIdx = face->firstVertex;
+			
+			TEXCOORDS(_texCoords[_faceTexCoordIndices[vertIdx]]);
+			DRAW(_vertices[_faceVertexIndices[vertIdx]]);
+			
+			TEXCOORDS(_texCoords[_faceTexCoordIndices[vertIdx + 1]]);
+			DRAW(_vertices[_faceVertexIndices[vertIdx + 1]]);
+			
+			TEXCOORDS(_texCoords[_faceTexCoordIndices[vertIdx + 2]]);
+			DRAW(_vertices[_faceVertexIndices[vertIdx + 2]]);
 			
 			++face;
 		}
@@ -150,6 +166,7 @@
 	DDMeshFaceData			*face;
 	Vector					c;
 	Scalar					normLength;
+	unsigned				vertIdx;
 	
 	CGL_MACRO_DECLARE_VARIABLES();
 	
@@ -163,9 +180,10 @@
 	{
 		// Find centre of polygon by averaging vertices
 		c.Set(0, 0, 0);
+		vertIdx = face->firstVertex;
 		for (j = 0; j != face->vertexCount; ++j)
 		{
-			c += _vertices[face->verts[j]];
+			c += _vertices[_faceVertexIndices[vertIdx++]];
 		}
 		c /= face->vertexCount;
 		

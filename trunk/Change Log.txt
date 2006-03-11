@@ -4,8 +4,10 @@
 	• Partial support for Mac OS X 10.3.9 - you can open, save and convert models, but not see them.
 	• New custom file format. Not very useful yet.
 	• Lots of bug fixes.
-	• More efficient internal representations of things.
+	• More efficient internal representations of stuff.
 	• First-run stuff should now happen properly.
+	• Started writing on-line help. In particular, there is now an error reference page available by
+	  clicking the help button in the Problem Report dialog.
 
 0.07 (v602-2)
 	• Added OBJ export support.

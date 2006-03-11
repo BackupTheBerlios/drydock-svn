@@ -32,6 +32,8 @@
 #import "DDMesh.h"
 #import "Logging.h"
 #import "SimpleTag.h"
+#import "DDModelDocument.h"
+#import "DDDocumentInspector.h"
 
 
 #define kMinPaneSize 200.0f
@@ -42,13 +44,6 @@ NSString		*kToolbarToggleWireframe			= @"de.berlios.drydock toolbar toggleWirefr
 NSString		*kToolbarToggleFaces				= @"de.berlios.drydock toolbar toggleFaces";
 NSString		*kToolbarToggleNormals				= @"de.berlios.drydock toolbar toggleNormals";
 NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
-
-
-@interface DDDocumentWindowController (Private)
-
-- (void)updateDimensionFields;
-
-@end
 
 
 @implementation DDDocumentWindowController
@@ -72,9 +67,8 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 	
 	[[glView openGLContext] makeCurrentContext];
 	[_sceneRoot release];
-	[_mesh release];
+	[_modelDocument release];
 	[NSOpenGLContext clearCurrentContext];
-	[formatter release];
 	[glView setController:nil];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -129,9 +123,6 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 	
 	[self setTool:kRotateTool];
 	
-	[nameField setObjectValue:[[self document] modelName]];
-	[self updateDimensionFields];
-	
 	[glView setObjectSize:_objectRadius];
 	
 	TraceOutdent();
@@ -171,7 +162,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 {
 	if (nil == _sceneRoot)
 	{
-		_sceneRoot = [[_mesh sceneGraphForMesh] retain];
+		_sceneRoot = [[[_modelDocument rootMesh] sceneGraphForMesh] retain];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sceneModified:) name:kNotificationSceneNodeModified object:_sceneRoot];
 		
 		_showWireframeTag = [SimpleTag tagWithKey:@"wireframe" boolValue:_showWireframe];
@@ -208,29 +199,33 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 - (void)sceneModified:notification
 {
 	[self setNeedsDisplay];
-	[self updateDimensionFields];
 }
 
 
-- (void)setMesh:(DDMesh *)inMesh
+- (void)setModelDocument:(DDModelDocument *)inDocument
 {
-	TraceMessage(@"Called.");
-	TraceIndent();
+	TraceEnter();
 	
-	if (_mesh != inMesh)
+	NSNotificationCenter	*notificationCenter;
+	
+	if (_modelDocument != inDocument)
 	{
-		[_mesh release];
+		notificationCenter = [NSNotificationCenter defaultCenter];
+		[notificationCenter removeObserver:self name:nil object:_modelDocument];
 		
-		_mesh = [inMesh retain];
-		_objectRadius = [_mesh maxR];
+		[_modelDocument release];
+		_modelDocument = [inDocument retain];
+		
+		[notificationCenter addObserver:self selector:@selector(documentRootMeshChanged:) name:kNotificationDDModelDocumentRootMeshChanged object:_modelDocument];
+		
+		_objectRadius = [[_modelDocument rootMesh] maxR];
 		if (_objectRadius < 1.0) _objectRadius = 1.0;
 		
 		[self invalidateSceneGraph];
-		[self updateDimensionFields];
 		[self setNeedsDisplay];
 	}
 	
-	TraceOutdent();
+	TraceExit();
 }
 
 
@@ -315,27 +310,10 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 }
 
 
-- (void)updateDimensionFields
+- (void)documentRootMeshChanged:notification
 {
-	// Set length, width and breadth fields
-	float l, w, h;
-	if (nil != _mesh)
-	{
-		l = [_mesh length];
-		w = [_mesh width];
-		h = [_mesh height];
-	}
-	else
-	{
-		// Because the 0 result when passing a message to nil only applies for general-purpose registers
-		l = w = h = 0.0;
-	}
-	
-	[lengthField setFloatValue:l];
-	[breadthField setFloatValue:w];
-	[heightField setFloatValue:h];
-	[verticesField setIntValue:[_mesh vertexCount]];
-	[facesField setIntValue:[_mesh faceCount]];
+	[self invalidateSceneGraph];
+	[self setNeedsDisplay];
 }
 
 
@@ -564,6 +542,12 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 {
 	NSLog(@"%@", item);
 	return YES;
+}
+
+
+- (id<DDInspectable>)objectToInspect
+{
+	return _modelDocument;
 }
 
 @end

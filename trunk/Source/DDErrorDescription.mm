@@ -74,6 +74,9 @@ static NSString *GetGenericOSStatusString(OSStatus inCode)
 		CASE(errFSBadFSRef);
 		CASE(gestaltUnknownErr);
 		CASE(coreFoundationUnknownErr);
+		CASE(noCodecErr);
+		CASE(codecUnimpErr);
+		CASE(codecBadDataErr);
 	}
 	
 	return nil;

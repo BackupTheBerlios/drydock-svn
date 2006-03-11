@@ -47,6 +47,7 @@
 @interface NSData(TigerMethods)
 
 - (BOOL)writeToURL:(NSURL *)url options:(unsigned)writeOptionsMask error:(NSError **)errorPtr;
++ (id)dataWithContentsOfURL:(NSURL *)url options:(unsigned)readOptionsMask error:(NSError **)error;
 
 @end
 
@@ -198,6 +199,25 @@ const CFStringRef kLSItemContentType = (const CFStringRef)@"kLSItemContentType";
 	else
 	{
 		result = [self writeToURL:url atomically:useAuxiliaryFile];
+	}
+	
+	return result;
+}
+
+
++ (id)dataWithContentsOfURL:(NSURL *)url options:(unsigned)readOptionsMask errorCompat:(NSError **)error
+{
+	id						result = nil;
+	
+	if (NULL != error) *error = nil;
+	
+	if ([self respondsToSelector:@selector(dataWithContentsOfURL:options:error:)])
+	{
+		result = [self dataWithContentsOfURL:url options:readOptionsMask error:error];
+	}
+	else
+	{
+		result = [self dataWithContentsOfURL:url];
 	}
 	
 	return result;

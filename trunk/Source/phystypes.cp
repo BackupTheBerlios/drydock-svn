@@ -31,6 +31,12 @@ CFStringRef Vector::CopyDescription(void)
 }
 
 
+CFStringRef Vector2::CopyDescription(void)
+{
+	return CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("{%g, %g}"), x, y);
+}
+
+
 Matrix Matrix::operator*(const Matrix &inMatrix) const
 {
 	Matrix				result(0);

@@ -119,6 +119,10 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>Dry Dock for Oolite</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>Dry Dock Help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>Dry Dock Help</string>
 	<key>CFBundleIconFile</key>
 	<string>Dry Dock</string>
 	<key>CFBundleIdentifier</key>

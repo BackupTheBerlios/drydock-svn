@@ -144,6 +144,7 @@ typedef struct
 {
 	GLhandleARB		program;
 	GLboolean		lighting;
+	GLboolean		texture2D;
 } WFModeContext;
 
 void EnterWireframeMode(WFModeContext &outContext);

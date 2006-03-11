@@ -21,7 +21,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Cocoa/Cocoa.h>
+#import "DDInspectorPane.h"
 
 
 @interface DDInspectorController: NSObject
@@ -30,23 +30,28 @@
 	IBOutlet NSView			*defaultView;
 	
 	NSWindow				*_mainWindow;
+	DDInspectorPane			*_activeInspectorPane;
 	NSView					*_activeInspectorView;
 }
 
++ (id)sharedController;
+
 - (void)bringInspectorToFront;
 
-@end
-
-
-@protocol DDInspectable
-
-- (NSView *)inspector;
+- (void)objectToInspectChanged;
 
 @end
 
 
 @interface NSWindow (InspectorSupport)
 
-- (id<DDInspectable>)objectToInspect;
+- (id<DDInspectable>)objectToInspect;	// Default: pass to controller
+
+@end
+
+
+@interface NSWindowController (InspectorSupport)
+
+- (id<DDInspectable>)objectToInspect;	// Default: nil
 
 @end

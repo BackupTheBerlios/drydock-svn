@@ -26,6 +26,7 @@
 #import "SceneNode.h"
 #import "DDMeshNode.h"
 #import "DisplayListCacheNode.h"
+#import "DDExhaustPlumeNode.h"
 
 
 @implementation DDMesh (Utilities)
@@ -47,6 +48,9 @@
 	mesh = [DDMeshNode nodeWithMesh:self];
 	
 	[root addChild:cache];
+	[cache addChild:mesh];
+	
+	mesh = [DDExhaustPlumeNode node];
 	[cache addChild:mesh];
 	
 	[root setName:@"Root"];

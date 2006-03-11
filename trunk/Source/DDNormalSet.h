@@ -26,22 +26,23 @@
 
 #import <Foundation/Foundation.h>
 #import "phystypes.h"
+#import "DDMesh.h"
 
 
 @interface DDNormalSet: NSObject
 {
 	NSMutableDictionary			*rev;
 	Vector						*array;
-	unsigned					count, max;
+	DDMeshIndex					count, max;
 }
 
 + (id)setWithCapacity:(unsigned)inCapacity;
 - (id)initWithCapacity:(unsigned)inCapacity;
 
 // Normalize() and CleanZeros() will be called on the vector by the DDNormalSet.
-- (unsigned)indexForVector:(Vector)inVector;
+- (DDMeshIndex)indexForVector:(Vector)inVector;
 
 // Once this is called, the set becomes unusable (gets a capacity of zero).
-- (void)getArray:(Vector **)outArray andCount:(unsigned *)outCount;
+- (void)getArray:(Vector **)outArray andCount:(DDMeshIndex *)outCount;
 
 @end
