@@ -9,7 +9,7 @@
 		<key>240</key>
 		<string>610 515 220 142 0 0 1440 878 </string>
 		<key>29</key>
-		<string>361 662 397 44 0 0 1440 878 </string>
+		<string>361 662 393 44 0 0 1440 878 </string>
 	</dict>
 	<key>IBFramework Version</key>
 	<string>443.0</string>
@@ -20,13 +20,7 @@
 	</array>
 	<key>IBOldestOS</key>
 	<integer>3</integer>
-	<key>IBOpenObjects</key>
-	<array>
-		<integer>29</integer>
-		<integer>237</integer>
-		<integer>240</integer>
-	</array>
 	<key>IBSystem Version</key>
-	<string>8H14</string>
+	<string>8I127</string>
 </dict>
 </plist>

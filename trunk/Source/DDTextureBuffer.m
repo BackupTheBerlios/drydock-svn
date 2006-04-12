@@ -152,7 +152,7 @@ static unsigned GetMaxTextureSize(void);
 	unsigned				w, h;
 	BOOL					errDescribed = NO;
 	CGImageRef				image = NULL;
-	char					*data, *nextData;
+	char					*data;
 	size_t					dataSize;
 	CGContextRef			context = NULL;
 	CGColorSpaceRef			colorSpace = NULL;

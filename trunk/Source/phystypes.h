@@ -59,8 +59,10 @@
 
 #if PHYS_DOUBLE_PRECISION
 	typedef GLdouble	Scalar;
+	#define GL_SCALAR	GL_DOUBLE
 #else
 	typedef GLfloat		Scalar;
+	#define GL_SCALAR	GL_FLOAT
 #endif
 
 class					Vector;

@@ -49,6 +49,9 @@
 	
 	EnterWireframeMode(wfmc);
 	
+	glVertexPointer(3, GL_SCALAR, 0, _vertices);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	
 	face = _faces;
 	glColor3f(0.6f, 0.6f, 0.0f);
 	for (i = 0; i != _faceCount; ++i)
@@ -57,7 +60,7 @@
 		vertIdx = face->firstVertex;
 		for (j = 0; j != face->vertexCount; ++j)
 		{
-			DRAW(_vertices[_faceVertexIndices[vertIdx++]]);
+			glArrayElement(_faceVertexIndices[vertIdx++]);
 		}
 		glEnd();
 		face++;
@@ -70,6 +73,9 @@
 		DRAW(_vertices[i]);
 	}
 	glEnd();
+	
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	
 	ExitWireframeMode(wfmc);
 }
@@ -94,6 +100,9 @@
 	currentMaterial = _materials[matIdx];
 	[currentMaterial makeActive];
 	
+	glVertexPointer(3, GL_SCALAR, 0, _vertices);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	
 	face = _faces;
 	if (_hasNonTriangles)
 	{
@@ -114,7 +123,7 @@
 			for (j = 0; j != face->vertexCount; ++j)
 			{
 				TEXCOORDS(_texCoords[_faceTexCoordIndices[vertIdx]]);
-				DRAW(_vertices[_faceVertexIndices[vertIdx]]);
+				glArrayElement(_faceVertexIndices[vertIdx]);
 				++vertIdx;
 			}
 			glEnd();
@@ -142,19 +151,20 @@
 			vertIdx = face->firstVertex;
 			
 			TEXCOORDS(_texCoords[_faceTexCoordIndices[vertIdx]]);
-			DRAW(_vertices[_faceVertexIndices[vertIdx]]);
+			glArrayElement(_faceVertexIndices[vertIdx]);
 			
 			TEXCOORDS(_texCoords[_faceTexCoordIndices[vertIdx + 1]]);
-			DRAW(_vertices[_faceVertexIndices[vertIdx + 1]]);
+			glArrayElement(_faceVertexIndices[vertIdx + 1]);
 			
 			TEXCOORDS(_texCoords[_faceTexCoordIndices[vertIdx + 2]]);
-			DRAW(_vertices[_faceVertexIndices[vertIdx + 2]]);
+			glArrayElement(_faceVertexIndices[vertIdx + 2]);
 			
 			++face;
 		}
 		glEnd();
 	}
 	
+	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -195,6 +205,46 @@
 	}
 	glEnd();
 	
+	ExitWireframeMode(wfmc);
+}
+
+
+- (void)glRenderBadPolygons
+{
+	uint32_t				count, j, vertIdx;
+	DDMeshFaceData			*face;
+	WFModeContext			wfmc;
+	
+	if (!_hasBadPolygons) return;
+	
+	CGL_MACRO_DECLARE_VARIABLES();
+	
+	EnterWireframeMode(wfmc);
+	glColor3f(1, 0, 0);
+	glLineWidth(2);
+	
+	glVertexPointer(3, GL_SCALAR, 0, _vertices);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	
+	count = _faceCount;
+	face = _faces;
+	do
+	{
+		if (face->nonCoplanar || face->nonConvex)
+		{
+			glBegin(GL_LINE_LOOP);
+			vertIdx = face->firstVertex;
+			for (j = 0; j != face->vertexCount; ++j)
+			{
+				glArrayElement(_faceVertexIndices[vertIdx++]);
+			}
+			glEnd();
+		}
+		face++;
+	} while (--count);
+	
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glLineWidth(1);
 	ExitWireframeMode(wfmc);
 }
 

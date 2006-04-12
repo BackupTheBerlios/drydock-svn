@@ -86,8 +86,6 @@ static NSString *GetGenericOSStatusString(OSStatus inCode)
 
 NSString *ErrnoToNSString(int inErrno)
 {
-	NSString					*result = nil;
-	
 	#ifndef NDEBUG
 		switch (inErrno)
 		{

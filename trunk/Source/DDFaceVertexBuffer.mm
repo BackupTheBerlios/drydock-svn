@@ -46,6 +46,7 @@
 		if (max < 100) max = 100;
 		vertIndices = (DDMeshIndex *)calloc(sizeof(DDMeshIndex), max);
 		texIndices = (DDMeshIndex *)calloc(sizeof(DDMeshIndex), max);
+		faceCount = inCount;
 		
 		if (NULL == vertIndices || NULL == texIndices)
 		{

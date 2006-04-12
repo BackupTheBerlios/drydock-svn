@@ -111,7 +111,6 @@ static CGFunctionRef CreateGradientFunction(const GradientViewPalette *inPalette
 
 - (void)drawRect:(NSRect)rect
 {
-	NSColor						*tintColor;
 	NSControlTint				tint;
 	const GradientViewPalette	*palette;
 	CGContextRef				cgContext;
@@ -120,14 +119,10 @@ static CGFunctionRef CreateGradientFunction(const GradientViewPalette *inPalette
 	NSSize						size = {0};
 	
 	tint = [NSColor currentControlTint];
-	tintColor = [NSColor colorForControlTint:tint];
-	tintColor = [tintColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	LogMessage(@"Control tint = %u. Colour = {%g, %g, %g, %g}.", tint, [tintColor redComponent] * 255, [tintColor greenComponent] * 255, [tintColor blueComponent] * 255, [tintColor alphaComponent]);
-	
-	size = [self frame].size;
-	
 	if (NSGraphiteControlTint == tint) palette = &kGraphitePalette;
 	else palette = &kAquaPalette;
+	
+	size = [self frame].size;
 	
 	if (NULL == sColorSpace) sColorSpace = CGColorSpaceCreateDeviceRGB();
 	if (NULL == sGradientFunction) sGradientFunction = CreateGradientFunction(palette);

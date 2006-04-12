@@ -12,7 +12,6 @@
 		1A0085F609C17EC0007B982D /* DDHeaderGradientView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A0085F409C17EC0007B982D /* DDHeaderGradientView.h */; };
 		1A0085F709C17EC0007B982D /* DDHeaderGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0085F509C17EC0007B982D /* DDHeaderGradientView.m */; };
 		1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A032044096C10FB0000B217 /* Carbon.framework */; };
-		1A085A0109B46B1400FFD056 /* NSData+Deflate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */; };
 		1A085A0209B46B1400FFD056 /* NSData+Deflate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A085A0009B46B1400FFD056 /* NSData+Deflate.m */; };
 		1A085A5309B4718300FFD056 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A085A5209B4718300FFD056 /* libz.dylib */; };
 		1A098873098AEC11007C2F5F /* BSTrampoline.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098872098AEC11007C2F5F /* BSTrampoline.m */; };
@@ -55,9 +54,7 @@
 		1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
 		1A5703DA09B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */; };
 		1A57040309B12B9400E0E17D /* DDPropertyListRepresentation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A57040209B12B9400E0E17D /* DDPropertyListRepresentation.h */; };
-		1A5705EB09B1D10F00E0E17D /* DDNormalSet.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A5705E909B1D10F00E0E17D /* DDNormalSet.h */; };
 		1A5705EC09B1D10F00E0E17D /* DDNormalSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */; };
-		1A5707A709B255C700E0E17D /* DDMaterialSet.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A5707A509B255C700E0E17D /* DDMaterialSet.h */; };
 		1A5707A809B255C700E0E17D /* DDMaterialSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5707A609B255C700E0E17D /* DDMaterialSet.mm */; };
 		1A5B112409B9C5B3001558A3 /* DDInspectorPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B112209B9C5B3001558A3 /* DDInspectorPane.mm */; };
 		1A5B138909BA7171001558A3 /* DDInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B138809BA7171001558A3 /* DDInspectorController.m */; };
@@ -103,7 +100,6 @@
 		1ACE7DE30954227B00BF7642 /* Rotate Tool.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7DE20954227B00BF7642 /* Rotate Tool.png */; };
 		1ACE7EF8095438E800BF7642 /* Inspector Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */; };
 		1AE2138309B72FA20064C1ED /* DDTexCoordSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE2138109B72FA20064C1ED /* DDTexCoordSet.mm */; };
-		1AE2138409B72FA20064C1ED /* DDTexCoordSet.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AE2138209B72FA20064C1ED /* DDTexCoordSet.h */; };
 		1AE33C8509BBAA5B00F44436 /* DDFaceVertexBuffer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AE33C8309BBAA5B00F44436 /* DDFaceVertexBuffer.h */; };
 		1AE33C8609BBAA5B00F44436 /* DDFaceVertexBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE33C8409BBAA5B00F44436 /* DDFaceVertexBuffer.mm */; };
 		1AE683C5096CA1BB00622ECC /* Document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AE683C4096CA1BB00622ECC /* Document.icns */; };
@@ -152,11 +148,7 @@
 			files = (
 				1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */,
 				1A57040309B12B9400E0E17D /* DDPropertyListRepresentation.h in CopyFiles */,
-				1A5705EB09B1D10F00E0E17D /* DDNormalSet.h in CopyFiles */,
-				1A5707A709B255C700E0E17D /* DDMaterialSet.h in CopyFiles */,
-				1A085A0109B46B1400FFD056 /* NSData+Deflate.h in CopyFiles */,
 				1AF5BEC009B5EA5A0053F435 /* DDModelDocument.h in CopyFiles */,
-				1AE2138409B72FA20064C1ED /* DDTexCoordSet.h in CopyFiles */,
 				1AE33C8509BBAA5B00F44436 /* DDFaceVertexBuffer.h in CopyFiles */,
 				1A00856A09C176C2007B982D /* DDWizardBackdropView.h in CopyFiles */,
 				1A0085F609C17EC0007B982D /* DDHeaderGradientView.h in CopyFiles */,

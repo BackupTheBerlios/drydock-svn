@@ -27,6 +27,7 @@
 #import "DDMeshNode.h"
 #import "DisplayListCacheNode.h"
 #import "DDExhaustPlumeNode.h"
+#import "AxisNode.h"
 
 
 @implementation DDMesh (Utilities)
@@ -54,6 +55,8 @@
 	[cache addChild:mesh];
 	
 	[root setName:@"Root"];
+	
+//	[root addChild:[AxisNode node]];
 	
 	return root;
 }

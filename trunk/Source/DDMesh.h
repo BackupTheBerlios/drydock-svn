@@ -58,11 +58,9 @@ typedef struct DDMeshFaceData
 	DDMeshIndex				material;
 	unsigned				firstVertex;	// Index into _faceVertexIndices and _faceTexCoordIndices
 	uint8_t					vertexCount;
-	uint8_t					reserved[3];
-/*	GLubyte					color[3],
-							vertexCount;*/
-	/*DDMeshIndex				verts[kMaxVertsPerFace];	// Indices
-	DDMeshIndex				texCoords[kMaxVertsPerFace];*/
+	uint8_t					nonCoplanar;
+	uint8_t					nonConvex;
+	uint8_t					reserved;
 } DDMeshFaceData;
 
 
@@ -155,6 +153,7 @@ typedef struct DDMeshFaceData
 - (void)glRenderShaded;
 - (void)glRenderWireframe;
 - (void)glRenderNormals;
+- (void)glRenderBadPolygons;
 
 @end
 

@@ -36,6 +36,10 @@
 
 NSString *kNotificationDDMeshModified = @"de.berlios.drydock DDMeshModified";
 
+
+static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, DDMeshIndex *inVertexIndices);
+
+
 @interface DDMesh (Private)
 
 - (id)initAsCopyOf:(DDMesh *)inMesh;
@@ -134,6 +138,7 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock DDMeshModified";
 		_rMax = inMesh->_rMax;
 		
 		_hasNonTriangles = inMesh->_hasNonTriangles;
+		_hasBadPolygons = inMesh->_hasBadPolygons;
 		_name = [inMesh->_name copyWithZone:zone];
 	}
 	
@@ -197,40 +202,23 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock DDMeshModified";
 	TraceEnter();
 	
 	// Calculate new normal for each face.
-	unsigned				i;
+	unsigned				count;
 	DDMeshFaceData			*face;
-	Vector					v0, v1, v2,
-							a, b,
-							n;
+	Vector					normal;
 	DDNormalSet				*normals;
 	unsigned				vertIdx;
-	
-	/*
-		Calculation is as follows:
-		Given a polygon with S sides, verts[0]..vers[S - 1], find three adjacent vertices. (v0, v1, v2)
-		Subtract the outer of these from the central one to get vectors along two adjacent edges. (a, b)
-		Take cross product and normalise. (n)
-	*/
 	
 	free(_normals);
 	normals = [DDNormalSet setWithCapacity:_faceCount];
 	face = _faces;
-	for (i = 0; i != _faceCount; ++i)
+	count = _faceCount;
+	do
 	{
-		vertIdx = face->firstVertex;
-		v0 = _vertices[_faceVertexIndices[vertIdx]];
-		v1 = _vertices[_faceVertexIndices[vertIdx + 1]];
-		v2 = _vertices[_faceVertexIndices[vertIdx + face->vertexCount - 1]];
-		
-		a = v1 - v0;
-		b = v2 - v0;
-		
-		n = (a % b);
-		
-		face->normal = [normals indexForVector:n];
-		
+		normal = NormalForFace(face, _vertices, _faceVertexIndices);
+		face->normal = [normals indexForVector:normal];
 		++face;
-	}
+	} while (--count);
+	
 	[normals getArray:&_normals andCount:&_normalCount];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDMeshModified object:self];
@@ -508,22 +496,73 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock DDMeshModified";
 
 - (void)findBadPolygonsWithIssues:(DDProblemReportManager *)ioManager
 {
-	unsigned				i, count;
+	TraceEnter();
+	
+	unsigned				i, count, vertexCount, notCoplanar = 0;
+	DDMeshFaceData			*face;
+	Vector					normal, a, b, edge;
+	Scalar					dot;
+	BOOL					reportedNonCoplanar = NO;
 	
 	// These values will be regenerated.
 	_hasNonTriangles = NO;
 	_hasBadPolygons = NO;
 	
+	face = _faces;
 	count = _faceCount;
-	for (i = 0; i != count; ++i)
+	do
 	{
-		if (3 != _faces[i].vertexCount)
+		face->nonCoplanar = NO;
+		face->nonConvex = NO;
+		
+		vertexCount = face->vertexCount;
+		if (3 != vertexCount)
 		{
+			if (vertexCount < 3)
+			{
+				[NSException raise:NSRangeException format:@"%s: invalid vertex count %u.", __PRETTY_FUNCTION__, vertexCount];
+			}
+			
 			_hasNonTriangles = YES;
 			
-			// TODO: test coplanarity.
+			// Test coplanarity.
+			normal = NormalForFace(face, _vertices, _faceVertexIndices);
+			LogMessage(@"normal = %@", normal.Description());
+			LogIndent();
+			
+			b = _vertices[_faceVertexIndices[face->vertexCount]];
+			for (i = 0; i != vertexCount; ++i)
+			{
+				a = b;
+				b = _vertices[_faceVertexIndices[face->firstVertex + i % face->vertexCount]];
+				
+				edge = b - a;
+				edge.Normalize();
+				
+				dot = edge * normal;
+				LogMessage(@"edge = %@, dot = %g", edge.Description(), dot);
+				
+				if (0.02 < fabs(dot))
+				{
+					face->nonCoplanar = YES;
+					++notCoplanar;
+					if (!reportedNonCoplanar)
+					{
+						reportedNonCoplanar = YES;
+						_hasBadPolygons = YES;
+						[ioManager addWarningIssueWithKey:@"hasNonCoplanarPolygons" localizedFormat:@"The document contains one or more polygons which are not coplanar. These polygons will be highlighted in red."];
+					}
+					break;
+				}
+			}
+			LogOutdent();
 		}
-	}
+		++face;
+	} while (--count);
+	
+	if (reportedNonCoplanar) LogMessage(@"%u of %u polygons were non-coplanar.", notCoplanar, _faceCount);
+	
+	TraceExit();
 }
 
 
@@ -587,3 +626,33 @@ NSString *kNotificationDDMeshModified = @"de.berlios.drydock DDMeshModified";
 }
 
 @end
+
+
+static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, DDMeshIndex *inVertexIndices)
+{
+	assert(NULL != inFace && NULL != inVertices && NULL != inVertexIndices);
+	
+	Vector					v0, v1, v2,
+							a, b,
+							n;
+	unsigned				vertIdx;
+	
+	/*
+		Calculation is as follows:
+		Given a polygon with S sides, verts[0]..vers[S - 1], find three adjacent vertices. (v0, v1, v2)
+		Subtract the outer of these from the central one to get vectors along two adjacent edges. (a, b)
+		Take cross product and normalise. (n)
+	*/
+	vertIdx = inFace->firstVertex;
+	v0 = inVertices[inVertexIndices[vertIdx]];
+	v1 = inVertices[inVertexIndices[vertIdx + 1]];
+	v2 = inVertices[inVertexIndices[vertIdx + inFace->vertexCount - 1]];
+	
+	a = v1 - v0;
+	b = v2 - v0;
+	
+	n = (a % b);
+	n.Normalize().CleanZeros();
+	
+	return n;
+}

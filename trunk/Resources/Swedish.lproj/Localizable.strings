@@ -78,7 +78,8 @@
 "The document is missing an END line. This is not serious, but should be fixed by resaving the document." = "Slutraden ”END” saknas i dokumentet. Detta är inte allvarligt, men bör åtgärdas genom at spara dokumentet.";
 "The document does not specify any textures or u/v co-ordinates." = "Dokumentet anger inga texturer eller u/v-koordinater.";
 "The document continues beyond where it was expected to end. It may be of a newer format." = "Dokumentet fortsätter längre än väntat. Det kan vara ett nytt format; det är möjligt att viktig data har missats.";
-"This document has %u %@. It will not be possible to open it with Oolite, which has a limit of %u %@." = "Dokumentet har %u %@. Det kommer inte att kunna öppnas med Oolite, som är begränsat till %u %@.";
+"This document has %u %@. It will not be possible to open it with Oolite, which has a limit of %u %@." = "Dokumentet innehåller %u %@. Det kommer inte att kunna öppnas med Oolite, som är begränsat till %u %@.";
+"The document contains one or more polygons which are not coplanar. These polygons will be highlighted in red." = "Dokumentet innehåller polygon vars punkter inte ligger i ett plan. Dessa kommer att markeras i rött.";
 
 "end of file" = "filslut";
 "end of line" = "radslut";

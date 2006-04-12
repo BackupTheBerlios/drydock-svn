@@ -63,7 +63,6 @@ extern int OoliteDAT_LineNumber(void)
 
 
 #ifdef LEX_TEST
-#warning LEX_TEST defined!
 
 int main(int argc, char **argv)
 {

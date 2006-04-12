@@ -101,6 +101,8 @@
 	
 	if (normals)	[_mesh glRenderNormals];
 	
+	[_mesh glRenderBadPolygons];
+	
 	TraceExit();
 }
 
