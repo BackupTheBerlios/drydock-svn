@@ -51,9 +51,6 @@
 	[root addChild:cache];
 	[cache addChild:mesh];
 	
-	mesh = [DDExhaustPlumeNode node];
-	[cache addChild:mesh];
-	
 	[root setName:@"Root"];
 	
 //	[root addChild:[AxisNode node]];

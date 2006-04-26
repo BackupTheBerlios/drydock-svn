@@ -47,6 +47,8 @@ FOUNDATION_EXPORT const CFStringRef kLSItemContentType;
 @interface NSDocument (TigerMethods)
 
 - (NSDictionary *)fileAttributesToWriteToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError;
+- (BOOL)writeSafelyToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation error:(NSError **)outError;
+- (NSURL *)fileURL;
 
 @end
 

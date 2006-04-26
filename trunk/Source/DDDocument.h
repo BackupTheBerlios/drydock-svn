@@ -30,6 +30,7 @@
 {
 	DDModelDocument					*_document;
 	DDDocumentWindowController		*_windowController;
+	NSURL							*_actualSaveDestination;
 }
 
 - (DDMesh *)mesh;

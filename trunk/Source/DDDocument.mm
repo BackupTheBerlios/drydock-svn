@@ -156,10 +156,27 @@
 }
 
 
+- (BOOL)writeSafelyToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation error:(NSError **)outError
+{
+	TraceEnterMsg(@"Called with absoluteURL=%@",
+					absoluteURL);
+	
+	BOOL					result;
+	
+	_actualSaveDestination = [absoluteURL retain];
+	result = [super writeSafelyToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+	[_actualSaveDestination release];
+	_actualSaveDestination = nil;
+	return result;
+	
+	TraceExit();
+}
+
+
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError
 {
-	TraceEnterMsg(@"Called with absoluteOriginalContentsURL=%@, absoluteURL=%@, typeName=\"%@\"",
-					absoluteOriginalContentsURL, absoluteURL, typeName);
+	TraceEnterMsg(@"Called with absoluteOriginalContentsURL=%@, absoluteURL=%@, fileURL=%@, actualSaveDestination=%@, typeName=\"%@\"",
+					absoluteOriginalContentsURL, absoluteURL, [self fileURL], _actualSaveDestination, typeName);
 	
 	BOOL					OK = NO;
 	DDProblemReportManager	*problemManager;
@@ -167,8 +184,10 @@
 	if (NULL != outError) *outError = nil;
 	
 	// Auto-saving and split files like OBJ won’t go well together… revisit this. Should possibly
-	// return Dry Dock Document from autosavingFileType when implemented.
+	// return Dry Dock Document from autosavingFileType when fully implemented.
 	if (NSAutosaveOperation == (int)saveOperation) return NO;
+	
+	if (nil != _actualSaveDestination) absoluteOriginalContentsURL = _actualSaveDestination;
 	
 	problemManager = [[DDProblemReportManager alloc] init];
 	
@@ -316,6 +335,23 @@
 			 forSaveOperation:saveOperationType
 		  originalContentsURL:[NSURL fileURLWithPath:fullOriginalDocumentPath]
 						error:NULL];
+	
+	return result;
+	TraceExit();
+}
+
+
+- (BOOL)writeWithBackupToFile:(NSString *)fullDocumentPath ofType:(NSString *)docType saveOperation:(NSSaveOperationType)saveOperationType
+{
+	TraceEnterMsg(@"Called with fullDocumentPath=\"%@\", docType=\"%@\"",
+					fullDocumentPath, docType);
+	
+	BOOL					result;
+	
+	_actualSaveDestination = [[NSURL fileURLWithPath:fullDocumentPath] retain];
+	result = [super writeWithBackupToFile:fullDocumentPath ofType:docType saveOperation:saveOperationType];
+	[_actualSaveDestination release];
+	_actualSaveDestination = nil;
 	
 	return result;
 	TraceExit();

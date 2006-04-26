@@ -811,18 +811,17 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	NSString				*mtlName;
 	NSURL					*mtlURL;
 	unsigned				i, j, faceVertexCount, count, ni, ti;
-	NSMutableArray			*texCoords;
-	NSMutableDictionary		*texCoordsRev;
 	NSNumber				*index;
 	NSMutableDictionary		*materialToFaceArray;
 	NSMutableArray			*facesForMaterial;
 	id						materialKey;
+	NSString				*materialName;
 	NSEnumerator			*materialEnumerator;
 	DDMeshFaceData			*currentFace;
 	NSAutoreleasePool		*pool;
-	NSArray					*materialNames;
+	NSArray					*materialsUsed;
 	DDMaterial				*material;
-	unsigned				vertIdx;
+	unsigned				vertIdx, materialIdx;
 	
 	/*	Build material library name. For “Foo.obj” or “Foo”, use “Foo.mtl”; for “Bar.baz”, use
 		“Bar.baz.mtl”. Material library names can’t contain spaces (OBJ allows multiple material
@@ -871,8 +870,6 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	{
 		[dataString appendFormat:@"vt %f %f\n", _texCoords[i].x, _texCoords[i].y];
 	}
-	[texCoords release];
-	texCoords = nil;
 	
 	// Write normals
 	[dataString appendFormat:@"\n# Normals (%u):\n", _normalCount];
@@ -930,8 +927,12 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	for (materialEnumerator = [materialToFaceArray keyEnumerator]; materialKey = [materialEnumerator nextObject]; )
 	{
 		facesForMaterial = [materialToFaceArray objectForKey:materialKey];
+		materialIdx = [materialKey intValue];
+		materialName = [_materials[materialIdx] name];
+		if (nil == materialName) materialName = [NSString stringWithFormat:@"anon-%u", materialIdx];
+		
 		count = [facesForMaterial count];
-		[dataString appendFormat:@"\n# Faces with texture %@ (%u):\ng %@\nusemtl %@", materialKey, count, materialKey, materialKey];
+		[dataString appendFormat:@"\n# Faces with texture %@ (%u):\ng %@\nusemtl %@", materialName, count, materialName, materialName];
 		for (i = 0; i != count; ++i)
 		{
 			index = [facesForMaterial objectAtIndex:i];
@@ -958,10 +959,11 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		return NO;
 	}
 	
-	materialNames = [[materialToFaceArray allKeys] retain];
+	materialsUsed = [[materialToFaceArray allKeys] retain];
 	[pool release];
-	[materialNames autorelease];
-	count = [materialNames count];
+	pool = [[NSAutoreleasePool alloc] init];
+	[materialsUsed autorelease];
+	count = [materialsUsed count];
 	
 	// Create material library file
 	dataString = [NSMutableString string];
@@ -974,18 +976,12 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	
 	for (i = 0; i != count; ++i)
 	{
-		materialKey = [materialNames objectAtIndex:i];
-		for (j = 0; j != _materialCount; ++j)
-		{
-			if ([[_materials[i] name] isEqual:materialKey])
-			{
-				[dataString appendFormat:  @"newmtl %@\n"
+		materialIdx = [[materialsUsed objectAtIndex:i] intValue];
+		material = _materials[materialIdx];
+		[dataString appendFormat:  @"newmtl %@\n"
 									"map_Kd %@\n\n",
-									materialKey,
-									[_materials[i] diffuseMapName]];
-				break;
-			}
-		}
+									[material name],
+									[material diffuseMapName]];
 	}
 	
 	// Write MTL file
@@ -995,6 +991,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		if (nil != error) [ioManager addWarningIssueWithKey:@"mtllibWriteFailed" localizedFormat:@"The material library for the document could not be saved. %@", [error localizedFailureReasonCompat]];
 		else [ioManager addWarningIssueWithKey:@"mtllibWriteFailed" localizedFormat:@"The material library for the document could not be saved, because an unknown error occured."];
 	}
+	[pool release];
 	
 	return YES;
 }
