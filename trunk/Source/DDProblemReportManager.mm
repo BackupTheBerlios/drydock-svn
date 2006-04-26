@@ -27,11 +27,15 @@
 #import "DDApplicationDelegate.h"
 #import "Logging.h"
 #import "IconFamily.h"
+#import "DDUtilities.h"
 
 
 @interface DDProblemReportManager (Private)
 
 - (void)prepareDialog;
+
+// Delegate method only in Tiger and later
+- (float)tableView:(NSTableView *)tableView heightOfRow:(int)row;
 
 @end
 
@@ -142,8 +146,9 @@
 	TraceEnter();
 	
 	NSString				*string, *contextString1, *contextString2;
-	unsigned				count;
+	unsigned				count, iter;
 	NSSize					iconSize = {32, 32};
+	float					curr, biggest;
 	
 	count = [_issues count];
 	_heights = (float *)calloc(sizeof (float), count);
@@ -219,6 +224,21 @@
 	[layoutProxyTextView setMaxSize:size];
 	[layoutProxyTextView setVerticallyResizable:YES];
 	[layoutProxyTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
+	
+	if (!TigerOrLater())
+	{
+		/*	Variable-height tables (- tableView:heightOfRow:) not supported; find maximum row height
+			and set table row height to this instead.
+		*/
+		biggest = 42;
+		for (iter = 0; iter != count; ++iter)
+		{
+			curr = [self tableView:tableView heightOfRow:iter];
+			if (biggest < curr) biggest = curr;
+		}
+		
+		[tableView setRowHeight:biggest];
+	}
 	
 	[tableView reloadData];
 	
