@@ -1,0 +1,1 @@
+This is a source distribution of Dry Dock for Oolite. Dry Dock for Oolite is original software by Jens Ayton, distributed under the MIT License, also known as the X11 License, which should be included in the distribution in a file called License.txt. The MIT License is an OSI Approved and GPL-Compatible open source license.

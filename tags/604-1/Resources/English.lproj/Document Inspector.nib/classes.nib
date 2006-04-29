@@ -1,0 +1,30 @@
+{
+    IBClasses = (
+        {
+            CLASS = DDDimensionFormatter; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSNumberFormatter; 
+        }, 
+        {
+            ACTIONS = {takeName = id; }; 
+            CLASS = DDDocumentInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                faceCountField = NSTextField; 
+                formatter = DDDimensionFormatter; 
+                heightField = NSTextField; 
+                lengthField = NSTextField; 
+                nameField = NSTextField; 
+                vertexCountField = NSTextField; 
+                view = NSView; 
+                widthField = NSTextField; 
+            }; 
+            SUPERCLASS = DDInspectorPane; 
+        }, 
+        {CLASS = DDHeaderGradientView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = DDInspectorPane; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = DDModelDocument; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,83 @@
+0.08 (v604-1)
+	• DAT loading is now more efficient, performs more validation and can handle files without
+	  textures.
+	• Partial support for Mac OS X 10.3.9 - you can open, save and convert models, but not see them.
+	• New custom file format. Not very useful yet. May not be forward-compatible.
+	• Lots of bug fixes.
+	• More efficient internal representations of stuff.
+	• First-run stuff should now happen properly.
+	• Started writing on-line help. In particular, there is now an error reference page available by
+	  clicking the help button in the Problem Report dialog.
+	• Workaround for long warning messages being truncated under 10.3.9 -- untested.
+	• Compare is temporarily broken in this release.
+	• When saving as OBJ, the MTL file now ends up in the same director as the OBJ, not the
+	  directory with the original document.
+
+0.07 (v602-2)
+	• Added OBJ export support.
+	• As side effect of testing OBJ export, fixed potential crasher in OBJ import (malformed files
+	  could specify out-of-range indices which weren’t corrected properly).
+	• Added Smart Crash Reports support – if SCR is installed and Dry Dock crashes, the option is
+	  given to mail me the crash log. The option is provided to install SCR the first time you run
+	  Dry Dock. If you say no, you won’t be asked again. If you say yes, you will be asked again if
+	  SCR is removed. Nothing is installed behind your back, so please don’t include me in any SCR-
+	  bashing you feel like engaging on, m’kay?
+	• First-run “wizard” added. Asks previously-mentioned question regarding Smart Crash Reports,
+	  and (for first-time users) takes over the responsiblity of asking about version checks more
+	  elegantly than the old alert.
+	• Changed automatic check-for-update frequency from once every ten days to once every two days.
+
+0.06 (v602-1)
+	• Compare dialog implemented.
+	• Implemented Scale tool.
+	• Changed bundle identifier. This will result in preferences being reset.
+	• Internal restructuring & bug fixes.
+
+0.05 (v601-4)
+	• Generalised Undo support in twenty minutes. Cocoa rules. (Admittedly I spent several hours
+	  yesterday making meshes copiable and wouldn’t be able to do this otherwise, but still.)
+	• Implemented new system for gathering and reporting “issues” – diagnostic notes, warnings and
+	  errors regarding (for now) opening and saving.
+	• Added Recentre and Flip commands.
+
+0.04 (v601-3)
+	• OBJ imporing.
+	• Added triangulation support. DAT files are now always saved triangulated, but you can do it
+	  explicitly from the Tools menu if that’s your idea of fun.
+	• Corrected loading of non-72-dpi textures.
+	• “Show” menu item status now updated correctly.
+	• You can no longer get more than one Open panel by re-activating the application.
+	• Began work on Compare window.
+	• Wireframe mode always uses yellow instead of face colour (which is otherwise ignored).
+	• Slightly less efficient texture loading which is not dependant on Tiger – this will make it
+	  into Oolite at some point.
+	• Lots of texturing changes that aren’t actually used, but will be rolled into Oolite at some
+	  point.
+	• Improved several icons.
+	• Internal infrastructure changes. Next version should be able to undo all destructive changes.
+
+0.03 (v601-2)
+	• No more pointless empty documents - brings up an Open dialog instead. Disabled equally
+	  pointless New command.
+	• Universal build. Does it work on Intel-based Macs?
+	• Rotating things a lot no longer deforms them in interesting ways.
+	• Once again rotate model to an interesting display angle on loading.
+	• Consistently scale light position feedback thing.
+	• You can no longer switch off both wireframe and face rendering.
+
+0.02 (v601-1)
+	• Much-improved “virtual joystick” rotation. Trust me, this is good.
+	• Error message instead of crash on pre-Tiger systems.
+	• Feedback when rotating lights.
+	• Reimplemented dragging (whee). The Rotate tool now works for general camera manipulation.
+	  With rotate tool selected:
+		- Dragging rotates the model.
+		- Shift-dragging rotates the lights.
+		- Command-dragging zooms.
+	  With any tool selected, the same actions are available by using the option key or the right
+	  mouse button. (May change to third button if I implement contextual menus in 3D view.)
+	  Additionally, a (vertical) scroll wheel always zooms.
+	• Got an icon (thanks, Murgh).
+	• Added version checking.
+
+0.01 (v512-1): first release
