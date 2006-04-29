@@ -494,11 +494,12 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 }
 
 
-- (void)findBadPolygonsWithIssues:(DDProblemReportManager *)ioManager
+- (BOOL)findBadPolygonsWithIssues:(DDProblemReportManager *)ioManager
 {
 	TraceEnter();
 	
-	unsigned				i, count, vertexCount, notCoplanar = 0;
+	BOOL					OK = YES;
+	unsigned				i, faceCount, vertexCount, notCoplanar = 0;
 	DDMeshFaceData			*face;
 	Vector					normal, a, b, edge;
 	Scalar					dot;
@@ -508,9 +509,9 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 	_hasNonTriangles = NO;
 	_hasBadPolygons = NO;
 	
+	faceCount = _faceCount;
 	face = _faces;
-	count = _faceCount;
-	do
+	while (faceCount--)
 	{
 		face->nonCoplanar = NO;
 		face->nonConvex = NO;
@@ -525,6 +526,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 			
 			_hasNonTriangles = YES;
 			
+			#if 0	// Coplanar test temporarily disabled.
 			// Test coplanarity.
 			normal = NormalForFace(face, _vertices, _faceVertexIndices);
 			LogMessage(@"normal = %@", normal.Description());
@@ -556,9 +558,43 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 				}
 			}
 			LogOutdent();
+			#endif
 		}
 		++face;
-	} while (--count);
+	}
+	
+	// Verify vertex indices
+	faceCount = _faceCount;
+	face = _faces;
+	while (faceCount--)
+	{
+		if (_faceVertexIndexCount < face->firstVertex + face->vertexCount)
+		{
+			OK = NO;
+			[ioManager addStopIssueWithKey:@"badInternalStructure" localizedFormat:@"Dry Dock's internal representation of the document is invalid: %@", NSLocalizedString(@"face index range outside vertex index buffer.", NULL)];
+			break;
+		}
+		
+		++face;
+	}
+	vertexCount = _faceVertexIndexCount;
+	for (i = 0; i != vertexCount; ++i)
+	{
+		if (_vertexCount <= _faceVertexIndices[i])
+		{
+			OK = NO;
+			[ioManager addStopIssueWithKey:@"badInternalStructure" localizedFormat:@"Dry Dock's internal representation of the document is invalid: %@", NSLocalizedString(@"vertex index greater than size of vertex buffer.", NULL)];
+			break;
+		}
+		if (_texCoordCount <= _faceTexCoordIndices[i])
+		{
+			OK = NO;
+			[ioManager addStopIssueWithKey:@"badInternalStructure" localizedFormat:@"Dry Dock's internal representation of the document is invalid: %@", NSLocalizedString(@"texture co-ordinate index greater than size of texture co-ordianate buffer.", NULL)];
+			break;
+		}
+		
+		++face;
+	}
 	
 	if (reportedNonCoplanar) LogMessage(@"%u of %u polygons were non-coplanar.", notCoplanar, _faceCount);
 	

@@ -81,6 +81,11 @@
 "This document has %u %@. It will not be possible to open it with Oolite, which has a limit of %u %@." = "Dokumentet innehåller %u %@. Det kommer inte att kunna öppnas med Oolite, som är begränsat till %u %@.";
 "The document contains one or more polygons which are not coplanar. These polygons will be highlighted in red." = "Dokumentet innehåller polygon vars punkter inte ligger i ett plan. Dessa kommer att markeras i rött.";
 
+"Dry Dock's internal representation of the document is invalid: %@" = "Torrdockans inre framställning av dokumentet är ogiltig: %@";
+"face index range outside vertex index buffer." = "punktindexomrråde för polygon ligger utanför punktindexmängd.";
+"vertex index greater than size of vertex buffer." = "punktindex ligger utanför punktmängden.";
+"texture co-ordinate index greater than size of texture co-ordianate buffer." = "texturkoordinatindex ligger utanför texturkoordinatmängden.";
+
 "end of file" = "filslut";
 "end of line" = "radslut";
 "integer" = "heltal";

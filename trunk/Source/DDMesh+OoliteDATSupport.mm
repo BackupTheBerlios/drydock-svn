@@ -490,6 +490,8 @@ enum
 	unsigned				materialCount;
 	int						i;
 	
+	[self findBadPolygonsWithIssues:ioManager];
+	
 	if (_hasNonTriangles)
 	{
 		[ioManager addWarningIssueWithKey:@"nonTriangularFaces" localizedFormat:@"This document contains non-triangular faces. In order to save it in the selected format, Dry Dock will triangulate it."];
@@ -572,7 +574,7 @@ enum
 								"//	Textures used: %@\n"
 								"\n",
 								ApplicationNameAndVersionString(), dateString,
-								[self length], [self height], [self length],
+								[self width], [self height], [self length],
 								texNameString];
 	
 	// Write vertex and face counts
@@ -596,10 +598,9 @@ enum
 		[dataString appendFormat:@"\n%u,%u,%u,\t%10f,%10f,%10f,\t%u",
 			127, 127, 127, -normal.x, normal.y, normal.z, faceVertexCount];
 		
-		vertIdx = face->firstVertex;
 		for (j = 0; j != faceVertexCount; ++j)
 		{
-			[dataString appendFormat:@",%s%u", j ? "" : "\t", _faceTexCoordIndices[vertIdx++]];
+			[dataString appendFormat:@",%s%u", j ? "" : "\t", _faceVertexIndices[face->firstVertex + j]];
 		}
 	}
 	

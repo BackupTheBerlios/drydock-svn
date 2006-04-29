@@ -122,8 +122,8 @@ typedef struct DDMeshFaceData
 - (BOOL)hasNonTriangles;
 - (BOOL)hasBadPolygons;		// “Bad polygons” are not coplanar or not convex.
 
-// This is mostly used by loaders and manipulators.
-- (void)findBadPolygonsWithIssues:(DDProblemReportManager *)ioManager;
+// This is mostly used by loaders and manipulators. Returns NO for serious errors.
+- (BOOL)findBadPolygonsWithIssues:(DDProblemReportManager *)ioManager;
 
 @end
 
