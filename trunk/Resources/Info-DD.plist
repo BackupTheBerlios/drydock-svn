@@ -134,7 +134,7 @@
 	<key>CFBundleSignature</key>
 	<string>DryD</string>
 	<key>CFBundleVersion</key>
-	<string>602-2</string>
+	<string>604-1</string>
 	<key>NSMainNibFile</key>
 	<string>DDApplication</string>
 	<key>NSPrincipalClass</key>
