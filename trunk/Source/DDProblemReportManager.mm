@@ -457,6 +457,7 @@
 {
 	[_issues release];
 	_issues = nil;
+	_highestType = kNoteIssueType;
 	[tableView reloadData];
 }
 
@@ -472,6 +473,7 @@
 	{
 		[_issues addObjectsFromArray:inSource->_issues];
 	}
+	if (_highestType < inSource->_highestType) _highestType = inSource->_highestType;
 	[inSource clear];
 }
 

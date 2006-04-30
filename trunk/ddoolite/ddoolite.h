@@ -1,5 +1,5 @@
 /*
-	DDMaterial.h
+	ddoolite.h
 	Dry Dock for Oolite
 	$Id$
 	
@@ -21,37 +21,41 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Foundation/Foundation.h>
-#import "DDPropertyListRepresentation.h"
 
-@class DDTextureBuffer;
-@class DDProblemReportManager;
+#include <stdarg.h>
+
+#define DDOOLITE_VERSION_STRING "0.01 (604-1)"
 
 
-@interface DDMaterial: NSObject <NSCopying, DDPropertyListRepresentation>
+typedef enum
 {
-	NSString				*_name;
+	kDDFormat_unknown,
 	
-	NSString				*_diffuseMapName;
-	
-#ifndef FACELESS
-	DDTextureBuffer			*_diffuseTexture;
-	GLuint					_diffuseGLName;
+	kDDFormat_DAT,
+	kDDFormat_OBJ,
+	kDDFormat_Mesh,
+	kDDFormat_DryDock
+} DDFormat;
+
+
+#if __cplusplus
+extern "C" {
 #endif
+
+NSString *ExtensionForDDFormat(DDFormat inFormat);
+NSString *NameForDDFormat(DDFormat inFormat);
+
+DDFormat DDFormatForExtension(NSString *inExtension);
+DDFormat DDFormatForFileName(NSString *inName);
+
+// printf() for NSStrings
+void Print(NSString *inFormat, ...);
+void Printv(NSString *inFormat, va_list inArgs);
+
+// fprintf(stderr, ...) for NSStrings
+void EPrint(NSString *inFormat, ...);
+void EPrintv(NSString *inFormat, va_list inArgs);
+
+#if __cplusplus
 }
-
-+ (id)materialWithName:(NSString *)inName;
-
-- (id)initWithName:(NSString *)inName;
-
-- (void)setName:(NSString *)inName;
-- (NSString *)name;
-
-- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues;
-- (NSString *)diffuseMapName;
-
-#ifndef FACELESS
-- (void)makeActive;
 #endif
-
-@end

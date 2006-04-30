@@ -21,7 +21,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "phystypes.h"
 #import "DDPropertyListRepresentation.h"
 

@@ -999,6 +999,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 @end
 
 
+#if 0
 static NSColor *ObjColorToNSColor(NSString *inColor)
 {
 	TraceEnter();
@@ -1016,6 +1017,7 @@ static NSColor *ObjColorToNSColor(NSString *inColor)
 	return [NSColor colorWithDeviceRed:r green:g blue:b alpha:1];
 	TraceExit();
 }
+#endif
 
 
 static Vector ObjVertexToVector(NSString *inVertex)

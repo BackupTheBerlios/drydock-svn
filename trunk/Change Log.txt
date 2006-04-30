@@ -1,3 +1,9 @@
+0.08b (v604-2)
+	• Fixed problems with incorrect version numbers.
+	• The previous release implemented copying of messages from the Problem Report dialog, but the
+	  release notes failed to mention this.
+	• Minor internal changes to support creation of command-line version.
+
 0.08 (v604-1)
 	• DAT loading is now more efficient, performs more validation and can handle files without
 	  textures.

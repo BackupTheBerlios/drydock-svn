@@ -1,5 +1,5 @@
 /*
-	DDMaterial.h
+	DDUtilities.m
 	Dry Dock for Oolite
 	$Id$
 	
@@ -21,37 +21,58 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Foundation/Foundation.h>
-#import "DDPropertyListRepresentation.h"
-
-@class DDTextureBuffer;
-@class DDProblemReportManager;
+#import "DDUtilities.h"
+#import "ddoolite_main.h"
+#import "Logging.h"
 
 
-@interface DDMaterial: NSObject <NSCopying, DDPropertyListRepresentation>
+NSString *ApplicationNameAndVersionString(void)
 {
-	NSString				*_name;
-	
-	NSString				*_diffuseMapName;
-	
-#ifndef FACELESS
-	DDTextureBuffer			*_diffuseTexture;
-	GLuint					_diffuseGLName;
-#endif
+	return @"ddoolite " DDOOLITE_VERSION_STRING;
 }
 
-+ (id)materialWithName:(NSString *)inName;
 
-- (id)initWithName:(NSString *)inName;
+#if DDOLITE_MACOSX
 
-- (void)setName:(NSString *)inName;
-- (NSString *)name;
+extern NSString *LocationOfOoliteResources(void)
+{
+	TraceEnter();
+	
+	static id				oolitePath = nil;
+	NSURL					*ooliteURL;
+	NSBundle				*oolite;
+	OSStatus				err;
+	
+	if (nil == oolitePath)
+	{
+		TraceMessage(@"Looking for Oolite.");
+		err = LSFindApplicationForInfo('Ool8', (CFStringRef)@"org.aegidian.oolite", NULL, NULL, (CFURLRef *)&ooliteURL);
+		if (noErr == err && [ooliteURL isFileURL])
+		{
+			TraceMessage(@"Oolite found at %@", [ooliteURL path]);
+			oolite = [[NSBundle alloc] initWithPath:[ooliteURL path]];
+			[ooliteURL release];
+			
+			oolitePath = [oolite resourcePath];
+			[oolite release];
+		}
+		else
+		{
+			oolitePath = [NSNull null];
+			TraceMessage(@"Oolite not found.");
+		}
+	}
+	
+	return ([NSNull null] == oolitePath) ? nil : oolitePath;
+	TraceExit();
+}
 
-- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues;
-- (NSString *)diffuseMapName;
+#else
+#warning Don’t know how to locate Oolite on this platform.
 
-#ifndef FACELESS
-- (void)makeActive;
+extern NSString *LocationOfOolite(void)
+{
+	return nil;
+}
+
 #endif
-
-@end

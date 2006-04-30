@@ -22,6 +22,7 @@
 */
 
 #import "DDUtilities.h"
+#import "Logging.h"
 #import <Cocoa/Cocoa.h>
 
 
@@ -36,6 +37,40 @@ NSString *ApplicationNameAndVersionString(void)
 	buildVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
 	
 	return [NSString stringWithFormat:@"Dry Dock for Oolite %@ (%@)", marketingVersion, buildVersion];
+}
+
+
+extern NSString *LocationOfOoliteResources(void)
+{
+	TraceEnter();
+	
+	static id				oolitePath = nil;
+	NSURL					*ooliteURL;
+	NSBundle				*oolite;
+	OSStatus				err;
+	
+	if (nil == oolitePath)
+	{
+		TraceMessage(@"Looking for Oolite.");
+		err = LSFindApplicationForInfo('Ool8', (CFStringRef)@"org.aegidian.oolite", NULL, NULL, (CFURLRef *)&ooliteURL);
+		if (noErr == err && [ooliteURL isFileURL])
+		{
+			TraceMessage(@"Oolite found at %@", [ooliteURL path]);
+			oolite = [[NSBundle alloc] initWithPath:[ooliteURL path]];
+			[ooliteURL release];
+			
+			oolitePath = [oolite resourcePath];
+			[oolite release];
+		}
+		else
+		{
+			oolitePath = [NSNull null];
+			TraceMessage(@"Oolite not found.");
+		}
+	}
+	
+	return ([NSNull null] == oolitePath) ? nil : oolitePath;
+	TraceExit();
 }
 
 

@@ -82,7 +82,7 @@ enum
 	DDMeshIndex				faceVertices[kMaxVertsPerFace];
 	DDMeshIndex				faceTexCoords[kMaxVertsPerFace] = {0};
 	
-	assert(nil != inFile && nil != ioIssues);
+	assert(nil != inFile);
 	
 	self = [super init];
 	if (nil == self) return nil;

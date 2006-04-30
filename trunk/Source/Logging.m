@@ -26,6 +26,11 @@
 
 #if ENABLE_LOGGING
 
+#if defined(FACELESS) && !defined(DDOLITE_MACOSX)
+// Defined in ddoolite_main.m
+extern void CFShow(void *obj);
+#endif
+
 static unsigned			sIndent = 0;
 
 

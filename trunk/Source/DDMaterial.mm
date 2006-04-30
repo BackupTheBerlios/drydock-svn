@@ -28,6 +28,7 @@
 #import "Logging.h"
 #import "DDProblemReportManager.h"
 #import "CocoaExtensions.h"
+#import "DDUtilities.h"
 
 
 @interface DDMaterial(Private)
@@ -64,15 +65,15 @@
 }
 
 
+#ifndef FACELESS
+
 - (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues
 {
 	TraceEnterMsg(@"Called for %@ relative to %@.", inFileName, inBaseFile);
 	
 	DDTextureBuffer			*texture;
 	NSURL					*url;
-	static NSBundle			*oolite = nil;
-	NSURL					*ooliteURL;
-	OSStatus				err;
+	NSString				*ooliteResources;
 	NSString				*path;
 	
 	// Look for texture in same folder as base file
@@ -100,34 +101,21 @@
 	if (nil == texture)
 	{
 		// Find Oolite bundle if we haven’t already
-		if (nil == oolite)
-		{
-			TraceMessage(@"Looking for Oolite.");
-			err = LSFindApplicationForInfo('Ool8', (CFStringRef)@"org.aegidian.oolite", NULL, NULL, (CFURLRef *)&ooliteURL);
-			if (noErr == err && [ooliteURL isFileURL])
-			{
-				TraceMessage(@"Oolite found at %@", [ooliteURL path]);
-				oolite = [[NSBundle alloc] initWithPath:[ooliteURL path]];
-				[ooliteURL release];
-			}
-			else
-			{
-				TraceMessage(@"Oolite not found.");
-			}
-		}
+		ooliteResources = LocationOfOoliteResources();
 		
-		if (nil != oolite)
+		if (nil != ooliteResources)
 		{
-			// Try in [oolite]/Contents/Resources/Textures/file
+			// Try in $OOLITE/Contents/Resources/Textures/file
 			TraceMessage(@"Looking in [oolite]/Contents/Resources/Textures/");
-			path = [oolite pathForResource:inFileName ofType:nil inDirectory:@"Textures"];
+			path = [ooliteResources stringByAppendingPathComponent:@"Textures"];
+			path = [path stringByAppendingPathComponent:inFileName];
 			if (nil != path) texture = [DDTextureBuffer textureWithFile:[NSURL fileURLWithPath:path] issues:ioIssues];
 			
 			if (nil == texture)
 			{
 				// Try in $OOLITE/Contents/Resources/file (because development builds don’t have a Textures subfolder)
-				TraceMessage(@"Looking in [oolite]/Contents/Textures/");
-				path = [oolite pathForResource:inFileName ofType:nil];
+				TraceMessage(@"Looking in [oolite]/Contents/Resources/");
+				path = [ooliteResources stringByAppendingPathComponent:inFileName];
 				if (nil != path) texture = [DDTextureBuffer textureWithFile:[NSURL fileURLWithPath:path] issues:ioIssues];
 			}
 		}
@@ -148,15 +136,28 @@
 	
 	if (nil != texture)
 	{
-		[_diffuseTexture release];
 		[_diffuseMapName release];
 		_diffuseMapName = [inFileName copy];
-		_diffuseTexture = [texture retain];
-		_diffuseGLName = 0;
+		
+		#ifndef FACELESS
+			[_diffuseTexture release];
+			_diffuseTexture = [texture retain];
+			_diffuseGLName = 0;
+		#endif
 	}
 	
 	TraceExit();
 }
+
+#else
+
+- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues
+{
+	[_diffuseMapName release];
+	_diffuseMapName = [inFileName copy];
+}
+
+#endif
 
 
 - (void)dealloc
@@ -165,7 +166,9 @@
 	
 	[_name release];
 	[_diffuseMapName autorelease];
-	[_diffuseTexture autorelease];
+	#ifndef FACELESS
+		[_diffuseTexture autorelease];
+	#endif
 	
 	[super dealloc];
 	
@@ -179,7 +182,10 @@
 	
 	DDMaterial *result = [[DDMaterial allocWithZone:inZone] initWithName:_name];
 	result->_diffuseMapName = [_diffuseMapName copyWithZone:inZone];
-	result->_diffuseTexture = [_diffuseTexture retain];
+	
+	#ifndef FACELESS
+		result->_diffuseTexture = [_diffuseTexture retain];
+	#endif
 	
 	return result;
 	TraceExit();
@@ -199,17 +205,13 @@
 }
 
 
-- (NSURL *)diffuseMapURL
-{
-	return [_diffuseTexture file];
-}
-
-
 - (NSString *)diffuseMapName
 {
 	return _diffuseMapName;
 }
 
+
+#ifndef FACELESS
 
 - (void)makeActive
 {
@@ -235,6 +237,8 @@
 		glBindTexture(GL_TEXTURE_2D, _diffuseGLName);
 	}
 }
+
+#endif
 
 
 - (id)initWithPropertyListRepresentation:(id)inPList issues:(DDProblemReportManager *)ioIssues
@@ -306,7 +310,11 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ %p>{\"%@\", diffuse map=%@}", [self className], self, _name, _diffuseTexture];
+	#ifndef FACELESS
+		return [NSString stringWithFormat:@"<%@ %p>{\"%@\", diffuse map=%@}", [self className], self, _name, _diffuseTexture];
+	#else
+		return [NSString stringWithFormat:@"<%@ %p>{\"%@\", diffuse map=%@}", [self className], self, _name, _diffuseMapName];
+	#endif
 }
 
 @end

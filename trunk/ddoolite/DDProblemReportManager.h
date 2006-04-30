@@ -1,7 +1,9 @@
 /*
-	DDMaterial.h
+	DDProblemReportManager.h
 	Dry Dock for Oolite
 	$Id$
+	
+	Collects DDProblemReportIssues and presents them as a dialog.
 	
 	Copyright © 2006 Jens Ayton
 
@@ -21,37 +23,37 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Foundation/Foundation.h>
-#import "DDPropertyListRepresentation.h"
-
-@class DDTextureBuffer;
-@class DDProblemReportManager;
+#import <Cocoa/Cocoa.h>
+#import "DDProblemReportIssue.h"
 
 
-@interface DDMaterial: NSObject <NSCopying, DDPropertyListRepresentation>
+typedef enum
 {
-	NSString				*_name;
+	kContextSave = 0UL,
+	kContextOpen,
 	
-	NSString				*_diffuseMapName;
-	
-#ifndef FACELESS
-	DDTextureBuffer			*_diffuseTexture;
-	GLuint					_diffuseGLName;
-#endif
+	kContextCount
+} ProblemReportContext;
+
+
+@interface DDProblemReportManager: NSObject
+{
+	NSMutableArray				*_issues;
+	ProblemReportContext		_context;
+	IssueType					_highestType;
 }
 
-+ (id)materialWithName:(NSString *)inName;
+- (void)addIssue:(DDProblemReportIssue *)inIssue;
+- (void)addNoteIssueWithKey:(NSString *)inKey localizedFormat:(NSString *)inFormat, ...;
+- (void)addWarningIssueWithKey:(NSString *)inKey localizedFormat:(NSString *)inFormat, ...;
+- (void)addStopIssueWithKey:(NSString *)inKey localizedFormat:(NSString *)inFormat, ...;
 
-- (id)initWithName:(NSString *)inName;
+- (void)mergeIssues:(DDProblemReportManager *)inSource;
 
-- (void)setName:(NSString *)inName;
-- (NSString *)name;
+- (void)setContext:(ProblemReportContext)inContext;
 
-- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues;
-- (NSString *)diffuseMapName;
+- (BOOL)showReportCommandLineQuietMode:(BOOL)inQuiet;
 
-#ifndef FACELESS
-- (void)makeActive;
-#endif
+- (void)clear;
 
 @end

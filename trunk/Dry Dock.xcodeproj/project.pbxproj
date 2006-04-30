@@ -41,6 +41,32 @@
 		1A23CD3E098F40CF004A48CD /* DDMesh+GLRendering.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
 		1A23CD8C098F491A004A48CD /* DDMesh+OoliteDATSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
 		1A23CD8D098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */; };
+		1A23DF370A04B07D00934A0A /* DDMesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D60F0094EDACB00E9D611 /* DDMesh.mm */; };
+		1A23DF380A04B08900934A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */; };
+		1A23DF6B0A04B19200934A0A /* ddoolite_Prefix.pch in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A23DF6A0A04B19200934A0A /* ddoolite_Prefix.pch */; };
+		1A23DF7C0A04B1DE00934A0A /* ddoolite.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A23DF7A0A04B1DE00934A0A /* ddoolite.h */; };
+		1A23DF8C0A04B24700934A0A /* DDFaceVertexBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE33C8409BBAA5B00F44436 /* DDFaceVertexBuffer.mm */; };
+		1A23DF8D0A04B24C00934A0A /* DDNormalSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */; };
+		1A23DF930A04B27100934A0A /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A442148094C830B000E90C2 /* Logging.m */; };
+		1A23DF970A04B28200934A0A /* ddoolite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23DF7B0A04B1DE00934A0A /* ddoolite.mm */; };
+		1A23DFFD0A04B82100934A0A /* DDMesh+LightwaveOBJSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */; };
+		1A23DFFE0A04B82200934A0A /* DDMesh+OoliteDATSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */; };
+		1A23DFFF0A04B82300934A0A /* DDMesh+PropertyListRepresentation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */; };
+		1A23E0090A04B85D00934A0A /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; settings = {COMPILER_FLAGS = "-pp -8 -CFre -POoliteDAT_yy"; }; };
+		1A23E00A0A04B85E00934A0A /* DDDATLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */; };
+		1A23E0180A04B88500934A0A /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
+		1A23E02D0A04B8FB00934A0A /* DDMaterialSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5707A609B255C700E0E17D /* DDMaterialSet.mm */; };
+		1A23E02E0A04B90000934A0A /* DDTexCoordSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE2138109B72FA20064C1ED /* DDTexCoordSet.mm */; };
+		1A23E0320A04B91C00934A0A /* DDMaterial.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A65C6270957A43E006990D5 /* DDMaterial.mm */; };
+		1A23E0380A04B9C100934A0A /* DDUtilities-ddoolite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23E0370A04B9C100934A0A /* DDUtilities-ddoolite.mm */; };
+		1A23E0830A04BCAB00934A0A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A032044096C10FB0000B217 /* Carbon.framework */; };
+		1A23E1E50A04E7BA00934A0A /* DDModelDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5BEBF09B5EA5A0053F435 /* DDModelDocument.mm */; };
+		1A23E2100A04E9B100934A0A /* DDPantherCompatibility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */; };
+		1A23E2180A04E9E400934A0A /* BS-HOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098888098AED78007C2F5F /* BS-HOM.m */; };
+		1A23E2190A04E9E500934A0A /* BSTrampoline.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098872098AEC11007C2F5F /* BSTrampoline.m */; };
+		1A23E2470A04EA9B00934A0A /* CocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */; };
+		1A23E2BF0A04F4F100934A0A /* DDProblemReportManager-faceless.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23E2BE0A04F4F100934A0A /* DDProblemReportManager-faceless.mm */; };
+		1A23E2D10A04F9C300934A0A /* DDProblemReportIssue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FEB5098C85D6003BDAD5 /* DDProblemReportIssue.mm */; };
 		1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A24608209A5D39000DC42F4 /* DDUtilities.mm */; };
 		1A2740B609A89E7A0031F97B /* DDPantherCompatibility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */; };
 		1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
@@ -152,6 +178,8 @@
 				1AE33C8509BBAA5B00F44436 /* DDFaceVertexBuffer.h in CopyFiles */,
 				1A00856A09C176C2007B982D /* DDWizardBackdropView.h in CopyFiles */,
 				1A0085F609C17EC0007B982D /* DDHeaderGradientView.h in CopyFiles */,
+				1A23DF6B0A04B19200934A0A /* ddoolite_Prefix.pch in CopyFiles */,
+				1A23DF7C0A04B1DE00934A0A /* ddoolite.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +233,12 @@
 		1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+GLRendering.mm"; sourceTree = "<group>"; };
 		1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+OoliteDATSupport.mm"; sourceTree = "<group>"; };
 		1A23CD8B098F491A004A48CD /* DDMesh+LightwaveOBJSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+LightwaveOBJSupport.mm"; sourceTree = "<group>"; };
+		1A23DF280A04B05000934A0A /* ddoolite */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ddoolite; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A23DF6A0A04B19200934A0A /* ddoolite_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ddoolite_Prefix.pch; sourceTree = "<group>"; };
+		1A23DF7A0A04B1DE00934A0A /* ddoolite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ddoolite.h; sourceTree = "<group>"; };
+		1A23DF7B0A04B1DE00934A0A /* ddoolite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ddoolite.mm; sourceTree = "<group>"; };
+		1A23E0370A04B9C100934A0A /* DDUtilities-ddoolite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDUtilities-ddoolite.mm"; sourceTree = "<group>"; };
+		1A23E2BE0A04F4F100934A0A /* DDProblemReportManager-faceless.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDProblemReportManager-faceless.mm"; sourceTree = "<group>"; };
 		1A245C1009A4676700DC42F4 /* OoliteDAT.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; lineEnding = 0; path = OoliteDAT.l; sourceTree = "<group>"; };
 		1A245CB109A4727700DC42F4 /* OoliteDATTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OoliteDATTokens.h; sourceTree = "<group>"; };
 		1A245EA909A4C8AF00DC42F4 /* DDDATLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDATLexer.h; sourceTree = "<group>"; };
@@ -339,6 +373,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1A23DF260A04B05000934A0A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A23DF380A04B08900934A0A /* Foundation.framework in Frameworks */,
+				1A23E0830A04BCAB00934A0A /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -383,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* Dry Dock for Oolite.app */,
+				1A23DF280A04B05000934A0A /* ddoolite */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -430,6 +474,18 @@
 				1A18DE10096456D20010CE0B /* UKUpdateChecker.m */,
 			);
 			path = "UK-NiftyFeatures";
+			sourceTree = "<group>";
+		};
+		1A23DF650A04B14B00934A0A /* ddoolite */ = {
+			isa = PBXGroup;
+			children = (
+				1A23DF6A0A04B19200934A0A /* ddoolite_Prefix.pch */,
+				1A23DF7A0A04B1DE00934A0A /* ddoolite.h */,
+				1A23DF7B0A04B1DE00934A0A /* ddoolite.mm */,
+				1A23E0370A04B9C100934A0A /* DDUtilities-ddoolite.mm */,
+				1A23E2BE0A04F4F100934A0A /* DDProblemReportManager-faceless.mm */,
+			);
+			path = ddoolite;
 			sourceTree = "<group>";
 		};
 		1A245C0D09A4675100DC42F4 /* Lexers */ = {
@@ -630,6 +686,7 @@
 				1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				1A23DF650A04B14B00934A0A /* ddoolite */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
@@ -653,12 +710,12 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				32DBCF750370BD2300C91783 /* Dry Dock_Prefix.pch */,
+				2A37F4B0FDCFA73011CA2CEA /* main.m */,
 				1A543C6C09AD0A3E006B751A /* DDErrorDescription.h */,
 				1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */,
 				1A80AA1109470BC2006AF8F5 /* phystypes.h */,
 				1A80AA1209470BC2006AF8F5 /* phystypes.cp */,
-				32DBCF750370BD2300C91783 /* Dry Dock_Prefix.pch */,
-				2A37F4B0FDCFA73011CA2CEA /* main.m */,
 				1A442147094C830B000E90C2 /* Logging.h */,
 				1A442148094C830B000E90C2 /* Logging.m */,
 				1A72083B095A8C8C00C6896A /* MathsUtils.h */,
@@ -704,6 +761,38 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1A23DF270A04B05000934A0A /* ddoolite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A23DF2A0A04B05200934A0A /* Build configuration list for PBXNativeTarget "ddoolite" */;
+			buildPhases = (
+				1A23DF250A04B05000934A0A /* Sources */,
+				1A23DF260A04B05000934A0A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = "$(HOME)/bin";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ddoolite;
+				ZERO_LINK = YES;
+			};
+			dependencies = (
+			);
+			name = ddoolite;
+			productName = ddoolite;
+			productReference = 1A23DF280A04B05000934A0A /* ddoolite */;
+			productType = "com.apple.product-type.tool";
+		};
 		8D15AC270486D014006FF6A4 /* Dry Dock */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AAC876508F293CC004A6AD2 /* Build configuration list for PBXNativeTarget "Dry Dock" */;
@@ -756,6 +845,7 @@
 			projectDirPath = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* Dry Dock */,
+				1A23DF270A04B05000934A0A /* ddoolite */,
 			);
 		};
 /* End PBXProject section */
@@ -803,6 +893,35 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1A23DF250A04B05000934A0A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A23DF370A04B07D00934A0A /* DDMesh.mm in Sources */,
+				1A23DF8C0A04B24700934A0A /* DDFaceVertexBuffer.mm in Sources */,
+				1A23DF8D0A04B24C00934A0A /* DDNormalSet.mm in Sources */,
+				1A23DF930A04B27100934A0A /* Logging.m in Sources */,
+				1A23DF970A04B28200934A0A /* ddoolite.mm in Sources */,
+				1A23DFFD0A04B82100934A0A /* DDMesh+LightwaveOBJSupport.mm in Sources */,
+				1A23DFFE0A04B82200934A0A /* DDMesh+OoliteDATSupport.mm in Sources */,
+				1A23DFFF0A04B82300934A0A /* DDMesh+PropertyListRepresentation.mm in Sources */,
+				1A23E0090A04B85D00934A0A /* OoliteDAT.l in Sources */,
+				1A23E00A0A04B85E00934A0A /* DDDATLexer.m in Sources */,
+				1A23E0180A04B88500934A0A /* DDErrorDescription.mm in Sources */,
+				1A23E02D0A04B8FB00934A0A /* DDMaterialSet.mm in Sources */,
+				1A23E02E0A04B90000934A0A /* DDTexCoordSet.mm in Sources */,
+				1A23E0320A04B91C00934A0A /* DDMaterial.mm in Sources */,
+				1A23E0380A04B9C100934A0A /* DDUtilities-ddoolite.mm in Sources */,
+				1A23E1E50A04E7BA00934A0A /* DDModelDocument.mm in Sources */,
+				1A23E2100A04E9B100934A0A /* DDPantherCompatibility.mm in Sources */,
+				1A23E2180A04E9E400934A0A /* BS-HOM.m in Sources */,
+				1A23E2190A04E9E500934A0A /* BSTrampoline.m in Sources */,
+				1A23E2470A04EA9B00934A0A /* CocoaExtensions.m in Sources */,
+				1A23E2BF0A04F4F100934A0A /* DDProblemReportManager-faceless.mm in Sources */,
+				1A23E2D10A04F9C300934A0A /* DDProblemReportIssue.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1008,6 +1127,117 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1A23DF2B0A04B05200934A0A /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ddoolite/ddoolite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DDOLITE_MACOSX,
+					FACELESS,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = ddoolite;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ddoolite\" \"$(SRCROOT)/Source\"";
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		1A23DF2C0A04B05200934A0A /* Development-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ddoolite/ddoolite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DDOLITE_MACOSX,
+					FACELESS,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = ddoolite;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ddoolite\" \"$(SRCROOT)/Source\"";
+				ZERO_LINK = NO;
+			};
+			name = "Development-Panther";
+		};
+		1A23DF2D0A04B05200934A0A /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ddoolite/ddoolite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DDOLITE_MACOSX,
+					FACELESS,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = ddoolite;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ddoolite\" \"$(SRCROOT)/Source\"";
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		1A23DF2E0A04B05200934A0A /* Debug-optimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ddoolite/ddoolite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DDOLITE_MACOSX,
+					FACELESS,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = ddoolite;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ddoolite\" \"$(SRCROOT)/Source\"";
+				ZERO_LINK = NO;
+			};
+			name = "Debug-optimized";
+		};
+		1A23DF2F0A04B05200934A0A /* Debug-optimized-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ddoolite/ddoolite_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DDOLITE_MACOSX,
+					FACELESS,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = ddoolite;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ddoolite\" \"$(SRCROOT)/Source\"";
+				ZERO_LINK = NO;
+			};
+			name = "Debug-optimized-Panther";
+		};
 		1A27407909A77C350031F97B /* Development-Panther */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1244,6 +1474,18 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1A23DF2A0A04B05200934A0A /* Build configuration list for PBXNativeTarget "ddoolite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A23DF2B0A04B05200934A0A /* Development */,
+				1A23DF2C0A04B05200934A0A /* Development-Panther */,
+				1A23DF2D0A04B05200934A0A /* Deployment */,
+				1A23DF2E0A04B05200934A0A /* Debug-optimized */,
+				1A23DF2F0A04B05200934A0A /* Debug-optimized-Panther */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
 		1AAC876508F293CC004A6AD2 /* Build configuration list for PBXNativeTarget "Dry Dock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

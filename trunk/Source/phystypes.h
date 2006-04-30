@@ -45,6 +45,7 @@
 #include <gcc/darwin/default/ppc_intrinsics.h>
 #include <Accelerate/Accelerate.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <OpenGL/gl.h>
 
 
 #ifdef __GNUC__

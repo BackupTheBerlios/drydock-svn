@@ -1,5 +1,5 @@
 /*
-	DDMaterial.h
+	Dry Dock_Prefix.pch
 	Dry Dock for Oolite
 	$Id$
 	
@@ -21,37 +21,16 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Foundation/Foundation.h>
-#import "DDPropertyListRepresentation.h"
+#define __STDC_LIMIT_MACROS
 
-@class DDTextureBuffer;
-@class DDProblemReportManager;
+#include <math.h>
 
-
-@interface DDMaterial: NSObject <NSCopying, DDPropertyListRepresentation>
-{
-	NSString				*_name;
-	
-	NSString				*_diffuseMapName;
-	
-#ifndef FACELESS
-	DDTextureBuffer			*_diffuseTexture;
-	GLuint					_diffuseGLName;
-#endif
-}
-
-+ (id)materialWithName:(NSString *)inName;
-
-- (id)initWithName:(NSString *)inName;
-
-- (void)setName:(NSString *)inName;
-- (NSString *)name;
-
-- (void)setDiffuseMap:(NSString *)inFileName relativeTo:(NSURL *)inBaseFile issues:(DDProblemReportManager *)ioIssues;
-- (NSString *)diffuseMapName;
-
-#ifndef FACELESS
-- (void)makeActive;
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
 #endif
 
-@end
+#include <Carbon/Carbon.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#include <OpenGL/glext.h>
+#include <OpenGL/OpenGL.h>

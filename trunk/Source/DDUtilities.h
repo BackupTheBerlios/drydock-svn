@@ -32,6 +32,9 @@
 
 extern NSString *ApplicationNameAndVersionString(void);
 
+extern NSString *LocationOfOoliteResources(void);
+
+
 #if TIGER_OR_LATER
 	#define TigerOrLater() 1
 #else

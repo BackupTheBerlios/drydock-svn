@@ -42,6 +42,7 @@
 	self = [super init];
 	if (nil != self)
 	{
+		if (0 == inCapacity) inCapacity = 1;
 		rev = [[NSMutableDictionary alloc] initWithCapacity:inCapacity];
 		array = (DDMaterial **)calloc(sizeof(DDMaterial *), inCapacity);
 		max = inCapacity;
