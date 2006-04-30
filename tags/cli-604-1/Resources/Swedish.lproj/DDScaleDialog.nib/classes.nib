@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {OKAction = id; cancelAction = id; changeMode = id; }; 
+            CLASS = DDScaleDialogController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                formatter = NSFormatter; 
+                modeRadioGroup = NSMatrix; 
+                panel = NSPanel; 
+                uniformField = NSTextField; 
+                xField = NSTextField; 
+                yField = NSTextField; 
+                zField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,278 @@
+	<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+ "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<title>Reference</title>
+<meta name="keywords" content="error, diagnostic, warning, message, problem, issue, debug, obj, dat" />
+<meta name="description" content="Descriptions of the error and warning messages displayed by Dry Dock." />
+
+<link rel="stylesheet" title="Style Sheet" type="text/css" media="screen" href="../css/stylesheet.css" />
+
+<meta name="author" content="Jens Ayton" />
+<link rev="made" title="Mail Jens" href="mailto: Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;" />
+<meta name="copyright" content="© 2006 Jens Ayton. All rights reserved." />
+
+</head>
+<body>
+
+<div id="help-banner">
+<a name="reference-errors" href="../index.html">Dry Dock Help</a>
+&gt; <a href="reference.html">Reference</a>
+</div>
+
+<div id="content"><h1>Errors and Warnings Reference</h1>
+<p>Many operations in Dry Dock may present errors, warnings or notes, or a combination thereof,
+using a “Problem Report” dialogue box as pictured below.</p>
+
+<div class="image-main">
+<img src="../images/problem-report.png" alt="The Problem Report dialogue box." width="550" height="341" />
+<p>Figure 1. A typical Problem Report dialogue box.</p>
+</div>
+
+<p>This help page presents examples of the most common types of errors, and explains why they
+arise.</p>
+
+<!-- Doesn’t work properly in Tiger.
+<div class="tip"><div class="label">Tip!</div>
+You can look up an error message in Help by selecting it in the Problem Report
+dialogue box, and pressing the Help button in the lower-left corner.</div>
+-->
+
+<p>If this help page does provide the information required to solve a problem, you may
+wish to send a bug report or request help <a href="mailto:Jens Ayton
+&lt;UMHMLDIZEYNZ@spammotel.com&gt;">by e-mail</a>. In this case, note that you can select one or
+more messages in the Problem Report dialogue box and copy them (using the <span
+class="command-name">Copy</span> command in the <span class="command-name">Edit</span> menu).</p>
+
+
+
+<!-- AppleSegStart="Errors and Warnings Reference: Warnings and Notes" -->
+<!-- AppleSegDescription="Descriptions of the most common warning and note messages displayed by Dry Dock." -->
+
+<h2>Warnings and Notes</h2>
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-nonTriangularFaces"></a>
+This document contains non-triangular faces. In order to save it in the selected format, Dry Dock
+will triangulate it.</div>
+
+<p>This message is presented when saving a document in Oolite DAT format, if it has faces with more
+than three vertices. If you continue, the document will be converted to triangles before saving.
+This is equivalent to selecting <span class="command-name">Triangulate</span> from the <span
+class="command-name">Tools</span> menu.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-textureNotFound"></a>
+No texture named “My Texture” could be found, using place-holder texture.</div>
+
+<p>When opening a document, Dry Dock looks for textures in several locations:</p>
+
+<ol>
+	<li> In the same folder as the document.</li>
+	<li> In a folder named “Textures” in the same folder as the document.</li>
+	<li> In a folder named “Textures” in the folder containing the folder with the document.</li>
+	<li> Inside the Oolite application, if it can be found.</li>
+</ol>
+
+<p>If the texture cannot be found in any of these locations, this message is displayed, and Dry Dock
+will use the “place-holder” texture, which is a grey checked pattern.</p>
+
+<div class="image-main">
+<img src="../../../Placeholder Texture.png" alt="The place-holder texture." width="256" height="256" />
+<p>Figure 2. The place-holder texture.</p>
+</div>
+
+<p>Note that Dry Dock will remember the name of the texture, and if you save the document and open
+it again, Dry Dock will once again look for the correct texture. In other words, the document is not
+damaged, only displayed incorrectly.</p>
+</div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-multipleMaterialLibraries"></a>
+The document contains multiple material library references. Currently, only one material library is
+supported. Ignoring reference to material library “Second Material Library”.</div>
+
+<p>Lightwave OBJ documents specify material properties, such as textures, in external files called
+“material libraries” (which use the file name extension “.mtl”). Any OBJ document may refer to zero
+or more material libraries. However, Dry Dock does not currently support more than one material
+library. Therefore, this message will be displayed when attempting to open an OBJ document
+which refers to more than one material library. The document can still be opened, but some textures
+may be missing. It seems unlikely that this will be a problem working with models for Oolite, but if
+it is, please <a href="mailto:Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;">e-mail a request</a> to
+fix this.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-unknownOBJLineType"></a>
+<a name="problem-ignoredOBJLineType"></a>
+<a name="problem-OBJCall"></a>
+<a name="problem-OBJShellScript"></a>
+The document contains lines of type “cstype” (parametric curve/surface type), which will be
+ignored.</div>
+
+<p>Lightwave OBJ documents can contain a variety of geometry types and commands which Dry Dock
+cannot presently handle, such as curved surfaces and references to other OBJ files. If you wish to
+see a particular OBJ feature supported, please <a href="mailto:Jens Ayton
+&lt;UMHMLDIZEYNZ@spammotel.com&gt;">e-mail a request</a>. Please attach example files if
+possible.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-textureNotPowerOfTwo"></a>
+The texture “My Texture” does not have power-of-two dimensions. It has been rescaled from 200 × 200
+pixels to 256 × 256 pixels.</div>
+
+<p>Like Oolite (and most 3D games), Dry Dock requires textures to have sides whose length in pixels
+is a power of two. Dry Dock, like Oolite, will rescale textures if necessary to ensure this. Such
+scaling wastes memory (both regular memory and graphics memory), so textures should be resized to
+a resolution where such scaling is not needed. For Oolite, it is recommended that you do not use
+textures larger than 512 × 512 pixels, and use 256 × 256 pixels if at all possible. Note that two
+256 × 256 textures use half as much memory as one 512 × 512 texture!</p>
+
+<p>Also note that different graphics cards have different size limits. Dry Dock will scale textures
+down to the maximum size allowed by the graphics card if necessary. Oolite is currently not capable
+of this, however.</p></div>
+
+<!-- AppleSegEnd -->
+
+
+
+<!-- AppleSegStart="Errors and Warnings Reference: Errors" -->
+<!-- AppleSegDescription="Descriptions of the most common error messages displayed by Dry Dock." -->
+<!-- AppleKeywords="error, diagnostic, message" -->
+
+<h2>Errors</h2>
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-allocFailed"></a>
+A memory allocation failed. This is probably due to a memory shortage.</div>
+<div class="problem-quote">
+<a name="problem-textureFileNotLoadedMemory"></a>
+The texture “My Texture” could not be loaded, because there was not enough memory.</div>
+
+<p>These messages indicates that Dry Dock asked the system for some memory, and none was provided.
+This generally means that both physical memory and your main hard disk (startup disk) are full. You
+should free up hard disk space by removing unneeded files and emptying the Trash, and free up memory
+by closing documents and quitting applications.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-noDataLoaded"></a>
+No data could be loaded from “My Document”.</div>
+
+<p>This error indicates that loading of a document failed. This could occur for a broad variety of
+reasons, such as the file disappearing before Dry Dock attempts to open it, or the disk containing
+the file being damaged. It generally does not indicate a problem with the contents of the file.
+Depending on the precise nature of the problem, an additional explanation may be provided.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-noDATNVERTS"></a>
+<a name="problem-noDATNFACES"></a>
+<a name="problem-insufficientParts"></a>
+<a name="problem-noVertexDataLoaded"></a>
+<a name="problem-noColorLoaded"></a>
+<a name="problem-noTextureNameLoaded"></a>
+<a name="problem-noTextureScaleLoaded"></a>
+<a name="problem-noUVLoaded"></a>
+Vertex data could not be read for vertex line 37.</div>
+
+<div class="problem-quote">
+<a name="problem-invalidVertexIndex"></a>
+<a name="problem-invalidNormalIndex"></a>
+<a name="problem-invalidUVIndex"></a>
+<a name="problem-vertexRange"></a>
+<a name="problem-normalIndexRange"></a>
+<a name="problem-UVIndexRange"></a>
+Face 10 specifies a vertex index of 25, but there are only 24 vertices in the document.</div>
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-vertexCountRange"></a>
+Invalid vertex count (2) for face 84. Each face must have at least three and no more than 16
+vertices.</div>
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-parseError"></a>
+Parse error on line 56: expected integer, got end of file.</div>
+
+<p>These errors indicate specific problems loading Oolite DAT or Lightwave OBJ documents. Unless you
+are editing them in a text editor, the differences are not important; they all mean that the document
+is not valid.</p></div>
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-tooManyVertices"></a>
+<a name="problem-tooManyFaces"></a>
+<a name="problem-tooManyMaterials"></a>
+This document contains 602 faces; the selected format allows no more than 512.</div>
+
+<p>This error occurs if you try to save a document in Oolite DAT format which is too complex for
+Oolite to load. It is necessary to reduce the complexity of the model by simplifying it or by
+dividing it into parts which can be joined together using the subentity system.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-invalidTextureName"></a>
+This document contains a texture named “My Texture”. The specified format does not support
+texture names containing spaces, commas, line breaks, “#” or “//”.</div>
+
+<p>This error may occur when trying to save a document in Oolite DAT format. This format has
+restrictions on allowable file names for textures, as detailed in the error message. For maximum
+compatibility, it is recommended that you restrict yourself to texture names consisting of lowercase
+letters, digits, hyphens and underscores.</p></div>
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-writeFailed"></a>
+The document could not be saved.</div>
+
+<div class="problem-quote">
+<a name="problem-mtllibWriteFailed"></a>
+The material library for the document could not be saved.</div>
+
+<p>This error indicates that something went wrong while trying to write the document to a disk, for
+instance because you don’t have permission to write to the specified location or because the disk is
+full. It does not indicate a problem in generating the contents of the file; it should be possible
+to save the document to another location or a different disk. Depending on the precise nature of the
+problem, an additional explanation may be provided.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-textureFileNotLoadedOSErr"></a>
+The texture “My Texture” could not be loaded, because an error of type -42 occurred.</div>
+
+<p>This error indicates that a texture could not be loaded. This could occur for a broad variety of
+reasons, such as the file disappearing before Dry Dock attempts to open it, or the texture being of
+a type not supported. (Dry Dock uses Quicktime to load textures, and thus supports many file types.
+However, the recommended file format for textures is PNG.)</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-notValidDryDock"></a>
+This is not a valid Dry Dock document.</div>
+<div class="problem-quote"><a name="problem-outOfDateDryDock"></a>
+This document appears to be generated by a newer version of Dry Dock; it is in an incompatible
+format.</div>
+
+<p>These errors indicate that a document appears to be a Dry Dock document but cannot be read as
+such.</p></div>
+
+
+<div class="problem-description"><div class="problem-quote">
+<a name="problem-documentTooComplex"></a>
+This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than
+65534 faces; this document has 100273.</div>
+
+<p>Dry Dock is designed to handle relatively simple models. Oolite is incapable of loading models
+with more than 320 vertices, 512 faces or 8 materials. Dry Dock relaxes these limits somewhat and
+can handle up to 65534 of each. Note that multiple models can be joined together using the subentity
+system.</p></div>
+
+<!-- AppleSegEnd -->
+
+</body>
+</html>

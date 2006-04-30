@@ -1,0 +1,14 @@
+{
+    IBClasses = (
+        {CLASS = DDComparatorView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {OKAction = id; }; 
+            CLASS = DDCompareDialogController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {dialog = NSWindow; leftView = NSView; rightView = NSView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
