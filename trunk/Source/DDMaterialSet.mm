@@ -109,7 +109,7 @@
 	
 	if (count == max)
 	{
-		LogMessage(@"Growing DDMaterialSet.");
+	//	LogMessage(@"Growing DDMaterialSet.");
 		if (kDDMeshIndexMax == max) [NSException raise:NSRangeException format:@"%s: failed to grow a DDMaterialSet (already at maximum size).", __FUNCTION__];
 		
 		if (kDDMeshIndexMax / 2 < max) max = kDDMeshIndexMax;

@@ -88,7 +88,7 @@
 		// Not found
 		if (count == max)
 		{
-			LogMessage(@"Growing DDNormalSet.");
+		//	LogMessage(@"Growing DDNormalSet.");
 			if (kDDMeshIndexMax == max) [NSException raise:NSRangeException format:@"%s: failed to grow a DDNormalSet (already at maximum size).", __FUNCTION__];
 			
 			if (kDDMeshIndexMax / 2 < max) max = kDDMeshIndexMax;

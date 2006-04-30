@@ -208,8 +208,6 @@ static BOOL ProcessFile(NSURL *inSourceFile, DDFormat inSourceFormat, NSURL *inO
 	[document autorelease];
 	if (!OK) return NO;
 	
-	LogMessage(@"Loaded %@", document);
-	
 	[issues setContext:kContextOpen];
 	if (![issues showReportCommandLineQuietMode:inQuiet]) return NO;
 	[issues clear];
@@ -221,6 +219,7 @@ static BOOL ProcessFile(NSURL *inSourceFile, DDFormat inSourceFormat, NSURL *inO
 			[document gatherIssues:issues withWritingOoliteDATToURL:inOutFile];
 			if ([issues showReportCommandLineQuietMode:inQuiet])
 			{
+				[issues clear];
 				OK = [document writeOoliteDATToURL:inOutFile issues:issues];
 				OK = OK && [issues showReportCommandLineQuietMode:inQuiet];
 			}
@@ -231,6 +230,7 @@ static BOOL ProcessFile(NSURL *inSourceFile, DDFormat inSourceFormat, NSURL *inO
 			[document gatherIssues:issues withWritingLightwaveOBJToURL:inOutFile];
 			if ([issues showReportCommandLineQuietMode:inQuiet])
 			{
+				[issues clear];
 				OK = [document writeLightwaveOBJToURL:inOutFile finalLocationURL:inOutFile issues:issues];
 				OK = OK && [issues showReportCommandLineQuietMode:inQuiet];
 			}
@@ -246,6 +246,7 @@ static BOOL ProcessFile(NSURL *inSourceFile, DDFormat inSourceFormat, NSURL *inO
 			[document gatherIssues:issues withWritingDryDockDocumentToURL:inOutFile];
 			if ([issues showReportCommandLineQuietMode:inQuiet])
 			{
+				[issues clear];
 				OK = [document writeDryDockDocumentToURL:inOutFile issues:issues];
 				OK = OK && [issues showReportCommandLineQuietMode:inQuiet];
 			}
@@ -308,9 +309,12 @@ void Print(NSString *inFormat, ...)
 void Printv(NSString *inFormat, va_list inArgs)
 {
 	NSString			*string;
+	NSData				*data;
 	
 	string = [[NSString alloc] initWithFormat:inFormat arguments:inArgs];
-	puts([string UTF8String]);	// Data will be autoreleased… do we need a pool just for this?
+	// Data will be autoreleased… do we need a pool just for this?
+	data = [string dataUsingEncoding:NSUTF8StringEncoding];
+	fwrite([data bytes], 1, [data length], stdout);
 	[string release];
 }
 
@@ -329,9 +333,12 @@ void EPrint(NSString *inFormat, ...)
 void EPrintv(NSString *inFormat, va_list inArgs)
 {
 	NSString			*string;
+	NSData				*data;
 	
 	string = [[NSString alloc] initWithFormat:inFormat arguments:inArgs];
-	fputs([string UTF8String], stderr);	// Data will be autoreleased… do we need a pool just for this?
+	// Data will be autoreleased… do we need a pool just for this?
+	data = [string dataUsingEncoding:NSUTF8StringEncoding];
+	fwrite([data bytes], 1, [data length], stderr);
 	[string release];
 }
 

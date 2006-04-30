@@ -27,7 +27,8 @@
 #import "Logging.h"
 #import "DDUtilities.h"
 #import "ddoolite.h"
-#import <stdio.h>
+#import <unistd.h>
+#import <termios.h>
 
 
 @implementation DDProblemReportManager
@@ -159,6 +160,7 @@
 	DDProblemReportIssue	*issue;
 	uint32_t				count;
 	int						answer;
+	struct termios			term, old;
 	
 	if (inQuiet && _highestType < kStopIssueType) return YES;
 	
@@ -219,9 +221,19 @@
 	}
 	else
 	{
-		Print(@"\nDo you wish to continue? [Y/n]\n");
-		answer = getchar();
-		if ('n' == answer || 'N' == answer) return NO;
+		if (isatty(0))
+		{
+			Print(@"\nDo you wish to continue? [Y/n]\n");
+			
+			tcgetattr(0, &term);
+			old = term;
+			cfmakeraw(&term);
+			tcsetattr(0, TCSANOW, &term);
+			answer = getchar();
+			tcsetattr(0, TCSANOW, &old);
+			
+			if ('n' == answer || 'N' == answer) return NO;
+		}
 	}
 	return YES;
 }

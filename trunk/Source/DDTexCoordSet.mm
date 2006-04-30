@@ -88,7 +88,7 @@
 		// Not found
 		if (count == max)
 		{
-			LogMessage(@"Growing DDTexCoordSet.");
+		//	LogMessage(@"Growing DDTexCoordSet.");
 			if (kDDMeshIndexMax == max) [NSException raise:NSRangeException format:@"%s: failed to grow a DDTexCoordSet (already at maximum size).", __FUNCTION__];
 			
 			if (kDDMeshIndexMax / 2 < max) max = kDDMeshIndexMax;

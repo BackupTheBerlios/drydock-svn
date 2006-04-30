@@ -22,7 +22,7 @@
 */
 
 #import "DDUtilities.h"
-#import "ddoolite_main.h"
+#import "ddoolite.h"
 #import "Logging.h"
 
 

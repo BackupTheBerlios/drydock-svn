@@ -84,7 +84,7 @@
 	
 	if (max <= inCount + count)
 	{
-		LogMessage(@"Growing DDFaceVertexBuffer.");
+	//	LogMessage(@"Growing DDFaceVertexBuffer.");
 		
 		ratio = (float)count / (float)facesSoFar;
 		ratio *= 1.1f;
