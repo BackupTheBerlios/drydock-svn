@@ -364,7 +364,7 @@ SCRLoadState LoadSCR(void)
 			path = [[NSBundle mainBundle] privateFrameworksPath];
 			path = [path stringByAppendingPathComponent:@"libSmartCrashReportsInstall.dylib"];
 			
-			sSCRHandle = dlopen([path fileSystemRepresentation], RTLD_LAZY | RTLD_LOCAL);
+			sSCRHandle = dlopen([path fileSystemRepresentation], RTLD_NOW | RTLD_LOCAL);
 			if (NULL == sSCRHandle)
 			{
 				LogMessage(@"Failed to load libSmartCrashReportsInstall (%s).", dlerror());

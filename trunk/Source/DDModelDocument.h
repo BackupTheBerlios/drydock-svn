@@ -60,9 +60,9 @@
 - (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingOoliteDATToURL:(NSURL *)inFile;
 - (BOOL)writeOoliteDATToURL:(NSURL *)inFile issues:(DDProblemReportManager *)ioManager;
 
-- (id)initWithLightwaveOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
-- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingLightwaveOBJToURL:(NSURL *)inFile;
-- (BOOL)writeLightwaveOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager;
+- (id)initWithWaveFrontOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
+- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingWaveFrontOBJToURL:(NSURL *)inFile;
+- (BOOL)writeWaveFrontOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager;
 
 @end
 

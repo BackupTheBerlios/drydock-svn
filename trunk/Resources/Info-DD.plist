@@ -78,9 +78,9 @@
 				<string>obj</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Lightwave OBJ Model</string>
+			<string>WaveFront OBJ Model</string>
 			<key>CFBundleTypeName</key>
-			<string>Lightwave OBJ Model</string>
+			<string>WaveFront OBJ Model</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
@@ -94,9 +94,9 @@
 				<string>mtl</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Lightwave Material Library</string>
+			<string>WaveFront Material Library</string>
 			<key>CFBundleTypeName</key>
-			<string>Lightwave Material Library</string>
+			<string>WaveFront Material Library</string>
 			<key>CFBundleTypeRole</key>
 			<string>None</string>
 			<key>LSTypeIsPackage</key>
@@ -218,7 +218,7 @@
 				<string>public.text</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Lightwave OBJ Model</string>
+			<string>WaveFront OBJ Model</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.newtek.lightwave.obj</string>
 			<key>UTTypeTagSpecification</key>
@@ -235,7 +235,7 @@
 				<string>public.text</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Lightwave Material Library</string>
+			<string>WaveFront Material Library</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.newtek.lightwave.mtl</string>
 			<key>UTTypeTagSpecification</key>

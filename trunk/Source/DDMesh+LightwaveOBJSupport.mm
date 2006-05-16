@@ -1,5 +1,5 @@
 /*
-	DDMesh+LightwaveOBJSupport.mm
+	DDMesh+WaveFrontOBJSupport.mm
 	Dry Dock for Oolite
 	$Id$
 	
@@ -50,7 +50,7 @@ static NSArray *ObjFaceToArrayOfArrays(NSString *inData);
 static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSMutableDictionary *ioLibrary, NSURL *inBaseURL, DDProblemReportManager *ioIssues);
 
 
-@interface DDMesh (LightwaveOBJSupport_Private)
+@interface DDMesh (WaveFrontOBJSupport_Private)
 
 - (NSMutableArray *)objTokenize:(NSURL *)inFile error:(NSError **)outError;
 - (NSDictionary *)loadObjMaterialLibraryNamed:(NSString *)inString relativeTo:(NSURL *)inBase issues:(DDProblemReportManager *)ioIssues;
@@ -58,19 +58,19 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 @end
 
 
-@interface DDMaterialSet (LightwaveOBJSupport)
+@interface DDMaterialSet (WaveFrontOBJSupport)
 
 - (unsigned)addMaterialNamed:(NSString *)inName forOBJAttributes:(NSDictionary *)inAttributes relativeTo:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
 
 @end
 
 
-@implementation DDMesh (LightwaveOBJSupport)
+@implementation DDMesh (WaveFrontOBJSupport)
 
 
 // A pretty good overview of OBJ files is at http://netghost.narod.ru/gff/graphics/summary/waveobj.htm
 // FIXME this code will choke on files using \ to escape newlines. I’ll fix this when doing the flex-based parser.
-- (id)initWithLightwaveOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
+- (id)initWithWaveFrontOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
 	TraceEnterMsg(@"Called for %@", inFile);
 	
@@ -795,13 +795,13 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 }
 
 
-- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingLightwaveOBJToURL:(NSURL *)inFile
+- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingWaveFrontOBJToURL:(NSURL *)inFile
 {
 	// No issues to check for at this time. OBJ is the most expressive format supported.
 }
 
 
-- (BOOL)writeLightwaveOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager
+- (BOOL)writeWaveFrontOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager
 {
 	BOOL					OK = YES;
 	NSError					*error = nil;
@@ -1083,7 +1083,7 @@ static NSArray *ObjFaceToArrayOfArrays(NSString *inData)
 }
 
 
-@implementation DDMaterialSet (LightwaveOBJSupport)
+@implementation DDMaterialSet (WaveFrontOBJSupport)
 
 - (unsigned)addMaterialNamed:(NSString *)inName forOBJAttributes:(NSDictionary *)inAttributes relativeTo:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {

@@ -1,3 +1,8 @@
+0.09 (v605-1)
+	• Re-enabled Compare command.
+	• Removed Swedish localisation; it’s not as if anyone’s using that.
+	• Fixed loading of untextured DAT files.
+
 0.08b (v604-2)
 	• Fixed problems with incorrect version numbers.
 	• The previous release implemented copying of messages from the Problem Report dialog, but the

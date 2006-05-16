@@ -26,9 +26,9 @@
 #import "DDMesh.h"
 #import "DDProblemReportManager.h"
 #import "Logging.h"
-#import "CocoaExtensions.h"
 #import "DDComparatorView.h"
 #import "DDComparatorGLView.h"
+#import "DDFileMatcher.h"
 
 
 @implementation DDCompareDialogController
@@ -45,12 +45,20 @@
 
 - (id)initWithDocument:(DDDocument *)inDocument
 {
-	_doc = [inDocument retain];
-	
-	if (![NSBundle loadNibNamed:@"DDCompareDialog" owner:self])
+	self = [super init];
+	if (nil != self)
 	{
-		[self release];
-		self = nil;
+		_doc = [inDocument retain];
+		_datMatcher = [[DDFileMatcher matcherWithUTI:@"org.aegidian.oolite.mesh"] retain];
+		_objMatcher = [[DDFileMatcher matcherWithExtension:@"obj"] retain];
+		
+//		LogMessage(@"Matchers: %@, %@", _datMatcher, _objMatcher);
+		
+		if (![NSBundle loadNibNamed:@"DDCompareDialog" owner:self])
+		{
+			[self release];
+			self = nil;
+		}
 	}
 	
 	return self;
@@ -63,6 +71,8 @@
 	[_doc release];
 	[_leftMesh release];
 	[_rightMesh release];
+	[_datMatcher release];
+	[_objMatcher release];
 	
 	[super dealloc];
 }
@@ -85,6 +95,7 @@
 	[selectPanel setAllowsMultipleSelection:NO];
 	[selectPanel setTreatsFilePackagesAsDirectories:YES];
 	[selectPanel setMessage:NSLocalizedString(@"Please select a model to compare with.", NULL)];
+	[selectPanel setDelegate:self];
 	
 	// There must be a better way… bug report submitted requesting UTI interface.
 	types = [NSArray arrayWithObjects:@"obj", @"dat", NSFileTypeForHFSTypeCode('OoDa'), nil];
@@ -98,7 +109,6 @@
 {
 	DDMesh					*compareMesh;
 	DDProblemReportManager	*issues;
-	CFStringRef				utiDAT, utiOBJ;
 	NSString				*filePath, *fileUTI;
 	NSURL					*fileURL;
 	
@@ -110,22 +120,16 @@
 		issues = [[DDProblemReportManager alloc] init];
 		[issues setContext:kContextOpen];
 		
-		// This sucks rocks. Cocoa should have a sensible way of comparing file types… and Dry Dock should really be using some sort of content sniffing.
-//		utiDAT = UTTypeCreatePreferredIdentifierForTag(CFSTR("com.apple.ostype"), CFSTR("OoDa"), NULL);
-		utiDAT = CFSTR("org.aegidian.oolite.mesh");
-		utiOBJ = UTTypeCreatePreferredIdentifierForTag(CFSTR("public.filename-extension"), CFSTR("obj"), NULL);
-		
 		filePath = [[inSheet filenames] objectAtIndex:0];
 		fileURL = [[inSheet URLs] objectAtIndex:0];
-		fileUTI = [[NSFileManager defaultManager] utiForItemAtPath:filePath];
 		
-		if (nil != fileUTI && UTTypeEqual(utiDAT, (CFStringRef)fileUTI))
+		if ([_datMatcher matchesFileAtPath:filePath])
 		{
 			compareMesh = [[DDMesh alloc] initWithOoliteDAT:fileURL issues:issues];
 		}
-		else if (nil != fileUTI && UTTypeEqual(utiOBJ, (CFStringRef)fileUTI))
+		else if ([_objMatcher matchesFileAtPath:filePath])
 		{
-			compareMesh = [[DDMesh alloc] initWithLightwaveOBJ:fileURL issues:issues];
+			compareMesh = [[DDMesh alloc] initWithWaveFrontOBJ:fileURL issues:issues];
 		}
 		else
 		{
@@ -137,9 +141,6 @@
 			_leftMesh = [[_doc mesh] copy];
 			_rightMesh = compareMesh;	// Already retained
 		}
-		
-		CFRelease(utiDAT);
-		CFRelease(utiOBJ);
 		
 		[issues runReportModalForWindow:[_doc windowForSheet] modalDelegate:self isDoneSelector:@selector(problemReport:doneWithResult:)];
 		[issues release];
@@ -252,6 +253,21 @@
 	[rightView setFrame:rightFrame];
 	
 	return frameSize;
+}
+
+
+- (BOOL)panel:(id)sender shouldShowFilename:(NSString *)inFileName
+{
+	NSFileManager			*fileManager;
+	NSDictionary			*attributes;
+	
+	LogMessage(@"Called for %@", inFileName);
+	
+	fileManager = [NSFileManager defaultManager];
+	attributes = [fileManager fileAttributesAtPath:inFileName traverseLink:YES];
+	if ([[attributes fileType] isEqual:NSFileTypeDirectory]) return YES;
+	
+	return [_datMatcher matchesFileAtPath:inFileName] || [_objMatcher matchesFileAtPath:inFileName];
 }
 
 @end

@@ -189,7 +189,7 @@ static BOOL ProcessFile(NSURL *inSourceFile, DDFormat inSourceFormat, NSURL *inO
 			break;
 		
 		case kDDFormat_OBJ:
-			document = [document initWithLightwaveOBJ:inSourceFile issues:issues];
+			document = [document initWithWaveFrontOBJ:inSourceFile issues:issues];
 			break;
 		
 		case kDDFormat_Mesh:
@@ -227,11 +227,11 @@ static BOOL ProcessFile(NSURL *inSourceFile, DDFormat inSourceFormat, NSURL *inO
 			break;
 		
 		case kDDFormat_OBJ:
-			[document gatherIssues:issues withWritingLightwaveOBJToURL:inOutFile];
+			[document gatherIssues:issues withWritingWaveFrontOBJToURL:inOutFile];
 			if ([issues showReportCommandLineQuietMode:inQuiet])
 			{
 				[issues clear];
-				OK = [document writeLightwaveOBJToURL:inOutFile finalLocationURL:inOutFile issues:issues];
+				OK = [document writeWaveFrontOBJToURL:inOutFile finalLocationURL:inOutFile issues:issues];
 				OK = OK && [issues showReportCommandLineQuietMode:inQuiet];
 			}
 			else OK = NO;
@@ -284,7 +284,7 @@ static void PrintHelp(void)
 			"   -f, --format  Format to convert to. If not specified, dat is assumed.\n"
 			"                     Possible values:\n"
 			"                     dat   Oolite DAT format.\n"
-			"                     obj   Lightwave OBJ format (with accompanying MTL file).\n"
+			"                     obj   WaveFront OBJ format (with accompanying MTL file).\n"
 //			"                     mesh  Meshwork document.\n"
 			"                     ddock Dry Dock for Oolite document.\n"
 			"-F, --srcFormat  Format to convert from (same values as -f). If not specified,\n"
@@ -373,7 +373,7 @@ NSString *NameForDDFormat(DDFormat inFormat)
 			return @"Oolite DAT";
 		
 		case kDDFormat_OBJ:
-			return @"Lightwave OBJ";
+			return @"WaveFront OBJ";
 		
 		case kDDFormat_Mesh:
 			return @"Meshwork";

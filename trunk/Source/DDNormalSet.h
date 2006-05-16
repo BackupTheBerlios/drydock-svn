@@ -6,7 +6,8 @@
 	Copyright © 2006 Jens Ayton
 	
 	Normals in Dry Dock are stored as indices into an array. This class assists in building such
-	an array while avoiding duplication.
+	an array while avoiding duplication. Now implemented as a subclass of DDVertexSet; the only
+	difference is that DDNormalSet normalises its vectors.
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the “Software”), to deal in the Software without
@@ -24,25 +25,12 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Foundation/Foundation.h>
-#import "phystypes.h"
-#import "DDMesh.h"
+#import "DDVertexSet.h"
 
 
-@interface DDNormalSet: NSObject
-{
-	NSMutableDictionary			*rev;
-	Vector						*array;
-	DDMeshIndex					count, max;
-}
-
-+ (id)setWithCapacity:(unsigned)inCapacity;
-- (id)initWithCapacity:(unsigned)inCapacity;
+@interface DDNormalSet: DDVertexSet
 
 // Normalize() and CleanZeros() will be called on the vector by the DDNormalSet.
 - (DDMeshIndex)indexForVector:(Vector)inVector;
-
-// Once this is called, the set becomes unusable (gets a capacity of zero).
-- (void)getArray:(Vector **)outArray andCount:(DDMeshIndex *)outCount;
 
 @end

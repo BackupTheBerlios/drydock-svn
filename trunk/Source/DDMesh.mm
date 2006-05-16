@@ -494,6 +494,12 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 }
 
 
+- (void)coalesceVertices
+{
+	
+}
+
+
 - (BOOL)findBadPolygonsWithIssues:(DDProblemReportManager *)ioManager
 {
 	TraceEnter();
@@ -526,7 +532,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 			
 			_hasNonTriangles = YES;
 			
-			#if 0	// Coplanar test temporarily disabled.
+			#if 1	// Coplanar test temporarily disabled.
 			// Test coplanarity.
 			normal = NormalForFace(face, _vertices, _faceVertexIndices);
 			LogMessage(@"normal = %@", normal.Description());

@@ -25,6 +25,7 @@
 
 @class DDDocument;
 @class DDComparatorView;
+@class DDFileMatcher;
 
 
 @interface DDCompareDialogController: NSObject
@@ -33,8 +34,13 @@
 	IBOutlet NSWindow				*dialog;
 	IBOutlet DDComparatorView		*leftView,
 									*rightView;
+	
 	DDMesh							*_leftMesh,
 									*_rightMesh;
+	
+	DDFileMatcher					*_datMatcher,
+									*_objMatcher;
+	
 	BOOL							_settingTransform;
 }
 

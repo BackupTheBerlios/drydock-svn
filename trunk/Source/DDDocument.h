@@ -40,6 +40,7 @@
 
 - (IBAction)recalcNormals:sender;
 - (IBAction)reverseWinding:sender;
+- (IBAction)coalesceVertices:sender;
 
 - (void)scaleX:(float)inX y:(float)inY z:(float)inZ;
 

@@ -41,6 +41,7 @@
         }, 
         {
             ACTIONS = {
+                coalesceVertices = id; 
                 doCompareDialog = id; 
                 doScaleDialog = id; 
                 exportDocument = id; 

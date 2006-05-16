@@ -98,13 +98,13 @@ enum
 }
 
 
-- (id)initWithLightwaveOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
+- (id)initWithWaveFrontOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
 	TraceEnter();
 	
 	DDMesh					*mesh;
 	
-	mesh = [[DDMesh alloc] initWithLightwaveOBJ:inFile issues:ioIssues];
+	mesh = [[DDMesh alloc] initWithWaveFrontOBJ:inFile issues:ioIssues];
 	if (nil != mesh)
 	{
 		self = [self initWithMesh:mesh];
@@ -481,15 +481,15 @@ enum
 }
 
 
-- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingLightwaveOBJToURL:(NSURL *)inFile
+- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingWaveFrontOBJToURL:(NSURL *)inFile
 {
-	return [_rootMesh gatherIssues:ioManager withWritingLightwaveOBJToURL:inFile];
+	return [_rootMesh gatherIssues:ioManager withWritingWaveFrontOBJToURL:inFile];
 }
 
 
-- (BOOL)writeLightwaveOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager
+- (BOOL)writeWaveFrontOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager
 {
-	return [_rootMesh writeLightwaveOBJToURL:inFile finalLocationURL:inFinalLocation issues:ioManager];
+	return [_rootMesh writeWaveFrontOBJToURL:inFile finalLocationURL:inFinalLocation issues:ioManager];
 }
 
 

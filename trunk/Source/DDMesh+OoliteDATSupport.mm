@@ -409,17 +409,29 @@ enum
 					if (!OK) break;
 				}
 			}
+			if (OK) [texCoords getArray:&_texCoords andCount:&_texCoordCount];
 		}
 		else if (OK)
 		{
 			// Create a dummy material. All the faces will have material index 0 because we calloc()ed the array.
 			_materialCount = 1;
 			_materials = (DDMaterial **)calloc(sizeof(DDMaterial *), 1);
-			if (NULL != _materials) _materials[0] = [DDMaterial materialWithName:@"$untextured"];
+			if (NULL != _materials) _materials[0] = [[DDMaterial materialWithName:@"$untextured"] retain];
 			if (NULL == _materials || nil == _materials[0])
 			{
 				OK = NO;
 				[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage"];
+			}
+			
+			if (OK)
+			{
+				_texCoordCount = 1;
+				_texCoords = (Vector2 *)calloc(sizeof(Vector2), 1);
+				if (NULL == _texCoords)
+				{
+					OK = NO;
+					[ioIssues addStopIssueWithKey:@"allocFailed" localizedFormat:@"A memory allocation failed. This is probably due to a memory shortage"];
+				}
 			}
 		}
 	}
@@ -450,7 +462,6 @@ enum
 		_vertices = vertices;
 		
 		[normals getArray:&_normals andCount:&_normalCount];
-		[texCoords getArray:&_texCoords andCount:&_texCoordCount];
 		[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices andCount:&_faceVertexIndexCount];
 		
 		_faceCount = faceCount;

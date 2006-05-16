@@ -96,9 +96,9 @@
 			document = [[DDModelDocument alloc] initWithOoliteDAT:absoluteURL issues:problemManager];
 			success = (nil != document);
 		}
-		else if ([typeName isEqual:@"Lightwave OBJ Model"])
+		else if ([typeName isEqual:@"WaveFront OBJ Model"])
 		{
-			document = [[DDModelDocument alloc] initWithLightwaveOBJ:absoluteURL issues:problemManager];
+			document = [[DDModelDocument alloc] initWithWaveFrontOBJ:absoluteURL issues:problemManager];
 			success = (nil != document);
 		}
 		else if ([typeName isEqual:@"Dry Dock Document"])
@@ -224,14 +224,14 @@
 				if (NULL != outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 			}
 		}
-		else if ([typeName isEqual:@"Lightwave OBJ Model"])
+		else if ([typeName isEqual:@"WaveFront OBJ Model"])
 		{
-			[[_document rootMesh] gatherIssues:problemManager withWritingLightwaveOBJToURL:absoluteURL];
+			[[_document rootMesh] gatherIssues:problemManager withWritingWaveFrontOBJToURL:absoluteURL];
 			OK = [problemManager showReportApplicationModal];
 			if (OK)
 			{
 				[problemManager clear];
-				OK = [[_document rootMesh] writeLightwaveOBJToURL:absoluteURL finalLocationURL:absoluteOriginalContentsURL issues:problemManager];
+				OK = [[_document rootMesh] writeWaveFrontOBJToURL:absoluteURL finalLocationURL:absoluteOriginalContentsURL issues:problemManager];
 				[problemManager showReportApplicationModal];
 			}
 			if (!OK)
@@ -289,7 +289,7 @@
 	{
 		type = 'OoDa';
 	}
-	else if ([typeName isEqual:@"Lightwave OBJ Model"])
+	else if ([typeName isEqual:@"WaveFront OBJ Model"])
 	{
 	//	type = 'OBJ ';
 		type = 'TEXT';
@@ -481,6 +481,20 @@
 	{
 		[self setUpMeshReplacingUndoActionNamed:@"Scale"];
 		[newMesh scaleX:inX y:inY z:inZ];
+		[_document setRootMesh:newMesh];
+	}
+}
+
+
+- (IBAction)coalesceVertices:sender
+{
+	DDMesh					*newMesh;
+	
+	newMesh = [[_document rootMesh] copy];
+	if (nil != newMesh)
+	{
+		[self setUpMeshReplacingUndoActionNamed:@"Coalesce Vertices"];
+		[newMesh coalesceVertices];
 		[_document setRootMesh:newMesh];
 	}
 }

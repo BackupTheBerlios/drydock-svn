@@ -118,6 +118,7 @@ typedef struct DDMeshFaceData
 - (void)flipZ;
 - (void)recenter;
 - (void)scaleX:(Scalar)inX y:(Scalar)inY z:(Scalar)inZ;
+- (void)coalesceVertices;
 
 - (BOOL)hasNonTriangles;
 - (BOOL)hasBadPolygons;		// “Bad polygons” are not coplanar or not convex.
@@ -138,12 +139,12 @@ typedef struct DDMeshFaceData
 @end
 
 
-@interface DDMesh (LightwaveOBJSupport)
+@interface DDMesh (WaveFrontOBJSupport)
 
-- (id)initWithLightwaveOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
+- (id)initWithWaveFrontOBJ:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
 
-- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingLightwaveOBJToURL:(NSURL *)inFile;
-- (BOOL)writeLightwaveOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager;
+- (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingWaveFrontOBJToURL:(NSURL *)inFile;
+- (BOOL)writeWaveFrontOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager;
 
 @end
 
