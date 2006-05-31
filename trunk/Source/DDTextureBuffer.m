@@ -267,15 +267,37 @@ static unsigned GetMaxTextureSize(void);
 	GLint				level;
 	unsigned			w, h, max;
 	char				*data;
+	size_t				dataSize;
 	BOOL				scaledDown = NO;
 	
-	glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 1);
 	
 	// Set up mip-map levels
 	w = _width;
 	h = _height;
 	data = (char *)_data;
 	level = 0;
+	
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
+	glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
+	dataSize = w * h * 4 * 4 / 3;
+	glTextureRangeAPPLE(GL_TEXTURE_2D, dataSize, data);
+	
+	if ([@"placeholder" isEqual:_key])
+	{
+		wrapMode = GL_REPEAT;
+		magFilter = GL_NEAREST;
+	}
+	else
+	{
+		wrapMode = GL_CLAMP_TO_EDGE;
+		magFilter = GL_LINEAR;
+	}
+	
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 4.0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	
 	max = GetMaxTextureSize();
 	
@@ -297,23 +319,6 @@ static unsigned GetMaxTextureSize(void);
 	{
 		LogMessage(@"Texture %@ scaled down.", self);
 	}
-	
-	if ([@"placeholder" isEqual:_key])
-	{
-		wrapMode = GL_REPEAT;
-		magFilter = GL_NEAREST;
-	}
-	else
-	{
-		wrapMode = GL_CLAMP_TO_EDGE;
-		magFilter = GL_LINEAR;
-	}
-	
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 4.0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 }
 
 

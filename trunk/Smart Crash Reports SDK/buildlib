@@ -1,0 +1,10 @@
+#! /bin/csh
+
+setenv MACOSX_DEPLOYMENT_TARGET 10.4
+setenv SDKROOT /Developer/SDKs/MacOSX10.4u.sdk/
+
+ld -arch ppc -arch_multiple -dylib -single_module -framework Carbon -framework Security -ldylib1.o -lSystemStubs -lz -lc -dylib_install_name "@executable_path/../Frameworks/libSmartCrashReportsInstall.dylib" -o libSmartCrashReportsInstall_ppc.dylib -syslibroot /Developer/SDKs/MacOSX10.4u.sdk/ SmartCrashReportsInstall.o
+
+ld -arch i386 -arch_multiple -dylib -single_module -framework Carbon -framework Security -ldylib1.o -lSystemStubs -lz -lc -dylib_install_name "@executable_path/../Frameworks/libSmartCrashReportsInstall.dylib" -o libSmartCrashReportsInstall_i386.dylib -syslibroot /Developer/SDKs/MacOSX10.4u.sdk/ SmartCrashReportsInstall.o
+
+lipo -output libSmartCrashReportsInstall.dylib -create libSmartCrashReportsInstall_ppc.dylib libSmartCrashReportsInstall_i386.dylib

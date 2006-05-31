@@ -261,8 +261,6 @@
 	NSFileManager			*fileManager;
 	NSDictionary			*attributes;
 	
-	LogMessage(@"Called for %@", inFileName);
-	
 	fileManager = [NSFileManager defaultManager];
 	attributes = [fileManager fileAttributesAtPath:inFileName traverseLink:YES];
 	if ([[attributes fileType] isEqual:NSFileTypeDirectory]) return YES;
