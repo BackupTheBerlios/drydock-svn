@@ -8,6 +8,7 @@
 
 %{	
 	#include "OoliteDATTokens.h"
+	#include <unistd.h>
 	
 	static unsigned sLine = 1;
 %}

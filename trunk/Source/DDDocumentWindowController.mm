@@ -83,7 +83,6 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 	NSWindow					*window;
 	DDPreviewView				*view;
 	NSToolbar					*toolbar;
-	NSString					*meterFormat;
 	NSSplitView					*splitView;
 	NSRect						frame;
 	

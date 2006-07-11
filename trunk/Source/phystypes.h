@@ -70,7 +70,9 @@ class					Vector;
 class					Matrix;
 
 
+#ifdef __MWERKS__
 #pragma cpp_extensions on
+#endif
 
 class Vector
 // 3D, hetrogenous-co-ordinate vector
@@ -95,7 +97,7 @@ public:
 								y = inVals[1];
 								z = inVals[2];
 							}
-	inline					Vector(Scalar inX, Scalar inY, Scalar inZ) GCC_ATTR((always_inline))
+	inline					Vector(Scalar inX, Scalar inY = 0, Scalar inZ = 0) GCC_ATTR((always_inline))
 							{
 								x = inX;
 								y = inY;
@@ -227,16 +229,16 @@ public:
 								return this->x * inVector.x + this->y * inVector.y + this->z * inVector.z;
 							}
 	
-	inline const Vector		operator%(const Vector &v) const GCC_ATTR((always_inline))
+	inline const Vector		operator%(const Vector &other) const GCC_ATTR((always_inline))
 							// Cross product
 							{
-								return Vector(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+								return Vector(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
 							}
 	
-	inline const Vector		&operator%=(Vector &v) GCC_ATTR((always_inline))
+	inline const Vector		&operator%=(Vector &other) GCC_ATTR((always_inline))
 							// Cross product
 							{
-								this->Set(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+								this->Set(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
 								return *this;
 							}
 	
@@ -900,5 +902,8 @@ public:
 	Matrix					&Orthogonalize(void);
 };
 
+#ifdef __MWERKS__
 #pragma cpp_extensions reset
+#endif
+
 #endif	/* INCLUDED_PHYSTYPES_h */

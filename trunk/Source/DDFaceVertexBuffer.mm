@@ -46,9 +46,10 @@
 		if (max < 100) max = 100;
 		vertIndices = (DDMeshIndex *)calloc(sizeof(DDMeshIndex), max);
 		texIndices = (DDMeshIndex *)calloc(sizeof(DDMeshIndex), max);
+		normIndices = (DDMeshIndex *)calloc(sizeof(DDMeshIndex), max);
 		faceCount = inCount;
 		
-		if (NULL == vertIndices || NULL == texIndices)
+		if (NULL == vertIndices || NULL == texIndices || NULL == normIndices)
 		{
 			[self release];
 			self = nil;
@@ -66,18 +67,20 @@
 	
 	if (NULL != vertIndices) free(vertIndices);
 	if (NULL != texIndices) free(texIndices);
+	if (NULL != normIndices) free(normIndices);
 	
 	[super dealloc];
 	TraceExit();
 }
 
 
-- (unsigned)addVertexIndices:(DDMeshIndex *)inVertIndices texCoordIndices:(DDMeshIndex *)inTexIndices count:(DDMeshIndex)inCount
+- (unsigned)addVertexIndices:(DDMeshIndex *)inVertIndices texCoordIndices:(DDMeshIndex *)inTexIndices vertexNormals:(DDMeshIndex *)inNormalIndices count:(DDMeshIndex)inCount
 {
 	TraceEnter();
 	
 	unsigned				result;
 	float					ratio;
+	DDMeshIndex				*temp;
 	
 	assert(3 <= inCount);
 	assert(NULL != inVertIndices && NULL != inTexIndices);
@@ -92,13 +95,19 @@
 		max = (unsigned)(ratio * (float)faceCount);
 		assert(inCount + count < max);
 		
-		vertIndices = (DDMeshIndex *)realloc(vertIndices, sizeof (DDMeshIndex) * max);
-		texIndices = (DDMeshIndex *)realloc(texIndices, sizeof (DDMeshIndex) * max);
-		if (NULL == vertIndices || NULL == texIndices) [NSException raise:NSMallocException format:@"%s: failed to grow a DDTexCoordSet (out of memory).", __FUNCTION__];
+		// Note: temp is required so the buffers will be released after a grow failure.
+		temp = (DDMeshIndex *)realloc(vertIndices, sizeof (DDMeshIndex) * max);
+		if (NULL != temp) vertIndices = temp;
+		temp = (DDMeshIndex *)realloc(texIndices, sizeof (DDMeshIndex) * max);
+		if (NULL != temp) texIndices = temp;
+		temp = (DDMeshIndex *)realloc(normIndices, sizeof (DDMeshIndex) * max);
+		if (NULL != temp) normIndices = temp;
+		if (NULL == vertIndices || NULL == texIndices || NULL == normIndices) [NSException raise:NSMallocException format:@"%s: failed to grow a DDTexCoordSet (out of memory).", __FUNCTION__];
 	}
 	
 	bcopy(inVertIndices, vertIndices + count, sizeof (DDMeshIndex) * inCount);
 	bcopy(inTexIndices, texIndices + count, sizeof (DDMeshIndex) * inCount);
+	bcopy(inNormalIndices, normIndices + count, sizeof (DDMeshIndex) * inCount);
 	
 	result = count;
 	count += inCount;
@@ -125,7 +134,7 @@
 }
 
 
-- (void)getVertexIndices:(DDMeshIndex **)outVertIndices textureCoordIndices:(DDMeshIndex **)outTexIndices andCount:(unsigned *)outCount
+- (void)getVertexIndices:(DDMeshIndex **)outVertIndices textureCoordIndices:(DDMeshIndex **)outTexIndices vertexNormals:(DDMeshIndex **)outNormalIndices andCount:(unsigned *)outCount
 {
 	TraceEnter();
 	
@@ -140,6 +149,9 @@
 	*outTexIndices = (DDMeshIndex *)realloc(texIndices, count * sizeof(DDMeshIndex));
 	if (NULL == *outTexIndices) *outTexIndices = texIndices;
 	texIndices = NULL;
+	*outNormalIndices = (DDMeshIndex *)realloc(normIndices, count * sizeof(DDMeshIndex));
+	if (NULL == *outNormalIndices) *outNormalIndices = normIndices;
+	normIndices = NULL;
 	
 	*outCount = count;
 	count = max = 0;

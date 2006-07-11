@@ -36,19 +36,31 @@
 #define RUN_PROBLEM_REPORTER_EXAMLE		0
 
 
-/*	The steps of first-run configuration are recorded as a bitmask in user preferences. This allows
-	new steps to be inserted in any sequence, and only new steps will be run for new versions.
-*/
+// Stages of the dialog to run
 enum
 {
-	kFirstRunStage_askInstallSCR			= 0x00000001UL,
-	kFirstRunStage_askCheckForUpdates		= 0x00000002UL
+	kFirstRunStage_askInstallSCR				= 0x00000001UL,
+	kFirstRunStage_askCheckForUpdates			= 0x00000002UL,
+	kFirstRunStage_updateCheckIsUpgrade			= 0x00000004UL,
+	kFirstRunStage_noSparkleForPanther			= 0x00000008UL
+};
+
+
+// Elements of first-start stuff that have been done
+enum
+{
+	kFirstRunState_offeredSCR					= 0x00000001UL,
+	kFirstRunState_configuredUKUpdateChecker	= 0x00000002UL,
+	kFirstRunState_configuredSparkle			= 0x00000004UL,
+	kFirstRunState_showedSparkleNoPanther		= 0x00000008UL
 };
 
 
 // Identifiers for tab view items in first-run wizard
 static NSString *kFirstRunTab_askInstallSCR			= @"install SCR";
 static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
+static NSString *kFirstRunTab_askNewUpdateOptions	= @"new update options";
+static NSString *kFirstRunTab_noSparkleForPanther	= @"Sparkle vs. Panther";
 static NSString *kFirstRunTab_finished				= @"finished";
 
 #if TIGER_OR_LATER
@@ -149,20 +161,32 @@ static void RegisterMyHelpBook(void);
 	
 	// Look for first-run actions which have not been performed
 	canInstallSCR = MySCRCanInstall(&authRequired);
-	if (canInstallSCR && ([defaults boolForKey:@"installed SCR"] || !(firstRunMask & kFirstRunStage_askInstallSCR)))
+	if (canInstallSCR && ([defaults boolForKey:@"installed SCR"] || !(firstRunMask & kFirstRunState_offeredSCR)))
 	{
 		toRun |= kFirstRunStage_askInstallSCR;
 	}
 	
-	if (nil == [defaults objectForKey:@"UKUpdateChecker:CheckAtStartup"])
+	if (!(firstRunMask & kFirstRunState_configuredSparkle))
 	{
-		toRun |= kFirstRunStage_askCheckForUpdates;
+		if (TigerOrLater())
+		{
+			toRun |= kFirstRunStage_askCheckForUpdates;
+			if (firstRunMask & kFirstRunState_configuredUKUpdateChecker)
+			{
+				// Upgrading from version with old update checking scheme
+				toRun |= kFirstRunStage_updateCheckIsUpgrade;
+			}
+		}
+		else
+		{
+			if (!(firstRunMask & kFirstRunState_showedSparkleNoPanther) && firstRunMask & kFirstRunState_configuredUKUpdateChecker)
+			{
+				toRun |= kFirstRunStage_noSparkleForPanther;
+			}
+		}
 	}
-	else
-	{
-		firstRunMask |= kFirstRunStage_askCheckForUpdates;
-		[defaults setInteger:firstRunMask forKey:@"first run status"];
-	}
+	
+	if (toRun) [self loadWizard];
 	
 	// Run "Install SCR" pane if required
 	if (toRun & kFirstRunStage_askInstallSCR)
@@ -193,19 +217,49 @@ static void RegisterMyHelpBook(void);
 	// Run "Check for Updates" pane if required
 	if (toRun & kFirstRunStage_askCheckForUpdates)
 	{
-		TraceMessage(@"Running Ask for Updates pane.");
-		
-		[self runFirstRunWizardPane:kFirstRunTab_askCheckForUpdates];
-		
-		if (nil != checkForUpdatesMatrix)
+		if (toRun & kFirstRunStage_updateCheckIsUpgrade)
 		{
-			userResponse = [[checkForUpdatesMatrix selectedCell] tag];
-			[defaults setInteger:userResponse forKey:@"UKUpdateChecker:CheckAtStartup"];
+			checkForUpdatesCheckBox = upgradeCheckForUpdatesCheckBox;
+			updateFrequencyField = upgradeUpdateFrequencyField;
+			autoInstallMatrix = upgradeAutoInstallMatrix;
 			
-			// Record the fact that we've done this
-			firstRunMask |= kFirstRunStage_askCheckForUpdates;
-			[defaults setInteger:firstRunMask forKey:@"first run status"];
+			if (nil != [defaults objectForKey:@"UKUpdateChecker:CheckAtStartup"] && ![defaults boolForKey:@"UKUpdateChecker:CheckAtStartup"])
+			{
+				[checkForUpdatesCheckBox setState:0];
+				[updateFrequencyField setEnabled:NO];
+				[autoInstallMatrix setEnabled:NO];
+			}
+			
+			TraceMessage(@"Running Ask for Updates Upgrade pane.");
+			[self runFirstRunWizardPane:kFirstRunTab_askNewUpdateOptions];
 		}
+		else
+		{
+			TraceMessage(@"Running Ask for Updates Upgrade pane.");
+			[self runFirstRunWizardPane:kFirstRunTab_askCheckForUpdates];
+		}
+		
+		[defaults setBool:[checkForUpdatesCheckBox state] forKey:@"SUCheckAtStartup"];
+		[defaults setFloat:roundf([updateFrequencyField floatValue]) * 86400.0f forKey:@"SUScheduledCheckInterval"];	// Converts from days to seconds
+		if (nil != upgradeAutoInstallMatrix)
+		{
+			userResponse = [[upgradeAutoInstallMatrix selectedCell] tag];
+			[defaults setBool:userResponse forKey:@"SUAutomaticallyUpdate"];
+		}
+		
+		// Record the fact that we've done this
+		firstRunMask |= kFirstRunState_configuredSparkle;
+		[defaults setInteger:firstRunMask forKey:@"first run status"];
+	}
+	
+	if (toRun & kFirstRunStage_noSparkleForPanther)
+	{
+		TraceMessage(@"Showing no-Sparkle-for-Tiger pane.");
+		[self runFirstRunWizardPane:kFirstRunTab_noSparkleForPanther];
+		
+		// Record the fact that we've done this
+		firstRunMask |= kFirstRunState_showedSparkleNoPanther;
+		[defaults setInteger:firstRunMask forKey:@"first run status"];
 	}
 	
 	[defaults synchronize];
@@ -222,7 +276,6 @@ static void RegisterMyHelpBook(void);
 	#endif
 	
 	[self release];
-	[updateChecker doLaunchStuff];
 	
 	TraceExit();
 }
@@ -233,13 +286,6 @@ static void RegisterMyHelpBook(void);
 	TraceEnterMsg(@"Called for \"%@\"", inPane);
 	
 	BOOL					OK = YES;
-	
-	if (nil == window)
-	{
-		// Load first run window
-		[self loadWizard];
-		if (nil == window) OK = NO;
-	}
 	
 	if (OK)
 	{
@@ -279,6 +325,16 @@ static void RegisterMyHelpBook(void);
 		[window release];
 		window = nil;
 	}
+}
+
+
+- (IBAction)checkForUpdatesAction:sender
+{
+	BOOL					selected;
+	
+	selected = [sender state];
+	[updateFrequencyField setEnabled:selected];
+	[autoInstallMatrix setEnabled:selected];
 }
 
 

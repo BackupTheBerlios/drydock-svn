@@ -53,9 +53,8 @@ enum
 	TraceEnterMsg(@"Called for %@", inFile);
 	
 	BOOL					OK = YES;
-	unsigned				i, j, lineCount;
-	NSScanner				*scanner = nil;
-	unsigned				vertexCount, faceCount, materialCount;
+	unsigned				i, j;
+	unsigned				vertexCount, faceCount;
 	Vector					*vertices = NULL;
 	DDMeshFaceData			*faces = NULL;
 	float					x, y, z;
@@ -66,21 +65,24 @@ enum
 							rMax = 0, r;
 	NSMutableDictionary		*materialDict = nil;
 	DDMaterialSet			*materials = nil;
-	NSURL					*texURL;
-	NSCharacterSet			*whiteSpaceAndNL, *whiteSpace;
 	NSString				*texFileName;
 	DDMaterial				*material;
 	float					s, t, max_s, max_t;
-	NSError					*error;
 	DDDATLexer				*lexer;
 	NSString				*tokString;
 	int						tok;
 	BOOL					readTextures;
-	DDNormalSet				*normals;
+	DDNormalSet				*normals = nil;
 	DDTexCoordSet			*texCoords;
-	DDFaceVertexBuffer		*buffer;
+	DDFaceVertexBuffer		*buffer = nil;
 	DDMeshIndex				faceVertices[kMaxVertsPerFace];
 	DDMeshIndex				faceTexCoords[kMaxVertsPerFace] = {0};
+	DDMeshIndex				faceNormals[kMaxVertsPerFace];
+	NSMutableDictionary		*smoothingGroups = nil;
+	uint8_t					activeSmoothingGroup = 0;
+	uint8_t					smoothingGroupsUsed = 0;
+	NSNumber				*smoothingGroupObj, *smoothingGroupIDObj;
+	unsigned				smoothingGroupID, lastSmoothingGroupID = 0, g, b;
 	
 	assert(nil != inFile);
 	
@@ -230,23 +232,56 @@ enum
 			TraceMessage(@"Reading %u faces.", faceCount);
 			for (i = 0; i != faceCount; ++i)
 			{
-				unsigned		r, g, b;
-				
-				// read colour
-				if (![lexer readInteger:&r] ||
-					![lexer readInteger:&g] ||
-					![lexer readInteger:&b])
+				if (![lexer readInteger:&smoothingGroupID])
 				{
-					[ioIssues addStopIssueWithKey:@"noColorLoaded" localizedFormat:@"Colour data could not be read for face line %u.", i + 1];
-					TraceMessage(@"** Failed to read colour for face index %u.", i + 1);
+					[ioIssues addStopIssueWithKey:@"noSmoothingGroupLoaded" localizedFormat:@"Smoothing group ID could not be read for face line %u.", i + 1];
+					TraceMessage(@"** Failed to read smoothing group ID for face index %u.", i + 1);
 					OK = NO;
 					break;
 				}
 				
-				// Colour is currently ignored.
+				if (smoothingGroupID != lastSmoothingGroupID || 0 == i)
+				{
+					// New smoothing group. We map file IDs to an internal range since file values aren’t explicitly clamped to uint8_t range.
+					smoothingGroupIDObj = [NSNumber numberWithUnsignedInt:smoothingGroupID];
+					smoothingGroupObj = [smoothingGroups objectForKey:smoothingGroupIDObj];
+					if (nil != smoothingGroupObj)
+					{
+						activeSmoothingGroup = [smoothingGroupObj unsignedCharValue];
+					}
+					else
+					{
+						// New smoothing group
+						if (smoothingGroupsUsed < 255)
+						{
+							activeSmoothingGroup = ++smoothingGroupsUsed;
+							smoothingGroupObj = [NSNumber numberWithUnsignedChar:activeSmoothingGroup];
+							if (nil == smoothingGroups) smoothingGroups = [NSMutableDictionary dictionary];
+							[smoothingGroups setObject:smoothingGroupObj forKey:smoothingGroupIDObj];
+						}
+						else
+						{
+							OK = NO;
+							[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u smoothing groups.", 255];
+						}
+					}
+				}
+				faces[i].smoothingGroup = activeSmoothingGroup;
+				
+				// read unused values (formerly face green and blue).
+				if (OK && 
+					![lexer readInteger:&g] ||
+					![lexer readInteger:&b])
+				{
+					[ioIssues addStopIssueWithKey:@"noReservedFieldsLoaded" localizedFormat:@"Reserved fields could not be read for face line %u.", i + 1];
+					TraceMessage(@"** Failed to read reserved fields for face index %u.", i + 1);
+					OK = NO;
+					break;
+				}
 				
 				// Read normal
-				if (![lexer readReal:&x] ||
+				if (OK &&
+					![lexer readReal:&x] ||
 					![lexer readReal:&y] ||
 					![lexer readReal:&z])
 				{
@@ -259,7 +294,7 @@ enum
 				faces[i].normal = [normals indexForVector:Vector(-x, y, z)];
 				
 				// Read vertex count
-				if (![lexer readInteger:&faceVertexCount])
+				if (OK && ![lexer readInteger:&faceVertexCount])
 				{
 					[ioIssues addStopIssueWithKey:@"noVertexCountLoaded" localizedFormat:@"Vertex count could not be read for face line %u.", i + 1];
 					TraceMessage(@"** Failed to read vertex count for face index %u.", i + 1);
@@ -267,7 +302,7 @@ enum
 					break;
 				}
 				
-				if (faceVertexCount != 3)
+				if (OK && faceVertexCount != 3)
 				{
 					if (faceVertexCount < 3 || kMaxVertsPerFace < faceVertexCount)
 					{
@@ -280,7 +315,7 @@ enum
 				
 				faces[i].vertexCount = faceVertexCount;
 				
-				for (j = 0; j != faceVertexCount; ++j)
+				if (OK) for (j = 0; j != faceVertexCount; ++j)
 				{
 					unsigned index;
 					if (![lexer readInteger:&index])
@@ -290,7 +325,7 @@ enum
 						OK = NO;
 						break;
 					}
-					if (index < 0 || vertexCount <= index)
+					if (vertexCount <= index)
 					{
 						[ioIssues addStopIssueWithKey:@"vertexRange" localizedFormat:@"Face line %u specifies a vertex index of %u, but there are only %u vertices in the document.", i + 1, index + 1, vertexCount];
 						TraceMessage(@"** Out-of-range vertex index (%U) for face index %u.", index, i + 1);
@@ -298,17 +333,27 @@ enum
 						break;
 					}
 					faceVertices[j] = index;
+					faceNormals[j] = faces[i].normal;
 				}
 				
 				if (OK)
 				{
 					// Tex co-ords are set to 0 here, and will be filled in later if there’s a TEXTURES section.
-					faces[i].firstVertex = [buffer addVertexIndices:faceVertices texCoordIndices:faceTexCoords count:faceVertexCount];
+					faces[i].firstVertex = [buffer addVertexIndices:faceVertices texCoordIndices:faceTexCoords vertexNormals:faceNormals count:faceVertexCount];
 				}
 				
 				if (OK) OK = [lexer passAtLeastOneLineBreak];
 				if (!OK) break;
 			}
+		}
+	}
+	
+	if (OK && smoothingGroupsUsed < 2)
+	{
+		// All faces in the same smoothing group is equivalent to no smoothing group.
+		for (i = 0; i != faceCount; ++i)
+		{
+			faces[i].smoothingGroup = 0;
 		}
 	}
 	
@@ -462,7 +507,7 @@ enum
 		_vertices = vertices;
 		
 		[normals getArray:&_normals andCount:&_normalCount];
-		[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices andCount:&_faceVertexIndexCount];
+		[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices vertexNormals:&_vertexNormalIndices andCount:&_faceVertexIndexCount];
 		
 		_faceCount = faceCount;
 		_faces = faces;
@@ -498,7 +543,6 @@ enum
 	DDMaterial				*material;
 	NSString				*name;
 	NSCharacterSet			*whiteSpace, *miscChars;
-	unsigned				materialCount;
 	int						i;
 	
 	[self findBadPolygonsWithIssues:ioManager];
@@ -518,7 +562,7 @@ enum
 	}
 	if (kMaxDATMaterials < _materialCount)
 	{
-		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u %@; the selected format allows no more than %u.", materialCount, NSLocalizedString(@"materials", NULL), kMaxDATMaterials];
+		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u %@; the selected format allows no more than %u.", _materialCount, NSLocalizedString(@"materials", NULL), kMaxDATMaterials];
 	}
 	
 	// Check for invalid texture names
@@ -546,12 +590,9 @@ enum
 	NSDateFormatter			*formatter;
 	NSString				*dateString;
 	NSMutableString			*texNameString = nil;
-	NSEnumerator			*texEnum;
-	NSString				*texKey;
 	unsigned				i, j, faceVertexCount;
 	DDMeshFaceData			*face;
 	NSString				*texName;
-	DDMaterial				*material;
 	Vector					normal;
 	Vector2					texCoords;
 	unsigned				vertIdx;
@@ -599,20 +640,20 @@ enum
 	
 	// Write faces
 	[dataString appendString:@"\nFACES"];
+	face = _faces;
 	for (i = 0; i != _faceCount; ++i)
 	{
-		face = _faces + i;
 		faceVertexCount = face->vertexCount;
 		normal = _normals[face->normal];
 		
-		// TODO: use material colour if appropriate
 		[dataString appendFormat:@"\n%u,%u,%u,\t%10f,%10f,%10f,\t%u",
-			127, 127, 127, -normal.x, normal.y, normal.z, faceVertexCount];
+			face->smoothingGroup, 0, 0, -normal.x, normal.y, normal.z, faceVertexCount];
 		
 		for (j = 0; j != faceVertexCount; ++j)
 		{
 			[dataString appendFormat:@",%s%u", j ? "" : "\t", _faceVertexIndices[face->firstVertex + j]];
 		}
+		++face;
 	}
 	
 	// Write textures

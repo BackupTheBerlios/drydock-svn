@@ -84,6 +84,8 @@ const CFStringRef kLSItemContentType = (const CFStringRef)@"kLSItemContentType";
 	{
 		result = [self localizedDescription];
 	}
+	
+	return result;
 }
 
 
@@ -105,6 +107,8 @@ const CFStringRef kLSItemContentType = (const CFStringRef)@"kLSItemContentType";
 	{
 		result = [self localizedDescription];
 	}
+	
+	return result;
 }
 
 @end

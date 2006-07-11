@@ -215,11 +215,6 @@
 
 - (void)makeActive
 {
-	GLint				wrapMode;
-	GLint				magFilter;
-	GLint				level;
-	unsigned			w, h;
-	
 	if (nil == _diffuseTexture)
 	{
 		_diffuseTexture = [DDTextureBuffer placeholderTextureWithIssues:nil];

@@ -32,11 +32,20 @@
 {
 	IBOutlet NSWindow				*window;
 	IBOutlet NSTabView				*stageTabView;
-	IBOutlet NSMatrix				*installSCRMatrix;
-	IBOutlet NSMatrix				*checkForUpdatesMatrix;
 	IBOutlet NSButton				*continueButton;
+	
+	IBOutlet NSMatrix				*installSCRMatrix;
 	IBOutlet NSTextField			*authorisationRequiredForSCRField;
-	IBOutlet UKUpdateChecker		*updateChecker;
+	
+	IBOutlet NSButton				*checkForUpdatesCheckBox;
+	IBOutlet NSTextField			*updateFrequencyField;
+	IBOutlet NSMatrix				*autoInstallMatrix;
+	
+	IBOutlet NSButton				*upgradeCheckForUpdatesCheckBox;
+	IBOutlet NSTextField			*upgradeUpdateFrequencyField;
+	IBOutlet NSMatrix				*upgradeAutoInstallMatrix;
+	
+	IBOutlet NSFormatter			*integerFormatter;
 	
 	BOOL							_haveAwoken;
 	BOOL							_runningLastFirstRunPane;
@@ -44,5 +53,7 @@
 
 - (IBAction)nextButtonAction:sender;
 - (IBAction)quitButtonAction:sender;
+
+- (IBAction)checkForUpdatesAction:sender;
 
 @end

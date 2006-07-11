@@ -1,15 +1,21 @@
 {
     IBClasses = (
         {
-            ACTIONS = {nextButtonAction = id; quitButtonAction = id; }; 
+            ACTIONS = {checkForUpdatesAction = id; nextButtonAction = id; quitButtonAction = id; }; 
             CLASS = DDFirstRunController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 authorisationRequiredForSCRField = NSTextField; 
-                checkForUpdatesMatrix = NSMatrix; 
+                autoInstallMatrix = NSMatrix; 
+                checkForUpdatesCheckBox = NSButton; 
                 continueButton = NSButton; 
                 installSCRMatrix = NSMatrix; 
+                integerFormatter = NSFormatter; 
                 stageTabView = NSTabView; 
+                updateFrequencyField = NSTextField; 
+                upgradeAutoInstallMatrix = NSMatrix; 
+                upgradeCheckForUpdatesCheckBox = NSButton; 
+                upgradeUpdateFrequencyField = NSTextField; 
                 window = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 

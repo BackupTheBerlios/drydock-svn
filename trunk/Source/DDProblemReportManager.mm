@@ -83,7 +83,6 @@
 	TraceEnter();
 	
 	va_list				args;
-	id					result;
 	DDProblemReportIssue *issue;
 	
 	va_start(args, inFormat);
@@ -102,7 +101,6 @@
 	TraceEnter();
 	
 	va_list				args;
-	id					result;
 	DDProblemReportIssue *issue;
 	
 	va_start(args, inFormat);
@@ -121,7 +119,6 @@
 	TraceEnter();
 	
 	va_list				args;
-	id					result;
 	DDProblemReportIssue *issue;
 	
 	va_start(args, inFormat);
@@ -333,7 +330,6 @@
 	NSIndexSet				*selection;
 	unsigned int			index;
 	DDProblemReportIssue	*issue;
-	OSStatus				err;
 	NSMutableString			*string;
 	NSString				*type;
 	unsigned				count = 0;
@@ -417,6 +413,7 @@
 			case kNoteIssueType:		return _noteImage;
 			case kWarningIssueType:		return _warnImage;
 			case kStopIssueType:		return _stopImage;
+			default:					return nil;
 		}
 	}
 	else if ([identifier isEqual:@"description"])
@@ -426,6 +423,7 @@
 	else
 	{
 		LogMessage(@"Unknown identifier %@", identifier);
+		return nil;
 	}
 }
 

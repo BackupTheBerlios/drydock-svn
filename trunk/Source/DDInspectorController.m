@@ -140,7 +140,6 @@ static BOOL		sHaveShownWindow = NO;
 	NSRect						frame;
 	NSPoint						topLeft;
 	NSArray						*array;
-	NSUserDefaults				*prefs;
 	
 	if (!sHaveShownWindow) return;
 	

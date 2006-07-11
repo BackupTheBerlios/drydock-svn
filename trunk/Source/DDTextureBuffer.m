@@ -64,7 +64,6 @@ static unsigned GetMaxTextureSize(void);
 + (id)textureWithFile:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues
 {
 	DDTextureBuffer				*result;
-	NSImage						*image;
 	
 	TraceEnterMsg(@"Called for %@. {", [inFile absoluteURL]);
 	
@@ -111,7 +110,6 @@ static unsigned GetMaxTextureSize(void);
 	TraceEnterMsg(@"Called with key=%@ {", inKey);
 	
 	BOOL					OK = YES;
-	NSImage					*image = nil;
 	FSRef					fsRef;
 	
 	assert(nil != inURL);
@@ -277,7 +275,7 @@ static unsigned GetMaxTextureSize(void);
 	data = (char *)_data;
 	level = 0;
 	
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_SHARED_APPLE);
 	glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
 	dataSize = w * h * 4 * 4 / 3;
 	glTextureRangeAPPLE(GL_TEXTURE_2D, dataSize, data);

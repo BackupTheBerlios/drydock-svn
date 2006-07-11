@@ -72,7 +72,6 @@ static CGFunctionRef CreateGradientFunction(const GradientViewPalette *inPalette
 
 - (void)dealloc
 {
-	NSDistributedNotificationCenter	*dnctr;
 	NSNotificationCenter		*nctr;
 	
 	nctr = [NSNotificationCenter defaultCenter];
@@ -116,7 +115,7 @@ static CGFunctionRef CreateGradientFunction(const GradientViewPalette *inPalette
 	CGContextRef				cgContext;
 	CGShadingRef				shading = NULL;
 	
-	NSSize						size = {0};
+	NSSize						size = {0, 0};
 	
 	tint = [NSColor currentControlTint];
 	if (NSGraphiteControlTint == tint) palette = &kGraphitePalette;
@@ -161,21 +160,21 @@ static void SetColorComponents(const ColorComponents *inComponents)
 static void GradientEvaluate(void *info, const float *inValue, float *outColor)
 {
 	const GradientViewPalette	*palette;
-	float						blend;
+	float						alpha;
 	const ColorComponents		*top, *bottom;
 	
 	palette = (const GradientViewPalette *)info;
 	
-	assert (NULL != inValue && NULL != outColor);
-	blend = *inValue;
+	assert(NULL != inValue && NULL != outColor);
+	alpha = *inValue;
 	
 	top = &palette->gradientTop;
 	bottom = &palette->gradientBottom;
 	
-	outColor[0] = ((float)top->r * blend + (float)bottom->r * (1.0f - blend));
-	outColor[1] = ((float)top->g * blend + (float)bottom->g * (1.0f - blend));
-	outColor[2] = ((float)top->b * blend + (float)bottom->b * (1.0f - blend));
-	outColor[3] = 1.0f;	// Alpha
+	outColor[0] = ((float)top->r * alpha + (float)bottom->r * (1.0f - alpha));
+	outColor[1] = ((float)top->g * alpha + (float)bottom->g * (1.0f - alpha));
+	outColor[2] = ((float)top->b * alpha + (float)bottom->b * (1.0f - alpha));
+	outColor[3] = 1.0f;	// Alpha component
 }
 
 

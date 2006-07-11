@@ -71,7 +71,10 @@ inline const Vector cmax(const Vector &a, const Vector &b)
 	return Vector(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z));
 }
 
+#ifdef __MWERKS__
 #pragma cpp_extensions on
+#endif
+
 typedef struct Colour
 {
 	union
@@ -113,7 +116,10 @@ typedef struct Colour
 								glLightfv(inLight, inParam, v);
 							}
 } Colour;
+
+#ifdef __MWERKS__
 #pragma cpp_extensions reset
+#endif
 
 
 // Drawing routines for common primitives

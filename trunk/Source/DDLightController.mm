@@ -36,7 +36,7 @@
 
 - (id)init
 {
-	[self initWithView:nil];
+	return [self initWithView:nil];
 }
 
 

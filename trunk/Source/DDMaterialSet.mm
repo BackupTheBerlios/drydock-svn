@@ -157,4 +157,10 @@
 	TraceExit();
 }
 
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ %p>{count=%u, capacity=%u}", [self className], self, count, max];
+}
+
 @end

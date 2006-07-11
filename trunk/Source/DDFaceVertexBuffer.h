@@ -32,6 +32,7 @@
 {
 	DDMeshIndex					*vertIndices;
 	DDMeshIndex					*texIndices;
+	DDMeshIndex					*normIndices;
 	DDMeshIndex					faceCount;
 	unsigned					count, max, facesSoFar;
 }
@@ -39,9 +40,9 @@
 + (id)bufferForFaceCount:(DDMeshIndex)inCount;
 - (id)initForFaceCount:(DDMeshIndex)inCount;
 
-- (unsigned)addVertexIndices:(DDMeshIndex *)inVertIndices texCoordIndices:(DDMeshIndex *)inTexIndices count:(DDMeshIndex)inCount;
+- (unsigned)addVertexIndices:(DDMeshIndex *)inVertIndices texCoordIndices:(DDMeshIndex *)inTexIndices vertexNormals:(DDMeshIndex *)inNormalIndices count:(DDMeshIndex)inCount;
 - (void)setTexCoordIndices:(DDMeshIndex *)inTexIndices startingAt:(unsigned)inStart count:(DDMeshIndex)inCount;
 
-- (void)getVertexIndices:(DDMeshIndex **)outVertIndices textureCoordIndices:(DDMeshIndex **)outTexIndices andCount:(unsigned *)outCount;
+- (void)getVertexIndices:(DDMeshIndex **)outVertIndices textureCoordIndices:(DDMeshIndex **)outTexIndices vertexNormals:(DDMeshIndex **)outNormalIndices andCount:(unsigned *)outCount;
 
 @end

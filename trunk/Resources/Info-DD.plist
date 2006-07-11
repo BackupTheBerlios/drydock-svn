@@ -265,5 +265,39 @@
 			</dict>
 		</dict>
 	</array>
+	<!--
+	<key>SUFeedURL</key>
+	<string>http://drydock.berlios.de/updates.xml</string>
+	<key>SUCheckAtStartup</key>
+	<false/>
+	<key>SUExpectsDSASignature</key>
+	<true/>-->
+	<key>SUFeedURL</key>
+	<string>http://ahruman.is-a-geek.net/temp/sparkletest.xml</string>
+	<key>SUCheckAtStartup</key>
+	<true/>
+	<key>SUExpectsDSASignature</key>
+	<true/>
+	<key>SUPublicDSAKey</key>
+	<string>-----BEGIN PUBLIC KEY-----
+MIIDPDCCAi4GByqGSM44BAEwggIhAoIBAQD+woITuFxfSmy3IxvVJOSpklrNRkTU
+RNveSVyEmmGUK98PrMK7VQv0CR/UvvVRvVln4g56mtB78dBuovIJav1LQ7lzxaiG
+vogbQXCenRoJaPgPyiMRqYvkbAFrSYfVVc0jbCQIVWlg6yvYO8ROuaGyIB2b8fsf
+7VUUjGuJv2bIHRGC1Vwkp/d/yysUqxPESXzZ1kIGtpEK3RaEN1kegRLRoDcJI9nQ
+aRpMxfCmBxCI6IgEo8a3HSCdmzP4c5jaw2Xh/HJIYNwUPJTUTm1bv9S5y+jEC3kS
+uGrnBBjvdGt15LTTrlIY9lr/eikeXETUA16hZrT50SfPpB4bWo9gvXx1AhUA6ZqZ
+G8NV9tYr01jQWIAcR82BkZkCggEBALLrFhhxIyTPA5MOCAojYgPLRWyOxHlgXrHS
+Js4fuWy/wTrwLHJw0wE3iU/Nf2rsayQrcRcwoozWsWoiHtXmexqKwlfGpFm0qqXC
+XRcy2Jjc8d7OFP5xuH7JJAwHNUGSorfiIlTXEfZetBpYL/dpQ5AsucDcjMtSP7G6
+8eEsgjZnKnFhq+MDTw1caPnOUpWE4KId9CZ3PE81g84fwobb8u8/lOqFflqEhbZA
+fC1Dd5MwYuLd+8vbks/pao3KRXkwX+mFwJnc0Wr+fAbFq+VYyIWdi82xYqrbZYT0
+/DArIcr9IibWNBrpdglReZSKVb3+BDrs6TaxOHLLRQRnQGF2IRwDggEGAAKCAQEA
+4OS+cxdX/Tlzf+A4hbBrArrm889kAHtV/av4EUJsHguTR5Bh0vlfxGKtxz5/8kep
+xnhVm5ZOGVVr6WYYDSMCQPkPbgoEkH8gGQwXqMPpNlYkTsevdm+b5hQAucNF6byT
+uR1eFxLPCbgKd5w3BpG4b76Dbn5NWP0JMHJw+7s3kFRhRNXkgluUvQPnQwnVjEeD
+kSMGgIlsTcwocBMlgvMhw5MjFEnNDOdoAobT8vUOl9tscAnIfwzZOD2r5oXKKzfn
+eSv74aAr16Eqd2jWUYjOnLWFn45q2IfoJH2Vxy8EZg1WKOOJhIadWo8KWgLj/JTa
+1WHdOm6s63VCcnhxzGuGuA==
+-----END PUBLIC KEY-----</string>
 </dict>
 </plist>

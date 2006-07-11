@@ -46,8 +46,7 @@ static void ByteSwap4Array(void *ioBuffer, size_t inCount);
 	id						object;
 	NSArray					*materialsArray = nil, *facesArray = nil;
 	NSData					*verticesData = nil, *normalsData = nil, *texCoordsData = nil;
-	unsigned				i, j;
-	NSArray					*faceVerts;
+	unsigned				i;
 	float					r;
 	Vector					vec;
 	unsigned				count;
@@ -388,8 +387,6 @@ static void ByteSwap4Array(void *ioBuffer, size_t inCount);
 
 - (void)gatherIssuesWithGeneratingPropertyListRepresentation:(DDProblemReportManager *)ioManager
 {
-	NSEnumerator			*materialEnumerator;
-	DDMaterial				*material;
 	unsigned				i;
 	
 	for (i = 0; i != _materialCount; ++i)
@@ -407,17 +404,10 @@ static void ByteSwap4Array(void *ioBuffer, size_t inCount);
 	NSMutableDictionary		*result;
 	NSMutableArray			*materialsArray;
 	DDMaterial				*material;
-	unsigned				i, j;
-	NSEnumerator			*materialEnumerator;
-	NSString				*name;
+	unsigned				i;
 	id						plist;
 	NSData					*vertexData = nil, *normalData = nil, *texCoordsData = nil;
 	size_t					verticesSize, normalsSize, texCoordsSize;
-	DDMeshFaceData			*face;
-	NSMutableArray			*facesArray;
-	NSMutableDictionary		*faceDict;
-	NSMutableArray			*faceVerts;
-	NSMutableDictionary		*vertDict;
 	
 	result = [[NSMutableDictionary alloc] initWithCapacity:7];
 	if (nil == result)

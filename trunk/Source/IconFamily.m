@@ -849,9 +849,9 @@
     // Tell the Finder that the folder now has a custom icon.
     ((struct FolderInfo *)catInfo.finderInfo)->finderFlags = ( ((struct FolderInfo *)catInfo.finderInfo)->finderFlags | kHasCustomIcon ) & ~kHasBeenInited;
 
-    FSSetCatalogInfo( &targetFolderFSRef,
-                      kFSCatInfoFinderInfo,
-                      &catInfo);
+    result = FSSetCatalogInfo( &targetFolderFSRef,
+							   kFSCatInfoFinderInfo,
+							   &catInfo);
     if( result != noErr )
         return NO;
 
@@ -1415,8 +1415,7 @@
 {
     ScrapRef scrap = NULL;
     ScrapFlavorInfo* scrapInfos = NULL;
-    UInt32 numInfos = 0;
-    int i = 0;
+    UInt32 i, numInfos = 0;
     BOOL canInit = NO;
 
     GetCurrentScrap(&scrap);

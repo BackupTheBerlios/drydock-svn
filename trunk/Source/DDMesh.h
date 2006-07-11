@@ -56,11 +56,11 @@ typedef struct DDMeshFaceData
 {
 	DDMeshIndex				normal;
 	DDMeshIndex				material;
-	unsigned				firstVertex;	// Index into _faceVertexIndices and _faceTexCoordIndices
+	unsigned				firstVertex;	// Index into _faceVertexIndices, _faceTexCoordIndices and _vertexNormalIndices
 	uint8_t					vertexCount;
 	uint8_t					nonCoplanar;
 	uint8_t					nonConvex;
-	uint8_t					reserved;
+	uint8_t					smoothingGroup;
 } DDMeshFaceData;
 
 
@@ -84,6 +84,7 @@ typedef struct DDMeshFaceData
 	unsigned				_faceVertexIndexCount;
 	DDMeshIndex				*_faceVertexIndices;
 	DDMeshIndex				*_faceTexCoordIndices;
+	DDMeshIndex				*_vertexNormalIndices;
 	
 	// Axis-aligned bounds
 	Scalar					_xMin, _xMax,

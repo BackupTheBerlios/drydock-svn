@@ -87,8 +87,7 @@
 	DDMeshFaceData			*face;
 	float					white[4] = { 1, 1, 1, 1 };
 	DDMaterial				*currentMaterial = nil;
-	Vector					*vertex, *normal;
-	Vector2					*texCoords;
+	Vector					*normal;
 	unsigned				vertIdx;
 	
 	CGL_MACRO_DECLARE_VARIABLES();

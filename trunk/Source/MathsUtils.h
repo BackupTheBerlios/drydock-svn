@@ -287,7 +287,7 @@ static inline float ApproxAtan2(float inY, float inX) MATHSUTILS_h_CONSTFUNC;
 
 static inline float ApproxAtan2(float inY, float inX)
 {
-	const float pi = 3.14159265358979f;
+	const float myPi = 3.14159265358979f;
 	const float halfPi = 1.5707963267949f;
 	const float factor = 0.2732395447351f;
 	
@@ -313,7 +313,7 @@ static inline float ApproxAtan2(float inY, float inX)
 			// adjust for sector
 			if (inX < 0.0f)
 			{
-				result += MATHSUTILS_h_fsel(inY, pi, -pi);
+				result += MATHSUTILS_h_fsel(inY, myPi, -myPi);
 			}
 			return result;
 		}
@@ -322,14 +322,14 @@ static inline float ApproxAtan2(float inY, float inX)
 	
 	if (inY > 0.0f) return halfPi;
 	else if (inY < 0.0f) return -halfPi;
-	else /* inY == 0 */ return MATHSUTILS_h_fsel(inX, 0.0f, pi);
+	else /* inY == 0 */ return MATHSUTILS_h_fsel(inX, 0.0f, myPi);
 }
 
 #else
 
 static inline float ApproxAtan2(float inY, float inX)
 {
-	const float pi = 3.14159265358979f;
+	const float myPi = 3.14159265358979f;
 	const float halfPi = 1.5707963267949f;
 	const float factor = 0.2732395447351f;
 	
@@ -356,8 +356,8 @@ static inline float ApproxAtan2(float inY, float inX)
 			// adjust for sector
 			if (inX < 0.0f)
 			{
-				if (inY < 0.0f) result -= pi;
-				else result += pi;
+				if (inY < 0.0f) result -= myPi;
+				else result += myPi;
 			}
 			return result;
 		}
@@ -366,7 +366,7 @@ static inline float ApproxAtan2(float inY, float inX)
 	
 	if (inY > 0.0f) return halfPi;
 	else if (inY < 0.0f) return -halfPi;
-	else /* inY == 0 */ return (0.0f <= inX) ? 0.0f : pi;
+	else /* inY == 0 */ return (0.0f <= inX) ? 0.0f : myPi;
 }
 
 #endif

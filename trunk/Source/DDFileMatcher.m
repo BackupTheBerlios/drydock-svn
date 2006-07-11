@@ -125,8 +125,6 @@ OSStatus (*LSCopyItemAttribute_ptr)(
 - (id)init
 {
 	CFBundleRef				launchServicesBundle;
-	NSString				*bundlePath;
-	static void				*handle;
 	
 	self = [super init];
 	if (nil != self)
@@ -248,7 +246,7 @@ OSStatus (*LSCopyItemAttribute_ptr)(
 			bundle = [NSBundle mainBundle];
 			// …in exported declarations
 			utis = [bundle objectForInfoDictionaryKey:@"UTExportedTypeDeclarations"];
-			for (utiEnum = [utis objectEnumerator]; utiSpec = [utiEnum nextObject]; )
+			for (utiEnum = [utis objectEnumerator]; (utiSpec = [utiEnum nextObject]); )
 			{
 				if ([[utiSpec objectForKey:@"UTTypeIdentifier"] isEqual:utiString])
 				{
@@ -259,7 +257,7 @@ OSStatus (*LSCopyItemAttribute_ptr)(
 			{
 				// …or imported declarations
 				utis = [bundle objectForInfoDictionaryKey:@"UTImportedTypeDeclarations"];
-				for (utiEnum = [utis objectEnumerator]; utiSpec = [utiEnum nextObject]; )
+				for (utiEnum = [utis objectEnumerator]; (utiSpec = [utiEnum nextObject]); )
 				{
 					if ([[utiSpec objectForKey:@"UTTypeIdentifier"] isEqual:utiString])
 					{

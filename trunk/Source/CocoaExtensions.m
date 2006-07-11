@@ -59,28 +59,3 @@
 }
 
 @end
-
-
-@implementation NSFileManager (CocoaExtensions)
-
-- (NSString *)utiForItemAtPath:(NSString *)inPath
-{
-	FSRef					fsRef;
-	NSURL					*url;
-	NSString				*result = nil;
-	
-	/*url = [NSURL fileURLWithPath:inPath];
-	if (nil != url)
-	{
-		if (CFURLGetFSRef((CFURLRef)url, &fsRef))
-		{
-			LSCopyItemAttribute(&fsRef, kLSRolesAll, kLSItemContentType, (CFTypeRef *)&result);
-			[result autorelease];
-		}
-	}*/
-	
-	return result;
-}
-
-@end
-

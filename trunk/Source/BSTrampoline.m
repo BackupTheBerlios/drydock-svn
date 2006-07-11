@@ -25,7 +25,7 @@
 @implementation BSTrampoline
 
 - (id)initWithEnumerator:(NSEnumerator *)inEnumerator mode:(int)operationMode {
-	if (operationMode < kDoMode | operationMode > kRejectMode)
+	if ((operationMode < kDoMode) || (operationMode > kRejectMode))
 		[NSException raise:@"InvalidArgumentException" format:@"operationMode argument of initWithEnumerator:mode: was %d, outside %d-%d range.", operationMode, kDoMode, kRejectMode];
 	enumerator = [inEnumerator retain];
 	mode = operationMode;
@@ -57,7 +57,7 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
-	id index;
+	id idx;
 	//Next line unnecessary in kDoMode but the preprocessor doesn't like it if I add a test up here:/
 	NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];	//The array to be returned
 	id objRetVal;	//Temporaries for reading off the return value of the bounced method
@@ -75,8 +75,8 @@
  	 * Test whether to add receiving object to array
  	 * Do so if necessary
  	 */
-	while (index = [enumerator nextObject]) {
-		[anInvocation invokeWithTarget:index];
+	while ((idx = [enumerator nextObject])) {
+		[anInvocation invokeWithTarget:idx];
 		
 		switch (mode) {
 			case kDoMode:
@@ -93,8 +93,8 @@
 					[NSException raise:@"InvalidArgumentException" format:@"All array items must return bool for the given selector to use -select, -reject or -countTo:. Return type is %s", [[anInvocation methodSignature] methodReturnType]];
 				}
 				[anInvocation getReturnValue:&boolRetVal];
-				if (boolRetVal && mode == kSelectMode || !boolRetVal && mode == kRejectMode)
-					[array addObject:index];
+				if ((boolRetVal && mode == kSelectMode) || (!boolRetVal && mode == kRejectMode))
+					[array addObject:idx];
 				break;
 			case kCountMode:
 				if (strcmp([[anInvocation methodSignature] methodReturnType], "c")) {	//Decoded: char/BOOL

@@ -107,9 +107,9 @@
 
 - (void)selectPanelDidEnd:(NSOpenPanel *)inSheet returnCode:(int)inReturnCode contextInfo:(void *)ignored
 {
-	DDMesh					*compareMesh;
+	DDMesh					*compareMesh = nil;
 	DDProblemReportManager	*issues;
-	NSString				*filePath, *fileUTI;
+	NSString				*filePath;
 	NSURL					*fileURL;
 	
 	[inSheet orderOut:nil];

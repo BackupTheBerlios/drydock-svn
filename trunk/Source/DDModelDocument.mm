@@ -423,7 +423,7 @@ enum
 	NSData					*data;
 	NSString				*errorDesc;
 	NSError					*error;
-	DryDockDocumentHeader	headerBytes = { 'D', 'r', 'y', 'D', 0 };
+	DryDockDocumentHeader	headerBytes = {{ 'D', 'r', 'y', 'D' }, 0 };
 	NSData					*header = nil;
 	BOOL					debugFormat;
 	

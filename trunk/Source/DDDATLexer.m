@@ -59,6 +59,7 @@ static const char *TokenString(int inToken);
 	else
 	{
 		[NSException raise:NSInvalidArgumentException format:@"DDDATLexer does not support non-file URLs such as %@", [inURL absoluteURL]];
+		return nil;
 	}
 	
 	TraceExit();

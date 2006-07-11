@@ -82,7 +82,7 @@
 	
 	BOOL					success;
 	DDProblemReportManager	*problemManager;
-	DDModelDocument			*document;
+	DDModelDocument			*document = nil;
 	
 	if (NULL != outError) *outError = nil;
 	
@@ -108,7 +108,6 @@
 		}
 		else
 		{
-			document = nil;
 			[problemManager addStopIssueWithKey:@"unknownFormat" localizedFormat:@"The document could not be opened, because the file type could not be recognised."];
 		}
 		if (nil != document)
@@ -405,7 +404,6 @@
 - (void)sendMeshMessage:(SEL)inMessage undoableWithName:(NSString *)inName
 {
 	DDMesh					*newMesh;
-	NSError					*error;
 	
 	newMesh = [[_document rootMesh] copy];
 	if (newMesh)
@@ -413,12 +411,7 @@
 		[self setUpMeshReplacingUndoActionNamed:inName];
 		[_document setRootMesh:newMesh];
 		[newMesh performSelector:inMessage];
-	}/*
-	else
-	{
-		error = [DDError errorWithCode:kDDErrorAllocationFailed];
-		[self presentError:error modalForWindow:[self windowForSheet] delegate:nil didPresentSelector:NULL contextInfo:NULL];
-	}*/
+	}
 }
 
 
@@ -522,10 +515,6 @@
 		if (action == @selector(triangulate:))
 		{
 			enabled = [[_document rootMesh] hasNonTriangles];
-		}
-		else if (action == @selector(doCompareDialog:))
-		{
-			enabled = TigerOrLater();
 		}
 	}
 	

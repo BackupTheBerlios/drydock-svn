@@ -78,8 +78,7 @@ NSString *kNotificationSceneNodeModified = @"com.ahruman.is-a-geek ObjectiveScen
 
 - (void)dealloc
 {
-	NSEnumerator			*childEnum, *tagEnum;
-	SceneNode				*child;
+	NSEnumerator			*tagEnum;
 	SceneTag				*tag;
 	
 	if (nil != parent)
@@ -92,7 +91,7 @@ NSString *kNotificationSceneNodeModified = @"com.ahruman.is-a-geek ObjectiveScen
 	{
 		[firstChild setParent:nil];
 	}
-	for (tagEnum = [tags objectEnumerator]; tag = [tagEnum nextObject]; )
+	for (tagEnum = [tags objectEnumerator]; (tag = [tagEnum nextObject]); )
 	{
 		[tag setOwner:nil];
 	}
@@ -457,7 +456,7 @@ NSString *kNotificationSceneNodeModified = @"com.ahruman.is-a-geek ObjectiveScen
 	
 	isDirty = 1;
 	
-	for (childEnumerator = [self childEnumerator]; child = [childEnumerator nextObject]; )
+	for (childEnumerator = [self childEnumerator]; (child = [childEnumerator nextObject]); )
 	{
 		[child becomeDirtyDownwards];
 	}
@@ -504,7 +503,7 @@ NSString *kNotificationSceneNodeModified = @"com.ahruman.is-a-geek ObjectiveScen
 			if (nil == inState) state = [[NSMutableDictionary alloc] init];
 			else state = [inState mutableCopy];
 			
-			for (tagEnum = [tags objectEnumerator]; tag = [tagEnum nextObject]; )
+			for (tagEnum = [tags objectEnumerator]; (tag = [tagEnum nextObject]); )
 			{
 				[tag apply:state];
 			}
@@ -548,14 +547,14 @@ NSString *kNotificationSceneNodeModified = @"com.ahruman.is-a-geek ObjectiveScen
 	isDirty = NO;
 	
 	// Render children
-	for (childEnum = [self childEnumerator]; child = [childEnum nextObject]; )
+	for (childEnum = [self childEnumerator]; (child = [childEnum nextObject]); )
 	{
 		[child renderWithState:state];
 	}
 	
 	[state release];
 	// Un-apply tags
-	for (tagEnum = [tags objectEnumerator]; tag = [tagEnum nextObject]; )
+	for (tagEnum = [tags objectEnumerator]; (tag = [tagEnum nextObject]); )
 	{
 		[tag unapply];
 	}

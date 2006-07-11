@@ -62,10 +62,8 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 	Vector2				*texCoords = NULL;
 	DDMeshIndex			*faceVertexIndices = NULL;
 	DDMeshIndex			*faceTexCoordIndices = NULL;
-	unsigned			i, materialCount;
-	id					*keys, *values;
-	NSArray				*keyArray;
-	id					key;
+	DDMeshIndex			*vertexNormalIndices = NULL;
+	unsigned			i;
 	NSZone				*zone;
 	size_t				vertsSize, facesSize, normalsSize, materialsSize, texCoordsSize, indexBufferSize;
 	
@@ -90,9 +88,11 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 		texCoords = (Vector2 *)malloc(texCoordsSize);
 		faceVertexIndices = (DDMeshIndex *)malloc(indexBufferSize);
 		faceTexCoordIndices = (DDMeshIndex *)malloc(indexBufferSize);
+		vertexNormalIndices = (DDMeshIndex *)malloc(indexBufferSize);
 		
 		OK = NULL != vertices && NULL != normals && NULL != faces && NULL != materials &&
-				NULL != texCoords && NULL != faceVertexIndices && NULL != faceTexCoordIndices;
+				NULL != texCoords && NULL != faceVertexIndices && NULL != faceTexCoordIndices &&
+				NULL != vertexNormalIndices;
 	}
 	
 	if (OK)
@@ -113,6 +113,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 		bcopy(inMesh->_texCoords, texCoords, texCoordsSize);
 		bcopy(inMesh->_faceVertexIndices, faceVertexIndices, indexBufferSize);
 		bcopy(inMesh->_faceTexCoordIndices, faceTexCoordIndices, indexBufferSize);
+		bcopy(inMesh->_vertexNormalIndices, vertexNormalIndices, indexBufferSize);
 		
 		_vertices = vertices;
 		_normals = normals;
@@ -121,6 +122,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 		_texCoords = texCoords;
 		_faceVertexIndices = faceVertexIndices;
 		_faceTexCoordIndices = faceTexCoordIndices;
+		_vertexNormalIndices = vertexNormalIndices;
 		
 		_vertexCount = inMesh->_vertexCount;
 		_normalCount = inMesh->_normalCount;
@@ -179,6 +181,10 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 			[_materials[i] release];
 		}
 	}
+	if (NULL != _faceVertexIndices) free(_faceVertexIndices);
+	if (NULL != _faceTexCoordIndices) free(_faceTexCoordIndices);
+	if (NULL != _vertexNormalIndices) free(_vertexNormalIndices);
+	
 	[_name release];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:nil name:kNotificationDDMeshModified object:self];
@@ -206,7 +212,6 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 	DDMeshFaceData			*face;
 	Vector					normal;
 	DDNormalSet				*normals;
-	unsigned				vertIdx;
 	
 	free(_normals);
 	normals = [DDNormalSet setWithCapacity:_faceCount];
@@ -275,7 +280,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 	
 	unsigned				i, j, k, count, total, subCount;
 	DDMeshFaceData			*newFaces;
-	DDMeshIndex				verts[3], texCoords[3];
+	DDMeshIndex				verts[3], texCoords[3], normals[3];
 	unsigned				vertIdx;
 	DDFaceVertexBuffer		*buffer;
 	
@@ -317,7 +322,11 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 			texCoords[1] = _faceTexCoordIndices[vertIdx + k + 1];
 			texCoords[2] = _faceTexCoordIndices[vertIdx + k + 2];
 			
-			newFaces[j].firstVertex = [buffer addVertexIndices:verts texCoordIndices:texCoords count:3];
+			normals[0] = _vertexNormalIndices[vertIdx];
+			normals[1] = _vertexNormalIndices[vertIdx + k + 1];
+			normals[2] = _vertexNormalIndices[vertIdx + k + 2];
+			
+			newFaces[j].firstVertex = [buffer addVertexIndices:verts texCoordIndices:texCoords vertexNormals:normals count:3];
 			newFaces[j].material = _faces[i].material;
 			++j;
 		}
@@ -326,10 +335,11 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 	free(_faces);
 	free(_faceVertexIndices);
 	free(_faceTexCoordIndices);
+	free(_vertexNormalIndices);
 	
 	_faces = newFaces;
 	_faceCount = total;
-	[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices andCount:&_faceVertexIndexCount];
+	[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices vertexNormals:&_vertexNormalIndices andCount:&_faceVertexIndexCount];
 	
 	_hasNonTriangles = NO;
 	_hasBadPolygons = NO;
@@ -603,6 +613,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 	}
 	
 	if (reportedNonCoplanar) LogMessage(@"%u of %u polygons were non-coplanar.", notCoplanar, _faceCount);
+	return OK;
 	
 	TraceExit();
 }

@@ -230,4 +230,6 @@ Matrix &Matrix::Orthogonalize(void)
 	m[0][0] = i[0]; m[1][0] = i[1]; m[2][0] = i[2];
 	m[0][1] = j[0]; m[1][1] = j[1]; m[2][1] = j[2];
 	m[0][2] = k[0]; m[1][2] = k[1]; m[2][2] = k[2];
+	
+	return *this;
 }

@@ -43,11 +43,13 @@ enum {
 };
 
 
-static NSColor *ObjColorToNSColor(NSString *inColor);
 static Vector ObjVertexToVector(NSString *inVertex);
 static Vector2 ObjUVToVector2(NSString *inUV);
 static NSArray *ObjFaceToArrayOfArrays(NSString *inData);
-static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSMutableDictionary *ioLibrary, NSURL *inBaseURL, DDProblemReportManager *ioIssues);
+
+#if 0
+static NSColor *ObjColorToNSColor(NSString *inColor);
+#endif
 
 
 @interface DDMesh (WaveFrontOBJSupport_Private)
@@ -77,8 +79,6 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	BOOL					OK = YES;
 	NSMutableArray			*lines;
 	NSArray					*line;
-	NSCharacterSet			*spaceSet;
-	NSRange					range;
 	unsigned				vertexCount, uvCount, normalCount, faceCount;
 	unsigned				vertexIdx = 0, uvIdx = 0, normalIdx = 0, faceIdx = 0;
 	Vector					*vertices = NULL;
@@ -92,9 +92,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	Vector					vec;
 	NSEnumerator			*lineEnum;
 	NSArray					*faceData;
-	NSArray					*vertexData;
 	unsigned				faceVertexCount, fvIdx;
-	Vector					normal;
+	Vector					normal, vtxNormal;
 	NSMutableSet			*ignoredTypes = nil;
 	NSError					*error;
 	unsigned				badUVWarnings = 0;
@@ -103,15 +102,20 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	BOOL					warnedAboutNoNormals = NO;
 	BOOL					warnedAboutCall = NO;
 	BOOL					warnedAboutShellScript = NO;
-	DDNormalSet				*normals;
+	DDNormalSet				*normals = nil;
 	DDMaterialSet			*materials = nil;
 	NSDictionary			*materialLibrary = nil;
 	DDMeshIndex				currentMaterial = kDDMeshIndexNotFound;
 	Vector2					*uv = NULL;
-	DDTexCoordSet			*texCoords;
-	DDFaceVertexBuffer		*buffer;
+	DDTexCoordSet			*texCoords = nil;
 	DDMeshIndex				faceVertices[kMaxVertsPerFace];
 	DDMeshIndex				faceTexCoords[kMaxVertsPerFace];
+	DDMeshIndex				vertexNormals[kMaxVertsPerFace];
+	DDFaceVertexBuffer		*buffer = nil;
+	NSMutableDictionary		*smoothingGroups = nil;
+	uint8_t					activeSmoothingGroup = 0;
+	uint8_t					smoothingGroupsUsed = 0;
+	NSNumber				*smoothingGroupIndex;
 	
 	self = [super init];
 	if (nil == self) return nil;
@@ -310,7 +314,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 							{
 								if (intVal < 0) index = vertexIdx + intVal;
 								else index = intVal - 1;
-								if (vertexIdx <= index || index < 0)
+								if ((int)vertexIdx <= index || index < 0)
 								{
 									[ioIssues addStopIssueWithKey:@"vertexRange" localizedFormat:@"Face line %u specifies a vertex index of %i, but there are only %u vertices in the document.", faceIdx, intVal, vertexIdx];
 									index = 0;
@@ -359,7 +363,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 								{
 									if (intVal < 0) index = uvIdx + intVal;
 									else index = intVal - 1;
-									if (uvIdx <= index || index < 0)
+									if ((int)uvIdx <= index || index < 0)
 									{
 										if (!warnedUVThisLine)
 										{
@@ -424,7 +428,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 								{
 									if (intVal < 0) index = normalIdx + intVal;
 									else index = intVal - 1;
-									if (normalIdx <= index || index < 0)
+									if ((int)normalIdx <= index || index < 0)
 									{
 										if (!warnedNormalThisLine)
 										{
@@ -447,11 +451,14 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 								
 								if (OK)
 								{
-									normal += normalArray[index];
+									vtxNormal = normalArray[index];
+									vertexNormals[fvIdx] = [normals indexForVector:vtxNormal];
+									normal += vtxNormal;
 								}
 								else
 								{
-									OK = YES;	// Lack of U/V index is non-fatal
+									OK = YES;	// Lack of normal index is non-fatal
+									vertexNormals[fvIdx] = [normals indexForVector:Vector(0, 0, 0)];
 								}
 							}
 						}
@@ -462,8 +469,8 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 							[ioIssues addWarningIssueWithKey:@"invalidNormal" localizedFormat:@"Some or all faces in the document lack a valid normal specified. This is likely to lead to lighting problems. This issue can be rectified by selecting Recalculate Normals from the Tools menu."];
 						}
 						face->normal = [normals indexForVector:normal];
-						
-						face->firstVertex = [buffer addVertexIndices:faceVertices texCoordIndices:faceTexCoords count:faceVertexCount];
+						face->smoothingGroup = activeSmoothingGroup;
+						face->firstVertex = [buffer addVertexIndices:faceVertices texCoordIndices:faceTexCoords vertexNormals:vertexNormals count:faceVertexCount];
 					}
 				}
 				
@@ -490,6 +497,45 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 			{
 				// Group Name; ignore
 				//LogMessage(@"Ignoring group: \"%@\"", params);
+			}
+			else if ([keyword isEqual:@"s"])
+			{
+				/*	Note: strictly, smoothing groups are required to be identified by number, with
+					"off" being an alias for zero. Since no specific range is given for smoothing
+					groups, we map them to uint8_ts. At this point, it becomes simpler to allow for
+					arbitrary strings than to require numbers.
+				*/
+				if ([@"off" isEqual:params] || [@"0" isEqual:params])
+				{
+					activeSmoothingGroup = 0;
+					//LogMessage(@"Disabling smoothing");
+				}
+				else
+				{
+					smoothingGroupIndex = [smoothingGroups objectForKey:params];
+					if (nil != smoothingGroupIndex)
+					{
+						activeSmoothingGroup = [smoothingGroupIndex unsignedCharValue];
+						//LogMessage(@"Switched to smoothing group %u", activeSmoothingGroup);
+					}
+					else
+					{
+						// New smoothing group
+						if (smoothingGroupsUsed < 255)
+						{
+							activeSmoothingGroup = ++smoothingGroupsUsed;
+							smoothingGroupIndex = [NSNumber numberWithUnsignedChar:activeSmoothingGroup];
+							if (nil == smoothingGroups) smoothingGroups = [NSMutableDictionary dictionary];
+							[smoothingGroups setObject:smoothingGroupIndex forKey:params];
+							//LogMessage(@"Started smoothing group %u", activeSmoothingGroup);
+						}
+						else
+						{
+							OK = NO;
+							[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u smoothing groups.", 255];
+						}
+					}
+				}
 			}
 			else if ([keyword isEqual:@"call"])
 			{
@@ -552,7 +598,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 		
 		[materials getArray:&_materials andCount:&_materialCount];
 		[texCoords getArray:&_texCoords andCount:&_texCoordCount];
-		[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices andCount:&_faceVertexIndexCount];
+		[buffer getVertexIndices:&_faceVertexIndices textureCoordIndices:&_faceTexCoordIndices vertexNormals:&_vertexNormalIndices andCount:&_faceVertexIndexCount];
 		
 		_xMin = xMin;
 		_xMax = xMax;
@@ -662,10 +708,9 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	NSMutableArray			*lines;
 	unsigned				lineCount, i = 0;
 	NSArray					*line;
-	NSString				*keyword, *params;
+	NSString				*keyword, *params = nil;
 	NSMutableDictionary		*result = nil;
-	NSMutableDictionary		*current;
-	NSColor					*color;
+	NSMutableDictionary		*current = nil;
 	NSString				*currentName;
 	NSError					*error;
 	
@@ -803,14 +848,13 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 
 - (BOOL)writeWaveFrontOBJToURL:(NSURL *)inFile finalLocationURL:(NSURL *)inFinalLocation issues:(DDProblemReportManager *)ioManager
 {
-	BOOL					OK = YES;
 	NSError					*error = nil;
 	NSMutableString			*dataString;
 	NSDateFormatter			*formatter;
 	NSString				*dateString;
 	NSString				*mtlName;
 	NSURL					*mtlURL;
-	unsigned				i, j, faceVertexCount, count, ni, ti;
+	unsigned				i, j, faceVertexCount, count, ni;
 	NSNumber				*index;
 	NSMutableDictionary		*materialToFaceArray;
 	NSMutableArray			*facesForMaterial;
@@ -822,6 +866,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	NSArray					*materialsUsed;
 	DDMaterial				*material;
 	unsigned				vertIdx, materialIdx;
+	uint8_t					activeSmoothingGroup = 0;
 	
 	/*	Build material library name. For “Foo.obj” or “Foo”, use “Foo.mtl”; for “Bar.baz”, use
 		“Bar.baz.mtl”. Material library names can’t contain spaces (OBJ allows multiple material
@@ -868,7 +913,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	[dataString appendFormat:@"\n# Texture co-ordinates (%u):\n", _texCoordCount];
 	for (i = 0; i != _texCoordCount; ++i)
 	{
-		[dataString appendFormat:@"vt %f %f\n", _texCoords[i].x, _texCoords[i].y];
+		[dataString appendFormat:@"vt %f %f\n", _texCoords[i].x, 1.0 - _texCoords[i].y];
 	}
 	
 	// Write normals
@@ -924,7 +969,7 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 	}
 	#endif
 	// Write faces for named textures
-	for (materialEnumerator = [materialToFaceArray keyEnumerator]; materialKey = [materialEnumerator nextObject]; )
+	for (materialEnumerator = [materialToFaceArray keyEnumerator]; (materialKey = [materialEnumerator nextObject]); )
 	{
 		facesForMaterial = [materialToFaceArray objectForKey:materialKey];
 		materialIdx = [materialKey intValue];
@@ -940,6 +985,19 @@ static DDMaterial *ObjLookUpMaterial(NSString *inName, NSDictionary *inDefs, NSM
 			faceVertexCount = currentFace->vertexCount;
 			ni = currentFace->normal + 1;
 			vertIdx = currentFace->firstVertex;
+			
+			if (activeSmoothingGroup != currentFace->smoothingGroup)
+			{
+				activeSmoothingGroup = currentFace->smoothingGroup;
+				if (0 == activeSmoothingGroup)
+				{
+					[dataString appendString:@"\ns off"];
+				}
+				else
+				{
+					[dataString appendFormat:@"\ns %u", activeSmoothingGroup];
+				}
+			}
 			
 			[dataString appendString:@"\nf"];
 			for (j = 0; j != faceVertexCount; ++j)

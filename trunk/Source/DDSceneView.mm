@@ -398,7 +398,6 @@ static const GLuint kFallbackAttributes[] =
 - (void)handleDragEvent:(NSEvent *)inEvent
 {
 	NSPoint					where;
-	float					angle;
 	Vector					newDragPoint, delta, axis;
 	float					dx, dy;
 	

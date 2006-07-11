@@ -34,6 +34,6 @@
 
 @interface NSFileManager (CocoaExtensions)
 
-- (NSString *)utiForItemAtPath:(NSString *)inPath;
+// - (NSString *)utiForItemAtPath:(NSString *)inPath;
 
 @end
