@@ -7,8 +7,13 @@
 	• Dry Dock now loads and preserves smoothing groups, but doesn’t render them. It also renumbers
 	  them in the order they appear in the file.
 	• OBJ exporter now writes correct texture co-ordinates.
+	• New Recentre... dialog provides two recentring methods.
+	• Added option to show bounding box.
+	• Stopped showing Open dialog on start/reopen, because sometimes the Wrong Thing is right.
 	• Fixed some potential bugs.
 	• Fixed real bug due to C++ being a very silly language.
+	• Fixed set of real bugs due to me being a very silly man. (Texture cache underflow, could cause
+	  crash when closing windows)
 
 0.08b (v604-2)
 	• Fixed problems with incorrect version numbers.

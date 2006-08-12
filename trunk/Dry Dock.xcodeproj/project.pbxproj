@@ -85,6 +85,8 @@
 		1A67FE82098C7FDA003BDAD5 /* DDProblemReportManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FE81098C7FDA003BDAD5 /* DDProblemReportManager.mm */; };
 		1A67FEB6098C85D6003BDAD5 /* DDProblemReportIssue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FEB5098C85D6003BDAD5 /* DDProblemReportIssue.mm */; };
 		1A7207CE095A8A6900C6896A /* DDTextureBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */; settings = {COMPILER_FLAGS = "-force_cpusubtype_ALL -falign-loops=16"; }; };
+		1A7432CC0A8CB099006AEA18 /* DDTextureInspectorController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A7432CA0A8CB099006AEA18 /* DDTextureInspectorController.h */; };
+		1A7432CD0A8CB099006AEA18 /* DDTextureInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7432CB0A8CB099006AEA18 /* DDTextureInspectorController.m */; };
 		1A7536790A0E15F40047DD80 /* DDVertexSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7536770A0E15F40047DD80 /* DDVertexSet.mm */; };
 		1A78150309767395001C0020 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A78150209767395001C0020 /* Accelerate.framework */; };
 		1A7B6CF2098F82EF004AA6D7 /* Read Me.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */; };
@@ -107,6 +109,9 @@
 		1A8B684B08142C330028C19F /* DDDocumentWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B684908142C330028C19F /* DDDocumentWindowController.mm */; };
 		1A8F08B508130C020040CAC3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F08B408130C020040CAC3 /* OpenGL.framework */; };
 		1A901231096D324800A5AC2D /* Oolite Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A901230096D324800A5AC2D /* Oolite Model.icns */; };
+		1A99FB7E0A6426EB0052591D /* DDRecenterDialogController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A99FB7C0A6426EB0052591D /* DDRecenterDialogController.h */; };
+		1A99FB7F0A6426EB0052591D /* DDRecenterDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A99FB7D0A6426EB0052591D /* DDRecenterDialogController.mm */; };
+		1A99FBF80A642B360052591D /* DDRecenterDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A99FBF60A642B360052591D /* DDRecenterDialog.nib */; };
 		1AA0E28109BF3F0200CA6EC1 /* Dry Dock Help in Resources */ = {isa = PBXBuildFile; fileRef = 1AA0E27709BF3F0200CA6EC1 /* Dry Dock Help */; };
 		1AA5471D099B35C500625FF2 /* DDStaticSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */; };
 		1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */; };
@@ -146,6 +151,8 @@
 			files = (
 				1ACB50BF0A3D8A900059D7F1 /* Sparkle.framework in CopyFiles */,
 				1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */,
+				1A99FB7E0A6426EB0052591D /* DDRecenterDialogController.h in CopyFiles */,
+				1A7432CC0A8CB099006AEA18 /* DDTextureInspectorController.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +257,8 @@
 		1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTextureBuffer.m; sourceTree = "<group>"; };
 		1A72083B095A8C8C00C6896A /* MathsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathsUtils.h; sourceTree = "<group>"; };
 		1A72092A095A98BF00C6896A /* DDInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInspectorController.h; sourceTree = "<group>"; };
+		1A7432CA0A8CB099006AEA18 /* DDTextureInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTextureInspectorController.h; sourceTree = "<group>"; };
+		1A7432CB0A8CB099006AEA18 /* DDTextureInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTextureInspectorController.m; sourceTree = "<group>"; };
 		1A7536770A0E15F40047DD80 /* DDVertexSet.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDVertexSet.mm; sourceTree = "<group>"; };
 		1A7536780A0E15F40047DD80 /* DDVertexSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDVertexSet.h; sourceTree = "<group>"; };
 		1A78150209767395001C0020 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
@@ -287,6 +296,9 @@
 		1A8B684908142C330028C19F /* DDDocumentWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDDocumentWindowController.mm; sourceTree = "<group>"; };
 		1A8F08B408130C020040CAC3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		1A901230096D324800A5AC2D /* Oolite Model.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Oolite Model.icns"; sourceTree = "<group>"; };
+		1A99FB7C0A6426EB0052591D /* DDRecenterDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDRecenterDialogController.h; sourceTree = "<group>"; };
+		1A99FB7D0A6426EB0052591D /* DDRecenterDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDRecenterDialogController.mm; sourceTree = "<group>"; };
+		1A99FBF70A642B360052591D /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDRecenterDialog.nib; sourceTree = "<group>"; };
 		1AA0E27809BF3F0200CA6EC1 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = "English.lproj/Dry Dock Help"; sourceTree = "<group>"; };
 		1AA5471B099B35C500625FF2 /* DDStaticSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDStaticSceneView.h; sourceTree = "<group>"; };
 		1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDStaticSceneView.mm; sourceTree = "<group>"; };
@@ -509,6 +521,7 @@
 				1A0FFE5B0981EBB200599E84 /* DDCompareDialog.nib */,
 				1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */,
 				1A8B185C099269EE007265FC /* DDScaleDialog.nib */,
+				1A99FBF60A642B360052591D /* DDRecenterDialog.nib */,
 				1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */,
 			);
 			name = NIBs;
@@ -546,8 +559,12 @@
 				1A8B185809926845007265FC /* DDScaleDialogController.mm */,
 				1AA54738099B370400625FF2 /* DDAxisReassignDialogController.h */,
 				1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */,
+				1A99FB7C0A6426EB0052591D /* DDRecenterDialogController.h */,
+				1A99FB7D0A6426EB0052591D /* DDRecenterDialogController.mm */,
 				1AA54883099CB77100625FF2 /* DDFirstRunController.h */,
 				1AA54884099CB77100625FF2 /* DDFirstRunController.m */,
+				1A7432CA0A8CB099006AEA18 /* DDTextureInspectorController.h */,
+				1A7432CB0A8CB099006AEA18 /* DDTextureInspectorController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -822,6 +839,7 @@
 				1A0B864109B9A3270034D90F /* Exhaust Plume.dat in Resources */,
 				1A0B86B509B9BB380034D90F /* Document Inspector.nib in Resources */,
 				1AA0E28109BF3F0200CA6EC1 /* Dry Dock Help in Resources */,
+				1A99FBF80A642B360052591D /* DDRecenterDialog.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,6 +941,8 @@
 				1A13B0090A09FFFF0017CD80 /* DDFileMatcher.m in Sources */,
 				1A7536790A0E15F40047DD80 /* DDVertexSet.mm in Sources */,
 				1A345F4C0A1A6ADF007E491D /* DDMesh+WaveFrontOBJSupport.mm in Sources */,
+				1A99FB7F0A6426EB0052591D /* DDRecenterDialogController.mm in Sources */,
+				1A7432CD0A8CB099006AEA18 /* DDTextureInspectorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -999,6 +1019,14 @@
 				1A8B185D099269EE007265FC /* English */,
 			);
 			name = DDScaleDialog.nib;
+			sourceTree = "<group>";
+		};
+		1A99FBF60A642B360052591D /* DDRecenterDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A99FBF70A642B360052591D /* English */,
+			);
+			name = DDRecenterDialog.nib;
 			sourceTree = "<group>";
 		};
 		1AA0E27709BF3F0200CA6EC1 /* Dry Dock Help */ = {
@@ -1229,7 +1257,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOS10.3.9.sdk/;
+				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
 			};
 			name = "Development-Panther";
 		};
@@ -1307,6 +1335,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
 				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = debugging;
 			};
@@ -1378,6 +1407,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
 				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = debugging;
 			};
@@ -1498,6 +1528,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_LINK_ESSENTIAL_SYMBOLS = YES;
 				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
 			};
 			name = Development;
 		};
@@ -1510,6 +1541,7 @@
 				KEEP_PRIVATE_EXTERNS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
 			};
 			name = Deployment;
 		};
