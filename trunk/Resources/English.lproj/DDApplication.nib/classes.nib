@@ -40,18 +40,32 @@
             SUPERCLASS = NSObject; 
         }, 
         {
+            CLASS = DDTextureInspectorController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                fileField = NSTextField; 
+                keyField = NSTextField; 
+                preview = NSImageView; 
+                refCountField = NSTextField; 
+                sizeField = NSTextField; 
+                table = NSTableView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
             ACTIONS = {
                 coalesceVertices = id; 
                 doCompareDialog = id; 
+                doRecenterDialog = id; 
                 doScaleDialog = id; 
                 exportDocument = id; 
                 flipX = id; 
                 flipY = id; 
                 flipZ = id; 
                 recalcNormals = id; 
-                recenter = id; 
                 reverseWinding = id; 
                 showInspector = id; 
+                toggleBoundingBox = id; 
                 toggleFaces = id; 
                 toggleNormals = id; 
                 toggleWireframe = id; 
