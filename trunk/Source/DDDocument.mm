@@ -34,6 +34,7 @@
 #import "DDPantherCompatibility.h"
 #import "DDUtilities.h"
 #import "DDModelDocument.h"
+#import "DDRecenterDialogController.h"
 
 
 @interface DDDocument(Private)
@@ -441,12 +442,6 @@
 }
 
 
-- (IBAction)recenter:sender
-{
-	[self sendMeshMessage:@selector(recenter) undoableWithName:@"Recentre"];
-}
-
-
 - (IBAction)flipX:sender
 {
 	[self sendMeshMessage:@selector(flipX) selfReversibleAction:_cmd withName:@"Flip X"];
@@ -522,6 +517,13 @@
 }
 
 
+- (void)completeAsynchronousMeshReplacingActionWithName:(NSString *)inName mesh:(DDMesh *)inMesh
+{
+	[self setUpMeshReplacingUndoActionNamed:inName];
+	[_document setRootMesh:inMesh];
+}
+
+
 - (IBAction)doCompareDialog:sender
 {
 	[DDCompareDialogController runCompareDialogForDocument:self];
@@ -531,6 +533,18 @@
 - (IBAction)doScaleDialog:sender
 {
 	[DDScaleDialogController runScaleDialogForDocument:self];
+}
+
+
+- (IBAction)doRecenterDialog:sender
+{
+	[DDRecenterDialogController runRecenterDialogForDocument:self];
+}
+
+
+- (DDModelDocument *)modelDocument
+{
+	return _document;
 }
 
 

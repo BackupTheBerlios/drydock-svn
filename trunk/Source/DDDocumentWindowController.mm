@@ -167,9 +167,11 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 		_showWireframeTag = [SimpleTag tagWithKey:@"wireframe" boolValue:_showWireframe];
 		_showFacesTag = [SimpleTag tagWithKey:@"shading" boolValue:_showFaces];
 		_showNormalsTag = [SimpleTag tagWithKey:@"normals" boolValue:_showNormals];
+		_showBBoxTag = [SimpleTag tagWithKey:@"bounding box" boolValue:_showBBox];
 		[_sceneRoot addTag:_showWireframeTag];
 		[_sceneRoot addTag:_showFacesTag];
 		[_sceneRoot addTag:_showNormalsTag];
+		[_sceneRoot addTag:_showBBoxTag];
 		
 		[outlineView reloadData];
 	}
@@ -186,6 +188,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 	_showWireframeTag = nil;
 	_showFacesTag = nil;
 	_showNormalsTag = nil;
+	_showBBoxTag = nil;
 }
 
 
@@ -236,7 +239,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 
 - (void)setShowWireframe:(BOOL)inFlag
 {
-	if (inFlag != [_showWireframeTag boolValue])
+	if (inFlag != _showWireframe)
 	{
 		_showWireframe = inFlag;
 		[_showWireframeTag setBoolValue:inFlag];
@@ -253,7 +256,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 
 - (void)setShowFaces:(BOOL)inFlag
 {
-	if (inFlag != [_showFacesTag boolValue])
+	if (inFlag != _showFaces)
 	{
 		_showFaces = inFlag;
 		[_showFacesTag setBoolValue:inFlag];
@@ -270,10 +273,27 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 
 - (void)setShowNormals:(BOOL)inFlag
 {
-	if (inFlag != [_showNormalsTag boolValue])
+	if (inFlag != _showNormals)
 	{
 		_showNormals = inFlag;
 		[_showNormalsTag setBoolValue:inFlag];
+		[[[self window] toolbar] validateVisibleItems];
+	}
+}
+
+
+- (BOOL)showBoundingBox
+{
+	return _showBBox;
+}
+
+
+- (void)setShowBoundingBox:(BOOL)inFlag
+{
+	if (inFlag != _showBBox)
+	{
+		_showBBox = inFlag;
+		[_showBBoxTag setBoolValue:inFlag];
 		[[[self window] toolbar] validateVisibleItems];
 	}
 }
@@ -309,6 +329,12 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 }
 
 
+- (IBAction)toggleBoundingBox:sender
+{
+	[self setShowBoundingBox:!_showBBox];
+}
+
+
 - (void)documentRootMeshChanged:notification
 {
 	[self invalidateSceneGraph];
@@ -340,6 +366,10 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 		else if (action == @selector(toggleNormals:))
 		{
 			[item setState:[self showNormals]];
+		}
+		else if (action == @selector(toggleBBox:))
+		{
+			[item setState:[self showBoundingBox]];
 		}
 	}
 	

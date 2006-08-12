@@ -431,7 +431,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 }
 
 
-- (void)recenter
+- (void)recenterWithMethod:(DDMeshRecenterMethod)inMethod
 {
 	TraceEnter();
 	
@@ -439,12 +439,26 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 	Vector				v, centre(0, 0, 0);
 	Scalar				r;
 	
-	// Average all the vertices together
-	for (i = 0; i != _vertexCount; ++i)
+	if (kDDMeshRecenterNone == inMethod) return;
+	if (kDDMeshRecenterByAveragingVertices == inMethod)
 	{
-		centre += _vertices[i];
+		// Average all the vertices together
+		for (i = 0; i != _vertexCount; ++i)
+		{
+			centre += _vertices[i];
+		}
+		centre /= _vertexCount;
 	}
-	centre /= _vertexCount;
+	else if (kDDMeshRecenterUsingBoundingBox == inMethod)
+	{
+		centre.x = (_xMax + _xMin) / 2.0;
+		centre.y = (_yMax + _yMin) / 2.0;
+		centre.z = (_zMax + _zMin) / 2.0;
+	}
+	else
+	{
+		LogMessage(@"Invalid rescale method %u.", (unsigned int)inMethod);
+	}
 	
 	// Shift all the vertices over, and recalculate rMax
 	_rMax = 0;

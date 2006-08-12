@@ -37,10 +37,13 @@
 
 - (IBAction)doCompareDialog:sender;
 - (IBAction)doScaleDialog:sender;
+- (IBAction)doRecenterDialog:sender;
 
 - (IBAction)recalcNormals:sender;
 - (IBAction)reverseWinding:sender;
 - (IBAction)coalesceVertices:sender;
+
+- (void)completeAsynchronousMeshReplacingActionWithName:(NSString *)inName mesh:(DDMesh *)inMesh;
 
 - (void)scaleX:(float)inX y:(float)inY z:(float)inZ;
 

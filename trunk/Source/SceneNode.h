@@ -59,8 +59,8 @@
 - (void)insertChild:(SceneNode *)inNode after:(SceneNode *)inExistingChild;
 - (void)removeChild:(SceneNode *)inChild;
 
-- (SceneNode *)firstChild;
-- (SceneNode *)nextSibling;
+- (id)firstChild;
+- (id)nextSibling;
 - (NSEnumerator *)childEnumerator;
 - (uint32_t)numberOfChildren;
 - (SceneNode *)childAtIndex:(uint32_t)inIndex;	// O(n)

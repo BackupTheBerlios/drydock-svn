@@ -52,6 +52,15 @@ enum
 };
 
 
+typedef enum
+{
+	kDDMeshRecenterNone,
+	kDDMeshRecenterByAveragingVertices,
+	kDDMeshRecenterUsingBoundingBox,
+	kDDMeshRecenterMethodCount
+} DDMeshRecenterMethod;
+
+
 typedef struct DDMeshFaceData
 {
 	DDMeshIndex				normal;
@@ -117,7 +126,7 @@ typedef struct DDMeshFaceData
 - (void)flipX;
 - (void)flipY;
 - (void)flipZ;
-- (void)recenter;
+- (void)recenterWithMethod:(DDMeshRecenterMethod)inMethod;
 - (void)scaleX:(Scalar)inX y:(Scalar)inY z:(Scalar)inZ;
 - (void)coalesceVertices;
 
@@ -156,6 +165,7 @@ typedef struct DDMeshFaceData
 - (void)glRenderWireframe;
 - (void)glRenderNormals;
 - (void)glRenderBadPolygons;
+- (void)glRenderBoundingBox;
 
 @end
 

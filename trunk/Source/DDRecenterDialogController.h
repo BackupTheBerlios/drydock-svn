@@ -1,5 +1,5 @@
 /*
-	DDTextureBuffer.h
+	DDRecenterDialogController.h
 	Dry Dock for Oolite
 	$Id$
 	
@@ -21,38 +21,28 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
+@class DDDocument, DDMesh, DDComparatorGLView, DDMeshNode;
 
-@class DDProblemReportManager;
 
-
-@interface DDTextureBuffer: NSObject
+@interface DDRecenterDialogController: NSObject
 {
-	GLuint					_width, _height;
-	void					*_data;
-	id						_key;
-	NSURL					*_file;
+	IBOutlet NSPanel				*window;
+	IBOutlet DDComparatorGLView		*glView;
+	
+	IBOutlet NSMatrix				*methodSelectionMatrix;
+	
+	DDDocument						*document;
+	DDMesh							*initialMesh;
+	DDMesh							*recenteredMesh;
+	DDMeshNode						*meshNode;
+	unsigned						method;
 }
 
-+ (id)textureWithFile:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
-+ (id)placeholderTextureWithIssues:(DDProblemReportManager *)ioIssues;
++ (void)runRecenterDialogForDocument:(DDDocument *)inDocument;
 
-- (void)setUpCurrentTexture;
-
-- (NSURL *)file;
-
-@end
-
-
-@interface DDTextureBuffer (DebugHooks)
-
-+ (void)getActiveBuffers:(DDTextureBuffer ***)outBuffers count:(unsigned *)outCount;
-
-- (id)key;
-- (NSString *)sizeString;
-- (NSImage *)image;
+- (IBAction)cancelAction:sender;
+- (IBAction)okAction:sender;
+- (IBAction)setMethodAction:sender;
 
 @end
-
-extern NSString *kNotificationDDTextureBufferActiveSetChanged;
-extern NSString *kNotificationDDTextureBufferRefCountChanged;

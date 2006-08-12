@@ -29,8 +29,9 @@
 
 - (int)runModalOpenPanel:(NSOpenPanel *)openPanel forTypes:(NSArray *)fileNameExtensionsAndHFSFileTypes
 {
-	[openPanel setTreatsFilePackagesAsDirectories:YES];
-	return [super runModalOpenPanel:openPanel forTypes:fileNameExtensionsAndHFSFileTypes];
+	/*[openPanel setTreatsFilePackagesAsDirectories:YES];
+	return [super runModalOpenPanel:openPanel forTypes:fileNameExtensionsAndHFSFileTypes];*/
+	return 0;
 }
 
 @end

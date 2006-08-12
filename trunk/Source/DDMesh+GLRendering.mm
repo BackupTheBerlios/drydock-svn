@@ -247,4 +247,37 @@
 	ExitWireframeMode(wfmc);
 }
 
+
+- (void)glRenderBoundingBox
+{
+	WFModeContext			wfmc;
+	
+	CGL_MACRO_DECLARE_VARIABLES();
+	
+	EnterWireframeMode(wfmc);
+	glColor3f(1, 1, 1);
+	
+	glBegin(GL_LINE_LOOP);
+		glVertex3f(_xMin, _yMin, _zMin);
+		glVertex3f(_xMax, _yMin, _zMin);
+		glVertex3f(_xMax, _yMax, _zMin);
+		glVertex3f(_xMin, _yMax, _zMin);
+		glVertex3f(_xMin, _yMax, _zMax);
+		glVertex3f(_xMax, _yMax, _zMax);
+		glVertex3f(_xMax, _yMin, _zMax);
+		glVertex3f(_xMin, _yMin, _zMax);
+	glEnd();
+	glBegin(GL_LINES);
+		glVertex3f(_xMax, _yMin, _zMin);
+		glVertex3f(_xMax, _yMin, _zMax);
+		glVertex3f(_xMax, _yMax, _zMin);
+		glVertex3f(_xMax, _yMax, _zMax);
+		glVertex3f(_xMin, _yMin, _zMin);
+		glVertex3f(_xMin, _yMax, _zMin);
+		glVertex3f(_xMin, _yMin, _zMax);
+		glVertex3f(_xMin, _yMax, _zMax);
+	glEnd();
+	
+	ExitWireframeMode(wfmc);}
+
 @end

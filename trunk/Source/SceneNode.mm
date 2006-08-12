@@ -310,13 +310,13 @@ NSString *kNotificationSceneNodeModified = @"com.ahruman.is-a-geek ObjectiveScen
 }
 
 
-- (SceneNode *)firstChild
+- (id)firstChild
 {
 	return [[firstChild retain] autorelease];
 }
 
 
-- (SceneNode *)nextSibling
+- (id)nextSibling
 {
 	return [[nextSibling retain] autorelease];
 }

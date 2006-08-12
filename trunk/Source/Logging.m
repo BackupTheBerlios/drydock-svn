@@ -88,7 +88,7 @@ void LogMessage_(NSString *inFormat, const char *inFile, const char *inFunction,
 		unsigned			indent;
 							// String of 64 spaces (null-terminated)
 		const char			spaces[kMaxIndent + 1] =
-							"                                                                ";
+							"                                                                \0";
 		const char			*indentString;
 		
 		indent = sIndent * 2;	// Two spaces per indent level

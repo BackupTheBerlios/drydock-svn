@@ -440,7 +440,7 @@
 			NSString *string = [[_issues objectAtIndex:row] string];
 			[layoutProxyTextView setString:string];
 			[layoutProxyTextView sizeToFit];
-			result = [layoutProxyTextView frame].size.height + 4;
+			result = [layoutProxyTextView frame].size.height + 8;
 			_heights[row] = result;
 		}
 	}

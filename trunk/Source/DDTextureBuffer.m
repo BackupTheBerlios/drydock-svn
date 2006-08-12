@@ -40,7 +40,13 @@
 #endif
 
 
+NSString *kNotificationDDTextureBufferActiveSetChanged = @"de.berlios.drydock TextureBufferActiveSetChanged";
+NSString *kNotificationDDTextureBufferRefCountChanged = @"de.berlios.drydock TextureBufferRefCountChanged";
+
+
 static NSMutableDictionary		*sCache = nil;
+static BOOL						sShadowCacheInvalidate = YES;
+static NSMutableDictionary		*sImageCache = nil;
 
 static unsigned GetMaxTextureSize(void);
 
@@ -54,6 +60,9 @@ static unsigned GetMaxTextureSize(void);
 #if USE_TEXTURE_VERIFICATION_WINDOW
 - (void)makeTextureVerificationWindowWithImage:(NSImage *)inImage;
 #endif
+
++ (void)sendDeferredRefCountChangedNotification;
++ (void)doSendRefCountChangedNotification;
 
 @end
 
@@ -74,6 +83,7 @@ static unsigned GetMaxTextureSize(void);
 	}
 	else
 	{
+		[result retain];
 		TraceMessage(@"Using cached texture %@.", result);
 	}
 	
@@ -97,6 +107,7 @@ static unsigned GetMaxTextureSize(void);
 	}
 	else
 	{
+		[result retain];
 		TraceMessage(@"Using cached texture %@.", result);
 	}
 	
@@ -121,6 +132,7 @@ static unsigned GetMaxTextureSize(void);
 	if (OK)
 	{
 		_key = [inKey retain];
+		_file = [inURL retain];
 		
 		OK = CFURLGetFSRef((CFURLRef)inURL, &fsRef);
 		if (OK) OK = [self loadFSRef:&fsRef issues:ioIssues];
@@ -131,6 +143,13 @@ static unsigned GetMaxTextureSize(void);
 		TraceMessage(@"Failed to load texture %@.", inKey);
 		[self release];
 		self = nil;
+	}
+	else
+	{
+		sShadowCacheInvalidate = YES;
+		if (nil == sCache) sCache = [[NSMutableDictionary alloc] init];
+		[sCache setObject:self forKey:inKey];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDTextureBufferActiveSetChanged object:[DDTextureBuffer class]];
 	}
 	
 	return self;
@@ -243,18 +262,49 @@ static unsigned GetMaxTextureSize(void);
 	[_key release];
 	[_file autorelease];
 	
+	sShadowCacheInvalidate = YES;
+	NSNotificationCenter *nctr = [NSNotificationCenter defaultCenter];
+	[nctr postNotificationName:kNotificationDDTextureBufferActiveSetChanged object:[DDTextureBuffer class]];
+	[nctr removeObserver:nil name:nil object:self];
+	[sImageCache removeObjectForKey:[NSValue valueWithPointer:self]];
+	
 	[super dealloc];
+}
+
+
+static BOOL sRemovingFromCache = NO;
+
+- (id)retain
+{
+	if (sRemovingFromCache) return self;
+	
+	[super retain];
+	[DDTextureBuffer sendDeferredRefCountChangedNotification];
+	
+	return self;
 }
 
 
 - (void)release
 {
-	BOOL					uncache;
+	if (sRemovingFromCache) return;
 	
-	uncache = (2 == [self retainCount]);
+	int retainCount = [self retainCount];
+	BOOL uncache = (retainCount == 2);
 	[super release];
 	
-	if (uncache) [sCache removeObjectForKey:_key];
+	[DDTextureBuffer sendDeferredRefCountChangedNotification];
+	
+	if (uncache)
+	{
+		if ([sCache objectForKey:_key] == self)
+		{
+			sRemovingFromCache = YES;
+			[sCache removeObjectForKey:_key];
+			sRemovingFromCache = NO;
+			[self release];
+		}
+	}
 }
 
 
@@ -329,6 +379,112 @@ static unsigned GetMaxTextureSize(void);
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<%@ %p>{%dx%d pixels, %@}", [self className], self, _width, _height, _key];
+}
+
+@end
+
+@implementation DDTextureBuffer (DebugHooks)
+
+static unsigned				sShadowCacheSize = 0;
+static DDTextureBuffer		**sShadowCache = nil;
+
++ (void)getActiveBuffers:(DDTextureBuffer ***)outBuffers count:(unsigned *)outCount
+{
+	if (sShadowCacheInvalidate)
+	{
+		sShadowCacheInvalidate = NO;
+		if (sShadowCache)
+		{
+			free(sShadowCache);
+			sShadowCache = nil;
+		}
+		sShadowCacheSize = [sCache count];
+		if (0 != sShadowCacheSize)
+		{
+			sShadowCache = (DDTextureBuffer **)calloc(sizeof (DDTextureBuffer *), sShadowCacheSize);
+			if (nil == sShadowCache) sShadowCacheSize = 0;
+			else CFDictionaryGetKeysAndValues((CFDictionaryRef)sCache, NULL, (const void **)sShadowCache);
+		}
+	}
+	
+	if (nil != outBuffers) *outBuffers = sShadowCache;
+	if (nil != outCount) *outCount = sShadowCacheSize;
+}
+
+
+- (id)key
+{
+	return _key;
+}
+
+
+- (NSString *)sizeString
+{
+	return [NSString stringWithFormat:@"%u x %u", _width, _height];
+}
+
+
+- (NSImage *)image
+{
+	NSImage				*image;
+	NSValue				*key;
+	NSBitmapImageRep	*bitmap;
+	uint32_t			*src, *dst, x, y, a, rgb;
+	
+	// Look for cached image
+	key = [NSValue valueWithPointer:self];
+	image = [sImageCache objectForKey:key];
+	if (nil != image) return image;
+	
+	if (nil == _data) return nil;
+	
+	// Create image
+	bitmap = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:_width pixelsHigh:_height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSCalibratedRGBColorSpace bytesPerRow:4 * _width bitsPerPixel:32];
+	if (nil != bitmap)
+	{
+		// Copy pixels, swizzling ARGB to RGBA
+		src = (uint32_t *)_data;
+		dst = (uint32_t *)[bitmap bitmapData];
+		for (y = 0; y != _height; ++y)
+		{
+			for (x = 0; x != _width; ++x)
+			{
+				rgb = *src++;
+				a = rgb & 0xFF000000;
+				*dst++  = (rgb << 8) | (a >> 24);
+			}
+		}
+		
+		image = [[[NSImage alloc] init] autorelease];
+		[image setSize:NSMakeSize(_width, _height)];
+		[image addRepresentation:bitmap];
+		[bitmap release];
+		
+		if (nil == sImageCache) sImageCache = [[NSMutableDictionary alloc] init];
+		[sImageCache setObject:image forKey:key];
+	}
+	
+	return image;
+}
+
+
+static BOOL sPendingDeferredRefCountChanged = NO;
+
++ (void)sendDeferredRefCountChangedNotification
+{
+	sPendingDeferredRefCountChanged = YES;
+	// Call +doSendRefCountChangedNotification after current event is processed
+	[self performSelectorOnMainThread:@selector(doSendRefCountChangedNotification) withObject:nil waitUntilDone:NO];
+}
+
+
++ (void)doSendRefCountChangedNotification
+{
+	if (sPendingDeferredRefCountChanged)
+	{
+		sPendingDeferredRefCountChanged = NO;	// Ensure we only send the notification once per event cycle
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDTextureBufferRefCountChanged object:self];
+	}
 }
 
 @end

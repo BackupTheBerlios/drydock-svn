@@ -51,13 +51,17 @@ enum
 	SceneNode						*_sceneRoot;
 	SimpleTag						*_showWireframeTag,
 									*_showFacesTag,
-									*_showNormalsTag;
+									*_showNormalsTag,
+									*_showBBoxTag;
 	
 	float							_objectRadius;
 	
 	unsigned						_tool;
 	
-	BOOL							_showWireframe, _showFaces, _showNormals;
+	BOOL							_showWireframe,
+									_showFaces,
+									_showNormals,
+									_showBBox;
 }
 
 - (IBAction)nameAction:sender;
@@ -75,6 +79,8 @@ enum
 - (void)setShowFaces:(BOOL)inFlag;
 - (BOOL)showNormals;
 - (void)setShowNormals:(BOOL)inFlag;
+- (BOOL)showBoundingBox;
+- (void)setShowBoundingBox:(BOOL)inFlag;
 
 - (unsigned)tool;
 - (void)setTool:(unsigned)inTool;

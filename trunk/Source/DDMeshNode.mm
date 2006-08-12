@@ -76,6 +76,7 @@
 	BOOL			shading = YES;
 	BOOL			wireframe = NO;
 	BOOL			normals = NO;
+	BOOL			bbox = NO;
 	id				val;
 	
 	val = [inState objectForKey:@"wireframe"];
@@ -96,10 +97,16 @@
 		normals = [val boolValue];
 	}
 	
+	val = [inState objectForKey:@"bounding box"];
+	if (val && [val respondsToSelector:@selector(boolValue)])
+	{
+		bbox = [val boolValue];
+	}
+	
 	if (shading)	[_mesh glRenderShaded];
 	if (wireframe)	[_mesh glRenderWireframe];
-	
 	if (normals)	[_mesh glRenderNormals];
+	if (bbox)		[_mesh glRenderBoundingBox];
 	
 	[_mesh glRenderBadPolygons];
 	
