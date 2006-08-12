@@ -439,7 +439,7 @@ static DDTextureBuffer		**sShadowCache = nil;
 	if (nil == _data) return nil;
 	
 	// Create image
-	bitmap = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:_width pixelsHigh:_height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSCalibratedRGBColorSpace bytesPerRow:4 * _width bitsPerPixel:32];
+	bitmap = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:_width pixelsHigh:_height bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:4 * _width bitsPerPixel:32];
 	if (nil != bitmap)
 	{
 		// Copy pixels, swizzling ARGB to RGBA
@@ -459,6 +459,8 @@ static DDTextureBuffer		**sShadowCache = nil;
 		[image setSize:NSMakeSize(_width, _height)];
 		[image addRepresentation:bitmap];
 		[bitmap release];
+		
+		[image setCacheMode:NSImageCacheBySize];
 		
 		if (nil == sImageCache) sImageCache = [[NSMutableDictionary alloc] init];
 		[sImageCache setObject:image forKey:key];

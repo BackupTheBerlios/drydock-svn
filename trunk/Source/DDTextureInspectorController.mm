@@ -143,8 +143,6 @@
 		result = nil;
 	}
 	
-//	LogMessage(@"Called for row %i, column \"%@\", buffer = %@; returing %@", row, identifier, buffer, result);
-	
 	return result;
 }
 
