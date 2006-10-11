@@ -453,6 +453,20 @@
 			sepNavVisRect = "{{0, 0}, {1214, 817}}";
 		};
 	};
+	1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1259, 8176}}";
+			sepNavSelRange = "{9526, 0}";
+			sepNavVisRect = "{{0, 5533}, {1192, 822}}";
+		};
+	};
+	1A53D8140ADD2AAF0057ED21 /* DDStartupController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1192, 960}}";
+			sepNavSelRange = "{933, 0}";
+			sepNavVisRect = "{{0, 0}, {1192, 822}}";
+		};
+	};
 	1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1039, 3616}}";
@@ -1019,20 +1033,6 @@
 			sepNavIntBoundsRect = "{{0, 0}, {1280, 1744}}";
 			sepNavSelRange = "{5802, 0}";
 			sepNavVisRect = "{{0, 1028}, {933, 716}}";
-		};
-	};
-	1AA54883099CB77100625FF2 /* DDFirstRunController.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1240, 960}}";
-			sepNavSelRange = "{1644, 17}";
-			sepNavVisRect = "{{0, 244}, {1240, 716}}";
-		};
-	};
-	1AA54884099CB77100625FF2 /* DDFirstRunController.m */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1259, 8112}}";
-			sepNavSelRange = "{1498, 0}";
-			sepNavVisRect = "{{0, 582}, {1192, 822}}";
 		};
 	};
 	1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */ = {

@@ -1,5 +1,5 @@
 /*
-	DDFirstRunController.h
+	DDStartupController.h
 	Dry Dock for Oolite
 	$Id$
 	
@@ -28,7 +28,7 @@
 @class UKUpdateChecker;
 
 
-@interface DDFirstRunController: NSObject
+@interface DDStartupController: NSObject
 {
 	IBOutlet NSWindow				*window;
 	IBOutlet NSTabView				*stageTabView;

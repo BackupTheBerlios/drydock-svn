@@ -17,9 +17,16 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSDocumentController; 
         }, 
+        {CLASS = DDHeaderGradientView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = DDInspectorController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {defaultView = NSView; window = NSWindow; }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {
             ACTIONS = {nextButtonAction = id; quitButtonAction = id; }; 
-            CLASS = DDFirstRunController; 
+            CLASS = DDStartupController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 authorisationRequiredForSCRField = NSTextField; 
@@ -30,13 +37,6 @@
                 updateChecker = UKUpdateChecker; 
                 window = NSWindow; 
             }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = DDHeaderGradientView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {
-            CLASS = DDInspectorController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {defaultView = NSView; window = NSWindow; }; 
             SUPERCLASS = NSObject; 
         }, 
         {

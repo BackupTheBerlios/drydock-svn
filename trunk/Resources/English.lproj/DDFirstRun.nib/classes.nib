@@ -2,7 +2,7 @@
     IBClasses = (
         {
             ACTIONS = {checkForUpdatesAction = id; nextButtonAction = id; quitButtonAction = id; }; 
-            CLASS = DDFirstRunController; 
+            CLASS = DDStartupController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 authorisationRequiredForSCRField = NSTextField; 

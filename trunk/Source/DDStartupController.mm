@@ -1,5 +1,5 @@
 /*
-	DDFirstRunController.mm
+	DDStartupController.mm
 	Dry Dock for Oolite
 	$Id$
 	
@@ -24,7 +24,7 @@
 #define ENABLE_TRACE 0
 #define DLOPEN_NO_WARN
 
-#import "DDFirstRunController.h"
+#import "DDStartupController.h"
 #import "Logging.h"
 #import "SmartCrashReportsInstall.h"
 #import "DDApplicationDelegate.h"
@@ -82,7 +82,7 @@ static void RunProblemReporterExample(void);
 static void RegisterMyHelpBook(void);
 
 
-@interface DDFirstRunController (Private)
+@interface DDStartupController (Private)
 
 - (void)doFirstRunIfAppropriate;
 
@@ -93,7 +93,7 @@ static void RegisterMyHelpBook(void);
 @end
 
 
-@implementation DDFirstRunController
+@implementation DDStartupController
 
 - (void)dealloc
 {
@@ -367,8 +367,12 @@ static void					*sSCRHandle = NULL;
 
 static SCRLoadState LoadSCR(void);
 
-static Boolean (*SCR_CanInstall)(Boolean* outOptionalAuthenticationWillBeRequired) = NULL;
-static OSStatus (*SCR_Install)(UInt32 inInstallFlags) = NULL;
+
+typedef Boolean (*SCR_CanInstallPtr)(Boolean* outOptionalAuthenticationWillBeRequired);
+typedef OSStatus (*SCR_InstallPtr)(UInt32 inInstallFlags);
+
+static SCR_CanInstallPtr SCR_CanInstall;
+static SCR_InstallPtr SCR_Install;
 
 
 static Boolean MySCRCanInstall(Boolean* outOptionalAuthenticationWillBeRequired)
@@ -428,8 +432,8 @@ SCRLoadState LoadSCR(void)
 			}
 			else
 			{
-				SCR_CanInstall = dlsym(sSCRHandle, "UnsanitySCR_CanInstall");
-				SCR_Install = dlsym(sSCRHandle, "UnsanitySCR_Install");
+				SCR_CanInstall = (SCR_CanInstallPtr)dlsym(sSCRHandle, "UnsanitySCR_CanInstall");
+				SCR_Install = (SCR_InstallPtr)dlsym(sSCRHandle, "UnsanitySCR_Install");
 				if (NULL != SCR_CanInstall && NULL != SCR_Install)
 				{
 					TraceMessage(@"Successfully loaded libSmartCrashReportsInstall.");

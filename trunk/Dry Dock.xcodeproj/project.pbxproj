@@ -74,6 +74,9 @@
 		1A51305E09909B6A00A55ED7 /* DDComparatorGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */; };
 		1A53D7E70ADD203D0057ED21 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A53D7E60ADD203D0057ED21 /* Sparkle.framework */; };
 		1A53D7F90ADD271B0057ED21 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A53D7E60ADD203D0057ED21 /* Sparkle.framework */; };
+		1A53D8150ADD2AAF0057ED21 /* DDStartupController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */; };
+		1A53D8160ADD2AAF0057ED21 /* DDStartupController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A53D8140ADD2AAF0057ED21 /* DDStartupController.h */; };
+		1A53D8290ADD2B500057ED21 /* DDStartup.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A53D8270ADD2B500057ED21 /* DDStartup.nib */; };
 		1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A543C1D09AD0087006B751A /* QuickTime.framework */; };
 		1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
 		1A5703DA09B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */; };
@@ -115,9 +118,7 @@
 		1AA5471D099B35C500625FF2 /* DDStaticSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */; };
 		1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */; };
 		1AA5477C099B3C1700625FF2 /* Right Way Around.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA5477B099B3C1700625FF2 /* Right Way Around.png */; };
-		1AA547D1099B8BF700625FF2 /* DDFirstRun.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */; };
 		1AA547D3099B8CC400625FF2 /* Big Translucent Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */; };
-		1AA54885099CB77100625FF2 /* DDFirstRunController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54884099CB77100625FF2 /* DDFirstRunController.m */; };
 		1AA548B2099CB91200625FF2 /* DDApplication.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA548B0099CB91200625FF2 /* DDApplication.nib */; };
 		1AA54975099CC00700625FF2 /* DDAxisReassignDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */; };
 		1AA79C0909896FEA00A1810B /* Arrow Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */; };
@@ -149,6 +150,7 @@
 			files = (
 				1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */,
 				1A53D7F90ADD271B0057ED21 /* Sparkle.framework in CopyFiles */,
+				1A53D8160ADD2AAF0057ED21 /* DDStartupController.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +232,9 @@
 		1A51305C09909B6A00A55ED7 /* DDComparatorGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDComparatorGLView.h; sourceTree = "<group>"; };
 		1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDComparatorGLView.mm; sourceTree = "<group>"; };
 		1A53D7E60ADD203D0057ED21 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Sparkle/Sparkle.framework; sourceTree = "<group>"; };
+		1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDStartupController.mm; sourceTree = "<group>"; };
+		1A53D8140ADD2AAF0057ED21 /* DDStartupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDStartupController.h; sourceTree = "<group>"; };
+		1A53D8280ADD2B500057ED21 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDStartup.nib; sourceTree = "<group>"; };
 		1A543C1D09AD0087006B751A /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDErrorDescription.mm; sourceTree = "<group>"; };
 		1A543C6C09AD0A3E006B751A /* DDErrorDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDErrorDescription.h; sourceTree = "<group>"; };
@@ -302,12 +307,9 @@
 		1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDAxisReassignDialogController.mm; sourceTree = "<group>"; };
 		1AA54741099B37E200625FF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDAxisReassignDialog.nib; sourceTree = "<group>"; };
 		1AA5477B099B3C1700625FF2 /* Right Way Around.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Right Way Around.png"; sourceTree = "<group>"; };
-		1AA547D0099B8BF700625FF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDFirstRun.nib; sourceTree = "<group>"; };
 		1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Big Translucent Icon.png"; sourceTree = "<group>"; };
 		1AA5485D099CB5D600625FF2 /* SmartCrashReportsInstall.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SmartCrashReportsInstall.o; sourceTree = "<group>"; };
 		1AA5485E099CB5D600625FF2 /* SmartCrashReportsInstall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartCrashReportsInstall.h; sourceTree = "<group>"; };
-		1AA54883099CB77100625FF2 /* DDFirstRunController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFirstRunController.h; sourceTree = "<group>"; };
-		1AA54884099CB77100625FF2 /* DDFirstRunController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFirstRunController.m; sourceTree = "<group>"; };
 		1AA548B1099CB91200625FF2 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DDApplication.nib; sourceTree = "<group>"; };
 		1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Arrow Tool.tiff"; sourceTree = "<group>"; };
 		1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DisplayListCacheNode.mm; sourceTree = "<group>"; };
@@ -518,7 +520,7 @@
 				1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */,
 				1A8B185C099269EE007265FC /* DDScaleDialog.nib */,
 				1A99FBF60A642B360052591D /* DDRecenterDialog.nib */,
-				1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */,
+				1A53D8270ADD2B500057ED21 /* DDStartup.nib */,
 			);
 			name = NIBs;
 			sourceTree = "<group>";
@@ -557,8 +559,8 @@
 				1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */,
 				1A99FB7C0A6426EB0052591D /* DDRecenterDialogController.h */,
 				1A99FB7D0A6426EB0052591D /* DDRecenterDialogController.mm */,
-				1AA54883099CB77100625FF2 /* DDFirstRunController.h */,
-				1AA54884099CB77100625FF2 /* DDFirstRunController.m */,
+				1A53D8140ADD2AAF0057ED21 /* DDStartupController.h */,
+				1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */,
 				1A7432CA0A8CB099006AEA18 /* DDTextureInspectorController.h */,
 				1AC5E3450A8DD2CE00C2D481 /* DDTextureInspectorController.mm */,
 			);
@@ -829,13 +831,13 @@
 				1A8B185E099269EE007265FC /* DDScaleDialog.nib in Resources */,
 				1AA54975099CC00700625FF2 /* DDAxisReassignDialog.nib in Resources */,
 				1AA5477C099B3C1700625FF2 /* Right Way Around.png in Resources */,
-				1AA547D1099B8BF700625FF2 /* DDFirstRun.nib in Resources */,
 				1AA547D3099B8CC400625FF2 /* Big Translucent Icon.png in Resources */,
 				1AA548B2099CB91200625FF2 /* DDApplication.nib in Resources */,
 				1A0B864109B9A3270034D90F /* Exhaust Plume.dat in Resources */,
 				1A0B86B509B9BB380034D90F /* Document Inspector.nib in Resources */,
 				1AA0E28109BF3F0200CA6EC1 /* Dry Dock Help in Resources */,
 				1A99FBF80A642B360052591D /* DDRecenterDialog.nib in Resources */,
+				1A53D8290ADD2B500057ED21 /* DDStartup.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -915,7 +917,6 @@
 				1A8B185909926845007265FC /* DDScaleDialogController.mm in Sources */,
 				1AA5471D099B35C500625FF2 /* DDStaticSceneView.mm in Sources */,
 				1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */,
-				1AA54885099CB77100625FF2 /* DDFirstRunController.m in Sources */,
 				1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */,
 				1A2740B609A89E7A0031F97B /* DDPantherCompatibility.mm in Sources */,
 				1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */,
@@ -939,6 +940,7 @@
 				1A345F4C0A1A6ADF007E491D /* DDMesh+WaveFrontOBJSupport.mm in Sources */,
 				1A99FB7F0A6426EB0052591D /* DDRecenterDialogController.mm in Sources */,
 				1AC5E3460A8DD2CE00C2D481 /* DDTextureInspectorController.mm in Sources */,
+				1A53D8150ADD2AAF0057ED21 /* DDStartupController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -993,6 +995,14 @@
 			name = UKUpdateChecker.strings;
 			sourceTree = "<group>";
 		};
+		1A53D8270ADD2B500057ED21 /* DDStartup.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A53D8280ADD2B500057ED21 /* English */,
+			);
+			name = DDStartup.nib;
+			sourceTree = "<group>";
+		};
 		1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1031,14 +1041,6 @@
 				1AA0E27809BF3F0200CA6EC1 /* English */,
 			);
 			name = "Dry Dock Help";
-			sourceTree = "<group>";
-		};
-		1AA547CF099B8BF700625FF2 /* DDFirstRun.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1AA547D0099B8BF700625FF2 /* English */,
-			);
-			name = DDFirstRun.nib;
 			sourceTree = "<group>";
 		};
 		1AA548B0099CB91200625FF2 /* DDApplication.nib */ = {
