@@ -320,7 +320,7 @@
 		helpBookName = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleHelpBookName"] retain];
 	}
 	
-	err = AHGotoPage((CFStringRef)helpBookName, (CFStringRef)@"html/reference-errors.html", (CFStringRef)anchor);
+	err = AHLookupAnchor((CFStringRef)helpBookName, (CFStringRef)anchor);
 	if (noErr != err) LogMessage(@"Error %i trying to look up help anchor \"%@\".", err, anchor);
 }
 

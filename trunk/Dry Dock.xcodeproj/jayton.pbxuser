@@ -2,9 +2,9 @@
 {
 	089C1660FE840EACC02AAC07 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1258, 801}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1016, 822}}";
 			sepNavSelRange = "{164, 26}";
-			sepNavVisRect = "{{0, 0}, {1258, 801}}";
+			sepNavVisRect = "{{0, 0}, {1016, 822}}";
 		};
 	};
 	1A00856809C176C2007B982D /* DDWizardBackdropView.h */ = {
@@ -37,8 +37,8 @@
 	};
 	1A0322A8096C3D890000B217 /* Change Log.txt */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1192, 1760}}";
-			sepNavSelRange = "{1043, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1192, 1776}}";
+			sepNavSelRange = "{993, 0}";
 			sepNavVisRect = "{{0, 0}, {1192, 822}}";
 		};
 	};
@@ -180,13 +180,6 @@
 			sepNavIntBoundsRect = "{{0, 0}, {1184, 822}}";
 			sepNavSelRange = "{43, 0}";
 			sepNavVisRect = "{{0, 0}, {1184, 822}}";
-		};
-	};
-	1A18DE07096456AF0010CE0B /* English */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1735, 822}}";
-			sepNavSelRange = "{1179, 0}";
-			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
 	1A18DE0D096456D20010CE0B /* UKFeedbackProvider.h */ = {
@@ -351,8 +344,8 @@
 	1A345F4B0A1A6ADE007E491D /* DDMesh+WaveFrontOBJSupport.mm */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {2106, 18576}}";
-			sepNavSelRange = "{20392, 0}";
-			sepNavVisRect = "{{0, 9162}, {1291, 348}}";
+			sepNavSelRange = "{23871, 0}";
+			sepNavVisRect = "{{0, 11133}, {1016, 822}}";
 		};
 	};
 	1A442147094C830B000E90C2 /* Logging.h */ = {
@@ -560,9 +553,9 @@
 	};
 	1A67FE81098C7FDA003BDAD5 /* DDProblemReportManager.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 7760}}";
-			sepNavSelRange = "{10488, 0}";
-			sepNavVisRect = "{{0, 6426}, {1214, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1070, 7760}}";
+			sepNavSelRange = "{8107, 0}";
+			sepNavVisRect = "{{0, 4749}, {1016, 822}}";
 		};
 	};
 	1A67FEB4098C85D6003BDAD5 /* DDProblemReportIssue.h */ = {
@@ -710,16 +703,16 @@
 	};
 	1A7D60F0094EDACB00E9D611 /* DDMesh.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1826, 12288}}";
-			sepNavSelRange = "{12730, 0}";
-			sepNavVisRect = "{{0, 7989}, {1192, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1826, 11664}}";
+			sepNavSelRange = "{15053, 0}";
+			sepNavVisRect = "{{0, 9305}, {1016, 822}}";
 		};
 	};
 	1A7D61A5094EE3D300E9D611 /* English */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {2799, 2720}}";
-			sepNavSelRange = "{2077, 0}";
-			sepNavVisRect = "{{0, 0}, {1214, 817}}";
+			sepNavSelRange = "{9485, 68}";
+			sepNavVisRect = "{{0, 573}, {1016, 822}}";
 		};
 	};
 	1A7D62C1094EF54600E9D611 /* DDMeshNode.h */ = {
@@ -753,8 +746,8 @@
 	1A80AA1109470BC2006AF8F5 /* phystypes.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1192, 14560}}";
-			sepNavSelRange = "{7264, 0}";
-			sepNavVisRect = "{{0, 3719}, {1192, 822}}";
+			sepNavSelRange = "{24536, 0}";
+			sepNavVisRect = "{{0, 3721}, {1192, 822}}";
 		};
 	};
 	1A80AA1209470BC2006AF8F5 /* phystypes.cp */ = {

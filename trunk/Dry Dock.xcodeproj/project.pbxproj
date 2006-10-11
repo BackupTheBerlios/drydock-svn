@@ -31,7 +31,6 @@
 		1A13B0090A09FFFF0017CD80 /* DDFileMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A13B0070A09FFFF0017CD80 /* DDFileMatcher.m */; };
 		1A18DDD309644E0D0010CE0B /* MacPAD.url in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DDD209644E0D0010CE0B /* MacPAD.url */; };
 		1A18DE08096456AF0010CE0B /* UKFeedbackProvider.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */; };
-		1A18DE09096456AF0010CE0B /* UKUpdateChecker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DE06096456AF0010CE0B /* UKUpdateChecker.strings */; };
 		1A18DE11096456D20010CE0B /* UKFeedbackProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A18DE0E096456D20010CE0B /* UKFeedbackProvider.m */; };
 		1A18DE20096457E90010CE0B /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A18DE1F096457E90010CE0B /* Message.framework */; };
 		1A1D51E409AFB4B30090D751 /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; settings = {COMPILER_FLAGS = "-pp -8 -CFre -POoliteDAT_yy"; }; };
@@ -194,7 +193,6 @@
 		1A13B0070A09FFFF0017CD80 /* DDFileMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileMatcher.m; sourceTree = "<group>"; };
 		1A18DDD209644E0D0010CE0B /* MacPAD.url */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MacPAD.url; sourceTree = "<group>"; };
 		1A18DE05096456AF0010CE0B /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/UKFeedbackProvider.nib; sourceTree = "<group>"; };
-		1A18DE07096456AF0010CE0B /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/UKUpdateChecker.strings; sourceTree = "<group>"; };
 		1A18DE0D096456D20010CE0B /* UKFeedbackProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKFeedbackProvider.h; sourceTree = "<group>"; };
 		1A18DE0E096456D20010CE0B /* UKFeedbackProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKFeedbackProvider.m; sourceTree = "<group>"; };
 		1A18DE1F096457E90010CE0B /* Message.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Message.framework; path = /System/Library/Frameworks/Message.framework; sourceTree = "<absolute>"; };
@@ -717,7 +715,6 @@
 				8D15AC360486D014006FF6A4 /* Info-DD.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 				1A7D61A4094EE3D300E9D611 /* Localizable.strings */,
-				1A18DE06096456AF0010CE0B /* UKUpdateChecker.strings */,
 				1A18DDD209644E0D0010CE0B /* MacPAD.url */,
 				1A6702B9098CF688003BDAD5 /* NIBs */,
 				1A49FAB40959B9C0003B322F /* Icons */,
@@ -809,7 +806,6 @@
 				1ACE7EF8095438E800BF7642 /* Inspector Toolbar Item.icns in Resources */,
 				1A18DDD309644E0D0010CE0B /* MacPAD.url in Resources */,
 				1A18DE08096456AF0010CE0B /* UKFeedbackProvider.nib in Resources */,
-				1A18DE09096456AF0010CE0B /* UKUpdateChecker.strings in Resources */,
 				1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */,
 				1AE683C5096CA1BB00622ECC /* Document.icns in Resources */,
 				1A901231096D324800A5AC2D /* Oolite Model.icns in Resources */,
@@ -979,14 +975,6 @@
 				1A18DE05096456AF0010CE0B /* English */,
 			);
 			name = UKFeedbackProvider.nib;
-			sourceTree = "<group>";
-		};
-		1A18DE06096456AF0010CE0B /* UKUpdateChecker.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1A18DE07096456AF0010CE0B /* English */,
-			);
-			name = UKUpdateChecker.strings;
 			sourceTree = "<group>";
 		};
 		1A53D8270ADD2B500057ED21 /* DDStartup.nib */ = {

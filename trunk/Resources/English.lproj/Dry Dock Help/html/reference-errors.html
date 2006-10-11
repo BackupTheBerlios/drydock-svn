@@ -1,54 +1,51 @@
-	<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
- "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<html lang="en-GB">
 <head>
 
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 
 <title>Reference</title>
-<meta name="keywords" content="error, diagnostic, warning, message, problem, issue, debug, obj, dat" />
-<meta name="description" content="Descriptions of the error and warning messages displayed by Dry Dock." />
+<meta name="keywords" content="error, diagnostic, warning, message, problem, issue, debug, obj, dat">
+<meta name="description" content="Descriptions of the error and warning messages displayed by Dry&nbsp;Dock.">
 
-<link rel="stylesheet" title="Style Sheet" type="text/css" media="screen" href="../css/stylesheet.css" />
+<link rel="stylesheet" title="Style Sheet" type="text/css" media="screen" href="../css/stylesheet.css">
 
-<meta name="author" content="Jens Ayton" />
-<link rev="made" title="Mail Jens" href="mailto: Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;" />
-<meta name="copyright" content="© 2006 Jens Ayton. All rights reserved." />
+<meta name="author" content="Jens Ayton">
+<link rev="made" title="Mail Jens" href="mailto: Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;">
+<meta name="copyright" content="© 2006 Jens Ayton. All rights reserved.">
 
 </head>
 <body>
 
 <div id="help-banner">
-<a name="reference-errors" href="../index.html">Dry Dock Help</a>
+<a name="reference-errors" href="../index.html">Dry&nbsp;Dock Help</a>
 &gt; <a href="reference.html">Reference</a>
 </div>
 
 <div id="content"><h1>Errors and Warnings Reference</h1>
-<p>Many operations in Dry Dock may present errors, warnings or notes, or a combination thereof,
-using a “Problem Report” dialogue box as pictured below.</p>
+<p>Many operations in Dry&nbsp;Dock may present errors, warnings or notes, or a combination thereof,
+using a “Problem Report” dialog box as pictured below.</p>
 
 <div class="image-main">
-<img src="../images/problem-report.png" alt="The Problem Report dialogue box." width="550" height="341" />
-<p>Figure 1. A typical Problem Report dialogue box.</p>
+<img src="../images/problem-report.png" alt="The Problem Report dialog box." width="550" height="341">
+<p>Figure 1. A typical Problem Report dialog box.</p>
 </div>
 
 <p>This help page presents examples of the most common types of errors, and explains why they
 arise.</p>
 
-<!-- Doesn’t work properly in Tiger.
+<!-- Very flaky in Tiger’s Help Viewer. Boo, hiss.
 <div class="tip"><div class="label">Tip!</div>
 You can look up an error message in Help by selecting it in the Problem Report
-dialogue box, and pressing the Help button in the lower-left corner.</div>
+dialog box, and pressing the Help button in the lower-left corner.</div>
 -->
 
 <p>If this help page does provide the information required to solve a problem, you may
-wish to send a bug report or request help <a href="mailto:Jens Ayton
-&lt;UMHMLDIZEYNZ@spammotel.com&gt;">by e-mail</a>. In this case, note that you can select one or
-more messages in the Problem Report dialogue box and copy them (using the <span
-class="command-name">Copy</span> command in the <span class="command-name">Edit</span> menu).</p>
+wish to send a bug report or request help
+<a href="mailto:Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;">by e-mail</a>. In this case, note
+that you can select one or more messages in the Problem Report dialogue box and copy them (using the
+<span class="command-name">Copy</span> command in the <span class="command-name">Edit</span> menu).</p>
 
 
 
@@ -56,10 +53,10 @@ class="command-name">Copy</span> command in the <span class="command-name">Edit<
 <!-- AppleSegDescription="Descriptions of the most common warning and note messages displayed by Dry Dock." -->
 
 <h2>Warnings and Notes</h2>
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-nonTriangularFaces"></a>
-This document contains non-triangular faces. In order to save it in the selected format, Dry Dock
-will triangulate it.</div>
+<div class="problem-description"><div class="problem-quote">
+This document contains non-triangular faces. In order to save it in the selected format,
+Dry&nbsp;Dock will triangulate it.</div>
 
 <p>This message is presented when saving a document in Oolite DAT format, if it has faces with more
 than three vertices. If you continue, the document will be converted to triangles before saving.
@@ -67,11 +64,11 @@ This is equivalent to selecting <span class="command-name">Triangulate</span> fr
 class="command-name">Tools</span> menu.</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-textureNotFound"></a>
+<div class="problem-description"><div class="problem-quote">
 No texture named “My Texture” could be found, using place-holder texture.</div>
 
-<p>When opening a document, Dry Dock looks for textures in several locations:</p>
+<p>When opening a document, Dry&nbsp;Dock looks for textures in several locations:</p>
 
 <ol>
 	<li> In the same folder as the document.</li>
@@ -80,28 +77,28 @@ No texture named “My Texture” could be found, using place-holder texture.</d
 	<li> Inside the Oolite application, if it can be found.</li>
 </ol>
 
-<p>If the texture cannot be found in any of these locations, this message is displayed, and Dry Dock
-will use the “place-holder” texture, which is a grey checked pattern.</p>
+<p>If the texture cannot be found in any of these locations, this message is displayed, and
+Dry&nbsp;Dock will use the “place-holder” texture, which is a grey checked pattern.</p>
 
 <div class="image-main">
-<img src="../../../Placeholder Texture.png" alt="The place-holder texture." width="256" height="256" />
+<img src="../../../Placeholder Texture.png" alt="The place-holder texture." width="256" height="256">
 <p>Figure 2. The place-holder texture.</p>
 </div>
 
-<p>Note that Dry Dock will remember the name of the texture, and if you save the document and open
-it again, Dry Dock will once again look for the correct texture. In other words, the document is not
-damaged, only displayed incorrectly.</p>
+<p>Note that Dry&nbsp;Dock will remember the name of the texture, and if you save the document and
+open it again, Dry&nbsp;Dock will once again look for the correct texture. In other words, the
+document is not damaged, only displayed incorrectly.</p>
 </div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-multipleMaterialLibraries"></a>
+<div class="problem-description"><div class="problem-quote">
 The document contains multiple material library references. Currently, only one material library is
 supported. Ignoring reference to material library “Second Material Library”.</div>
 
 <p>WaveFront OBJ documents specify material properties, such as textures, in external files called
 “material libraries” (which use the file name extension “.mtl”). Any OBJ document may refer to zero
-or more material libraries. However, Dry Dock does not currently support more than one material
+or more material libraries. However, Dry&nbsp;Dock does not currently support more than one material
 library. Therefore, this message will be displayed when attempting to open an OBJ document
 which refers to more than one material library. The document can still be opened, but some textures
 may be missing. It seems unlikely that this will be a problem working with models for Oolite, but if
@@ -109,70 +106,109 @@ it is, please <a href="mailto:Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;">e-m
 fix this.</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-unknownOBJLineType"></a>
 <a name="problem-ignoredOBJLineType"></a>
 <a name="problem-OBJCall"></a>
 <a name="problem-OBJShellScript"></a>
+<div class="problem-description"><div class="problem-quote">
 The document contains lines of type “cstype” (parametric curve/surface type), which will be
 ignored.</div>
 
-<p>WaveFront OBJ documents can contain a variety of geometry types and commands which Dry Dock
+<p>WaveFront OBJ documents can contain a variety of geometry types and commands which Dry&nbsp;Dock
 cannot presently handle, such as curved surfaces and references to other OBJ files. If you wish to
 see a particular OBJ feature supported, please <a href="mailto:Jens Ayton
 &lt;UMHMLDIZEYNZ@spammotel.com&gt;">e-mail a request</a>. Please attach example files if
 possible.</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-textureNotPowerOfTwo"></a>
+<div class="problem-description"><div class="problem-quote">
 The texture “My Texture” does not have power-of-two dimensions. It has been rescaled from 200 × 200
 pixels to 256 × 256 pixels.</div>
 
-<p>Like Oolite (and most 3D games), Dry Dock requires textures to have sides whose length in pixels
-is a power of two. Dry Dock, like Oolite, will rescale textures if necessary to ensure this. Such
-scaling wastes memory (both regular memory and graphics memory), so textures should be resized to
-a resolution where such scaling is not needed. For Oolite, it is recommended that you do not use
-textures larger than 512 × 512 pixels, and use 256 × 256 pixels if at all possible. Note that two
-256 × 256 textures use half as much memory as one 512 × 512 texture!</p>
+<p>Like Oolite (and most 3D games), Dry&nbsp;Dock requires textures to have sides whose length in
+pixels is a power of two. Dry&nbsp;Dock, like Oolite, will rescale textures if necessary to ensure
+this. Such scaling wastes memory (both regular memory and video memory), so textures should be
+resized to a resolution where such scaling is not needed. For Oolite, it is recommended that you do
+not use textures larger than 512 × 512 pixels, and use 256 × 256 pixels if at all possible. Note
+that two 256 × 256 textures use half as much memory as one 512 × 512 texture!</p>
 
-<p>Also note that different graphics cards have different size limits. Dry Dock will scale textures
-down to the maximum size allowed by the graphics card if necessary. Oolite is currently not capable
-of this, however.</p></div>
+<p>Also note that different graphics cards have different size limits. Dry&nbsp;Dock will scale
+textures down to the maximum size allowed by the graphics card if necessary. Oolite is currently not
+capable of this, however.</p></div>
+
+
+<a name="problem-invalidNormal"></a>
+<div class="problem-description"><div class="problem-quote">
+Some or all faces in the document do not have a valid normal specified. This is likely to lead to
+lighting problems. This issue can be rectified by selecting Recalculate Normals from the Tools
+menu.</div>
+
+<p>Normal vectors represent the direction a polygon faces, and are used for lighting calculations.
+Oolite requires normals to be specified in models, but not all 3D modelling tools provide them.
+Dry&nbsp;Dock can calculate normals based on the polygons with the <span
+class="command-name">Recalculate Normals</span> command in the <span
+class="command-name">Tools</span>, but this may provide less control than using a full 3D
+modeller.</p></div>
+
+
+<a name="problem-noMaterialLibraryLoaded"></a>
+<div class="problem-description"><div class="problem-quote">
+The material library “mymaterials.mtl” could not be loaded.</div>
+
+<p>Models stored in OBJ format use a separate file called a material library to store information
+about, among other things, textures. This message is displayed if an OBJ file contains a reference
+to a material library, but the material libary can’t be found.</p>
+<p>Material libraries are expected to be be stored in the same folder as the corresponding OBJ
+file.</p></div>
+
+
+<a name="problem-hasNonCoplanarPolygons"></a>
+<div class="problem-description"><div class="problem-quote">
+The document contains one or more polygons whose vertices are not coplanar. These polygons will be
+highlighted in red.</div>
+
+<p>Models consist of polygons, which are expected to be planar, i.e. flat. Non-flat polygons may
+display lighting anomalies and other rendering errors. The situation can be rectified by using the
+<span class="command-name">Triangulate</span> and <span class="command-name">Recalculate
+Normals</span> commands in the <span class="command-name">Tools</span> menu, but the result may not
+be what you expected, in which case resolving the problem in a full 3D modeller is
+reccomended.</p></div>
 
 <!-- AppleSegEnd -->
 
 
 
 <!-- AppleSegStart="Errors and Warnings Reference: Errors" -->
-<!-- AppleSegDescription="Descriptions of the most common error messages displayed by Dry Dock." -->
+<!-- AppleSegDescription="Descriptions of the most common error messages displayed by Dry&nbsp;Dock." -->
 <!-- AppleKeywords="error, diagnostic, message" -->
 
 <h2>Errors</h2>
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-allocFailed"></a>
+
+<a name="problem-textureFileNotLoadedMemory"></a>
+<div class="problem-description"><div class="problem-quote">
 A memory allocation failed. This is probably due to a memory shortage.</div>
 <div class="problem-quote">
-<a name="problem-textureFileNotLoadedMemory"></a>
 The texture “My Texture” could not be loaded, because there was not enough memory.</div>
 
-<p>These messages indicates that Dry Dock asked the system for some memory, and none was provided.
-This generally means that both physical memory and your main hard disk (startup disk) are full. You
-should free up hard disk space by removing unneeded files and emptying the Trash, and free up memory
-by closing documents and quitting applications.</p></div>
+<p>These messages indicates that Dry&nbsp;Dock asked the system for some memory, and none was
+provided. This generally means that both physical memory and your main hard disk (startup disk) are
+full. You should free up hard disk space by removing unneeded files and emptying the Trash, and free
+up memory by closing documents and quitting applications.</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-noDataLoaded"></a>
+<div class="problem-description"><div class="problem-quote">
 No data could be loaded from “My Document”.</div>
 
 <p>This error indicates that loading of a document failed. This could occur for a broad variety of
-reasons, such as the file disappearing before Dry Dock attempts to open it, or the disk containing
-the file being damaged. It generally does not indicate a problem with the contents of the file.
-Depending on the precise nature of the problem, an additional explanation may be provided.</p></div>
+reasons, such as the file disappearing before Dry&nbsp;Dock attempts to open it, or the disk
+containing the file being damaged. It generally does not indicate a problem with the contents of the
+file. Depending on the precise nature of the problem, an additional explanation may be
+provided.</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-noDATNVERTS"></a>
 <a name="problem-noDATNFACES"></a>
 <a name="problem-insufficientParts"></a>
@@ -182,34 +218,40 @@ Depending on the precise nature of the problem, an additional explanation may be
 <a name="problem-noTextureNameLoaded"></a>
 <a name="problem-noTextureScaleLoaded"></a>
 <a name="problem-noUVLoaded"></a>
-Vertex data could not be read for vertex line 37.</div>
 
-<div class="problem-quote">
 <a name="problem-invalidVertexIndex"></a>
 <a name="problem-invalidNormalIndex"></a>
 <a name="problem-invalidUVIndex"></a>
 <a name="problem-vertexRange"></a>
 <a name="problem-normalIndexRange"></a>
 <a name="problem-UVIndexRange"></a>
-Face 10 specifies a vertex index of 25, but there are only 24 vertices in the document.</div>
+<a name="problem-UVSupress"></a>
+<a name="problem-normalSuppress"></a>
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-vertexCountRange"></a>
+
+<a name="problem-parseError"></a>
+<a name="problem-noVertexDataRead"></a>
+<div class="problem-description"><div class="problem-quote">
+Vertex data could not be read for vertex line 37.</div>
+
+<div class="problem-quote">
+Face 10 specifies a vertex index of 25, but there are only 24 vertices in the document.</div>
+<div class="problem-quote">
 Invalid vertex count (2) for face 84. Each face must have at least three and no more than 16
 vertices.</div>
 
-<div class="problem-description"><div class="problem-quote">
-<a name="problem-parseError"></a>
+<div class="problem-quote">
 Parse error on line 56: expected integer, got end of file.</div>
 
 <p>These errors indicate specific problems loading Oolite DAT or WaveFront OBJ documents. Unless you
 are editing them in a text editor, the differences are not important; they all mean that the document
 is not valid.</p></div>
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-tooManyVertices"></a>
 <a name="problem-tooManyFaces"></a>
 <a name="problem-tooManyMaterials"></a>
+<div class="problem-description"><div class="problem-quote">
 This document contains 602 faces; the selected format allows no more than 512.</div>
 
 <p>This error occurs if you try to save a document in Oolite DAT format which is too complex for
@@ -217,8 +259,8 @@ Oolite to load. It is necessary to reduce the complexity of the model by simplif
 dividing it into parts which can be joined together using the subentity system.</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-invalidTextureName"></a>
+<div class="problem-description"><div class="problem-quote">
 This document contains a texture named “My Texture”. The specified format does not support
 texture names containing spaces, commas, line breaks, “#” or “//”.</div>
 
@@ -227,12 +269,12 @@ restrictions on allowable file names for textures, as detailed in the error mess
 compatibility, it is recommended that you restrict yourself to texture names consisting of lowercase
 letters, digits, hyphens and underscores.</p></div>
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-writeFailed"></a>
+<div class="problem-description"><div class="problem-quote">
 The document could not be saved.</div>
 
-<div class="problem-quote">
 <a name="problem-mtllibWriteFailed"></a>
+<div class="problem-quote">
 The material library for the document could not be saved.</div>
 
 <p>This error indicates that something went wrong while trying to write the document to a disk, for
@@ -242,38 +284,54 @@ to save the document to another location or a different disk. Depending on the p
 problem, an additional explanation may be provided.</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-textureFileNotLoadedOSErr"></a>
+<div class="problem-description"><div class="problem-quote">
 The texture “My Texture” could not be loaded, because an error of type -42 occurred.</div>
 
 <p>This error indicates that a texture could not be loaded. This could occur for a broad variety of
-reasons, such as the file disappearing before Dry Dock attempts to open it, or the texture being of
-a type not supported. (Dry Dock uses Quicktime to load textures, and thus supports many file types.
-However, the recommended file format for textures is PNG.)</p></div>
+reasons, such as the file disappearing before Dry&nbsp;Dock attempts to open it, or the texture
+being of a type not supported. (Dry&nbsp;Dock uses Quicktime to load textures, and thus supports
+many file types. However, the recommended file format for textures is PNG.)</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-notValidDryDock"></a>
-This is not a valid Dry Dock document.</div>
+<div class="problem-description"><div class="problem-quote">
+This is not a valid Dry&nbsp;Dock document.</div>
 <div class="problem-quote"><a name="problem-outOfDateDryDock"></a>
-This document appears to be generated by a newer version of Dry Dock; it is in an incompatible
+This document appears to be generated by a newer version of Dry&nbsp;Dock; it is in an incompatible
 format.</div>
 
-<p>These errors indicate that a document appears to be a Dry Dock document but cannot be read as
-such.</p></div>
+<p>These errors indicate that a document appears to be a Dry&nbsp;Dock document but cannot be read
+as such.</p></div>
 
 
-<div class="problem-description"><div class="problem-quote">
 <a name="problem-documentTooComplex"></a>
-This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than
-65534 faces; this document has 100273.</div>
+<div class="problem-description"><div class="problem-quote">
+This document is too complex to be loaded by Dry&nbsp;Dock. Dry&nbsp;Dock cannot handle models with
+more than 65534 faces; this document has 100273.</div>
 
-<p>Dry Dock is designed to handle relatively simple models. Oolite is incapable of loading models
-with more than 320 vertices, 512 faces or 8 materials. Dry Dock relaxes these limits somewhat and
-can handle up to 65534 of each. Note that multiple models can be joined together using the subentity
-system.</p></div>
+<p>Dry&nbsp;Dock is designed to handle relatively simple models. Oolite is incapable of loading
+models with more than 320 vertices, 512 faces or 8 materials. Dry&nbsp;Dock relaxes these limits
+somewhat and can handle up to 65534 of each. Note that multiple models can be joined together using
+the subentity system.</p></div>
+
+
+<a name="problem-badInternalStructure"></a>
+<div class="problem-description"><div class="problem-quote">
+Dry&nbsp;Dock’s internal representation of the document is invalid: widget buffer overflow inversion
+stack failure.</div>
+
+<p>Messages of this type indicate a serious error within Dry&nbsp;Dock. Please copy and paste or
+write down the exact error message, check for messages in the Console application. Send a bug report
+<a href="mailto:Jens Ayton &lt;UMHMLDIZEYNZ@spammotel.com&gt;">by e-mail</a>, and describe what you
+were doing at the time. If at all possible, attach any relevant files.</p>
+<p class="seealso"><strong>Open This for Me: </strong>
+<a href="help:runscript=Dry Dock Help/scripts/openbundle.scpt string='com.apple.Console'">Console</a></p>
+</div>
+
 
 <!-- AppleSegEnd -->
 
-</body>
+<p>&nbsp;</p>
+</div></body>
 </html>
