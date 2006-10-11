@@ -37,9 +37,9 @@
 	};
 	1A0322A8096C3D890000B217 /* Change Log.txt */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {985, 1712}}";
-			sepNavSelRange = "{858, 0}";
-			sepNavVisRect = "{{0, 0}, {985, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1192, 1760}}";
+			sepNavSelRange = "{1043, 0}";
+			sepNavVisRect = "{{0, 0}, {1192, 822}}";
 		};
 	};
 	1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */ = {
@@ -441,15 +441,15 @@
 	};
 	1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1259, 8320}}";
-			sepNavSelRange = "{1442, 0}";
-			sepNavVisRect = "{{0, 4276}, {1192, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1259, 8192}}";
+			sepNavSelRange = "{6614, 0}";
+			sepNavVisRect = "{{0, 3309}, {1192, 822}}";
 		};
 	};
 	1A53D8140ADD2AAF0057ED21 /* DDStartupController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1192, 976}}";
-			sepNavSelRange = "{1892, 23}";
+			sepNavSelRange = "{2069, 0}";
 			sepNavVisRect = "{{0, 138}, {1192, 822}}";
 		};
 	};
@@ -710,9 +710,9 @@
 	};
 	1A7D60F0094EDACB00E9D611 /* DDMesh.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1826, 11616}}";
-			sepNavSelRange = "{11399, 0}";
-			sepNavVisRect = "{{0, 8654}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1826, 12288}}";
+			sepNavSelRange = "{12730, 0}";
+			sepNavVisRect = "{{0, 7989}, {1192, 822}}";
 		};
 	};
 	1A7D61A5094EE3D300E9D611 /* English */ = {
@@ -752,9 +752,9 @@
 	};
 	1A80AA1109470BC2006AF8F5 /* phystypes.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1291, 14560}}";
-			sepNavSelRange = "{2510, 0}";
-			sepNavVisRect = "{{0, 1352}, {1291, 353}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1192, 14560}}";
+			sepNavSelRange = "{7264, 0}";
+			sepNavVisRect = "{{0, 3719}, {1192, 822}}";
 		};
 	};
 	1A80AA1209470BC2006AF8F5 /* phystypes.cp */ = {
@@ -1108,7 +1108,7 @@
 		fRef = 1A7D60F0094EDACB00E9D611 /* DDMesh.mm */;
 		name = GL.h;
 		rLen = 0;
-		rLoc = 1650;
+		rLoc = 1853;
 		rType = 0;
 		vrLen = 1561;
 		vrLoc = 733;

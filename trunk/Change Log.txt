@@ -1,19 +1,23 @@
-0.09 (v606-1)
+0.09 (v610-1)
 	• Re-enabled Compare command.
-	• Removed Swedish localisation; it’s not as if anyone’s using that.
 	• Fixed loading of untextured DAT files.
-	• Noticed Apple apps with toolbars have Show/Hide Toolbar and Customize Toolbar items in View
-	  menu, and did same.
+	• Polygons which are non-coplanar (i.e., not flat) are now highlighted with a red outline.
 	• Dry Dock now loads and preserves smoothing groups, but doesn’t render them. It also renumbers
 	  them in the order they appear in the file.
 	• OBJ exporter now writes correct texture co-ordinates.
 	• New Recentre... dialog provides two recentring methods.
 	• Added option to show bounding box.
+	• Removed Swedish localisation; it’s not as if anyone’s using that.
+	• Noticed Apple apps with toolbars have Show/Hide Toolbar and Customize Toolbar items in View
+	  menu, and did same.
 	• Stopped showing Open dialog on start/reopen, because sometimes the Wrong Thing is right.
 	• Fixed some potential bugs.
 	• Fixed real bug due to C++ being a very silly language.
 	• Fixed set of real bugs due to me being a very silly man. (Texture cache underflow, could cause
 	  crash when closing windows)
+	• Switched to Sparkle for version checking. Version checking is no longer available under
+	  Mac OS X 10.3.9.
+	• Unresolved memory leaks in texture caching scheme.
 
 0.08b (v604-2)
 	• Fixed problems with incorrect version numbers.

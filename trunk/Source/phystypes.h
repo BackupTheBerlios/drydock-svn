@@ -223,7 +223,7 @@ public:
 								return Vector(this->x * inScalar, this->y * inScalar, this->z * inScalar);
 							}
 	
-	inline const Scalar		operator*(Vector &inVector) const GCC_ATTR((always_inline))
+	inline const Scalar		operator*(const Vector &inVector) const GCC_ATTR((always_inline))
 							// scalar (dot) product
 							{
 								return this->x * inVector.x + this->y * inVector.y + this->z * inVector.z;
@@ -235,21 +235,21 @@ public:
 								return Vector(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
 							}
 	
-	inline const Vector		&operator%=(Vector &other) GCC_ATTR((always_inline))
+	inline const Vector		&operator%=(const Vector &other) GCC_ATTR((always_inline))
 							// Cross product
 							{
 								this->Set(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
 								return *this;
 							}
 	
-	inline const bool		operator==(Vector &inVector) const GCC_ATTR((always_inline))
+	inline const bool		operator==(const Vector &inVector) const GCC_ATTR((always_inline))
 							{
 								return	(fabs(this->x - inVector.x) < kPhysComparisonMargin) &&
 										(fabs(this->y - inVector.y) < kPhysComparisonMargin) &&
 										(fabs(this->z - inVector.z) < kPhysComparisonMargin);
 							}
 	
-	inline const bool		operator!=(Vector &inVector) const GCC_ATTR((always_inline))
+	inline const bool		operator!=(const Vector &inVector) const GCC_ATTR((always_inline))
 							{
 								return	(fabs(this->x - inVector.x) >= kPhysComparisonMargin) ||
 										(fabs(this->y - inVector.y) >= kPhysComparisonMargin) ||

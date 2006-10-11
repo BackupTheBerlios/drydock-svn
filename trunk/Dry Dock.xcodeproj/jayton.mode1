@@ -237,6 +237,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -283,13 +285,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>9</integer>
+									<integer>5</integer>
 									<integer>4</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {253, 729}}</string>
+							<string>{{0, 0}, {253, 654}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -301,14 +303,14 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {270, 747}}</string>
+						<string>{{0, 0}, {270, 672}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>MainColumn</string>
 							<real>253</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>602 90 835 788 0 0 1440 878 </string>
+						<string>472 124 835 713 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -345,7 +347,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {560, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>602 90 835 788 0 0 1440 878 </string>
+								<string>472 124 835 713 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -353,8 +355,6 @@
 							<string>0pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -365,14 +365,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 5}, {560, 742}}</string>
+								<string>{{0, 5}, {560, 667}}</string>
 								<key>RubberWindowFrame</key>
-								<string>602 90 835 788 0 0 1440 878 </string>
+								<string>472 124 835 713 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>742pt</string>
+							<string>667pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -512,7 +512,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>182267685.843586</real>
+	<real>182270087.108367</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -527,14 +527,14 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1ACE4CC10A56826E00A56591</string>
-		<string>1A53D8630ADD2E1E0057ED21</string>
-		<string>/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Dry Dock.xcodeproj</string>
 		<string>1C0AD2B3069F1EA900FABCE6</string>
-		<string>1A53D8640ADD2E1E0057ED21</string>
+		<string>1A53D8980ADD34250057ED21</string>
+		<string>1ACE4CC10A56826E00A56591</string>
+		<string>1A53D8850ADD307C0057ED21</string>
+		<string>/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Dry Dock.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>602 90 835 788 0 0 1440 878 </string>
+	<string>472 124 835 713 0 0 1440 878 </string>
 	<key>WindowTools</key>
 	<array>
 		<dict>
@@ -626,7 +626,7 @@
 			<key>WindowToolGUID</key>
 			<string>1ACE4CC10A56826E00A56591</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -990,7 +990,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C0AD2B3069F1EA900FABCE6</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

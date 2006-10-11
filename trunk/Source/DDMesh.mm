@@ -34,6 +34,10 @@
 #import "DDFaceVertexBuffer.h"
 
 
+#define VERTEX_FOR_FACE(face, vi) ({ DDMeshFaceData *face_ = (face); _vertices[_faceVertexIndices[face_->firstVertex + (vi)]]; })
+#define VERTEX_FOR_FACE_INDEX(fi, vi) VERTEX_FOR_FACE(_faces[fi], vi);
+
+
 NSString *kNotificationDDMeshModified = @"de.berlios.drydock DDMeshModified";
 
 
@@ -556,26 +560,26 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 			
 			_hasNonTriangles = YES;
 			
-			#if 1	// Coplanar test temporarily disabled.
-			// Test coplanarity.
-			normal = NormalForFace(face, _vertices, _faceVertexIndices);
-			LogMessage(@"normal = %@", normal.Description());
 			LogIndent();
+			Vector				x1, x2, x3;
+			Vector				x3mx1;
+			Vector				x2mx1;
+			Vector				xNmx3;
 			
-			b = _vertices[_faceVertexIndices[face->vertexCount]];
-			for (i = 0; i != vertexCount; ++i)
+			x1 = VERTEX_FOR_FACE(face, 0);
+			x2 = VERTEX_FOR_FACE(face, 1);
+			x3 = VERTEX_FOR_FACE(face, 2);
+			x3mx1 = x3 - x1;
+			x2mx1 = x2 - x1;
+			
+			for (i = 3; i != vertexCount; ++i)
 			{
-				a = b;
-				b = _vertices[_faceVertexIndices[face->firstVertex + i % face->vertexCount]];
-				
-				edge = b - a;
-				edge.Normalize();
-				
-				dot = edge * normal;
-				LogMessage(@"edge = %@, dot = %g", edge.Description(), dot);
-				
-				if (0.02 < fabs(dot))
+				xNmx3 = _vertices[_faceVertexIndices[face->firstVertex + i]] - x3;
+				dot = fabs(x3mx1 * (x2mx1 % xNmx3));
+				if (0.1 < dot)
 				{
+				//	LogMessage(@"Dot product is %g for vertex %u of polygon %u", dot, i, _faceCount - faceCount);
+					
 					face->nonCoplanar = YES;
 					++notCoplanar;
 					if (!reportedNonCoplanar)
@@ -588,7 +592,6 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 				}
 			}
 			LogOutdent();
-			#endif
 		}
 		++face;
 	}
