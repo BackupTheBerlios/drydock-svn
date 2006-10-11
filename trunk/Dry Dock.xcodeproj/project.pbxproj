@@ -72,6 +72,8 @@
 		1A5051A8098E1F790056F45F /* NSString+CarbonFSRefCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */; };
 		1A512F16099090A600A55ED7 /* DDSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A512F15099090A600A55ED7 /* DDSceneView.mm */; };
 		1A51305E09909B6A00A55ED7 /* DDComparatorGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */; };
+		1A53D7E70ADD203D0057ED21 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A53D7E60ADD203D0057ED21 /* Sparkle.framework */; };
+		1A53D7F90ADD271B0057ED21 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A53D7E60ADD203D0057ED21 /* Sparkle.framework */; };
 		1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A543C1D09AD0087006B751A /* QuickTime.framework */; };
 		1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
 		1A5703DA09B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */; };
@@ -85,7 +87,6 @@
 		1A67FE82098C7FDA003BDAD5 /* DDProblemReportManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FE81098C7FDA003BDAD5 /* DDProblemReportManager.mm */; };
 		1A67FEB6098C85D6003BDAD5 /* DDProblemReportIssue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FEB5098C85D6003BDAD5 /* DDProblemReportIssue.mm */; };
 		1A7207CE095A8A6900C6896A /* DDTextureBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */; settings = {COMPILER_FLAGS = "-force_cpusubtype_ALL -falign-loops=16"; }; };
-		1A7432CC0A8CB099006AEA18 /* DDTextureInspectorController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A7432CA0A8CB099006AEA18 /* DDTextureInspectorController.h */; };
 		1A7536790A0E15F40047DD80 /* DDVertexSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7536770A0E15F40047DD80 /* DDVertexSet.mm */; };
 		1A78150309767395001C0020 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A78150209767395001C0020 /* Accelerate.framework */; };
 		1A7B6CF2098F82EF004AA6D7 /* Read Me.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */; };
@@ -108,7 +109,6 @@
 		1A8B684B08142C330028C19F /* DDDocumentWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B684908142C330028C19F /* DDDocumentWindowController.mm */; };
 		1A8F08B508130C020040CAC3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F08B408130C020040CAC3 /* OpenGL.framework */; };
 		1A901231096D324800A5AC2D /* Oolite Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A901230096D324800A5AC2D /* Oolite Model.icns */; };
-		1A99FB7E0A6426EB0052591D /* DDRecenterDialogController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A99FB7C0A6426EB0052591D /* DDRecenterDialogController.h */; };
 		1A99FB7F0A6426EB0052591D /* DDRecenterDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A99FB7D0A6426EB0052591D /* DDRecenterDialogController.mm */; };
 		1A99FBF80A642B360052591D /* DDRecenterDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A99FBF60A642B360052591D /* DDRecenterDialog.nib */; };
 		1AA0E28109BF3F0200CA6EC1 /* Dry Dock Help in Resources */ = {isa = PBXBuildFile; fileRef = 1AA0E27709BF3F0200CA6EC1 /* Dry Dock Help */; };
@@ -124,8 +124,6 @@
 		1ABEC05409485ED500B1E952 /* DisplayListCacheNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */; };
 		1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1377F096894FD006BB3EE /* Dry Dock.icns */; };
 		1AC5E3460A8DD2CE00C2D481 /* DDTextureInspectorController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5E3450A8DD2CE00C2D481 /* DDTextureInspectorController.mm */; };
-		1ACB50AA0A3D8A7C0059D7F1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACB50A90A3D8A7C0059D7F1 /* Sparkle.framework */; };
-		1ACB50BF0A3D8A900059D7F1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1ACB50A90A3D8A7C0059D7F1 /* Sparkle.framework */; };
 		1ACE7DE30954227B00BF7642 /* Rotate Tool.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7DE20954227B00BF7642 /* Rotate Tool.png */; };
 		1ACE7EF8095438E800BF7642 /* Inspector Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */; };
 		1AE2138309B72FA20064C1ED /* DDTexCoordSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE2138109B72FA20064C1ED /* DDTexCoordSet.mm */; };
@@ -149,10 +147,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1ACB50BF0A3D8A900059D7F1 /* Sparkle.framework in CopyFiles */,
 				1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */,
-				1A99FB7E0A6426EB0052591D /* DDRecenterDialogController.h in CopyFiles */,
-				1A7432CC0A8CB099006AEA18 /* DDTextureInspectorController.h in CopyFiles */,
+				1A53D7F90ADD271B0057ED21 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +229,7 @@
 		1A512F15099090A600A55ED7 /* DDSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDSceneView.mm; sourceTree = "<group>"; };
 		1A51305C09909B6A00A55ED7 /* DDComparatorGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDComparatorGLView.h; sourceTree = "<group>"; };
 		1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDComparatorGLView.mm; sourceTree = "<group>"; };
+		1A53D7E60ADD203D0057ED21 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Sparkle/Sparkle.framework; sourceTree = "<group>"; };
 		1A543C1D09AD0087006B751A /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDErrorDescription.mm; sourceTree = "<group>"; };
 		1A543C6C09AD0A3E006B751A /* DDErrorDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDErrorDescription.h; sourceTree = "<group>"; };
@@ -317,7 +314,6 @@
 		1ABEC05309485ED500B1E952 /* DisplayListCacheNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayListCacheNode.h; sourceTree = "<group>"; };
 		1AC1377F096894FD006BB3EE /* Dry Dock.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Dry Dock.icns"; sourceTree = "<group>"; };
 		1AC5E3450A8DD2CE00C2D481 /* DDTextureInspectorController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDTextureInspectorController.mm; sourceTree = "<group>"; };
-		1ACB50A90A3D8A7C0059D7F1 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Sparkle/Sparkle.framework; sourceTree = "<group>"; };
 		1ACE7DE20954227B00BF7642 /* Rotate Tool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rotate Tool.png"; sourceTree = "<group>"; };
 		1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Inspector Toolbar Item.icns"; sourceTree = "<group>"; };
 		1AE2138109B72FA20064C1ED /* DDTexCoordSet.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDTexCoordSet.mm; sourceTree = "<group>"; };
@@ -365,7 +361,7 @@
 				1A78150309767395001C0020 /* Accelerate.framework in Frameworks */,
 				1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */,
 				1A085A5309B4718300FFD056 /* libz.dylib in Frameworks */,
-				1ACB50AA0A3D8A7C0059D7F1 /* Sparkle.framework in Frameworks */,
+				1A53D7E70ADD203D0057ED21 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,7 +371,7 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1ACB50A90A3D8A7C0059D7F1 /* Sparkle.framework */,
+				1A53D7E60ADD203D0057ED21 /* Sparkle.framework */,
 				1A543C1D09AD0087006B751A /* QuickTime.framework */,
 				1A8F08B408130C020040CAC3 /* OpenGL.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
@@ -1270,6 +1266,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
@@ -1278,7 +1276,9 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PFE_FILE_C_DIALECTS = "objective-c objective-c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = YY_NO_UNPUT;
@@ -1353,6 +1353,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
@@ -1421,6 +1423,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
@@ -1474,6 +1478,8 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
