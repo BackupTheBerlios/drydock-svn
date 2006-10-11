@@ -47,8 +47,9 @@
 	
 	IBOutlet NSFormatter			*integerFormatter;
 	
-	BOOL							_haveAwoken;
-	BOOL							_runningLastFirstRunPane;
+	IBOutlet NSMenuItem				*checkForUpdatesMenuItem;
+	
+	BOOL							haveAwoken;
 }
 
 - (IBAction)nextButtonAction:sender;

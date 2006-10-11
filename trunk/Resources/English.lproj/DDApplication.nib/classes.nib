@@ -25,16 +25,22 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {nextButtonAction = id; quitButtonAction = id; }; 
+            ACTIONS = {checkForUpdatesAction = id; nextButtonAction = id; quitButtonAction = id; }; 
             CLASS = DDStartupController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 authorisationRequiredForSCRField = NSTextField; 
-                checkForUpdatesMatrix = NSMatrix; 
+                autoInstallMatrix = NSMatrix; 
+                checkForUpdatesCheckBox = NSButton; 
+                checkForUpdatesMenuItem = NSMenuItem; 
                 continueButton = NSButton; 
                 installSCRMatrix = NSMatrix; 
+                integerFormatter = NSFormatter; 
                 stageTabView = NSTabView; 
-                updateChecker = UKUpdateChecker; 
+                updateFrequencyField = NSTextField; 
+                upgradeAutoInstallMatrix = NSMatrix; 
+                upgradeCheckForUpdatesCheckBox = NSButton; 
+                upgradeUpdateFrequencyField = NSTextField; 
                 window = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 
@@ -76,12 +82,6 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {checkForUpdates = id; }; 
-            CLASS = SUUpdater; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
             ACTIONS = {
                 closeFeedbackWindow = id; 
                 openURL = id; 
@@ -96,13 +96,6 @@
                 messageText = NSTextView; 
                 subjectField = NSComboBox; 
             }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {checkForUpdates = id; takeBoolFromObject = id; }; 
-            CLASS = UKUpdateChecker; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {prefsButton = NSButton; }; 
             SUPERCLASS = NSObject; 
         }
     ); 

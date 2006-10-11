@@ -29,8 +29,8 @@
 #import "SmartCrashReportsInstall.h"
 #import "DDApplicationDelegate.h"
 #import "DDUtilities.h"
-#import "UKUpdateChecker.h"
 #import <dlfcn.h>
+#import <Sparkle/SUUpdater.h>
 
 
 #define RUN_PROBLEM_REPORTER_EXAMLE		0
@@ -79,9 +79,6 @@ static void RunProblemReporterExample(void);
 #endif
 
 
-static void RegisterMyHelpBook(void);
-
-
 @interface DDStartupController (Private)
 
 - (void)doFirstRunIfAppropriate;
@@ -107,15 +104,24 @@ static void RegisterMyHelpBook(void);
 {
 	TraceEnter();
 	
-	if (!_haveAwoken)
+	NSURL						*url;
+	FSRef						ref;
+	
+	if (!haveAwoken)
 	{
-		_haveAwoken = YES;
+		haveAwoken = YES;
 		[[NSApp delegate] inhibitOpenPanel];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:NSApp];
 		
-		// Other stuff that has to be done more or less at loading time:
 		// Register help book. This is necessary for help buttons to work.
-		RegisterMyHelpBook();
+		url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+		if (nil != url)
+		{
+			if (CFURLGetFSRef((CFURLRef)url, &ref))
+			{
+				AHRegisterHelpBook(&ref);
+			}
+		}
 	}
 	
 	TraceExit();
@@ -153,6 +159,7 @@ static void RegisterMyHelpBook(void);
 	BOOL					userResponse;
 	Boolean					authRequired = NO;
 	BOOL					canInstallSCR;
+	SUUpdater				*updater;
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
@@ -275,7 +282,15 @@ static void RegisterMyHelpBook(void);
 		if (0 == [[[NSDocumentController sharedDocumentController] documents] count]) [[NSApp delegate] runOpenPanel];
 	#endif
 	
-	[self release];
+	if (TigerOrLater())
+	{
+		// Create a Sparkle update checker
+		updater = [[SUUpdater alloc] init];
+		[checkForUpdatesMenuItem setTarget:updater];
+		[checkForUpdatesMenuItem setAction:@selector(checkForUpdates:)];
+	}
+	
+	[self autorelease];
 	
 	TraceExit();
 }
@@ -474,6 +489,8 @@ static void UnloadSCR(void)
 #if RUN_PROBLEM_REPORTER_EXAMLE
 #import "DDProblemReportManager.h"
 
+// This is used to make a screen shot for the manual
+
 
 static void RunProblemReporterExample(void)
 {
@@ -492,19 +509,3 @@ static void RunProblemReporterExample(void)
 }
 
 #endif
-
-
-static void RegisterMyHelpBook(void)
-{
-	NSURL						*url;
-	FSRef						ref;
-	
-	url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-	if (nil != url)
-	{
-		if (CFURLGetFSRef((CFURLRef)url, &ref))
-		{
-			AHRegisterHelpBook(&ref);
-		}
-	}
-}

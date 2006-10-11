@@ -203,20 +203,6 @@
 			sepNavVisRect = "{{0, 426}, {970, 822}}";
 		};
 	};
-	1A18DE0F096456D20010CE0B /* UKUpdateChecker.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1189, 1360}}";
-			sepNavSelRange = "{2646, 13}";
-			sepNavVisRect = "{{0, 511}, {948, 817}}";
-		};
-	};
-	1A18DE10096456D20010CE0B /* UKUpdateChecker.m */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1242, 4512}}";
-			sepNavSelRange = "{258, 0}";
-			sepNavVisRect = "{{0, 0}, {1242, 822}}";
-		};
-	};
 	1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1214, 4544}}";
@@ -455,16 +441,16 @@
 	};
 	1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1259, 8176}}";
-			sepNavSelRange = "{9526, 0}";
-			sepNavVisRect = "{{0, 5533}, {1192, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1259, 8320}}";
+			sepNavSelRange = "{1442, 0}";
+			sepNavVisRect = "{{0, 4276}, {1192, 822}}";
 		};
 	};
 	1A53D8140ADD2AAF0057ED21 /* DDStartupController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1192, 960}}";
-			sepNavSelRange = "{933, 0}";
-			sepNavVisRect = "{{0, 0}, {1192, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1192, 976}}";
+			sepNavSelRange = "{1892, 23}";
+			sepNavVisRect = "{{0, 138}, {1192, 822}}";
 		};
 	};
 	1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */ = {

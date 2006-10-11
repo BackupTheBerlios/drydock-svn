@@ -274,6 +274,8 @@
 								<string>2A37F4AAFDCFA73011CA2CEA</string>
 								<string>2A37F4ABFDCFA73011CA2CEA</string>
 								<string>2A37F4B8FDCFA73011CA2CEA</string>
+								<string>2A37F4C3FDCFA73011CA2CEA</string>
+								<string>1058C7A6FEA54F5311CA2CBB</string>
 								<string>1C37FBAC04509CD000000102</string>
 								<string>1A53D80C0ADD271F0057ED21</string>
 								<string>1C37FAAC04509CD000000102</string>
@@ -281,6 +283,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>9</integer>
+									<integer>4</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -508,7 +512,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>182266860.47709399</real>
+	<real>182267685.843586</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -524,9 +528,10 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>1ACE4CC10A56826E00A56591</string>
-		<string>1A53D82A0ADD2B5A0057ED21</string>
+		<string>1A53D8630ADD2E1E0057ED21</string>
 		<string>/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Dry Dock.xcodeproj</string>
 		<string>1C0AD2B3069F1EA900FABCE6</string>
+		<string>1A53D8640ADD2E1E0057ED21</string>
 	</array>
 	<key>WindowString</key>
 	<string>602 90 835 788 0 0 1440 878 </string>
