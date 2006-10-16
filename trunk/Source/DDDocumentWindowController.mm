@@ -367,7 +367,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 		{
 			[item setState:[self showNormals]];
 		}
-		else if (action == @selector(toggleBBox:))
+		else if (action == @selector(toggleBoundingBox:))
 		{
 			[item setState:[self showBoundingBox]];
 		}

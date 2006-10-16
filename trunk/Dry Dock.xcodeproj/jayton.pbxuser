@@ -196,6 +196,23 @@
 			sepNavVisRect = "{{0, 426}, {970, 822}}";
 		};
 	};
+	1A2046D90ADEACAE002EC35A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1A2046DA0ADEACAE002EC35A /* reference-errors.html */;
+		name = "(null): 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	1A2046DA0ADEACAE002EC35A /* reference-errors.html */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.html;
+		name = "reference-errors.html";
+		path = "/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Resources/English.lproj/Dry Dock Help/html/reference-errors.html";
+		sourceTree = "<absolute>";
+	};
 	1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1214, 4544}}";
@@ -899,9 +916,9 @@
 	};
 	1A8B684908142C330028C19F /* DDDocumentWindowController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1284, 9328}}";
-			sepNavSelRange = "{8376, 0}";
-			sepNavVisRect = "{{0, 5254}, {1284, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 9328}}";
+			sepNavSelRange = "{8326, 0}";
+			sepNavVisRect = "{{0, 5437}, {1016, 822}}";
 		};
 	};
 	1A8F08AC08130BD90040CAC3 /* Dry Dock */ = {
@@ -964,6 +981,23 @@
 	1A8F08B308130BF90040CAC3 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
+	};
+	1A9948CB0ADEA6F500AA204D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1A9948CC0ADEA6F500AA204D /* reference-errors.html */;
+		name = "(null): 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	1A9948CC0ADEA6F500AA204D /* reference-errors.html */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.html;
+		name = "reference-errors.html";
+		path = "/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Resources/English.lproj/Dry Dock Help/html/reference-errors.html";
+		sourceTree = "<absolute>";
 	};
 	1A99FB7C0A6426EB0052591D /* DDRecenterDialogController.h */ = {
 		uiCtxt = {
@@ -1321,7 +1355,7 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 182263600;
+			PBXPerProjectTemplateStateSaveDate = 182699614;
 			PBXPrepackagedSmartGroups_v2 = (
 				{
 					PBXTransientLocationAtTop = bottom;
@@ -1498,7 +1532,11 @@
 					};
 				},
 			);
-			PBXWorkspaceStateSaveDate = 182263600;
+			PBXWorkspaceStateSaveDate = 182699614;
+		};
+		perUserProjectItems = {
+			1A2046D90ADEACAE002EC35A = 1A2046D90ADEACAE002EC35A /* PBXTextBookmark */;
+			1A9948CB0ADEA6F500AA204D = 1A9948CB0ADEA6F500AA204D /* PBXTextBookmark */;
 		};
 		sourceControlManager = 1A8F08B208130BF90040CAC3 /* Source Control */;
 		userBookmarkGroup = 1ACE7D60095414F500BF7642 /* PBXBookmarkGroup */;
