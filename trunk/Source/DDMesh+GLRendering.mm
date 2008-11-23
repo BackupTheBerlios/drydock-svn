@@ -95,6 +95,7 @@
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, white);
 	
 	matIdx = _faces[0].material;
+	NSAssert(matIdx < _materialCount, @"Material index out of range");
 	currentMaterial = _materials[matIdx];
 	[currentMaterial makeActive];
 	

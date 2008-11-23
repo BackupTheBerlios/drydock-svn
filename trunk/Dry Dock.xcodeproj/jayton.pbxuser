@@ -68,6 +68,8 @@
 		};
 		sourceDirectories = (
 		);
+		variableFormatDictionary = {
+		};
 	};
 	1A01E6240ED98FD9004B59DC /* IconFamily.m */ = {
 		uiCtxt = {
@@ -138,7 +140,8 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 137;
-		modificationTime = 249155981.914703;
+		location = "Dry Dock for Oolite-gc";
+		modificationTime = 249156885.314979;
 		state = 1;
 	};
 	1A0322A8096C3D890000B217 /* Change Log.txt */ = {
@@ -312,17 +315,17 @@
 	};
 	1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {865, 3393}}";
-			sepNavSelRange = "{1265, 0}";
-			sepNavVisRange = "{0, 2479}";
+			sepNavIntBoundsRect = "{{0, 0}, {1271, 3627}}";
+			sepNavSelRange = "{2774, 8}";
+			sepNavVisRange = "{2402, 738}";
 			sepNavVisRect = "{{0, 3142}, {908, 836}}";
 		};
 	};
 	1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {865, 9869}}";
-			sepNavSelRange = "{24051, 22}";
-			sepNavVisRange = "{21949, 2298}";
+			sepNavIntBoundsRect = "{{0, 0}, {1282, 9607}}";
+			sepNavSelRange = "{17146, 10}";
+			sepNavVisRange = "{15504, 2815}";
 			sepNavVisRect = "{{0, 9493}, {1014, 836}}";
 		};
 	};
@@ -643,9 +646,9 @@
 	};
 	1A67FE81098C7FDA003BDAD5 /* DDProblemReportManager.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1282, 6500}}";
-			sepNavSelRange = "{1880, 0}";
-			sepNavVisRange = "{1925, 1789}";
+			sepNavIntBoundsRect = "{{0, 0}, {1271, 6487}}";
+			sepNavSelRange = "{3415, 0}";
+			sepNavVisRange = "{2774, 914}";
 			sepNavVisRect = "{{0, 4749}, {1016, 822}}";
 		};
 	};
@@ -732,9 +735,9 @@
 	};
 	1A7D60F0094EDACB00E9D611 /* DDMesh.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1282, 8970}}";
-			sepNavSelRange = "{5556, 0}";
-			sepNavVisRange = "{2003, 2952}";
+			sepNavIntBoundsRect = "{{0, 0}, {1282, 9269}}";
+			sepNavSelRange = "{5510, 0}";
+			sepNavVisRange = "{4967, 1370}";
 			sepNavVisRect = "{{0, 9305}, {1299, 836}}";
 		};
 	};
@@ -755,9 +758,9 @@
 	};
 	1A7D62C2094EF54600E9D611 /* DDMeshNode.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1282, 2015}}";
-			sepNavSelRange = "{1874, 0}";
-			sepNavVisRange = "{129, 2128}";
+			sepNavIntBoundsRect = "{{0, 0}, {1271, 2015}}";
+			sepNavSelRange = "{2537, 0}";
+			sepNavVisRange = "{2254, 587}";
 			sepNavVisRect = "{{0, 1180}, {908, 836}}";
 		};
 	};
@@ -1077,7 +1080,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 249155933.752167;
+		modificationTime = 249156885.315606;
 		state = 1;
 		symbolName = objc_exception_throw;
 	};
@@ -1258,7 +1261,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					315,
+					321,
 					20,
 					48,
 					43,
@@ -1511,9 +1514,9 @@
 	};
 	2A37F4ACFDCFA73011CA2CEA /* DDDocument.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1282, 7566}}";
-			sepNavSelRange = "{1933, 7}";
-			sepNavVisRange = "{695, 2369}";
+			sepNavIntBoundsRect = "{{0, 0}, {1282, 7215}}";
+			sepNavSelRange = "{3728, 0}";
+			sepNavVisRange = "{2204, 2635}";
 			sepNavVisRect = "{{0, 0}, {1014, 836}}";
 		};
 	};
@@ -1555,9 +1558,9 @@
 	};
 	8D15AC360486D014006FF6A4 /* Info-DD.plist */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1282, 4446}}";
-			sepNavSelRange = "{1059, 0}";
-			sepNavVisRange = "{3083, 2199}";
+			sepNavIntBoundsRect = "{{0, 0}, {1282, 4472}}";
+			sepNavSelRange = "{5552, 0}";
+			sepNavVisRange = "{3623, 2140}";
 			sepNavVisRect = "{{0, 1852}, {1252, 822}}";
 		};
 	};

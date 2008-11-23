@@ -88,19 +88,19 @@
 	problemManager = [[DDProblemReportManager alloc] init];
 	[problemManager setContext:kContextOpen];
 	
-	NS_DURING
+	@try
 	{
-		if ([typeName isEqual:@"Oolite Model"])
+		if ([typeName isEqualToString:@"org.aegidian.oolite.mesh"] || [typeName isEqualToString:@"Oolite Model"])
 		{
 			document = [[DDModelDocument alloc] initWithOoliteDAT:absoluteURL issues:problemManager];
 			success = (nil != document);
 		}
-		else if ([typeName isEqual:@"WaveFront OBJ Model"])
+		else if ([typeName isEqualToString:@"com.newtek.lightwave.obj"] || [typeName isEqualToString:@"WaveFront OBJ Model"])
 		{
 			document = [[DDModelDocument alloc] initWithWaveFrontOBJ:absoluteURL issues:problemManager];
 			success = (nil != document);
 		}
-		else if ([typeName isEqual:@"Dry Dock Document"])
+		else if ([typeName isEqualToString:@"de.berlios.drydock.document"] || [typeName isEqualToString:@"Dry Dock Document"])
 		{
 			document = [[DDModelDocument alloc] initWithDryDockDocument:absoluteURL issues:problemManager];
 			success = (nil != document);
@@ -117,8 +117,7 @@
 		}
 		else success = NO;
 	}
-	//@catch (id localException)
-	NS_HANDLER
+	@catch (id localException)
 	{
 		LogMessage(@"Caught %@", localException);
 		
@@ -136,7 +135,6 @@
 		success = NO;
 		[problemManager addStopIssueWithKey:@"exception" localizedFormat:@"An uncaught exception occurred. This is almost certainly a programming error; please report it.\n%@", desc];
 	}
-	NS_ENDHANDLER
 	
 	success = [problemManager showReportApplicationModal];
 	if (!success && NULL != outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
@@ -189,10 +187,9 @@
 	
 	problemManager = [[DDProblemReportManager alloc] init];
 	
-	//@try
-	NS_DURING
+	@try
 	{
-		if ([typeName isEqual:@"Dry Dock Document"])
+		if ([typeName isEqualToString:@"de.berlios.drydock.document"] || [typeName isEqualToString:@"Dry Dock Document"])
 		{
 			[_document gatherIssuesWithGeneratingPropertyListRepresentation:problemManager];
 			OK = [problemManager showReportApplicationModal];
@@ -207,7 +204,7 @@
 				if (NULL != outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 			}
 		}
-		else if ([typeName isEqual:@"Oolite Model"])
+		else if ([typeName isEqualToString:@"de.berlios.drydock.document"] || [typeName isEqualToString:@"Oolite Model"])
 		{
 			[[_document rootMesh] gatherIssues:problemManager withWritingOoliteDATToURL:absoluteURL];
 			OK = [problemManager showReportApplicationModal];
@@ -222,7 +219,7 @@
 				if (NULL != outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 			}
 		}
-		else if ([typeName isEqual:@"WaveFront OBJ Model"])
+		else if ([typeName isEqualToString:@"com.newtek.lightwave.obj"] || [typeName isEqualToString:@"WaveFront OBJ Model"])
 		{
 			[[_document rootMesh] gatherIssues:problemManager withWritingWaveFrontOBJToURL:absoluteURL];
 			OK = [problemManager showReportApplicationModal];
@@ -243,8 +240,7 @@
 			OK = NO;
 		}
 	}
-	//@catch (id localException)
-	NS_HANDLER
+	@catch (id localException)
 	{
 		LogMessage(@"Caught %@", localException);
 		
@@ -261,7 +257,6 @@
 		
 		[problemManager addStopIssueWithKey:@"exception" localizedFormat:@"An uncaught exception occurred. This is almost certainly a programming error; please report it.\n%@", desc];
 	}
-	NS_ENDHANDLER
 	
 	[problemManager release];
 	

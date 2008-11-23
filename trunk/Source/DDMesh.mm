@@ -184,7 +184,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 		{
 			[_materials[i] release];
 		}
-		free(_materials);
+		Free(_materials);
 	}
 	Free(_faceVertexIndices);
 	Free(_faceTexCoordIndices);
