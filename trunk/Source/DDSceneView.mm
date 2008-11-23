@@ -216,7 +216,7 @@ static const GLuint kFallbackAttributes[] =
 	glPointSize(3);
 	glLineWidth(1);
 	
-	glEnable (GL_POLYGON_OFFSET_FILL);
+	glEnable(GL_POLYGON_OFFSET_FILL);
 	glPolygonOffset(1, 1);
 	
 	LogGLErrors();
@@ -277,7 +277,7 @@ static const GLuint kFallbackAttributes[] =
 		LogMessage(@"Exception \"%@\" rendering.", ex);
 	}
 	
-	glFlush();
+	//glFlush();
 	[[self openGLContext] flushBuffer];
 	LogGLErrors();
 	

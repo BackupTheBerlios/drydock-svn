@@ -30,7 +30,7 @@
 
 @interface DDDATLexer: NSObject
 {
-	int						_nextToken;
+	OoliteDATLexToken		_nextToken;
 	FILE					*_file;
 	DDProblemReportManager	*_issues;
 }
@@ -38,8 +38,8 @@
 - (id)initWithURL:(NSURL *)inURL issues:(DDProblemReportManager *)ioIssues;
 - (id)initWithPath:(NSString *)inPath issues:(DDProblemReportManager *)ioIssues;
 
-- (int)nextToken:(NSString **)outToken;
-- (int)nextTokenDesc:(NSString **)outToken;
+- (OoliteDATLexToken)nextToken:(NSString **)outToken;
+- (OoliteDATLexToken)nextTokenDesc:(NSString **)outToken;
 - (void)skipLineBreaks;				// Skips zero or more EOL tokens
 - (BOOL)passAtLeastOneLineBreak;	// Skips one or more EOL tokens
 

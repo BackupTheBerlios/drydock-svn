@@ -119,11 +119,11 @@ static const char *TokenString(int inToken);
 }
 
 
-- (int)nextToken:(NSString **)outToken
+- (OoliteDATLexToken)nextToken:(NSString **)outToken
 {
 	TraceEnter();
 	
-	int result = _nextToken;
+	OoliteDATLexToken result = _nextToken;
 	if (NULL != outToken) *outToken = [NSString stringWithUTF8String:OoliteDAT_yytext];
 	[self advance];
 	return result;
@@ -132,11 +132,11 @@ static const char *TokenString(int inToken);
 }
 
 
-- (int)nextTokenDesc:(NSString **)outToken
+- (OoliteDATLexToken)nextTokenDesc:(NSString **)outToken
 {
 	TraceEnter();
 	
-	int result = _nextToken;
+	OoliteDATLexToken result = _nextToken;
 	if (NULL != outToken) *outToken = [self describeToken];
 	[self advance];
 	return result;

@@ -121,6 +121,10 @@
 	#define TraceMessage(...)	do {} while (0)
 	#define TraceIndent()		do {} while (0)
 	#define TraceOutdent()		do {} while (0)
+	
+	#define TraceEnterMsg(...)	do {} while (0)
+	#define TraceEnter()		do {} while (0)
+	#define TraceExit()			do {} while (0)
 	#endif	/* __OBJC__ */
 	
 #endif /* ENABLE_LOGGING */

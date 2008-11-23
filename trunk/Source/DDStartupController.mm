@@ -314,7 +314,7 @@ static void RunProblemReporterExample(void);
 		}
 	}
 	
-	if (OK)
+	if (OK && window != nil)
 	{
 		[NSApp runModalForWindow:window];
 	}

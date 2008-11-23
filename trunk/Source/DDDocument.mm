@@ -62,7 +62,6 @@
 - (void)dealloc
 {
 	[_document autorelease];
-	[_windowController setModelDocument:nil];
 	
 	[super dealloc];
 }
@@ -72,8 +71,8 @@
 {
 	_windowController = [[DDDocumentWindowController alloc] initWithWindowNibName:@"DDDocument"];
 	[self addWindowController:_windowController];
-	[_windowController release];
 	[_windowController setModelDocument:_document];
+	[_windowController release];
 }
 
 

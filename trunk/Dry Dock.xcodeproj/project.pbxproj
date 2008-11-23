@@ -9,6 +9,113 @@
 /* Begin PBXBuildFile section */
 		1A00856B09C176C2007B982D /* DDWizardBackdropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00856909C176C2007B982D /* DDWizardBackdropView.m */; };
 		1A0085F709C17EC0007B982D /* DDHeaderGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0085F509C17EC0007B982D /* DDHeaderGradientView.m */; };
+		1A01E5940ED98BC4004B59DC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		1A01E5950ED98BC4004B59DC /* DDDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* DDDocument.nib */; };
+		1A01E5960ED98BC4004B59DC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		1A01E5970ED98BC4004B59DC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A7D61A4094EE3D300E9D611 /* Localizable.strings */; };
+		1A01E5980ED98BC4004B59DC /* Placeholder Texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE7E0E0094FA7AA000F6B6E /* Placeholder Texture.png */; };
+		1A01E5990ED98BC4004B59DC /* Rotate Tool.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7DE20954227B00BF7642 /* Rotate Tool.png */; };
+		1A01E59A0ED98BC4004B59DC /* Inspector Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */; };
+		1A01E59B0ED98BC4004B59DC /* MacPAD.url in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DDD209644E0D0010CE0B /* MacPAD.url */; };
+		1A01E59C0ED98BC4004B59DC /* UKFeedbackProvider.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */; };
+		1A01E59D0ED98BC4004B59DC /* Dry Dock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1377F096894FD006BB3EE /* Dry Dock.icns */; };
+		1A01E59E0ED98BC4004B59DC /* Document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AE683C4096CA1BB00622ECC /* Document.icns */; };
+		1A01E59F0ED98BC4004B59DC /* Oolite Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A901230096D324800A5AC2D /* Oolite Model.icns */; };
+		1A01E5A00ED98BC4004B59DC /* DDComparatorView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A0FFE4D0981EA9F00599E84 /* DDComparatorView.nib */; };
+		1A01E5A10ED98BC4004B59DC /* DDCompareDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A0FFE5B0981EBB200599E84 /* DDCompareDialog.nib */; };
+		1A01E5A20ED98BC4004B59DC /* Arrow Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */; };
+		1A01E5A30ED98BC4004B59DC /* Lightwave OBJ Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A09893E098AFBD2007C2F5F /* Lightwave OBJ Model.icns */; };
+		1A01E5A40ED98BC4004B59DC /* Wireframe Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A098960098B0632007C2F5F /* Wireframe Toolbar Item.icns */; };
+		1A01E5A50ED98BC4004B59DC /* Faces Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A09896C098B08C6007C2F5F /* Faces Toolbar Item.icns */; };
+		1A01E5A60ED98BC4004B59DC /* Normals Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A098994098B0D31007C2F5F /* Normals Toolbar Item.icns */; };
+		1A01E5A70ED98BC4004B59DC /* Compare Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A0989AD098B106C007C2F5F /* Compare Toolbar Item.icns */; };
+		1A01E5A80ED98BC4004B59DC /* DDProblemReportManager.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6702A6098CF005003BDAD5 /* DDProblemReportManager.nib */; };
+		1A01E5A90ED98BC4004B59DC /* Read Me.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */; };
+		1A01E5AA0ED98BC4004B59DC /* DDScaleDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B185C099269EE007265FC /* DDScaleDialog.nib */; };
+		1A01E5AB0ED98BC4004B59DC /* DDAxisReassignDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */; };
+		1A01E5AC0ED98BC4004B59DC /* Right Way Around.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA5477B099B3C1700625FF2 /* Right Way Around.png */; };
+		1A01E5AD0ED98BC4004B59DC /* Big Translucent Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA547D2099B8CC400625FF2 /* Big Translucent Icon.png */; };
+		1A01E5AE0ED98BC4004B59DC /* DDApplication.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1AA548B0099CB91200625FF2 /* DDApplication.nib */; };
+		1A01E5AF0ED98BC4004B59DC /* Exhaust Plume.dat in Resources */ = {isa = PBXBuildFile; fileRef = 1A0B864009B9A3270034D90F /* Exhaust Plume.dat */; };
+		1A01E5B00ED98BC4004B59DC /* Document Inspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A0B86B309B9BB380034D90F /* Document Inspector.nib */; };
+		1A01E5B10ED98BC4004B59DC /* Dry Dock Help in Resources */ = {isa = PBXBuildFile; fileRef = 1AA0E27709BF3F0200CA6EC1 /* Dry Dock Help */; };
+		1A01E5B20ED98BC4004B59DC /* DDRecenterDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A99FBF60A642B360052591D /* DDRecenterDialog.nib */; };
+		1A01E5B30ED98BC4004B59DC /* DDStartup.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A53D8270ADD2B500057ED21 /* DDStartup.nib */; };
+		1A01E5B50ED98BC4004B59DC /* DDDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* DDDocument.mm */; settings = {ATTRIBUTES = (); }; };
+		1A01E5B60ED98BC4004B59DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		1A01E5B70ED98BC4004B59DC /* DDPreviewView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B680A081427270028C19F /* DDPreviewView.mm */; };
+		1A01E5B80ED98BC4004B59DC /* DDDocumentWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B684908142C330028C19F /* DDDocumentWindowController.mm */; };
+		1A01E5B90ED98BC4004B59DC /* SceneNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA0B09470B80006AF8F5 /* SceneNode.mm */; };
+		1A01E5BA0ED98BC4004B59DC /* phystypes.cp in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA1209470BC2006AF8F5 /* phystypes.cp */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
+		1A01E5BB0ED98BC4004B59DC /* SimpleTag.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA6009470D50006AF8F5 /* SimpleTag.mm */; };
+		1A01E5BC0ED98BC4004B59DC /* SceneTag.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA6109470D50006AF8F5 /* SceneTag.mm */; };
+		1A01E5BD0ED98BC4004B59DC /* AxisNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AA9D09470DF0006AF8F5 /* AxisNode.mm */; };
+		1A01E5BE0ED98BC4004B59DC /* GLUtilities.cp in Sources */ = {isa = PBXBuildFile; fileRef = 1A80AADC09470F12006AF8F5 /* GLUtilities.cp */; };
+		1A01E5BF0ED98BC4004B59DC /* DisplayListCacheNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */; };
+		1A01E5C00ED98BC4004B59DC /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A442148094C830B000E90C2 /* Logging.m */; };
+		1A01E5C10ED98BC4004B59DC /* DDMesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D60F0094EDACB00E9D611 /* DDMesh.mm */; };
+		1A01E5C20ED98BC4004B59DC /* DDMeshNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D62C2094EF54600E9D611 /* DDMeshNode.mm */; };
+		1A01E5C30ED98BC4004B59DC /* DDError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE7E10C094FA9A2000F6B6E /* DDError.mm */; };
+		1A01E5C40ED98BC4004B59DC /* DDMaterial.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A65C6270957A43E006990D5 /* DDMaterial.mm */; };
+		1A01E5C50ED98BC4004B59DC /* DDApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B67B80957CA6000EC8EDA /* DDApplication.mm */; };
+		1A01E5C60ED98BC4004B59DC /* DDDocumentController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B68120957CC4300EC8EDA /* DDDocumentController.mm */; };
+		1A01E5C70ED98BC4004B59DC /* DDLightController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A49F9EE0959B235003B322F /* DDLightController.mm */; };
+		1A01E5C80ED98BC4004B59DC /* DDTextureBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */; settings = {COMPILER_FLAGS = "-force_cpusubtype_ALL -falign-loops=16"; }; };
+		1A01E5C90ED98BC4004B59DC /* UKFeedbackProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A18DE0E096456D20010CE0B /* UKFeedbackProvider.m */; };
+		1A01E5CA0ED98BC4004B59DC /* DDApplicationDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0BC4DC096F194500D2B2A7 /* DDApplicationDelegate.mm */; };
+		1A01E5CB0ED98BC4004B59DC /* DDComparatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0FFE530981EADC00599E84 /* DDComparatorView.mm */; };
+		1A01E5CC0ED98BC4004B59DC /* DDCompareDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */; };
+		1A01E5CD0ED98BC4004B59DC /* BSTrampoline.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098872098AEC11007C2F5F /* BSTrampoline.m */; };
+		1A01E5CE0ED98BC4004B59DC /* BS-HOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A098888098AED78007C2F5F /* BS-HOM.m */; };
+		1A01E5CF0ED98BC4004B59DC /* DDProblemReportManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FE81098C7FDA003BDAD5 /* DDProblemReportManager.mm */; };
+		1A01E5D00ED98BC4004B59DC /* DDProblemReportIssue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FEB5098C85D6003BDAD5 /* DDProblemReportIssue.mm */; };
+		1A01E5D10ED98BC4004B59DC /* CocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */; };
+		1A01E5D20ED98BC4004B59DC /* IconFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A50518D098E1E6B0056F45F /* IconFamily.m */; };
+		1A01E5D30ED98BC4004B59DC /* NSString+CarbonFSRefCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */; };
+		1A01E5D40ED98BC4004B59DC /* DDMesh+GLRendering.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
+		1A01E5D50ED98BC4004B59DC /* DDMesh+OoliteDATSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
+		1A01E5D60ED98BC4004B59DC /* DDSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A512F15099090A600A55ED7 /* DDSceneView.mm */; };
+		1A01E5D70ED98BC4004B59DC /* DDComparatorGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A51305D09909B6A00A55ED7 /* DDComparatorGLView.mm */; };
+		1A01E5D80ED98BC4004B59DC /* DDDimensionFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B14B10992175F007265FC /* DDDimensionFormatter.mm */; };
+		1A01E5D90ED98BC4004B59DC /* DDMesh+Utilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */; };
+		1A01E5DA0ED98BC4004B59DC /* DDScaleDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B185809926845007265FC /* DDScaleDialogController.mm */; };
+		1A01E5DB0ED98BC4004B59DC /* DDStaticSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA5471C099B35C500625FF2 /* DDStaticSceneView.mm */; };
+		1A01E5DC0ED98BC4004B59DC /* DDAxisReassignDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */; };
+		1A01E5DD0ED98BC4004B59DC /* DDUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A24608209A5D39000DC42F4 /* DDUtilities.mm */; };
+		1A01E5DE0ED98BC4004B59DC /* DDPantherCompatibility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */; };
+		1A01E5DF0ED98BC4004B59DC /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
+		1A01E5E00ED98BC4004B59DC /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; settings = {COMPILER_FLAGS = "-pp -8 -CFre -POoliteDAT_yy"; }; };
+		1A01E5E10ED98BC4004B59DC /* DDDATLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */; };
+		1A01E5E20ED98BC4004B59DC /* DDMesh+PropertyListRepresentation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */; };
+		1A01E5E30ED98BC4004B59DC /* DDNormalSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */; };
+		1A01E5E40ED98BC4004B59DC /* DDMaterialSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5707A609B255C700E0E17D /* DDMaterialSet.mm */; };
+		1A01E5E50ED98BC4004B59DC /* NSData+Deflate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A085A0009B46B1400FFD056 /* NSData+Deflate.m */; };
+		1A01E5E60ED98BC4004B59DC /* DDModelDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AF5BEBF09B5EA5A0053F435 /* DDModelDocument.mm */; };
+		1A01E5E70ED98BC4004B59DC /* DDTexCoordSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE2138109B72FA20064C1ED /* DDTexCoordSet.mm */; };
+		1A01E5E80ED98BC4004B59DC /* DDExhaustPlumeNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0B856A09B995760034D90F /* DDExhaustPlumeNode.mm */; };
+		1A01E5E90ED98BC4004B59DC /* DDDocumentInspector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0B86DC09B9BF7A0034D90F /* DDDocumentInspector.mm */; };
+		1A01E5EA0ED98BC4004B59DC /* DDInspectorPane.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B112209B9C5B3001558A3 /* DDInspectorPane.mm */; };
+		1A01E5EB0ED98BC4004B59DC /* DDInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B138809BA7171001558A3 /* DDInspectorController.m */; };
+		1A01E5EC0ED98BC4004B59DC /* DDFaceVertexBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE33C8409BBAA5B00F44436 /* DDFaceVertexBuffer.mm */; };
+		1A01E5ED0ED98BC4004B59DC /* DDWizardBackdropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A00856909C176C2007B982D /* DDWizardBackdropView.m */; };
+		1A01E5EE0ED98BC4004B59DC /* DDHeaderGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0085F509C17EC0007B982D /* DDHeaderGradientView.m */; };
+		1A01E5EF0ED98BC4004B59DC /* DDFileMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A13B0070A09FFFF0017CD80 /* DDFileMatcher.m */; };
+		1A01E5F00ED98BC4004B59DC /* DDVertexSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A7536770A0E15F40047DD80 /* DDVertexSet.mm */; };
+		1A01E5F10ED98BC4004B59DC /* DDMesh+WaveFrontOBJSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A345F4B0A1A6ADE007E491D /* DDMesh+WaveFrontOBJSupport.mm */; };
+		1A01E5F20ED98BC4004B59DC /* DDRecenterDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A99FB7D0A6426EB0052591D /* DDRecenterDialogController.mm */; };
+		1A01E5F30ED98BC4004B59DC /* DDTextureInspectorController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5E3450A8DD2CE00C2D481 /* DDTextureInspectorController.mm */; };
+		1A01E5F40ED98BC4004B59DC /* DDStartupController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */; };
+		1A01E5F60ED98BC4004B59DC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		1A01E5F70ED98BC4004B59DC /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F08B408130C020040CAC3 /* OpenGL.framework */; };
+		1A01E5F80ED98BC4004B59DC /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A18DE1F096457E90010CE0B /* Message.framework */; };
+		1A01E5F90ED98BC4004B59DC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A032044096C10FB0000B217 /* Carbon.framework */; };
+		1A01E5FA0ED98BC4004B59DC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A78150209767395001C0020 /* Accelerate.framework */; };
+		1A01E5FB0ED98BC4004B59DC /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A543C1D09AD0087006B751A /* QuickTime.framework */; };
+		1A01E5FC0ED98BC4004B59DC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A085A5209B4718300FFD056 /* libz.dylib */; };
+		1A01E5FD0ED98BC4004B59DC /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A53D7E60ADD203D0057ED21 /* Sparkle.framework */; };
+		1A01E5FE0ED98BC4004B59DC /* libSmartCrashReportsInstall.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
+		1A01E6000ED98BC4004B59DC /* libSmartCrashReportsInstall.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
+		1A01E6010ED98BC4004B59DC /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A53D7E60ADD203D0057ED21 /* Sparkle.framework */; };
 		1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A032044096C10FB0000B217 /* Carbon.framework */; };
 		1A085A0209B46B1400FFD056 /* NSData+Deflate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A085A0009B46B1400FFD056 /* NSData+Deflate.m */; };
 		1A085A5309B4718300FFD056 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A085A5209B4718300FFD056 /* libz.dylib */; };
@@ -62,7 +169,6 @@
 		1A23E2D10A04F9C300934A0A /* DDProblemReportIssue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A67FEB5098C85D6003BDAD5 /* DDProblemReportIssue.mm */; };
 		1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A24608209A5D39000DC42F4 /* DDUtilities.mm */; };
 		1A2740B609A89E7A0031F97B /* DDPantherCompatibility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */; };
-		1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
 		1A345F4C0A1A6ADF007E491D /* DDMesh+WaveFrontOBJSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A345F4B0A1A6ADE007E491D /* DDMesh+WaveFrontOBJSupport.mm */; };
 		1A442149094C830B000E90C2 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A442148094C830B000E90C2 /* Logging.m */; };
 		1A49F9F00959B235003B322F /* DDLightController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A49F9EE0959B235003B322F /* DDLightController.mm */; };
@@ -73,7 +179,6 @@
 		1A53D7E70ADD203D0057ED21 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A53D7E60ADD203D0057ED21 /* Sparkle.framework */; };
 		1A53D7F90ADD271B0057ED21 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A53D7E60ADD203D0057ED21 /* Sparkle.framework */; };
 		1A53D8150ADD2AAF0057ED21 /* DDStartupController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */; };
-		1A53D8160ADD2AAF0057ED21 /* DDStartupController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A53D8140ADD2AAF0057ED21 /* DDStartupController.h */; };
 		1A53D8290ADD2B500057ED21 /* DDStartup.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A53D8270ADD2B500057ED21 /* DDStartup.nib */; };
 		1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A543C1D09AD0087006B751A /* QuickTime.framework */; };
 		1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
@@ -122,6 +227,8 @@
 		1AA79C0909896FEA00A1810B /* Arrow Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */; };
 		1ABEC05409485ED500B1E952 /* DisplayListCacheNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */; };
 		1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1377F096894FD006BB3EE /* Dry Dock.icns */; };
+		1AC3A03D0D8C3559007E13E9 /* libSmartCrashReportsInstall.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
+		1AC3A0490D8C35CF007E13E9 /* libSmartCrashReportsInstall.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
 		1AC5E3460A8DD2CE00C2D481 /* DDTextureInspectorController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5E3450A8DD2CE00C2D481 /* DDTextureInspectorController.mm */; };
 		1ACE7DE30954227B00BF7642 /* Rotate Tool.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7DE20954227B00BF7642 /* Rotate Tool.png */; };
 		1ACE7EF8095438E800BF7642 /* Inspector Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */; };
@@ -140,15 +247,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1A01E5FF0ED98BC4004B59DC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1A01E6000ED98BC4004B59DC /* libSmartCrashReportsInstall.dylib in CopyFiles */,
+				1A01E6010ED98BC4004B59DC /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A27427C09A8B9110031F97B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1A27426C09A8B7410031F97B /* libSmartCrashReportsInstall.dylib in CopyFiles */,
+				1AC3A0490D8C35CF007E13E9 /* libSmartCrashReportsInstall.dylib in CopyFiles */,
 				1A53D7F90ADD271B0057ED21 /* Sparkle.framework in CopyFiles */,
-				1A53D8160ADD2AAF0057ED21 /* DDStartupController.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +278,8 @@
 		1A00856909C176C2007B982D /* DDWizardBackdropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDWizardBackdropView.m; sourceTree = "<group>"; };
 		1A0085F409C17EC0007B982D /* DDHeaderGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHeaderGradientView.h; sourceTree = "<group>"; };
 		1A0085F509C17EC0007B982D /* DDHeaderGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHeaderGradientView.m; sourceTree = "<group>"; };
+		1A01E6080ED98BC4004B59DC /* Dry Dock for Oolite-gc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dry Dock for Oolite-gc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A01E60C0ED98BC5004B59DC /* Info-DD copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-DD copy.plist"; sourceTree = "<group>"; };
 		1A032044096C10FB0000B217 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		1A0322A8096C3D890000B217 /* Change Log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Change Log.txt"; sourceTree = "<group>"; };
 		1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Deflate.h"; sourceTree = "<group>"; };
@@ -338,6 +457,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1A01E5F50ED98BC4004B59DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A01E5F60ED98BC4004B59DC /* Cocoa.framework in Frameworks */,
+				1A01E5F70ED98BC4004B59DC /* OpenGL.framework in Frameworks */,
+				1A01E5F80ED98BC4004B59DC /* Message.framework in Frameworks */,
+				1A01E5F90ED98BC4004B59DC /* Carbon.framework in Frameworks */,
+				1A01E5FA0ED98BC4004B59DC /* Accelerate.framework in Frameworks */,
+				1A01E5FB0ED98BC4004B59DC /* QuickTime.framework in Frameworks */,
+				1A01E5FC0ED98BC4004B59DC /* libz.dylib in Frameworks */,
+				1A01E5FD0ED98BC4004B59DC /* Sparkle.framework in Frameworks */,
+				1A01E5FE0ED98BC4004B59DC /* libSmartCrashReportsInstall.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A23DF260A04B05000934A0A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -359,6 +494,7 @@
 				1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */,
 				1A085A5309B4718300FFD056 /* libz.dylib in Frameworks */,
 				1A53D7E70ADD203D0057ED21 /* Sparkle.framework in Frameworks */,
+				1AC3A03D0D8C3559007E13E9 /* libSmartCrashReportsInstall.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +530,7 @@
 			children = (
 				8D15AC370486D014006FF6A4 /* Dry Dock for Oolite.app */,
 				1A23DF280A04B05000934A0A /* ddoolite */,
+				1A01E6080ED98BC4004B59DC /* Dry Dock for Oolite-gc.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -718,6 +855,7 @@
 				1A18DDD209644E0D0010CE0B /* MacPAD.url */,
 				1A6702B9098CF688003BDAD5 /* NIBs */,
 				1A49FAB40959B9C0003B322F /* Icons */,
+				1A01E60C0ED98BC5004B59DC /* Info-DD copy.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -734,6 +872,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1A01E5920ED98BC4004B59DC /* Dry Dock-gc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A01E6020ED98BC4004B59DC /* Build configuration list for PBXNativeTarget "Dry Dock-gc" */;
+			buildPhases = (
+				1A01E5930ED98BC4004B59DC /* Resources */,
+				1A01E5B40ED98BC4004B59DC /* Sources */,
+				1A01E5F50ED98BC4004B59DC /* Frameworks */,
+				1A01E5FF0ED98BC4004B59DC /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Dry Dock-gc";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Dry Dock";
+			productReference = 1A01E6080ED98BC4004B59DC /* Dry Dock for Oolite-gc.app */;
+			productType = "com.apple.product-type.application";
+		};
 		1A23DF270A04B05000934A0A /* ddoolite */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1A23DF2A0A04B05200934A0A /* Build configuration list for PBXNativeTarget "ddoolite" */;
@@ -775,6 +932,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 1AAC876908F293CC004A6AD2 /* Build configuration list for PBXProject "Dry Dock" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -785,14 +943,55 @@
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Dry Dock */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* Dry Dock */,
 				1A23DF270A04B05000934A0A /* ddoolite */,
+				1A01E5920ED98BC4004B59DC /* Dry Dock-gc */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1A01E5930ED98BC4004B59DC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A01E5940ED98BC4004B59DC /* Credits.rtf in Resources */,
+				1A01E5950ED98BC4004B59DC /* DDDocument.nib in Resources */,
+				1A01E5960ED98BC4004B59DC /* InfoPlist.strings in Resources */,
+				1A01E5970ED98BC4004B59DC /* Localizable.strings in Resources */,
+				1A01E5980ED98BC4004B59DC /* Placeholder Texture.png in Resources */,
+				1A01E5990ED98BC4004B59DC /* Rotate Tool.png in Resources */,
+				1A01E59A0ED98BC4004B59DC /* Inspector Toolbar Item.icns in Resources */,
+				1A01E59B0ED98BC4004B59DC /* MacPAD.url in Resources */,
+				1A01E59C0ED98BC4004B59DC /* UKFeedbackProvider.nib in Resources */,
+				1A01E59D0ED98BC4004B59DC /* Dry Dock.icns in Resources */,
+				1A01E59E0ED98BC4004B59DC /* Document.icns in Resources */,
+				1A01E59F0ED98BC4004B59DC /* Oolite Model.icns in Resources */,
+				1A01E5A00ED98BC4004B59DC /* DDComparatorView.nib in Resources */,
+				1A01E5A10ED98BC4004B59DC /* DDCompareDialog.nib in Resources */,
+				1A01E5A20ED98BC4004B59DC /* Arrow Tool.tiff in Resources */,
+				1A01E5A30ED98BC4004B59DC /* Lightwave OBJ Model.icns in Resources */,
+				1A01E5A40ED98BC4004B59DC /* Wireframe Toolbar Item.icns in Resources */,
+				1A01E5A50ED98BC4004B59DC /* Faces Toolbar Item.icns in Resources */,
+				1A01E5A60ED98BC4004B59DC /* Normals Toolbar Item.icns in Resources */,
+				1A01E5A70ED98BC4004B59DC /* Compare Toolbar Item.icns in Resources */,
+				1A01E5A80ED98BC4004B59DC /* DDProblemReportManager.nib in Resources */,
+				1A01E5A90ED98BC4004B59DC /* Read Me.rtf in Resources */,
+				1A01E5AA0ED98BC4004B59DC /* DDScaleDialog.nib in Resources */,
+				1A01E5AB0ED98BC4004B59DC /* DDAxisReassignDialog.nib in Resources */,
+				1A01E5AC0ED98BC4004B59DC /* Right Way Around.png in Resources */,
+				1A01E5AD0ED98BC4004B59DC /* Big Translucent Icon.png in Resources */,
+				1A01E5AE0ED98BC4004B59DC /* DDApplication.nib in Resources */,
+				1A01E5AF0ED98BC4004B59DC /* Exhaust Plume.dat in Resources */,
+				1A01E5B00ED98BC4004B59DC /* Document Inspector.nib in Resources */,
+				1A01E5B10ED98BC4004B59DC /* Dry Dock Help in Resources */,
+				1A01E5B20ED98BC4004B59DC /* DDRecenterDialog.nib in Resources */,
+				1A01E5B30ED98BC4004B59DC /* DDStartup.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC2B0486D014006FF6A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -835,6 +1034,77 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1A01E5B40ED98BC4004B59DC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A01E5B50ED98BC4004B59DC /* DDDocument.mm in Sources */,
+				1A01E5B60ED98BC4004B59DC /* main.m in Sources */,
+				1A01E5B70ED98BC4004B59DC /* DDPreviewView.mm in Sources */,
+				1A01E5B80ED98BC4004B59DC /* DDDocumentWindowController.mm in Sources */,
+				1A01E5B90ED98BC4004B59DC /* SceneNode.mm in Sources */,
+				1A01E5BA0ED98BC4004B59DC /* phystypes.cp in Sources */,
+				1A01E5BB0ED98BC4004B59DC /* SimpleTag.mm in Sources */,
+				1A01E5BC0ED98BC4004B59DC /* SceneTag.mm in Sources */,
+				1A01E5BD0ED98BC4004B59DC /* AxisNode.mm in Sources */,
+				1A01E5BE0ED98BC4004B59DC /* GLUtilities.cp in Sources */,
+				1A01E5BF0ED98BC4004B59DC /* DisplayListCacheNode.mm in Sources */,
+				1A01E5C00ED98BC4004B59DC /* Logging.m in Sources */,
+				1A01E5C10ED98BC4004B59DC /* DDMesh.mm in Sources */,
+				1A01E5C20ED98BC4004B59DC /* DDMeshNode.mm in Sources */,
+				1A01E5C30ED98BC4004B59DC /* DDError.mm in Sources */,
+				1A01E5C40ED98BC4004B59DC /* DDMaterial.mm in Sources */,
+				1A01E5C50ED98BC4004B59DC /* DDApplication.mm in Sources */,
+				1A01E5C60ED98BC4004B59DC /* DDDocumentController.mm in Sources */,
+				1A01E5C70ED98BC4004B59DC /* DDLightController.mm in Sources */,
+				1A01E5C80ED98BC4004B59DC /* DDTextureBuffer.m in Sources */,
+				1A01E5C90ED98BC4004B59DC /* UKFeedbackProvider.m in Sources */,
+				1A01E5CA0ED98BC4004B59DC /* DDApplicationDelegate.mm in Sources */,
+				1A01E5CB0ED98BC4004B59DC /* DDComparatorView.mm in Sources */,
+				1A01E5CC0ED98BC4004B59DC /* DDCompareDialogController.mm in Sources */,
+				1A01E5CD0ED98BC4004B59DC /* BSTrampoline.m in Sources */,
+				1A01E5CE0ED98BC4004B59DC /* BS-HOM.m in Sources */,
+				1A01E5CF0ED98BC4004B59DC /* DDProblemReportManager.mm in Sources */,
+				1A01E5D00ED98BC4004B59DC /* DDProblemReportIssue.mm in Sources */,
+				1A01E5D10ED98BC4004B59DC /* CocoaExtensions.m in Sources */,
+				1A01E5D20ED98BC4004B59DC /* IconFamily.m in Sources */,
+				1A01E5D30ED98BC4004B59DC /* NSString+CarbonFSRefCreation.m in Sources */,
+				1A01E5D40ED98BC4004B59DC /* DDMesh+GLRendering.mm in Sources */,
+				1A01E5D50ED98BC4004B59DC /* DDMesh+OoliteDATSupport.mm in Sources */,
+				1A01E5D60ED98BC4004B59DC /* DDSceneView.mm in Sources */,
+				1A01E5D70ED98BC4004B59DC /* DDComparatorGLView.mm in Sources */,
+				1A01E5D80ED98BC4004B59DC /* DDDimensionFormatter.mm in Sources */,
+				1A01E5D90ED98BC4004B59DC /* DDMesh+Utilities.mm in Sources */,
+				1A01E5DA0ED98BC4004B59DC /* DDScaleDialogController.mm in Sources */,
+				1A01E5DB0ED98BC4004B59DC /* DDStaticSceneView.mm in Sources */,
+				1A01E5DC0ED98BC4004B59DC /* DDAxisReassignDialogController.mm in Sources */,
+				1A01E5DD0ED98BC4004B59DC /* DDUtilities.mm in Sources */,
+				1A01E5DE0ED98BC4004B59DC /* DDPantherCompatibility.mm in Sources */,
+				1A01E5DF0ED98BC4004B59DC /* DDErrorDescription.mm in Sources */,
+				1A01E5E00ED98BC4004B59DC /* OoliteDAT.l in Sources */,
+				1A01E5E10ED98BC4004B59DC /* DDDATLexer.m in Sources */,
+				1A01E5E20ED98BC4004B59DC /* DDMesh+PropertyListRepresentation.mm in Sources */,
+				1A01E5E30ED98BC4004B59DC /* DDNormalSet.mm in Sources */,
+				1A01E5E40ED98BC4004B59DC /* DDMaterialSet.mm in Sources */,
+				1A01E5E50ED98BC4004B59DC /* NSData+Deflate.m in Sources */,
+				1A01E5E60ED98BC4004B59DC /* DDModelDocument.mm in Sources */,
+				1A01E5E70ED98BC4004B59DC /* DDTexCoordSet.mm in Sources */,
+				1A01E5E80ED98BC4004B59DC /* DDExhaustPlumeNode.mm in Sources */,
+				1A01E5E90ED98BC4004B59DC /* DDDocumentInspector.mm in Sources */,
+				1A01E5EA0ED98BC4004B59DC /* DDInspectorPane.mm in Sources */,
+				1A01E5EB0ED98BC4004B59DC /* DDInspectorController.m in Sources */,
+				1A01E5EC0ED98BC4004B59DC /* DDFaceVertexBuffer.mm in Sources */,
+				1A01E5ED0ED98BC4004B59DC /* DDWizardBackdropView.m in Sources */,
+				1A01E5EE0ED98BC4004B59DC /* DDHeaderGradientView.m in Sources */,
+				1A01E5EF0ED98BC4004B59DC /* DDFileMatcher.m in Sources */,
+				1A01E5F00ED98BC4004B59DC /* DDVertexSet.mm in Sources */,
+				1A01E5F10ED98BC4004B59DC /* DDMesh+WaveFrontOBJSupport.mm in Sources */,
+				1A01E5F20ED98BC4004B59DC /* DDRecenterDialogController.mm in Sources */,
+				1A01E5F30ED98BC4004B59DC /* DDTextureInspectorController.mm in Sources */,
+				1A01E5F40ED98BC4004B59DC /* DDStartupController.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A23DF250A04B05000934A0A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1060,6 +1330,324 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1A01E6030ED98BC4004B59DC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = YY_NO_UNPUT;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
+				ONLY_LINK_ESSENTIAL_SYMBOLS = NO;
+				OTHER_CFLAGS = "-DPHYS_NO_VECTORISE_PPC";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				PRODUCT_NAME = "Dry Dock for Oolite-gc";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				STRIP_INSTALLED_PRODUCT = NO;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		1A01E6040ED98BC4004B59DC /* Development-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = YY_NO_UNPUT;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				ONLY_LINK_ESSENTIAL_SYMBOLS = NO;
+				OTHER_CFLAGS = "-DPHYS_NO_VECTORISE_PPC";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				PRODUCT_NAME = "Dry Dock for Oolite-gc";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				STRIP_INSTALLED_PRODUCT = NO;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = "Development-Panther";
+		};
+		1A01E6050ED98BC4004B59DC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					x86_64,
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_FAST_OBJC_DISPATCH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = YY_NO_UNPUT;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
+				OTHER_CFLAGS = (
+					"-DNDEBUG",
+					"-DPHYS_NO_VECTORISE_PPC",
+				);
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				PRODUCT_NAME = "Dry Dock for Oolite-gc";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT_ppc = /Developer/SDKs/MacOSX10.3.9.sdk;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		1A01E6060ED98BC4004B59DC /* Debug-optimized */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_FAST_OBJC_DISPATCH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = YY_NO_UNPUT;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
+				OTHER_CFLAGS = (
+					"-DENABLE_LOGGING=1",
+					"-DPHYS_NO_VECTORISE_PPC",
+				);
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				PRODUCT_NAME = "Dry Dock for Oolite-gc";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Debug-optimized";
+		};
+		1A01E6070ED98BC4004B59DC /* Debug-optimized-Panther */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = ppc;
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/Sparkle\"";
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PFE_FILE_C_DIALECTS = "objective-c objective-c++";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = YY_NO_UNPUT;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				OTHER_CFLAGS = (
+					"-DENABLE_LOGGING=1",
+					"-DPHYS_NO_VECTORISE_PPC",
+				);
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				PRODUCT_NAME = "Dry Dock for Oolite-gc";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT_ppc = /Developer/SDKs/MacOSX10.3.9.sdk;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wno-strict-aliasing",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wdisabled-optimization",
+					"-Wunreachable-code",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Debug-optimized-Panther";
+		};
 		1A23DF2B0A04B05200934A0A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1213,6 +1801,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.3;
 				ONLY_LINK_ESSENTIAL_SYMBOLS = NO;
 				OTHER_CFLAGS = "-DPHYS_NO_VECTORISE_PPC";
@@ -1285,6 +1878,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.3;
 				OTHER_CFLAGS = (
 					"-DENABLE_LOGGING=1",
@@ -1370,12 +1968,18 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
 				OTHER_CFLAGS = (
 					"-DENABLE_LOGGING=1",
 					"-DPHYS_NO_VECTORISE_PPC",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "Dry Dock for Oolite";
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Debug-optimized";
@@ -1442,10 +2046,16 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
 				ONLY_LINK_ESSENTIAL_SYMBOLS = NO;
 				OTHER_CFLAGS = "-DPHYS_NO_VECTORISE_PPC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "Dry Dock for Oolite";
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				STRIP_INSTALLED_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -1495,12 +2105,19 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
 				OTHER_CFLAGS = (
 					"-DNDEBUG",
 					"-DPHYS_NO_VECTORISE_PPC",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "Dry Dock for Oolite";
+				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT_ppc = /Developer/SDKs/MacOSX10.3.9.sdk;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -1538,6 +2155,18 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1A01E6020ED98BC4004B59DC /* Build configuration list for PBXNativeTarget "Dry Dock-gc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A01E6030ED98BC4004B59DC /* Development */,
+				1A01E6040ED98BC4004B59DC /* Development-Panther */,
+				1A01E6050ED98BC4004B59DC /* Deployment */,
+				1A01E6060ED98BC4004B59DC /* Debug-optimized */,
+				1A01E6070ED98BC4004B59DC /* Debug-optimized-Panther */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
 		1A23DF2A0A04B05200934A0A /* Build configuration list for PBXNativeTarget "ddoolite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

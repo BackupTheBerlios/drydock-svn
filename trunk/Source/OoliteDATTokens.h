@@ -1,7 +1,7 @@
 #ifndef INCLUDED_OOLITEDATTOKENS_h
 #define INCLUDED_OOLITEDATTOKENS_h
 
-enum
+typedef enum
 {
 	KOoliteDatToken_EOF,
 	KOoliteDatToken_EOL,
@@ -14,7 +14,7 @@ enum
 	KOoliteDatToken_INTEGER,
 	KOoliteDatToken_REAL,
 	KOoliteDatToken_STRING
-};
+} OoliteDATLexToken;
 
 
 #ifdef __cplusplus

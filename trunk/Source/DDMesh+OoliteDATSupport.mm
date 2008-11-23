@@ -40,8 +40,14 @@
 // Hard-coded limits from Oolite
 enum
 {
-	kMaxDATVertices			= 320,
-	kMaxDATFaces			= 512,
+	// Up to 1.68
+	kMaxDATVerticesOld		= 320,
+	kMaxDATFacesOld			= 512,
+	kMaxDATMaterialsOld		= 7,
+	
+	// 1.69 and later
+	kMaxDATVertices			= 500,
+	kMaxDATFaces			= 800,
 	kMaxDATMaterials		= 8
 };
 
@@ -71,9 +77,9 @@ enum
 	DDDATLexer				*lexer;
 	NSString				*tokString;
 	int						tok;
-	BOOL					readTextures;
+	BOOL					readTextures = NO;
 	DDNormalSet				*normals = nil;
-	DDTexCoordSet			*texCoords;
+	DDTexCoordSet			*texCoords = NULL;
 	DDFaceVertexBuffer		*buffer = nil;
 	DDMeshIndex				faceVertices[kMaxVertsPerFace];
 	DDMeshIndex				faceTexCoords[kMaxVertsPerFace] = {0};
@@ -88,8 +94,6 @@ enum
 	
 	self = [super init];
 	if (nil == self) return nil;
-	
-//	[NSException raise:NSGenericException format:@"This is a long and pointless string. Loooooong. And very very pointless. As pointless as a pointless and long thing. A thing which is long and has no point, other than being long."];
 	
 	TraceMessage(@"Loading file.");
 	_name = [inFile displayString];
@@ -118,7 +122,11 @@ enum
 		}
 		else if (kMaxDATVertices < vertexCount)
 		{
-			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOolite" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite, which has a limit of %u %@.", vertexCount, NSLocalizedString(@"vertices", NULL), kMaxDATVertices, NSLocalizedString(@"vertices", NULL)];
+			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOolite" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite%@, which has a limit of %u %@.", vertexCount, NSLocalizedString(@"vertices", NULL), @"", kMaxDATVertices, NSLocalizedString(@"vertices", NULL)];
+		}
+		else if (kMaxDATVerticesOld < vertexCount)
+		{
+			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOoliteOld" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite%@, which has a limit of %u %@.", vertexCount, NSLocalizedString(@"vertices", NULL), NSLocalizedString(@"1.68 and earlier", NULL), kMaxDATVerticesOld, NSLocalizedString(@"vertices", NULL)];
 		}
 	}
 	
@@ -140,7 +148,11 @@ enum
 		}
 		else if (kMaxDATFaces < faceCount)
 		{
-			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOolite" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite, which has a limit of %u faces.", faceCount, NSLocalizedString(@"faces", NULL), kMaxDATFaces, NSLocalizedString(@"faces", NULL)];
+			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOolite" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite%@, which has a limit of %u %@.", faceCount, NSLocalizedString(@"faces", NULL), @"", kMaxDATFaces, NSLocalizedString(@"faces", NULL)];
+		}
+		else if (kMaxDATFacesOld < faceCount)
+		{
+			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOoliteOld" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite%@, which has a limit of %u %@.", faceCount, NSLocalizedString(@"faces", NULL), NSLocalizedString(@"1.68 and earlier", NULL), kMaxDATFacesOld, NSLocalizedString(@"faces", NULL)];
 		}
 	}
 	
@@ -184,7 +196,7 @@ enum
 				break;
 			}
 			
-			x = -x;		// Dunno why, but it does the right thing.
+			x = -x;		// Oolite uses a flipped co-ordinate system.
 			
 			vertices[i].Set(x, y, z).CleanZeros();
 			

@@ -35,6 +35,35 @@
 			sepNavVisRect = "{{0, 2323}, {933, 716}}";
 		};
 	};
+	1A01E5920ED98BC4004B59DC /* Dry Dock-gc */ = {
+		activeExec = 0;
+		executables = (
+			1A01E6090ED98BC4004B59DC /* Dry Dock-gc */,
+		);
+	};
+	1A01E6090ED98BC4004B59DC /* Dry Dock-gc */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "Dry Dock-gc";
+		sourceDirectories = (
+		);
+	};
 	1A0322A8096C3D890000B217 /* Change Log.txt */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1192, 1776}}";
@@ -149,16 +178,16 @@
 	};
 	1A0FFE750981EE3100599E84 /* DDCompareDialogController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 880}}";
-			sepNavSelRange = "{1400, 16}";
-			sepNavVisRect = "{{0, 0}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1252, 880}}";
+			sepNavSelRange = "{1287, 0}";
+			sepNavVisRect = "{{0, 0}, {1252, 836}}";
 		};
 	};
 	1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1462, 4352}}";
-			sepNavSelRange = "{1339, 16}";
-			sepNavVisRect = "{{0, 0}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1079, 4432}}";
+			sepNavSelRange = "{1896, 13}";
+			sepNavVisRect = "{{0, 106}, {1079, 836}}";
 		};
 	};
 	1A13B0060A09FFFF0017CD80 /* DDFileMatcher.h */ = {
@@ -170,9 +199,9 @@
 	};
 	1A13B0070A09FFFF0017CD80 /* DDFileMatcher.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1714, 5632}}";
-			sepNavSelRange = "{5870, 0}";
-			sepNavVisRect = "{{0, 3618}, {933, 716}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1079, 5648}}";
+			sepNavSelRange = "{4690, 0}";
+			sepNavVisRect = "{{0, 3108}, {1079, 836}}";
 		};
 	};
 	1A18DDD209644E0D0010CE0B /* MacPAD.url */ = {
@@ -191,40 +220,25 @@
 	};
 	1A18DE0E096456D20010CE0B /* UKFeedbackProvider.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1252, 1248}}";
-			sepNavSelRange = "{379, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{749, 0}";
+			sepNavVisRange = "{0, 2181}";
 			sepNavVisRect = "{{0, 426}, {970, 822}}";
 		};
 	};
-	1A2046D90ADEACAE002EC35A /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 1A2046DA0ADEACAE002EC35A /* reference-errors.html */;
-		name = "(null): 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	1A2046DA0ADEACAE002EC35A /* reference-errors.html */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = text.html;
-		name = "reference-errors.html";
-		path = "/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Resources/English.lproj/Dry Dock Help/html/reference-errors.html";
-		sourceTree = "<absolute>";
-	};
 	1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 4544}}";
-			sepNavSelRange = "{2633, 0}";
-			sepNavVisRect = "{{0, 1374}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {908, 4544}}";
+			sepNavSelRange = "{1654, 26}";
+			sepNavVisRect = "{{0, 3142}, {908, 836}}";
 		};
 	};
 	1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2120, 11088}}";
-			sepNavSelRange = "{12824, 0}";
-			sepNavVisRect = "{{0, 5594}, {1291, 348}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1170, 9204}}";
+			sepNavSelRange = "{3094, 0}";
+			sepNavVisRange = "{1808, 3261}";
+			sepNavVisRect = "{{0, 9493}, {1014, 836}}";
 		};
 	};
 	1A23DF270A04B05000934A0A /* ddoolite */ = {
@@ -235,7 +249,6 @@
 	};
 	1A23DF290A04B05000934A0A /* ddoolite */ = {
 		isa = PBXExecutable;
-		activeArgIndex = 1;
 		activeArgIndices = (
 			NO,
 			YES,
@@ -249,6 +262,7 @@
 			"../../../../Test\\ Files/Behemoth.dat",
 		);
 		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
@@ -290,9 +304,9 @@
 	};
 	1A23E0370A04B9C100934A0A /* DDUtilities-ddoolite.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {992, 1248}}";
-			sepNavSelRange = "{1217, 0}";
-			sepNavVisRect = "{{0, 0}, {992, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1299, 1248}}";
+			sepNavSelRange = "{1602, 106}";
+			sepNavVisRect = "{{0, 411}, {1299, 836}}";
 		};
 	};
 	1A23E2BE0A04F4F100934A0A /* DDProblemReportManager-faceless.mm */ = {
@@ -304,30 +318,34 @@
 	};
 	1A245C1009A4676700DC42F4 /* OoliteDAT.l */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {933, 2368}}";
-			sepNavSelRange = "{170, 0}";
-			sepNavVisRect = "{{0, 0}, {933, 716}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1271, 1924}}";
+			sepNavSelRange = "{1181, 0}";
+			sepNavVisRange = "{967, 437}";
+			sepNavVisRect = "{{0, 1531}, {762, 836}}";
 		};
 	};
 	1A245CB109A4727700DC42F4 /* OoliteDATTokens.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1003, 796}}";
-			sepNavSelRange = "{350, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1170, 1094}}";
+			sepNavSelRange = "{385, 17}";
+			sepNavVisRange = "{0, 670}";
 			sepNavVisRect = "{{0, 0}, {1003, 796}}";
 		};
 	};
 	1A245EA909A4C8AF00DC42F4 /* DDDATLexer.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1242, 822}}";
-			sepNavSelRange = "{1591, 14}";
+			sepNavIntBoundsRect = "{{0, 0}, {1170, 1117}}";
+			sepNavSelRange = "{1918, 0}";
+			sepNavVisRange = "{0, 1918}";
 			sepNavVisRect = "{{0, 0}, {1242, 822}}";
 		};
 	};
 	1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1441, 5216}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRect = "{{0, 0}, {933, 716}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1170, 4279}}";
+			sepNavSelRange = "{3346, 0}";
+			sepNavVisRange = "{1902, 1677}";
+			sepNavVisRect = "{{0, 933}, {762, 836}}";
 		};
 	};
 	1A24608109A5D39000DC42F4 /* DDUtilities.h */ = {
@@ -346,9 +364,9 @@
 	};
 	1A2740B409A89E7A0031F97B /* DDPantherCompatibility.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1630, 1392}}";
-			sepNavSelRange = "{2154, 0}";
-			sepNavVisRect = "{{0, 488}, {1305, 810}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1014, 1424}}";
+			sepNavSelRange = "{1505, 18}";
+			sepNavVisRect = "{{0, 300}, {1014, 836}}";
 		};
 	};
 	1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */ = {
@@ -360,16 +378,17 @@
 	};
 	1A345F4B0A1A6ADE007E491D /* DDMesh+WaveFrontOBJSupport.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2106, 18576}}";
-			sepNavSelRange = "{23871, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1087, 15080}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{9443, 2418}";
 			sepNavVisRect = "{{0, 11133}, {1016, 822}}";
 		};
 	};
 	1A442147094C830B000E90C2 /* Logging.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {992, 2064}}";
-			sepNavSelRange = "{3383, 0}";
-			sepNavVisRect = "{{0, 1197}, {992, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1014, 2128}}";
+			sepNavSelRange = "{3003, 0}";
+			sepNavVisRect = "{{0, 1197}, {1014, 836}}";
 		};
 	};
 	1A442148094C830B000E90C2 /* Logging.m */ = {
@@ -402,22 +421,25 @@
 	};
 	1A50518D098E1E6B0056F45F /* IconFamily.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2365, 23728}}";
-			sepNavSelRange = "{30591, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 19565}}";
+			sepNavSelRange = "{10627, 0}";
+			sepNavVisRange = "{0, 3113}";
 			sepNavVisRect = "{{0, 13209}, {933, 716}}";
 		};
 	};
 	1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 822}}";
-			sepNavSelRange = "{1456, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{1112, 0}";
+			sepNavVisRange = "{0, 1456}";
 			sepNavVisRect = "{{0, 0}, {1214, 822}}";
 		};
 	};
 	1A5051A7098E1F790056F45F /* NSString+CarbonFSRefCreation.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1037, 822}}";
-			sepNavSelRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{499, 0}";
+			sepNavVisRange = "{0, 499}";
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
@@ -430,9 +452,9 @@
 	};
 	1A512F15099090A600A55ED7 /* DDSceneView.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 8784}}";
-			sepNavSelRange = "{2444, 0}";
-			sepNavVisRect = "{{0, 437}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1074, 8784}}";
+			sepNavSelRange = "{6487, 0}";
+			sepNavVisRect = "{{0, 4019}, {1074, 836}}";
 		};
 	};
 	1A51305C09909B6A00A55ED7 /* DDComparatorGLView.h */ = {
@@ -451,15 +473,17 @@
 	};
 	1A53D8130ADD2AAF0057ED21 /* DDStartupController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1259, 8192}}";
-			sepNavSelRange = "{6614, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1271, 6591}}";
+			sepNavSelRange = "{8662, 0}";
+			sepNavVisRange = "{8616, 319}";
 			sepNavVisRect = "{{0, 3309}, {1192, 822}}";
 		};
 	};
 	1A53D8140ADD2AAF0057ED21 /* DDStartupController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1192, 976}}";
-			sepNavSelRange = "{2069, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {984, 1116}}";
+			sepNavSelRange = "{1617, 0}";
+			sepNavVisRange = "{0, 2069}";
 			sepNavVisRect = "{{0, 138}, {1192, 822}}";
 		};
 	};
@@ -479,16 +503,17 @@
 	};
 	1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2092, 9680}}";
-			sepNavSelRange = "{12661, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1087, 7800}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{9886, 2276}";
 			sepNavVisRect = "{{0, 6026}, {933, 716}}";
 		};
 	};
 	1A57040209B12B9400E0E17D /* DDPropertyListRepresentation.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1154, 817}}";
-			sepNavSelRange = "{1545, 0}";
-			sepNavVisRect = "{{0, 0}, {1154, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1200, 837}}";
+			sepNavSelRange = "{727, 0}";
+			sepNavVisRect = "{{0, 0}, {1200, 836}}";
 		};
 	};
 	1A5705E909B1D10F00E0E17D /* DDNormalSet.h */ = {
@@ -542,9 +567,9 @@
 	};
 	1A65C6270957A43E006990D5 /* DDMaterial.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1112, 5056}}";
-			sepNavSelRange = "{5679, 0}";
-			sepNavVisRect = "{{0, 3204}, {933, 716}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1299, 5056}}";
+			sepNavSelRange = "{3083, 25}";
+			sepNavVisRect = "{{0, 1044}, {1299, 836}}";
 		};
 	};
 	1A67034E098D81C2003BDAD5 /* CocoaExtensions.h */ = {
@@ -598,9 +623,9 @@
 	};
 	1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1714, 8192}}";
-			sepNavSelRange = "{12875, 0}";
-			sepNavVisRect = "{{0, 6755}, {985, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1014, 8272}}";
+			sepNavSelRange = "{3668, 6}";
+			sepNavVisRect = "{{0, 1590}, {1014, 836}}";
 		};
 	};
 	1A72083B095A8C8C00C6896A /* MathsUtils.h */ = {
@@ -617,78 +642,12 @@
 			sepNavVisRect = "{{0, 106}, {988, 822}}";
 		};
 	};
-	1A7376BA098522F1004C2DFA /* XCBreakpointsBucket */ = {
-		isa = XCBreakpointsBucket;
-		name = "Project Breakpoints";
-		objects = (
-			1A7433D80A8CC06C006AEA18 /* DDTextureInspectorController.m:74 */,
-			1A7433FD0A8CC26E006AEA18 /* DDTextureBuffer.m:289 */,
-			1A7434130A8CC3EA006AEA18 /* DDTextureBuffer.m:278 */,
-			1AC5E1930A8CCDAB00C2D481 /* -[_NSZombie retainCount] */,
-			1AC5E19D0A8CCE3D00C2D481 /* -[_NSZombie class] */,
-			1AC5E22D0A8CD7AB00C2D481 /* DDTextureBuffer.m:428 */,
-			1AC5E2A10A8CDE1100C2D481 /* DDTextureBuffer.m:466 */,
-		);
-	};
 	1A7432CA0A8CB099006AEA18 /* DDTextureInspectorController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1214, 822}}";
 			sepNavSelRange = "{469, 0}";
 			sepNavVisRect = "{{0, 0}, {1214, 822}}";
 		};
-	};
-	1A7432CB0A8CB099006AEA18 /* DDTextureInspectorController.m */ = {
-		isa = PBXFileReference;
-		fileEncoding = 4;
-		lastKnownFileType = sourcecode.c.objc;
-		name = DDTextureInspectorController.m;
-		path = "/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Source/DDTextureInspectorController.m";
-		sourceTree = "<absolute>";
-	};
-	1A7433D80A8CC06C006AEA18 /* DDTextureInspectorController.m:74 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		delayBeforeContinue = 0;
-		fileReference = 1A7432CB0A8CB099006AEA18 /* DDTextureInspectorController.m */;
-		functionName = "-changeSelection:";
-		hitCount = 1;
-		lineNumber = 74;
-		location = "Dry Dock for Oolite";
-		modificationTime = 176999166.760658;
-		state = 1;
-	};
-	1A7433FD0A8CC26E006AEA18 /* DDTextureBuffer.m:289 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		delayBeforeContinue = 0;
-		fileReference = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
-		functionName = "-release";
-		hitCount = 1;
-		lineNumber = 289;
-		location = "Dry Dock for Oolite";
-		modificationTime = 176999215.974943;
-		state = 1;
-	};
-	1A7434130A8CC3EA006AEA18 /* DDTextureBuffer.m:278 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		delayBeforeContinue = 0;
-		fileReference = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
-		functionName = "-retain";
-		hitCount = 2;
-		lineNumber = 278;
-		location = "Dry Dock for Oolite";
-		modificationTime = 176999739.012588;
-		state = 1;
 	};
 	1A7536770A0E15F40047DD80 /* DDVertexSet.mm */ = {
 		uiCtxt = {
@@ -713,23 +672,24 @@
 	};
 	1A7D60EF094EDACB00E9D611 /* DDMesh.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 2976}}";
-			sepNavSelRange = "{4666, 27}";
-			sepNavVisRect = "{{0, 2159}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1087, 2418}}";
+			sepNavSelRange = "{3982, 0}";
+			sepNavVisRange = "{2778, 1917}";
+			sepNavVisRect = "{{0, 656}, {1014, 836}}";
 		};
 	};
 	1A7D60F0094EDACB00E9D611 /* DDMesh.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1826, 11664}}";
-			sepNavSelRange = "{15053, 0}";
-			sepNavVisRect = "{{0, 9305}, {1016, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1299, 11728}}";
+			sepNavSelRange = "{14488, 0}";
+			sepNavVisRect = "{{0, 9305}, {1299, 836}}";
 		};
 	};
 	1A7D61A5094EE3D300E9D611 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2799, 2720}}";
-			sepNavSelRange = "{9485, 68}";
-			sepNavVisRect = "{{0, 573}, {1016, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1014, 3280}}";
+			sepNavSelRange = "{9071, 0}";
+			sepNavVisRect = "{{0, 1365}, {1014, 836}}";
 		};
 	};
 	1A7D62C1094EF54600E9D611 /* DDMeshNode.h */ = {
@@ -741,9 +701,9 @@
 	};
 	1A7D62C2094EF54600E9D611 /* DDMeshNode.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1546, 2592}}";
-			sepNavSelRange = "{2697, 0}";
-			sepNavVisRect = "{{0, 1095}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {908, 2608}}";
+			sepNavSelRange = "{2391, 0}";
+			sepNavVisRect = "{{0, 1180}, {908, 836}}";
 		};
 	};
 	1A80AA0A09470B80006AF8F5 /* SceneNode.h */ = {
@@ -846,23 +806,23 @@
 	};
 	1A8B15EB099237B4007265FC /* DDMesh+Utilities.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 992}}";
-			sepNavSelRange = "{1293, 0}";
-			sepNavVisRect = "{{0, 170}, {1214, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1299, 992}}";
+			sepNavSelRange = "{1451, 0}";
+			sepNavVisRect = "{{0, 155}, {1299, 836}}";
 		};
 	};
 	1A8B185709926845007265FC /* DDScaleDialogController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {985, 822}}";
-			sepNavSelRange = "{174, 0}";
-			sepNavVisRect = "{{0, 0}, {985, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1252, 837}}";
+			sepNavSelRange = "{1213, 22}";
+			sepNavVisRect = "{{0, 0}, {1252, 836}}";
 		};
 	};
 	1A8B185809926845007265FC /* DDScaleDialogController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1196, 2128}}";
-			sepNavSelRange = "{2828, 0}";
-			sepNavVisRect = "{{0, 1293}, {985, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1010, 2144}}";
+			sepNavSelRange = "{2320, 0}";
+			sepNavVisRect = "{{0, 759}, {1010, 836}}";
 		};
 	};
 	1A8B67B70957CA6000EC8EDA /* DDApplication.h */ = {
@@ -895,40 +855,40 @@
 	};
 	1A8B68110957CC4300EC8EDA /* DDDocumentController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1154, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1252, 822}}";
 			sepNavSelRange = "{190, 0}";
-			sepNavVisRect = "{{0, 0}, {1154, 817}}";
+			sepNavVisRect = "{{0, 0}, {1252, 822}}";
 		};
 	};
 	1A8B68120957CC4300EC8EDA /* DDDocumentController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1299, 837}}";
 			sepNavSelRange = "{1184, 0}";
-			sepNavVisRect = "{{0, 0}, {1214, 822}}";
+			sepNavVisRect = "{{0, 0}, {1299, 836}}";
 		};
 	};
 	1A8B684808142C330028C19F /* DDDocumentWindowController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 1424}}";
-			sepNavSelRange = "{2399, 0}";
-			sepNavVisRect = "{{0, 607}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1252, 1424}}";
+			sepNavSelRange = "{1864, 0}";
+			sepNavVisRect = "{{0, 587}, {1252, 836}}";
 		};
 	};
 	1A8B684908142C330028C19F /* DDDocumentWindowController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1154, 9328}}";
-			sepNavSelRange = "{8326, 0}";
-			sepNavVisRect = "{{0, 5437}, {1016, 822}}";
+			sepNavIntBoundsRect = "{{0, 0}, {844, 9376}}";
+			sepNavSelRange = "{3286, 0}";
+			sepNavVisRect = "{{0, 1224}, {844, 833}}";
 		};
 	};
 	1A8F08AC08130BD90040CAC3 /* Dry Dock */ = {
 		isa = PBXExecutable;
-		activeArgIndex = 2147483647;
 		activeArgIndices = (
 		);
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
 		configStateDict = {
 			"PBXLSLaunchAction-1" = {
 				PBXLSLaunchAction = 1;
@@ -981,23 +941,6 @@
 	1A8F08B308130BF90040CAC3 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
-	};
-	1A9948CB0ADEA6F500AA204D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 1A9948CC0ADEA6F500AA204D /* reference-errors.html */;
-		name = "(null): 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	1A9948CC0ADEA6F500AA204D /* reference-errors.html */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = text.html;
-		name = "reference-errors.html";
-		path = "/Users/jayton/Programming/Projects/Oolite/Dry Dock/berlios-repo/trunk/Resources/English.lproj/Dry Dock Help/html/reference-errors.html";
-		sourceTree = "<absolute>";
 	};
 	1A99FB7C0A6426EB0052591D /* DDRecenterDialogController.h */ = {
 		uiCtxt = {
@@ -1062,58 +1005,53 @@
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
-	1AC5E1930A8CCDAB00C2D481 /* -[_NSZombie retainCount] */ = {
+	1AC3A0570D8C3677007E13E9 /* objc_exception_throw */ = {
 		isa = PBXSymbolicBreakpoint;
 		actions = (
 		);
 		breakpointStyle = 1;
 		continueAfterActions = 0;
+		countType = 0;
 		delayBeforeContinue = 0;
-		hitCount = 1;
-		location = Foundation;
-		modificationTime = 177004062.591619;
+		hitCount = 0;
+		ignoreCount = 0;
+		location = libobjc.A.dylib;
+		modificationTime = 227293031.684533;
 		state = 1;
-		symbolName = "-[_NSZombie retainCount]";
+		symbolName = objc_exception_throw;
 	};
-	1AC5E19D0A8CCE3D00C2D481 /* -[_NSZombie class] */ = {
-		isa = PBXSymbolicBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 1;
-		continueAfterActions = 0;
-		delayBeforeContinue = 0;
-		hitCount = 1;
-		location = CoreFoundation;
-		modificationTime = 177004182.576899;
-		state = 1;
-		symbolName = "-[_NSZombie class]";
-	};
-	1AC5E22D0A8CD7AB00C2D481 /* DDTextureBuffer.m:428 */ = {
+	1AC3A06A0D8C376B007E13E9 /* DDMesh+OoliteDATSupport.mm:103 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
 		breakpointStyle = 0;
 		continueAfterActions = 0;
+		countType = 0;
 		delayBeforeContinue = 0;
-		fileReference = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
-		functionName = "-image";
+		fileReference = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */;
+		functionName = "-initWithOoliteDAT:issues:";
 		hitCount = 1;
-		lineNumber = 428;
-		modificationTime = 177007394.442701;
+		ignoreCount = 0;
+		lineNumber = 103;
+		location = "Dry Dock for Oolite";
+		modificationTime = 227293039.585527;
 		state = 1;
 	};
-	1AC5E2A10A8CDE1100C2D481 /* DDTextureBuffer.m:466 */ = {
+	1AC3A0720D8C39F3007E13E9 /* DDMesh+OoliteDATSupport.mm:373 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
 		breakpointStyle = 0;
 		continueAfterActions = 0;
+		countType = 0;
 		delayBeforeContinue = 0;
-		fileReference = 1A7207CD095A8A6900C6896A /* DDTextureBuffer.m */;
-		functionName = "-image";
+		fileReference = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */;
+		functionName = "-initWithOoliteDAT:issues:";
 		hitCount = 1;
-		lineNumber = 466;
-		modificationTime = 177007394.440139;
+		ignoreCount = 0;
+		lineNumber = 373;
+		location = "Dry Dock for Oolite";
+		modificationTime = 227293687.858442;
 		state = 1;
 	};
 	1AC5E3450A8DD2CE00C2D481 /* DDTextureInspectorController.mm */ = {
@@ -1156,15 +1094,17 @@
 	};
 	1AE33C8309BBAA5B00F44436 /* DDFaceVertexBuffer.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1301, 822}}";
-			sepNavSelRange = "{1526, 11}";
+			sepNavIntBoundsRect = "{{0, 0}, {1170, 1117}}";
+			sepNavSelRange = "{1581, 5}";
+			sepNavVisRange = "{0, 2179}";
 			sepNavVisRect = "{{0, 0}, {1184, 822}}";
 		};
 	};
 	1AE33C8409BBAA5B00F44436 /* DDFaceVertexBuffer.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1364, 2608}}";
-			sepNavSelRange = "{1274, 18}";
+			sepNavIntBoundsRect = "{{0, 0}, {1170, 2145}}";
+			sepNavSelRange = "{2549, 5}";
+			sepNavVisRange = "{1512, 2517}";
 			sepNavVisRect = "{{0, 401}, {933, 716}}";
 		};
 	};
@@ -1205,32 +1145,29 @@
 	};
 	1AF5BEBF09B5EA5A0053F435 /* DDModelDocument.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1343, 8032}}";
-			sepNavSelRange = "{3017, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1271, 6396}}";
+			sepNavSelRange = "{2391, 0}";
+			sepNavVisRange = "{2068, 446}";
 			sepNavVisRect = "{{0, 1378}, {1291, 353}}";
 		};
 	};
 	2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = "Development-Panther";
-		activeExecutable = 1A8F08AC08130BD90040CAC3 /* Dry Dock */;
-		activeTarget = 8D15AC270486D014006FF6A4 /* Dry Dock */;
+		activeBuildConfigurationName = Development;
+		activeExecutable = 1A01E6090ED98BC4004B59DC /* Dry Dock-gc */;
+		activeTarget = 1A01E5920ED98BC4004B59DC /* Dry Dock-gc */;
 		addToTargets = (
 			8D15AC270486D014006FF6A4 /* Dry Dock */,
 		);
 		breakpoints = (
-			1AC5E1930A8CCDAB00C2D481 /* -[_NSZombie retainCount] */,
-			1AC5E19D0A8CCE3D00C2D481 /* -[_NSZombie class] */,
-			1AC5E22D0A8CD7AB00C2D481 /* DDTextureBuffer.m:428 */,
-			1AC5E2A10A8CDE1100C2D481 /* DDTextureBuffer.m:466 */,
-			1A7433D80A8CC06C006AEA18 /* DDTextureInspectorController.m:74 */,
-			1A7433FD0A8CC26E006AEA18 /* DDTextureBuffer.m:289 */,
-			1A7434130A8CC3EA006AEA18 /* DDTextureBuffer.m:278 */,
+			1AC3A0570D8C3677007E13E9 /* objc_exception_throw */,
+			1AC3A06A0D8C376B007E13E9 /* DDMesh+OoliteDATSupport.mm:103 */,
+			1AC3A0720D8C39F3007E13E9 /* DDMesh+OoliteDATSupport.mm:373 */,
 		);
-		breakpointsGroup = 1A7376BA098522F1004C2DFA /* XCBreakpointsBucket */;
 		codeSenseManager = 1A8F08B308130BF90040CAC3 /* Code sense */;
 		executables = (
 			1A8F08AC08130BD90040CAC3 /* Dry Dock */,
 			1A23DF290A04B05000934A0A /* ddoolite */,
+			1A01E6090ED98BC4004B59DC /* Dry Dock-gc */,
 		);
 		perUserDictionary = {
 			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA1AED706398EBD00589147" = {
@@ -1275,7 +1212,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					22,
 					300,
-					57.5835,
+					208.58349609375,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXExecutablesDataSource_ActiveFlagID,
@@ -1338,8 +1275,8 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					200,
-					141,
+					281,
+					60,
 					20,
 					48,
 					43,
@@ -1355,7 +1292,7 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 182699614;
+			PBXPerProjectTemplateStateSaveDate = 249138100;
 			PBXPrepackagedSmartGroups_v2 = (
 				{
 					PBXTransientLocationAtTop = bottom;
@@ -1532,11 +1469,7 @@
 					};
 				},
 			);
-			PBXWorkspaceStateSaveDate = 182699614;
-		};
-		perUserProjectItems = {
-			1A2046D90ADEACAE002EC35A = 1A2046D90ADEACAE002EC35A /* PBXTextBookmark */;
-			1A9948CB0ADEA6F500AA204D = 1A9948CB0ADEA6F500AA204D /* PBXTextBookmark */;
+			PBXWorkspaceStateSaveDate = 249138100;
 		};
 		sourceControlManager = 1A8F08B208130BF90040CAC3 /* Source Control */;
 		userBookmarkGroup = 1ACE7D60095414F500BF7642 /* PBXBookmarkGroup */;
@@ -1545,9 +1478,10 @@
 	};
 	2A37F4ACFDCFA73011CA2CEA /* DDDocument.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1623, 8912}}";
-			sepNavSelRange = "{12802, 7}";
-			sepNavVisRect = "{{0, 6512}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1271, 7085}}";
+			sepNavSelRange = "{1957, 0}";
+			sepNavVisRange = "{1688, 326}";
+			sepNavVisRect = "{{0, 0}, {1014, 836}}";
 		};
 	};
 	2A37F4AEFDCFA73011CA2CEA /* DDDocument.h */ = {
@@ -1586,9 +1520,9 @@
 	};
 	8D15AC360486D014006FF6A4 /* Info-DD.plist */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 4864}}";
-			sepNavSelRange = "{3569, 0}";
-			sepNavVisRect = "{{0, 1806}, {1214, 817}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1252, 5248}}";
+			sepNavSelRange = "{3622, 0}";
+			sepNavVisRect = "{{0, 1852}, {1252, 822}}";
 		};
 	};
 }
