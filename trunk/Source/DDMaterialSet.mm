@@ -116,10 +116,10 @@
 		else max *= 2;
 		
 		array = (DDMaterial **)realloc(array, sizeof (DDMaterial *) * max);
-		if (nil == array) [NSException raise:NSMallocException format:@"%s: failed to grow a DDMaterialSet (out of memory).", __FUNCTION__];
+		if (array == NULL) [NSException raise:NSMallocException format:@"%s: failed to grow a DDMaterialSet (out of memory).", __FUNCTION__];
 	}
 	result = [self indexForName:[inMaterial name]];
-	if (nil != result)
+	if (result != 0)
 	{
 		result = count++;
 		

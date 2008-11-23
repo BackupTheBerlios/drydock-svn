@@ -374,11 +374,11 @@
 		if (![pBoard setString:string forType:NSStringPboardType]) count = 0;
 	}
 	
-	if (0 == count) AlertSoundPlay();
+	if (0 == count) NSBeep();
 }
 
 
-- (BOOL)validateMenuItem:(id <NSMenuItem>)inItem
+- (BOOL)validateMenuItem:(NSMenuItem *)inItem
 {
 	SEL						action;
 	
@@ -392,13 +392,13 @@
 }
 
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
 	return [_issues count];
 }
 
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	NSString				*identifier;
 	DDProblemReportIssue	*issue;

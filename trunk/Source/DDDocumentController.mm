@@ -27,7 +27,7 @@
 
 @implementation DDDocumentController
 
-- (int)runModalOpenPanel:(NSOpenPanel *)openPanel forTypes:(NSArray *)fileNameExtensionsAndHFSFileTypes
+- (NSInteger)runModalOpenPanel:(NSOpenPanel *)openPanel forTypes:(NSArray *)fileNameExtensionsAndHFSFileTypes
 {
 	/*[openPanel setTreatsFilePackagesAsDirectories:YES];
 	return [super runModalOpenPanel:openPanel forTypes:fileNameExtensionsAndHFSFileTypes];*/

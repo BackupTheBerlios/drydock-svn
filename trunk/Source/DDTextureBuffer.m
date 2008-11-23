@@ -386,7 +386,7 @@ static BOOL sRemovingFromCache = NO;
 @implementation DDTextureBuffer (DebugHooks)
 
 static unsigned				sShadowCacheSize = 0;
-static DDTextureBuffer		**sShadowCache = nil;
+static DDTextureBuffer		**sShadowCache = NULL;
 
 + (void)getActiveBuffers:(DDTextureBuffer ***)outBuffers count:(unsigned *)outCount
 {
@@ -396,19 +396,19 @@ static DDTextureBuffer		**sShadowCache = nil;
 		if (sShadowCache)
 		{
 			free(sShadowCache);
-			sShadowCache = nil;
+			sShadowCache = NULL;
 		}
 		sShadowCacheSize = [sCache count];
 		if (0 != sShadowCacheSize)
 		{
 			sShadowCache = (DDTextureBuffer **)calloc(sizeof (DDTextureBuffer *), sShadowCacheSize);
-			if (nil == sShadowCache) sShadowCacheSize = 0;
+			if (sShadowCache == NULL)  sShadowCacheSize = 0;
 			else CFDictionaryGetKeysAndValues((CFDictionaryRef)sCache, NULL, (const void **)sShadowCache);
 		}
 	}
 	
-	if (nil != outBuffers) *outBuffers = sShadowCache;
-	if (nil != outCount) *outCount = sShadowCacheSize;
+	if (outBuffers != NULL) *outBuffers = sShadowCache;
+	if (outCount != NULL) *outCount = sShadowCacheSize;
 }
 
 

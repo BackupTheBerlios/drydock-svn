@@ -31,7 +31,7 @@ NSMutableDictionary			*sInspectorsForDocuments = nil;
 
 static inline id KeyForDocument(DDModelDocument *inDocument)
 {
-	return [NSNumber numberWithPointer:(uintptr_t)inDocument];
+	return [NSValue valueWithPointer:inDocument];
 }
 
 

@@ -540,7 +540,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 
 // Outline view for displaying scene graph (currently for debugging)
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (nil == item) return [self sceneRoot];
 	return [item childAtIndex:index];
@@ -554,9 +554,9 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 }
 
 
-- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-	if (nil == item) return 1;
+	if (item == nil) return 1;
 	return [item numberOfChildren];
 }
 

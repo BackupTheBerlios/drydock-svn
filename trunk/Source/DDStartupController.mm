@@ -30,7 +30,7 @@
 #import "DDApplicationDelegate.h"
 #import "DDUtilities.h"
 #import <dlfcn.h>
-#import <Sparkle/SUUpdater.h>
+#import <Sparkle/Sparkle.h>
 
 
 #define RUN_PROBLEM_REPORTER_EXAMLE		0

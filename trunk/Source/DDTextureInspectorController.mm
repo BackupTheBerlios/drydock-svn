@@ -104,7 +104,7 @@
 }
 
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
 	unsigned result;
 	[DDTextureBuffer getActiveBuffers:NULL count:&result];
@@ -112,7 +112,7 @@
 }
 
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	id					result;
 	DDTextureBuffer		**active;

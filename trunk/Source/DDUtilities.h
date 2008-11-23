@@ -27,25 +27,22 @@
 #import <stdint.h>
 
 
-#define TIGER_OR_LATER (!TARGET_CPU_PPC || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4))
+#define TIGER_OR_LATER (!TARGET_CPU_PPC || (MAC_OS_X_VERSION_MAX_ALLOWED >= 1040))
+#define LEOPARD_OR_LATER (MAC_OS_X_VERSION_MAX_ALLOWED >= 1050)
+#define SNOW_LEOPARD_OR_LATER (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
 
 
 extern NSString *ApplicationNameAndVersionString(void);
-
 extern NSString *LocationOfOoliteResources(void);
+
+
+#if MAC_OS_X_VERSION_10_4 <= MAC_OS_X_VERSION_MAX_ALLOWED
+
+#endif
 
 
 #if TIGER_OR_LATER
 	#define TigerOrLater() 1
 #else
 	FOUNDATION_EXPORT BOOL TigerOrLater(void);
-#endif
-
-
-#if (UINTPTR_MAX == UINT32_MAX)
-#define numberWithPointer numberWithUnsignedLong
-#elif (UINTPTR_MAX == UINT64_MAX)
-#define numberWithPointer numberWithUnsignedLongLong
-#else
-#error Need to define numberWithPointer!
 #endif

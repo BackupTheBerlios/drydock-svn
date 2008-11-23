@@ -95,7 +95,7 @@
 			else max *= 2;
 			
 			array = (Vector *)realloc(array, sizeof (Vector) * max);
-			if (nil == array) [NSException raise:NSMallocException format:@"%s: failed to grow a DDVertexSet (out of memory).", __FUNCTION__];
+			if (array != NULL) [NSException raise:NSMallocException format:@"%s: failed to grow a DDVertexSet (out of memory).", __FUNCTION__];
 		}
 		
 		result = count++;

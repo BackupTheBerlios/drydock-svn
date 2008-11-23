@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
@@ -30,6 +30,10 @@
 			<key>NSExportableAs</key>
 			<array>
 				<string>Oolite Expansion Pack</string>
+			</array>
+			<key>NSExportableTypes</key>
+			<array>
+				<string>org.aegidian.oolite.oxp</string>
 			</array>
 			<key>LSItemContentTypes</key>
 			<array>
@@ -142,7 +146,7 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>Dry Dock for Oolite</string>
+	<string>$PRODUCT_NAME</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Dry Dock Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -289,15 +293,12 @@
 			</dict>
 		</dict>
 	</array>
-	<!--
 	<key>SUFeedURL</key>
-	<string>http://drydock.berlios.de/updates.xml</string>
+	<string>http:/&#x2f;drydock.berlios.de/updates.xml</string>
 	<key>SUCheckAtStartup</key>
 	<false/>
 	<key>SUExpectsDSASignature</key>
-	<true/>-->
-	<key>SUFeedURL</key>
-	<string>http://ahruman.is-a-geek.net/temp/sparkletest.xml</string>
+	<true/>
 	<key>SUCheckAtStartup</key>
 	<true/>
 	<key>SUExpectsDSASignature</key>

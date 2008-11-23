@@ -32,11 +32,17 @@
 #include <OpenGL/OpenGL.h>
 
 #ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-
-// Why? Because standard CFSTR generates "may break strict pointer aliasing rules" warning.
-#undef CFSTR
-#define CFSTR(x) ((CFStringRef)@x)
+	#import <Cocoa/Cocoa.h>
+	
+	// Why? Because standard CFSTR generates "may break strict pointer aliasing rules" warning.
+	#undef CFSTR
+	#define CFSTR(x) ((CFStringRef)@x)
+	
+	#undef nil
+	#define nil ((id)0)
+	
+	#undef Nil
+	#define Nil ((Class)0)
 #endif
 
 
