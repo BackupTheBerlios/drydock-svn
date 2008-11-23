@@ -377,13 +377,13 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 }
 
 
-- (float)splitView:(NSSplitView *)inSender constrainMaxCoordinate:(float)proposedCoord ofSubviewAt:(int)offset
+- (CGFloat)splitView:(NSSplitView *)inSender constrainMaxCoordinate:(CGFloat)proposedCoord ofSubviewAt:(NSInteger)offset
 {
 	return ([inSender bounds].size.width - [inSender dividerThickness] - kMinPaneSize);
 }
 
 
-- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedCoord ofSubviewAt:(int)offset
+- (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedCoord ofSubviewAt:(NSInteger)offset
 {
 	return kMinPaneSize;
 }

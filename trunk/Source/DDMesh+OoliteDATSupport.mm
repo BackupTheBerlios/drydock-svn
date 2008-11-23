@@ -29,7 +29,6 @@
 #import "DDProblemReportManager.h"
 #import "CocoaExtensions.h"
 #import "DDUtilities.h"
-#import "DDPantherCompatibility.h"
 #import "DDDATLexer.h"
 #import "DDNormalSet.h"
 #import "DDMaterialSet.h"
@@ -690,10 +689,10 @@ enum
 	// Finish up
 	if (OK)
 	{
-		OK = [dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding errorCompat:&error];
+		OK = [dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding error:&error];
 		if (!OK)
 		{
-			if (nil != error) [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
+			if (nil != error) [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReason]];
 			else [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
 		}
 	}

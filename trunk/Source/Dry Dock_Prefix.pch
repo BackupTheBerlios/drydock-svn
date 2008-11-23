@@ -25,12 +25,28 @@
 
 #include <math.h>
 
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
-
 #include <Carbon/Carbon.h>
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #include <OpenGL/glext.h>
 #include <OpenGL/OpenGL.h>
+
+#ifdef __OBJC__
+#import <Cocoa/Cocoa.h>
+
+// Why? Because standard CFSTR generates "may break strict pointer aliasing rules" warning.
+#undef CFSTR
+#define CFSTR(x) ((CFStringRef)@x)
+#endif
+
+
+#ifndef NSINTEGER_DEFINED
+typedef int NSInteger;
+typedef unsigned int NSUInteger;
+#define NSINTEGER_DEFINED 1
+#endif
+
+#ifndef CGFLOAT_DEFINED
+typedef float CGFloat;
+#define CGFLOAT_DEFINED 1
+#endif

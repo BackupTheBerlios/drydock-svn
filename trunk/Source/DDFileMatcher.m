@@ -28,15 +28,6 @@
 #import <dlfcn.h>
 
 
-#if 0
-	// Testing covenience
-	#ifdef TigerOrLater
-		#undef TigerOrLater
-	#endif
-	#define TigerOrLater() 0
-#endif
-
-
 OSStatus (*LSCopyItemAttribute_ptr)(
   const FSRef *  inItem,
   LSRolesMask    inRoles,
@@ -202,19 +193,19 @@ OSStatus (*LSCopyItemAttribute_ptr)(
 {
 	FSRef					fsRef;
 	NSURL					*url;
-	NSString				*fileUTI;
+	CFTypeRef				fileUTI;
 	
 	url = [NSURL fileURLWithPath:inPath];
 	if (nil != url)
 	{
 		if (CFURLGetFSRef((CFURLRef)url, &fsRef))
 		{
-			LSCopyItemAttribute_ptr(&fsRef, kLSRolesAll, (CFStringRef)@"LSItemContentType", (CFTypeRef *)&fileUTI);
-			[fileUTI autorelease];
+			LSCopyItemAttribute_ptr(&fsRef, kLSRolesAll, (CFStringRef)@"LSItemContentType", &fileUTI);
+			[(NSString *)fileUTI autorelease];
 		}
 	}
 	
-	return (nil != fileUTI && UTTypeConformsTo((CFStringRef)fileUTI, _uti));
+	return (nil != fileUTI && UTTypeConformsTo(fileUTI, _uti));
 }
 
 

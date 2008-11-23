@@ -27,7 +27,7 @@ static int VersionCheck(void)
 {
 	int						result;
 	OSStatus				err;
-	long					version;
+	SInt32					version;
 	CFStringRef				errStr, explStr, tempStr;
 	AlertStdCFStringAlertParamRec alertParam =
 							{

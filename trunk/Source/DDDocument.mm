@@ -31,7 +31,6 @@
 #import "DDProblemReportManager.h"
 #import "Logging.h"
 #import "DDScaleDialogController.h"
-#import "DDPantherCompatibility.h"
 #import "DDUtilities.h"
 #import "DDModelDocument.h"
 #import "DDRecenterDialogController.h"
@@ -493,7 +492,7 @@
 }
 
 
-- (BOOL)validateMenuItem:(id <NSMenuItem>)inItem
+- (BOOL)validateMenuItem:(NSMenuItem *)inItem
 {
 	NSMenuItem				*item;
 	SEL						action;

@@ -25,7 +25,6 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "DDPantherCompatibility.h"
 
 @interface DDError: NSError
 

@@ -24,7 +24,6 @@
 #import "Logging.h"
 #import "GLUtilities.h"
 #import "DDMaterial.h"
-#import "DDPantherCompatibility.h"
 
 #define CGL_MACRO_CACHE_RENDERER
 #import <OpenGL/CGLMacro.h>

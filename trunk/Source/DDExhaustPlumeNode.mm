@@ -24,7 +24,6 @@
 #import "DDExhaustPlumeNode.h"
 #import "GLUtilities.h"
 #import "Logging.h"
-#import "DDPantherCompatibility.h"
 #import "DDMesh.h"
 #import "DDProblemReportManager.h"
 

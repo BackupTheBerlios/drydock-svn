@@ -23,7 +23,6 @@
 */
 
 #import "CocoaExtensions.h"
-#import "DDPantherCompatibility.h"
 
 
 @implementation NSURL (CocoaExtensions)

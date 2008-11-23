@@ -28,7 +28,6 @@
 #import "DDUtilities.h"
 #import "CocoaExtensions.h"
 #import "DDProblemReportManager.h"
-#import "DDPantherCompatibility.h"
 
 
 NSString *kNotificationDDModelDocumentRootMeshChanged =				@"de.berlios.drydock DDModelDocumentRootMeshChanged";
@@ -207,11 +206,11 @@ enum
 	id						plist;
 	NSString				*errorDesc = nil;
 	
-	data = [NSData dataWithContentsOfURL:inFile options:0 errorCompat:&error];
+	data = [NSData dataWithContentsOfURL:inFile options:0 error:&error];
 	if (nil == data)
 	{
 		OK = NO;
-		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReasonCompat] : @""];
+		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReason] : @""];
 	}
 	
 	if (OK)
@@ -456,10 +455,10 @@ enum
 	
 	if (OK)
 	{
-		OK = [data writeToURL:inAbsoluteURL atomically:NO errorCompat:&error];
+		OK = [data writeToURL:inAbsoluteURL options:NSAtomicWrite error:&error];
 		if (!OK)
 		{
-			if (nil != error) [ioIssues addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
+			if (nil != error) [ioIssues addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReason]];
 			else [ioIssues addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
 		}
 	}

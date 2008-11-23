@@ -28,7 +28,6 @@
 #import "Logging.h"
 #import "GLUtilities.h"
 #import "SceneNode.h"
-#import "DDPantherCompatibility.h"
 
 NSString *kNotificationDDSceneViewSceneChanged = @"de.berlios.drydock kNotificationDDSceneViewSceneChanged";
 NSString *kNotificationDDSceneViewCameraOrLightChanged = @"de.berlios.drydock kNotificationDDSceneViewCameraOrLightChanged";

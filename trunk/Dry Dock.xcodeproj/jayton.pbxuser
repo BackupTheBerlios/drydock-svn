@@ -64,6 +64,34 @@
 		sourceDirectories = (
 		);
 	};
+	1A01E6240ED98FD9004B59DC /* IconFamily.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {865, 20553}}";
+			sepNavSelRange = "{13691, 0}";
+			sepNavVisRange = "{12840, 2469}";
+		};
+	};
+	1A01E62E0ED990E0004B59DC /* IconFamily+GarbageCollection.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{223, 0}";
+			sepNavVisRange = "{0, 223}";
+		};
+	};
+	1A01E62F0ED990E0004B59DC /* IconFamily+GarbageCollection.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{449, 0}";
+			sepNavVisRange = "{0, 449}";
+		};
+	};
+	1A01E64A0ED99546004B59DC /* OoliteDAT.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{570, 0}";
+			sepNavVisRange = "{0, 570}";
+		};
+	};
 	1A0322A8096C3D890000B217 /* Change Log.txt */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1192, 1776}}";
@@ -115,8 +143,9 @@
 	};
 	1A0B856A09B995760034D90F /* DDExhaustPlumeNode.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {988, 2368}}";
-			sepNavSelRange = "{3092, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1898}}";
+			sepNavSelRange = "{1255, 0}";
+			sepNavVisRange = "{0, 2276}";
 			sepNavVisRect = "{{0, 1546}, {988, 822}}";
 		};
 	};
@@ -192,15 +221,17 @@
 	};
 	1A13B0060A09FFFF0017CD80 /* DDFileMatcher.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1039, 822}}";
-			sepNavSelRange = "{1242, 13}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{1464, 0}";
+			sepNavVisRange = "{0, 1464}";
 			sepNavVisRect = "{{0, 0}, {1039, 822}}";
 		};
 	};
 	1A13B0070A09FFFF0017CD80 /* DDFileMatcher.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1079, 5648}}";
-			sepNavSelRange = "{4690, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 4524}}";
+			sepNavSelRange = "{2826, 0}";
+			sepNavVisRange = "{1830, 1566}";
 			sepNavVisRect = "{{0, 3108}, {1079, 836}}";
 		};
 	};
@@ -228,16 +259,17 @@
 	};
 	1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {908, 4544}}";
-			sepNavSelRange = "{1654, 26}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 3393}}";
+			sepNavSelRange = "{1265, 0}";
+			sepNavVisRange = "{0, 2479}";
 			sepNavVisRect = "{{0, 3142}, {908, 836}}";
 		};
 	};
 	1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1170, 9204}}";
-			sepNavSelRange = "{3094, 0}";
-			sepNavVisRange = "{1808, 3261}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 9869}}";
+			sepNavSelRange = "{24051, 22}";
+			sepNavVisRange = "{21949, 2298}";
 			sepNavVisRect = "{{0, 9493}, {1014, 836}}";
 		};
 	};
@@ -318,16 +350,16 @@
 	};
 	1A245C1009A4676700DC42F4 /* OoliteDAT.l */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1271, 1924}}";
-			sepNavSelRange = "{1181, 0}";
-			sepNavVisRange = "{967, 437}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1937}}";
+			sepNavSelRange = "{1132, 0}";
+			sepNavVisRange = "{1347, 1354}";
 			sepNavVisRect = "{{0, 1531}, {762, 836}}";
 		};
 	};
 	1A245CB109A4727700DC42F4 /* OoliteDATTokens.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1170, 1094}}";
-			sepNavSelRange = "{385, 17}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{670, 0}";
 			sepNavVisRange = "{0, 670}";
 			sepNavVisRect = "{{0, 0}, {1003, 796}}";
 		};
@@ -357,30 +389,17 @@
 	};
 	1A24608209A5D39000DC42F4 /* DDUtilities.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {992, 1504}}";
-			sepNavSelRange = "{1302, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1170}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 2608}";
 			sepNavVisRect = "{{0, 244}, {992, 817}}";
-		};
-	};
-	1A2740B409A89E7A0031F97B /* DDPantherCompatibility.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1014, 1424}}";
-			sepNavSelRange = "{1505, 18}";
-			sepNavVisRect = "{{0, 300}, {1014, 836}}";
-		};
-	};
-	1A2740B509A89E7A0031F97B /* DDPantherCompatibility.mm */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {933, 3712}}";
-			sepNavSelRange = "{3102, 0}";
-			sepNavVisRect = "{{0, 2996}, {933, 716}}";
 		};
 	};
 	1A345F4B0A1A6ADE007E491D /* DDMesh+WaveFrontOBJSupport.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1087, 15080}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{9443, 2418}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 15496}}";
+			sepNavSelRange = "{34962, 0}";
+			sepNavVisRange = "{32081, 2558}";
 			sepNavVisRect = "{{0, 11133}, {1016, 822}}";
 		};
 	};
@@ -412,37 +431,6 @@
 			sepNavVisRect = "{{0, 0}, {1037, 822}}";
 		};
 	};
-	1A50518C098E1E6B0056F45F /* IconFamily.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1240, 2944}}";
-			sepNavSelRange = "{52, 13}";
-			sepNavVisRect = "{{0, 2228}, {1240, 716}}";
-		};
-	};
-	1A50518D098E1E6B0056F45F /* IconFamily.m */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {865, 19565}}";
-			sepNavSelRange = "{10627, 0}";
-			sepNavVisRange = "{0, 3113}";
-			sepNavVisRect = "{{0, 13209}, {933, 716}}";
-		};
-	};
-	1A5051A6098E1F790056F45F /* NSString+CarbonFSRefCreation.m */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
-			sepNavSelRange = "{1112, 0}";
-			sepNavVisRange = "{0, 1456}";
-			sepNavVisRect = "{{0, 0}, {1214, 822}}";
-		};
-	};
-	1A5051A7098E1F790056F45F /* NSString+CarbonFSRefCreation.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
-			sepNavSelRange = "{499, 0}";
-			sepNavVisRange = "{0, 499}";
-			sepNavVisRect = "{{0, 0}, {1037, 822}}";
-		};
-	};
 	1A512F14099090A600A55ED7 /* DDSceneView.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1214, 1344}}";
@@ -452,8 +440,9 @@
 	};
 	1A512F15099090A600A55ED7 /* DDSceneView.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1074, 8784}}";
-			sepNavSelRange = "{6487, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 6786}}";
+			sepNavSelRange = "{1310, 0}";
+			sepNavVisRange = "{0, 2425}";
 			sepNavVisRect = "{{0, 4019}, {1074, 836}}";
 		};
 	};
@@ -581,8 +570,9 @@
 	};
 	1A67034F098D81C2003BDAD5 /* CocoaExtensions.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 992}}";
-			sepNavSelRange = "{1641, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{1806, 0}";
+			sepNavVisRange = "{0, 1833}";
 			sepNavVisRect = "{{0, 170}, {1214, 822}}";
 		};
 	};
@@ -876,8 +866,9 @@
 	};
 	1A8B684908142C330028C19F /* DDDocumentWindowController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {844, 9376}}";
-			sepNavSelRange = "{3286, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 7735}}";
+			sepNavSelRange = "{8629, 0}";
+			sepNavVisRange = "{7458, 1916}";
 			sepNavVisRect = "{{0, 1224}, {844, 833}}";
 		};
 	};
@@ -888,7 +879,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 1;
+		breakpointsEnabled = 0;
 		configStateDict = {
 			"PBXLSLaunchAction-1" = {
 				PBXLSLaunchAction = 1;
@@ -1020,7 +1011,7 @@
 		state = 1;
 		symbolName = objc_exception_throw;
 	};
-	1AC3A06A0D8C376B007E13E9 /* DDMesh+OoliteDATSupport.mm:103 */ = {
+	1AC3A06A0D8C376B007E13E9 /* DDMesh+OoliteDATSupport.mm:102 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1032,12 +1023,12 @@
 		functionName = "-initWithOoliteDAT:issues:";
 		hitCount = 1;
 		ignoreCount = 0;
-		lineNumber = 103;
+		lineNumber = 102;
 		location = "Dry Dock for Oolite";
 		modificationTime = 227293039.585527;
 		state = 1;
 	};
-	1AC3A0720D8C39F3007E13E9 /* DDMesh+OoliteDATSupport.mm:373 */ = {
+	1AC3A0720D8C39F3007E13E9 /* DDMesh+OoliteDATSupport.mm:372 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1049,7 +1040,7 @@
 		functionName = "-initWithOoliteDAT:issues:";
 		hitCount = 1;
 		ignoreCount = 0;
-		lineNumber = 373;
+		lineNumber = 372;
 		location = "Dry Dock for Oolite";
 		modificationTime = 227293687.858442;
 		state = 1;
@@ -1117,15 +1108,17 @@
 	};
 	1AE7E10B094FA9A2000F6B6E /* DDError.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {948, 817}}";
-			sepNavSelRange = "{1498, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{1299, 0}";
+			sepNavVisRange = "{0, 1467}";
 			sepNavVisRect = "{{0, 0}, {948, 817}}";
 		};
 	};
 	1AE7E10C094FA9A2000F6B6E /* DDError.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1039, 896}}";
-			sepNavSelRange = "{1158, 12}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{1628, 49}";
+			sepNavVisRange = "{0, 1706}";
 			sepNavVisRect = "{{0, 0}, {1039, 822}}";
 		};
 	};
@@ -1145,14 +1138,14 @@
 	};
 	1AF5BEBF09B5EA5A0053F435 /* DDModelDocument.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1271, 6396}}";
-			sepNavSelRange = "{2391, 0}";
-			sepNavVisRange = "{2068, 446}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 6786}}";
+			sepNavSelRange = "{11414, 0}";
+			sepNavVisRange = "{10105, 2548}";
 			sepNavVisRect = "{{0, 1378}, {1291, 353}}";
 		};
 	};
 	2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Development;
+		activeBuildConfigurationName = Deployment;
 		activeExecutable = 1A01E6090ED98BC4004B59DC /* Dry Dock-gc */;
 		activeTarget = 1A01E5920ED98BC4004B59DC /* Dry Dock-gc */;
 		addToTargets = (
@@ -1160,8 +1153,8 @@
 		);
 		breakpoints = (
 			1AC3A0570D8C3677007E13E9 /* objc_exception_throw */,
-			1AC3A06A0D8C376B007E13E9 /* DDMesh+OoliteDATSupport.mm:103 */,
-			1AC3A0720D8C39F3007E13E9 /* DDMesh+OoliteDATSupport.mm:373 */,
+			1AC3A06A0D8C376B007E13E9 /* DDMesh+OoliteDATSupport.mm:102 */,
+			1AC3A0720D8C39F3007E13E9 /* DDMesh+OoliteDATSupport.mm:372 */,
 		);
 		codeSenseManager = 1A8F08B308130BF90040CAC3 /* Code sense */;
 		executables = (
@@ -1478,9 +1471,9 @@
 	};
 	2A37F4ACFDCFA73011CA2CEA /* DDDocument.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1271, 7085}}";
-			sepNavSelRange = "{1957, 0}";
-			sepNavVisRange = "{1688, 326}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 7111}}";
+			sepNavSelRange = "{1418, 0}";
+			sepNavVisRange = "{0, 2529}";
 			sepNavVisRect = "{{0, 0}, {1014, 836}}";
 		};
 	};
@@ -1493,8 +1486,9 @@
 	};
 	2A37F4B0FDCFA73011CA2CEA /* main.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1301, 1248}}";
-			sepNavSelRange = "{1202, 94}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{482, 0}";
+			sepNavVisRange = "{0, 2036}";
 			sepNavVisRect = "{{0, 450}, {933, 716}}";
 		};
 	};
@@ -1507,8 +1501,9 @@
 	};
 	32DBCF750370BD2300C91783 /* Dry Dock_Prefix.pch */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1192, 822}}";
-			sepNavSelRange = "{23, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {865, 1117}}";
+			sepNavSelRange = "{1687, 0}";
+			sepNavVisRange = "{0, 1687}";
 			sepNavVisRect = "{{0, 0}, {1192, 822}}";
 		};
 	};

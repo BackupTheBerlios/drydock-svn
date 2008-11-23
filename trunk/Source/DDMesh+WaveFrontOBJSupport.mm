@@ -124,7 +124,7 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	if (!lines)
 	{
 		OK = NO;
-		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReasonCompat] : @""];
+		[ioIssues addStopIssueWithKey:@"noDataLoaded" localizedFormat:@"No data could be loaded from %@. %@", [inFile displayString], error ? [error localizedFailureReason] : @""];
 	}
 	
 	if (OK)
@@ -646,8 +646,8 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	
 	if (NULL != outError) *outError = nil;
 	
-	dataString = [NSString stringWithContentsOfURL:inFile encoding:NSUTF8StringEncoding errorCompat:outError];
-	if (nil == dataString) dataString = [NSString stringWithContentsOfURL:inFile usedEncoding:NULL errorCompat:outError];
+	dataString = [NSString stringWithContentsOfURL:inFile encoding:NSUTF8StringEncoding error:outError];
+	if (nil == dataString) dataString = [NSString stringWithContentsOfURL:inFile usedEncoding:NULL error:outError];
 	if (nil == dataString)
 	{
 		OK = NO;
@@ -719,7 +719,7 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	if (nil == lines)
 	{
 		OK = NO;
-		[ioIssues addNoteIssueWithKey:@"noMaterialLibraryLoaded" localizedFormat:@"No material library could be loaded from %@. %@", inString, error ? [error localizedFailureReasonCompat] : @""];
+		[ioIssues addNoteIssueWithKey:@"noMaterialLibraryLoaded" localizedFormat:@"No material library could be loaded from %@. %@", inString, error ? [error localizedFailureReason] : @""];
 	}
 	
 	if (OK)
@@ -1010,9 +1010,9 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	}
 	
 	// Write OBJ file
-	if (![dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding errorCompat:&error])
+	if (![dataString writeToURL:inFile atomically:NO encoding:NSUTF8StringEncoding error:&error])
 	{
-		if (nil != error) [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReasonCompat]];
+		if (nil != error) [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved. %@", [error localizedFailureReason]];
 		else [ioManager addStopIssueWithKey:@"writeFailed" localizedFormat:@"The document could not be saved, because an unknown error occured."];
 		return NO;
 	}
@@ -1044,9 +1044,9 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	
 	// Write MTL file
 	mtlURL = [NSURL URLWithString:mtlName relativeToURL:inFinalLocation];
-	if (![dataString writeToURL:mtlURL atomically:YES encoding:NSUTF8StringEncoding errorCompat:&error])
+	if (![dataString writeToURL:mtlURL atomically:YES encoding:NSUTF8StringEncoding error:&error])
 	{
-		if (nil != error) [ioManager addWarningIssueWithKey:@"mtllibWriteFailed" localizedFormat:@"The material library for the document could not be saved. %@", [error localizedFailureReasonCompat]];
+		if (nil != error) [ioManager addWarningIssueWithKey:@"mtllibWriteFailed" localizedFormat:@"The material library for the document could not be saved. %@", [error localizedFailureReason]];
 		else [ioManager addWarningIssueWithKey:@"mtllibWriteFailed" localizedFormat:@"The material library for the document could not be saved, because an unknown error occured."];
 	}
 	[pool release];
