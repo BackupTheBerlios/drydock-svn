@@ -67,6 +67,23 @@
 	if (NULL != array) free(array);
 	
 	[super dealloc];
+	
+	TraceExit();
+}
+
+
+- (void) finalize
+{
+	TraceEnter();
+	
+	if (NULL != array)
+	{
+		free(array);
+		array = NULL;
+	}
+	
+	[super finalize];
+	
 	TraceExit();
 }
 

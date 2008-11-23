@@ -28,8 +28,8 @@
 
 @interface DisplayListCacheNode: SceneNode
 {
-	GLuint				listName;
-	NSOpenGLContext		*context;
+	GLuint					listName;
+	__weak NSOpenGLContext	*context;
 }
 
 // Note: the display list is implicitly regenerated when the node becomes dirty or the graph is rendered in a new context.

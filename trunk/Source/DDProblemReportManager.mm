@@ -50,9 +50,25 @@
 	[_noteImage release];
 	[_warnImage release];
 	[_stopImage release];
-	if (NULL != _heights) free(_heights);
+	if (_heights != NULL)  free(_heights);
 	
 	[super dealloc];
+	
+	TraceExit();
+}
+
+
+- (void) finalize
+{
+	TraceEnter();
+	
+	if (_heights != NULL)
+	{
+		free(_heights);
+		_heights = NULL;
+	}
+	
+	[super finalize];
 	
 	TraceExit();
 }

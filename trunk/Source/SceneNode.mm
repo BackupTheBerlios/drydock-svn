@@ -343,7 +343,7 @@ NSString *kNotificationSceneNodeModified = @"com.ahruman.is-a-geek ObjectiveScen
 - (void)setMatrix:(const Matrix *)inMatrix
 {
 	#ifndef NDEBUG
-		if (nil == inMatrix)
+		if (inMatrix == NULL)
 		{
 			[NSException raise:NSInvalidArgumentException format:@"%s: NULL matrix passed. This will crash non-debug builds. Receiver = %@", __FUNCTION__, self];
 		}

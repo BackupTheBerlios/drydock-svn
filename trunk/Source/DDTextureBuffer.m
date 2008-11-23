@@ -266,9 +266,23 @@ static unsigned GetMaxTextureSize(void);
 	NSNotificationCenter *nctr = [NSNotificationCenter defaultCenter];
 	[nctr postNotificationName:kNotificationDDTextureBufferActiveSetChanged object:[DDTextureBuffer class]];
 	[nctr removeObserver:nil name:nil object:self];
-	[sImageCache removeObjectForKey:[NSValue valueWithPointer:self]];
+	@synchronized (sImageCache)
+	{
+		[sImageCache removeObjectForKey:[NSValue valueWithPointer:self]];
+	}
 	
 	[super dealloc];
+}
+
+
+- (void) finalize
+{
+	@synchronized (sImageCache)
+	{
+		[sImageCache removeObjectForKey:[NSValue valueWithPointer:self]];
+	}
+	
+	[super finalize];
 }
 
 
@@ -433,7 +447,10 @@ static DDTextureBuffer		**sShadowCache = NULL;
 	
 	// Look for cached image
 	key = [NSValue valueWithPointer:self];
-	image = [sImageCache objectForKey:key];
+	@synchronized (sImageCache)
+	{
+		image = [sImageCache objectForKey:key];
+	}
 	if (nil != image) return image;
 	
 	if (nil == _data) return nil;
@@ -463,7 +480,10 @@ static DDTextureBuffer		**sShadowCache = NULL;
 		[image setCacheMode:NSImageCacheBySize];
 		
 		if (nil == sImageCache) sImageCache = [[NSMutableDictionary alloc] init];
-		[sImageCache setObject:image forKey:key];
+		@synchronized (sImageCache)
+		{
+			[sImageCache setObject:image forKey:key];
+		}
 	}
 	
 	return image;

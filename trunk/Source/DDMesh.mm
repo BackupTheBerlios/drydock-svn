@@ -174,27 +174,44 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 {
 	TraceEnter();
 	
-	if (NULL != _vertices) free(_vertices);
-	if (NULL != _normals) free(_normals);
-	if (NULL != _faces) free(_faces);
-	if (NULL != _texCoords) free(_texCoords);
-	if (NULL != _materials)
+	Free(_vertices);
+	Free(_normals);
+	Free(_faces);
+	Free(_texCoords);
+	if(_materials != NULL)
 	{
 		for (int i = 0; i != _materialCount; ++i)
 		{
 			[_materials[i] release];
 		}
+		free(_materials);
 	}
-	if (NULL != _faceVertexIndices) free(_faceVertexIndices);
-	if (NULL != _faceTexCoordIndices) free(_faceTexCoordIndices);
-	if (NULL != _vertexNormalIndices) free(_vertexNormalIndices);
+	Free(_faceVertexIndices);
+	Free(_faceTexCoordIndices);
+	Free(_vertexNormalIndices);
 	
-	[_name release];
+	Release(_name);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:nil name:kNotificationDDMeshModified object:self];
 	
 	[super dealloc];
+	
 	TraceExit();
+}
+
+
+- (void) finalize
+{
+	Free(_vertices);
+	Free(_normals);
+	Free(_faces);
+	Free(_texCoords);
+	Free(_materials);
+	Free(_faceVertexIndices);
+	Free(_faceTexCoordIndices);
+	Free(_vertexNormalIndices);
+	
+	[super finalize];
 }
 
 

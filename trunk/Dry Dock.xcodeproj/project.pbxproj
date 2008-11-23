@@ -120,6 +120,12 @@
 		1A01E7B10ED9B277004B59DC /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A01E7B00ED9B277004B59DC /* Sparkle.framework */; };
 		1A01E7BA0ED9B27E004B59DC /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1A01E7B00ED9B277004B59DC /* Sparkle.framework */; };
 		1A01E7BB0ED9B285004B59DC /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1A01E7A50ED9B269004B59DC /* Sparkle.framework */; };
+		1A01E7D90ED9C810004B59DC /* CollectionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E7D80ED9C810004B59DC /* CollectionUtils.m */; };
+		1A01E7DA0ED9C810004B59DC /* CollectionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E7D80ED9C810004B59DC /* CollectionUtils.m */; };
+		1A01E7DB0ED9C810004B59DC /* CollectionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E7D80ED9C810004B59DC /* CollectionUtils.m */; };
+		1A01E7DE0ED9C819004B59DC /* JAPropertyListAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E7DC0ED9C819004B59DC /* JAPropertyListAccessors.m */; };
+		1A01E7DF0ED9C819004B59DC /* JAPropertyListAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E7DC0ED9C819004B59DC /* JAPropertyListAccessors.m */; };
+		1A01E7E00ED9C819004B59DC /* JAPropertyListAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E7DC0ED9C819004B59DC /* JAPropertyListAccessors.m */; };
 		1A032045096C10FB0000B217 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A032044096C10FB0000B217 /* Carbon.framework */; };
 		1A085A0209B46B1400FFD056 /* NSData+Deflate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A085A0009B46B1400FFD056 /* NSData+Deflate.m */; };
 		1A085A5309B4718300FFD056 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A085A5209B4718300FFD056 /* libz.dylib */; };
@@ -290,6 +296,10 @@
 		1A01E72D0ED9AC76004B59DC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		1A01E7A50ED9B269004B59DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "With Garbage Collection/Sparkle.framework"; sourceTree = "<group>"; };
 		1A01E7B00ED9B277004B59DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		1A01E7D70ED9C810004B59DC /* CollectionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionUtils.h; path = Dependencies/CollectionUtils/CollectionUtils.h; sourceTree = SOURCE_ROOT; };
+		1A01E7D80ED9C810004B59DC /* CollectionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionUtils.m; path = Dependencies/CollectionUtils/CollectionUtils.m; sourceTree = SOURCE_ROOT; };
+		1A01E7DC0ED9C819004B59DC /* JAPropertyListAccessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPropertyListAccessors.m; path = Dependencies/JAPropertyListAccessors/JAPropertyListAccessors.m; sourceTree = SOURCE_ROOT; };
+		1A01E7DD0ED9C819004B59DC /* JAPropertyListAccessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPropertyListAccessors.h; path = Dependencies/JAPropertyListAccessors/JAPropertyListAccessors.h; sourceTree = SOURCE_ROOT; };
 		1A032044096C10FB0000B217 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		1A0322A8096C3D890000B217 /* Change Log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Change Log.txt"; sourceTree = "<group>"; };
 		1A0859FF09B46B1400FFD056 /* NSData+Deflate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Deflate.h"; sourceTree = "<group>"; };
@@ -815,17 +825,24 @@
 				1A01E7290ED9AC4E004B59DC /* SmartCrashReportsInstall.h */,
 				1A01E72A0ED9AC58004B59DC /* SmartCrashReportsInstall.o */,
 			);
-			path = "Smart Crash Reports SDK";
+			name = "Smart Crash Reports SDK";
+			path = "../Smart Crash Reports SDK";
 			sourceTree = "<group>";
 		};
-		1AA5485C099CB59D00625FF2 /* Third-party */ = {
+		1AA5485C099CB59D00625FF2 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
 				1A01E61B0ED98FA1004B59DC /* IconFamily */,
 				1A18DE0C096456D20010CE0B /* UK-NiftyFeatures */,
 				1A098882098AECDE007C2F5F /* BS-HOM */,
+				1A01E7D70ED9C810004B59DC /* CollectionUtils.h */,
+				1A01E7D80ED9C810004B59DC /* CollectionUtils.m */,
+				1A01E7DC0ED9C819004B59DC /* JAPropertyListAccessors.m */,
+				1A01E7DD0ED9C819004B59DC /* JAPropertyListAccessors.h */,
+				1AA54853099CB57C00625FF2 /* Smart Crash Reports SDK */,
 			);
-			name = "Third-party";
+			name = Libraries;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		2A37F4AAFDCFA73011CA2CEA /* Dry Dock */ = {
@@ -836,6 +853,7 @@
 				1A7B6CF1098F82EF004AA6D7 /* Read Me.rtf */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				1AA5485C099CB59D00625FF2 /* Libraries */,
 				1A23DF650A04B14B00934A0A /* ddoolite */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
@@ -851,7 +869,6 @@
 				1A7D60E3094EDA8200E9D611 /* View */,
 				1A7D60E0094EDA7A00E9D611 /* Controller */,
 				1A085A0509B46B1C00FFD056 /* Other */,
-				1AA5485C099CB59D00625FF2 /* Third-party */,
 			);
 			name = Classes;
 			path = Source;
@@ -899,7 +916,6 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1AA54853099CB57C00625FF2 /* Smart Crash Reports SDK */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
@@ -1139,6 +1155,8 @@
 				1A01E6280ED98FD9004B59DC /* IconFamily.m in Sources */,
 				1A01E6290ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m in Sources */,
 				1A01E6310ED990E0004B59DC /* IconFamily+GarbageCollection.m in Sources */,
+				1A01E7DA0ED9C810004B59DC /* CollectionUtils.m in Sources */,
+				1A01E7DF0ED9C819004B59DC /* JAPropertyListAccessors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1166,6 +1184,8 @@
 				1A23E2470A04EA9B00934A0A /* CocoaExtensions.m in Sources */,
 				1A23E2BF0A04F4F100934A0A /* DDProblemReportManager-faceless.mm in Sources */,
 				1A23E2D10A04F9C300934A0A /* DDProblemReportIssue.mm in Sources */,
+				1A01E7DB0ED9C810004B59DC /* CollectionUtils.m in Sources */,
+				1A01E7E00ED9C819004B59DC /* JAPropertyListAccessors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1236,6 +1256,8 @@
 				1A53D8150ADD2AAF0057ED21 /* DDStartupController.mm in Sources */,
 				1A01E6260ED98FD9004B59DC /* IconFamily.m in Sources */,
 				1A01E6270ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m in Sources */,
+				1A01E7D90ED9C810004B59DC /* CollectionUtils.m in Sources */,
+				1A01E7DE0ED9C819004B59DC /* JAPropertyListAccessors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1379,6 +1401,7 @@
 					"\"$(SRCROOT)/Dependencies/Sparkle SDK/With Garbage Collection\"",
 				);
 				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -1397,7 +1420,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = 4.2;
-				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD copy.plist";
+				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD.plist";
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -1414,6 +1437,8 @@
 					"-Wall",
 					"-Wextra",
 					"-Wno-unused-parameter",
+					"-Wno-strict-aliasing",
+					"-Wno-missing-braces",
 				);
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -1434,6 +1459,7 @@
 					"\"$(SRCROOT)/Dependencies/Sparkle SDK/With Garbage Collection\"",
 				);
 				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = required;
@@ -1468,6 +1494,7 @@
 					"-Wextra",
 					"-Wno-unused-parameter",
 					"-Wno-strict-aliasing",
+					"-Wno-missing-braces",
 				);
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -1492,6 +1519,7 @@
 					"\"$(SRCROOT)/Dependencies/Sparkle SDK/With Garbage Collection\"",
 				);
 				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1507,7 +1535,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = 4.2;
-				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD copy.plist";
+				INFOPLIST_FILE = "/Users/jayton/Programming/Projects/Oolite-proj/Dry Dock/berlios-repo/trunk/Resources/Info-DD.plist";
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -1526,6 +1554,8 @@
 					"-Wall",
 					"-Wextra",
 					"-Wno-unused-parameter",
+					"-Wno-strict-aliasing",
+					"-Wno-missing-braces",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -1618,6 +1648,7 @@
 					"\"$(SRCROOT)/Dependencies/Sparkle SDK\"",
 				);
 				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1647,6 +1678,8 @@
 					"-Wall",
 					"-Wextra",
 					"-Wno-unused-parameter",
+					"-Wno-strict-aliasing",
+					"-Wno-missing-braces",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -1684,6 +1717,7 @@
 					"\"$(SRCROOT)/Dependencies/Sparkle SDK\"",
 				);
 				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -1714,6 +1748,8 @@
 					"-Wall",
 					"-Wextra",
 					"-Wno-unused-parameter",
+					"-Wno-strict-aliasing",
+					"-Wno-missing-braces",
 				);
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -1737,6 +1773,7 @@
 					"\"$(SRCROOT)/Dependencies/Sparkle SDK\"",
 				);
 				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_FAST_OBJC_DISPATCH = YES;
@@ -1765,6 +1802,8 @@
 					"-Wall",
 					"-Wextra",
 					"-Wno-unused-parameter",
+					"-Wno-strict-aliasing",
+					"-Wno-missing-braces",
 				);
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;

@@ -25,6 +25,8 @@
 
 #import "DisplayListCacheNode.h"
 #import "Logging.h"
+#import "CollectionUtils.h"
+#import "JAPropertyListAccessors.h"
 
 
 @implementation DisplayListCacheNode
@@ -46,6 +48,40 @@
 	if (0 != listName) glDeleteLists(listName, 1);
 	
 	[super dealloc];
+}
+
+
+- (void) finalize
+{
+	if (context != nil && listName != 0)
+	{
+		NSDictionary	*dict = nil;
+		
+		dict = $dict(context, @"context", [NSNumber numberWithUnsignedInt:listName], @"listname");
+		[[DisplayListCacheNode class] performSelectorOnMainThread:@selector(deferredDeleteList:)
+													   withObject:dict
+													waitUntilDone:NO];
+		context = nil;
+	}
+	
+	[super finalize];
+}
+
+
++ (void) deferredDeleteList:(NSDictionary *)params
+{
+	NSOpenGLContext		*context = nil, *savedContext = nil;
+	GLuint				listName;
+	
+	context = [params objectForKey:@"context"];
+	listName = [params unsignedIntForKey:@"listname"];
+	if (context != nil && listName != 0)
+	{
+		savedContext = [NSOpenGLContext currentContext];
+		[context makeCurrentContext];
+		glDeleteLists(listName, 1);
+		[savedContext makeCurrentContext];
+	}
 }
 
 

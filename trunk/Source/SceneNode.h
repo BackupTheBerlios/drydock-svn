@@ -44,7 +44,7 @@
 {
 	Matrix						matrix;
 	NSMutableArray				*tags;
-	SceneNode					*parent;
+	__weak SceneNode			*parent;
 	SceneNode					*firstChild;
 	SceneNode					*nextSibling;
 	NSString					*name;

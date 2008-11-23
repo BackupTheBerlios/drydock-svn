@@ -65,11 +65,38 @@
 {
 	TraceEnter();
 	
-	if (NULL != vertIndices) free(vertIndices);
-	if (NULL != texIndices) free(texIndices);
-	if (NULL != normIndices) free(normIndices);
+	if (vertIndices != NULL)  free(vertIndices);
+	if (texIndices != NULL) free(texIndices);
+	if (normIndices != NULL) free(normIndices);
 	
 	[super dealloc];
+	
+	TraceExit();
+}
+
+
+- (void)finalize
+{
+	TraceEnter();
+	
+	if (vertIndices != NULL)
+	{
+		free(vertIndices);
+		vertIndices = NULL;
+	}
+	if (texIndices != NULL)
+	{
+		free(texIndices);
+		texIndices = NULL;
+	}
+	if (normIndices != NULL)
+	{
+		free(normIndices);
+		normIndices = NULL;
+	}
+	
+	[super finalize];
+	
 	TraceExit();
 }
 

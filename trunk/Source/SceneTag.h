@@ -32,7 +32,7 @@
 	<NSCoding>
 #endif
 {
-	SceneNode				*owner;
+	__weak SceneNode		*owner;
 }
 
 + (SceneTag *)tag;
