@@ -1,0 +1,31 @@
+//
+// Prefix header for all source files of the 'Dry Dock Redux' target in the 'Dry Dock Redux' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+	#import "JAPropertyListAccessors.h"
+	#import "CollectionUtils.h"
+	
+	#undef nil
+	#define nil ((id)NULL)
+	#undef Nil
+	#define Nil ((Class)NULL)
+#endif
+
+#import "Logging.h"
+
+#import <OpenGL/gl.h>
+#import <OpenGL/glu.h>
+
+
+#define PHYS_OPENGL	1
+
+
+#ifdef __cplusplus
+#define BEGIN_EXTERN_C	extern "C" {
+#define END_EXTERN_C	}
+#else
+#define BEGIN_EXTERN_C
+#define END_EXTERN_C
+#endif

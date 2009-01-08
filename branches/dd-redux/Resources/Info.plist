@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>Dry Dock for Oolite</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>drydock</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Dry Dock Document</string>
+			<key>CFBundleTypeName</key>
+			<string>Dry Dock Document</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>DryD</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>DDDocument</string>
+			<key>NSExportableAs</key>
+			<array>
+				<string>Oolite Expansion Pack</string>
+				<string>Normal Mapper Model</string>
+			</array>
+			<key>NSExportableTypes</key>
+			<array>
+				<string>org.aegidian.oolite.oxp</string>
+				<string>com.ati.nmf</string>
+			</array>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>de.berlios.drydock.document</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>dat</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Oolite Model</string>
+			<key>CFBundleTypeName</key>
+			<string>Oolite Model</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>OoDa</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>DDDocument</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.aegidian.oolite.mesh</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mesh</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Meshwork Model</string>
+			<key>CFBundleTypeName</key>
+			<string>Meshwork Model</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>Mesh</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>DDDocument</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.codenautics.meshwork.mesh</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>obj</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>WaveFront OBJ Model</string>
+			<key>CFBundleTypeName</key>
+			<string>WaveFront OBJ Model</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>DDDocument</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.newtek.lightwave.obj</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mtl</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>WaveFront Material Library</string>
+			<key>CFBundleTypeName</key>
+			<string>WaveFront Material Library</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.newtek.lightwave.mtl</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>oxp</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Oolite Expansion Pack</string>
+			<key>CFBundleTypeName</key>
+			<string>Oolite Expansion Pack</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.aegidian.oolite.oxp</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>nmf</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Normal Mapper Model</string>
+			<key>CFBundleTypeName</key>
+			<string>Normal Mapper Model</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.ati.nmf</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>Dry Dock Help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>Dry Dock Help</string>
+	<key>CFBundleIconFile</key>
+	<string>Dry Dock</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.oolite.drydock</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>DryD</string>
+	<key>CFBundleVersion</key>
+	<string>901.01</string>
+	<key>NSMainNibFile</key>
+	<string>DDApplication</string>
+	<key>NSPrincipalClass</key>
+	<string>DDApplication</string>
+	<key>SmartCrashReports_CompanyName</key>
+	<string>Jens Ayton</string>
+	<key>SmartCrashReports_EmailTicket</key>
+	<string>SCR-E5DEF7E7FA</string>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Dry Dock Document</string>
+			<key>UTTypeIdentifier</key>
+			<string>de.berlios.drydock.document</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>DryD</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>drydock</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Oolite Model</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.aegidian.oolite.mesh</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>OoDa</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>dat</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Meshwork Model</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.codenautics.meshwork.mesh</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>Mesh</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mesh</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>WaveFront OBJ Model</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.newtek.lightwave.obj</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>obj</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>WaveFront Material Library</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.newtek.lightwave.mtl</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mtl</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Oolite Expansion Pack</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.aegidian.oolite.oxp</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>oxp</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Normal Mapper Model</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.ati.nmf</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>nmf</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>SUFeedURL</key>
+	<string>http:/&#x2f;drydock.berlios.de/updates.xml</string>
+	<key>SUCheckAtStartup</key>
+	<false/>
+	<key>SUExpectsDSASignature</key>
+	<true/>
+	<key>SUCheckAtStartup</key>
+	<true/>
+	<key>SUExpectsDSASignature</key>
+	<true/>
+	<key>SUPublicDSAKey</key>
+	<string>-----BEGIN PUBLIC KEY-----
+MIIDPDCCAi4GByqGSM44BAEwggIhAoIBAQD+woITuFxfSmy3IxvVJOSpklrNRkTU
+RNveSVyEmmGUK98PrMK7VQv0CR/UvvVRvVln4g56mtB78dBuovIJav1LQ7lzxaiG
+vogbQXCenRoJaPgPyiMRqYvkbAFrSYfVVc0jbCQIVWlg6yvYO8ROuaGyIB2b8fsf
+7VUUjGuJv2bIHRGC1Vwkp/d/yysUqxPESXzZ1kIGtpEK3RaEN1kegRLRoDcJI9nQ
+aRpMxfCmBxCI6IgEo8a3HSCdmzP4c5jaw2Xh/HJIYNwUPJTUTm1bv9S5y+jEC3kS
+uGrnBBjvdGt15LTTrlIY9lr/eikeXETUA16hZrT50SfPpB4bWo9gvXx1AhUA6ZqZ
+G8NV9tYr01jQWIAcR82BkZkCggEBALLrFhhxIyTPA5MOCAojYgPLRWyOxHlgXrHS
+Js4fuWy/wTrwLHJw0wE3iU/Nf2rsayQrcRcwoozWsWoiHtXmexqKwlfGpFm0qqXC
+XRcy2Jjc8d7OFP5xuH7JJAwHNUGSorfiIlTXEfZetBpYL/dpQ5AsucDcjMtSP7G6
+8eEsgjZnKnFhq+MDTw1caPnOUpWE4KId9CZ3PE81g84fwobb8u8/lOqFflqEhbZA
+fC1Dd5MwYuLd+8vbks/pao3KRXkwX+mFwJnc0Wr+fAbFq+VYyIWdi82xYqrbZYT0
+/DArIcr9IibWNBrpdglReZSKVb3+BDrs6TaxOHLLRQRnQGF2IRwDggEGAAKCAQEA
+4OS+cxdX/Tlzf+A4hbBrArrm889kAHtV/av4EUJsHguTR5Bh0vlfxGKtxz5/8kep
+xnhVm5ZOGVVr6WYYDSMCQPkPbgoEkH8gGQwXqMPpNlYkTsevdm+b5hQAucNF6byT
+uR1eFxLPCbgKd5w3BpG4b76Dbn5NWP0JMHJw+7s3kFRhRNXkgluUvQPnQwnVjEeD
+kSMGgIlsTcwocBMlgvMhw5MjFEnNDOdoAobT8vUOl9tscAnIfwzZOD2r5oXKKzfn
+eSv74aAr16Eqd2jWUYjOnLWFn45q2IfoJH2Vxy8EZg1WKOOJhIadWo8KWgLj/JTa
+1WHdOm6s63VCcnhxzGuGuA==
+-----END PUBLIC KEY-----</string>
+</dict>
+</plist>
