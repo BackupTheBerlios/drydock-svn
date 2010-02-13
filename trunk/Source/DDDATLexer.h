@@ -23,25 +23,33 @@
 
 #import <Foundation/Foundation.h>
 #import <stdio.h>
-#import "OoliteDATTokens.h"
 
 @class DDProblemReportManager;
 
 
 @interface DDDATLexer: NSObject
 {
-	OoliteDATLexToken		_nextToken;
-	FILE					*_file;
-	DDProblemReportManager	*_issues;
+@private
+	const char				*_cursor;
+	const char				*_end;
+	size_t					_tokenLength;
+	NSData					*_data;
+	unsigned				_lineNumber;
+	NSString				*_tokenString;
 }
 
 - (id)initWithURL:(NSURL *)inURL issues:(DDProblemReportManager *)ioIssues;
 - (id)initWithPath:(NSString *)inPath issues:(DDProblemReportManager *)ioIssues;
+- (id)initWithData:(NSData *)inData issues:(DDProblemReportManager *)ioIssues;
 
-- (OoliteDATLexToken)nextToken:(NSString **)outToken;
-- (OoliteDATLexToken)nextTokenDesc:(NSString **)outToken;
-- (void)skipLineBreaks;				// Skips zero or more EOL tokens
-- (BOOL)passAtLeastOneLineBreak;	// Skips one or more EOL tokens
+- (unsigned) lineNumber;
+
+- (NSString *) currentTokenString;
+
+- (NSString *)nextToken;
+
+// Somewhat more efficient than comparing an NSString.
+- (BOOL) expectLiteral:(const char *)literal;
 
 - (BOOL)readInteger:(unsigned *)outInt;
 - (BOOL)readReal:(float *)outReal;

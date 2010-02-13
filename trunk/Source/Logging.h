@@ -97,9 +97,9 @@
 			#define TraceIndent			LogIndent
 			#define TraceOutdent		LogOutdent
 
-			#define TraceEnterMsg(...)	TraceMessage(__VA_ARGS__); TraceIndent(); @try { do{} while (0)
+			#define TraceEnterMsg(...)	TraceMessage(__VA_ARGS__); TraceIndent(); @try {
 			#define TraceEnter()		TraceEnterMsg(@"Called. {")
-			#define TraceExit()			} @finally { TraceOutdent(); LogMessage_(@"}", NULL, NULL, 0); } do {} while (0)
+			#define TraceExit()			} @finally { TraceOutdent(); LogMessage_(@"}", NULL, NULL, 0); }
 		#else
 			#define TraceMessage(...)	do {} while (0)
 			#define TraceIndent()		do {} while (0)

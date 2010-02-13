@@ -110,7 +110,6 @@
 		1A01E5FB0ED98BC4004B59DC /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A543C1D09AD0087006B751A /* QuickTime.framework */; };
 		1A01E5FC0ED98BC4004B59DC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A085A5209B4718300FFD056 /* libz.dylib */; };
 		1A01E6260ED98FD9004B59DC /* IconFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E6240ED98FD9004B59DC /* IconFamily.m */; settings = {COMPILER_FLAGS = "-Wno-sign-compare"; }; };
-		1A01E6270ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E6250ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m */; };
 		1A01E6280ED98FD9004B59DC /* IconFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E6240ED98FD9004B59DC /* IconFamily.m */; settings = {COMPILER_FLAGS = "-Wno-sign-compare -Wno-deprecated-declarations"; }; };
 		1A01E6290ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E6250ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m */; };
 		1A01E6310ED990E0004B59DC /* IconFamily+GarbageCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E62F0ED990E0004B59DC /* IconFamily+GarbageCollection.m */; };
@@ -147,7 +146,6 @@
 		1A13B0090A09FFFF0017CD80 /* DDFileMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A13B0070A09FFFF0017CD80 /* DDFileMatcher.m */; };
 		1A18DDD309644E0D0010CE0B /* MacPAD.url in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DDD209644E0D0010CE0B /* MacPAD.url */; };
 		1A18DE08096456AF0010CE0B /* UKFeedbackProvider.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */; };
-		1A18DE11096456D20010CE0B /* UKFeedbackProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A18DE0E096456D20010CE0B /* UKFeedbackProvider.m */; };
 		1A18DE20096457E90010CE0B /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A18DE1F096457E90010CE0B /* Message.framework */; };
 		1A1D51E409AFB4B30090D751 /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; settings = {COMPILER_FLAGS = "-pp -8 -CFre -POoliteDAT_yy"; }; };
 		1A1D51E509AFB4B40090D751 /* DDDATLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */; };
@@ -817,8 +815,8 @@
 				1A098882098AECDE007C2F5F /* BS-HOM */,
 				1A01E7D70ED9C810004B59DC /* CollectionUtils.h */,
 				1A01E7D80ED9C810004B59DC /* CollectionUtils.m */,
-				1A01E7DC0ED9C819004B59DC /* JAPropertyListAccessors.m */,
 				1A01E7DD0ED9C819004B59DC /* JAPropertyListAccessors.h */,
+				1A01E7DC0ED9C819004B59DC /* JAPropertyListAccessors.m */,
 			);
 			name = Libraries;
 			path = Source;
@@ -1192,7 +1190,6 @@
 				1A8B68130957CC4300EC8EDA /* DDDocumentController.mm in Sources */,
 				1A49F9F00959B235003B322F /* DDLightController.mm in Sources */,
 				1A7207CE095A8A6900C6896A /* DDTextureBuffer.m in Sources */,
-				1A18DE11096456D20010CE0B /* UKFeedbackProvider.m in Sources */,
 				1A0BC4DD096F194500D2B2A7 /* DDApplicationDelegate.mm in Sources */,
 				1A0FFE540981EADC00599E84 /* DDComparatorView.mm in Sources */,
 				1A0FFE770981EE3100599E84 /* DDCompareDialogController.mm in Sources */,
@@ -1234,7 +1231,6 @@
 				1AC5E3460A8DD2CE00C2D481 /* DDTextureInspectorController.mm in Sources */,
 				1A53D8150ADD2AAF0057ED21 /* DDStartupController.mm in Sources */,
 				1A01E6260ED98FD9004B59DC /* IconFamily.m in Sources */,
-				1A01E6270ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m in Sources */,
 				1A01E7D90ED9C810004B59DC /* CollectionUtils.m in Sources */,
 				1A01E7DE0ED9C819004B59DC /* JAPropertyListAccessors.m in Sources */,
 			);
@@ -1712,7 +1708,7 @@
 				GCC_PREFIX_HEADER = "Source/Dry Dock_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = YY_NO_UNPUT;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = 4.0;
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = "Resources/Info-DD.plist";
 				INFOPLIST_PREPROCESS = YES;
 				INSTALL_PATH = "$(HOME)/Applications";

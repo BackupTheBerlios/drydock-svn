@@ -40,13 +40,14 @@
 enum
 {
 	// Up to 1.68
-	kMaxDATVerticesOld		= 320,
-	kMaxDATFacesOld			= 512,
-	kMaxDATMaterialsOld		= 7,
+	kMaxDATVerticesPre168	= 320,
+	kMaxDATFacesPre168		= 512,
+	kMaxDATMaterialsPre168	= 7,
 	
-	// 1.69 and later
-	kMaxDATVertices			= 500,
-	kMaxDATFaces			= 800,
+	// 1.73 and later
+	kMaxDATVerticesPre173	= 500,
+	kMaxDATFacesPre173		= 800,
+	
 	kMaxDATMaterials		= 8
 };
 
@@ -75,7 +76,6 @@ enum
 	float					s, t, max_s, max_t;
 	DDDATLexer				*lexer;
 	NSString				*tokString;
-	int						tok;
 	BOOL					readTextures = NO;
 	DDNormalSet				*normals = nil;
 	DDTexCoordSet			*texCoords = NULL;
@@ -101,17 +101,16 @@ enum
 	
 	lexer = [[DDDATLexer alloc] initWithURL:inFile issues:ioIssues];
 	OK = (nil != lexer);
-	[lexer skipLineBreaks];
 		
 	// Get number of vertices
 	if (OK)
 	{
-		OK = (KOoliteDatToken_NVERTS == [lexer nextToken:NULL]);
-		if (OK) OK = [lexer readInteger:&vertexCount] && [lexer passAtLeastOneLineBreak];
+		OK = [lexer expectLiteral:"NVERTS"];
+		if (OK) OK = [lexer readInteger:&vertexCount];
 		
 		if (!OK)
 		{
-			[ioIssues addStopIssueWithKey:@"noDATNVERTS" localizedFormat:@"The required NVERTS line could not be found."];
+			if (!OK) [ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", [lexer lineNumber], @"NVERTS", [lexer currentTokenString]];
 			TraceMessage(@"** Failed to find \"NVERTS\".");
 		}
 		else if (kDDMeshIndexMax < vertexCount)
@@ -119,25 +118,25 @@ enum
 			OK = NO;
 			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"vertices", NULL), vertexCount];
 		}
-		else if (kMaxDATVertices < vertexCount)
+		else if (kMaxDATVerticesPre173 < vertexCount)
 		{
-			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOolite" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite%@, which has a limit of %u %@.", vertexCount, NSLocalizedString(@"vertices", NULL), @"", kMaxDATVertices, NSLocalizedString(@"vertices", NULL)];
+			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOolite173" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite versions %@ and earlier, which have a limit of %u %@.", vertexCount, NSLocalizedString(@"vertices", NULL), @"1.73", kMaxDATVerticesPre173, NSLocalizedString(@"vertices", NULL)];
 		}
-		else if (kMaxDATVerticesOld < vertexCount)
+		else if (kMaxDATVerticesPre168 < vertexCount)
 		{
-			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOoliteOld" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite%@, which has a limit of %u %@.", vertexCount, NSLocalizedString(@"vertices", NULL), NSLocalizedString(@"1.68 and earlier", NULL), kMaxDATVerticesOld, NSLocalizedString(@"vertices", NULL)];
+			[ioIssues addWarningIssueWithKey:@"tooManyVerticesForOolite168" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite versions %@ and earlier, which have a limit of %u %@.", vertexCount, NSLocalizedString(@"vertices", NULL), "1.68", kMaxDATVerticesPre168, NSLocalizedString(@"vertices", NULL)];
 		}
 	}
 	
 	// Get number of faces
 	if (OK)
 	{
-		OK = (KOoliteDatToken_NFACES == [lexer nextToken:NULL]);
-		if (OK) OK = [lexer readInteger:&faceCount] && [lexer passAtLeastOneLineBreak];
+		OK = [lexer expectLiteral:"NFACES"];
+		if (OK) OK = [lexer readInteger:&faceCount];
 		
 		if (!OK)
 		{
-			[ioIssues addStopIssueWithKey:@"noDATNFACES" localizedFormat:@"The required NFACES line could not be found."];
+			if (!OK) [ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", [lexer lineNumber], @"NFACES", [lexer currentTokenString]];
 			TraceMessage(@"** Failed to find \"NFACES\".");
 		}
 		else if (kDDMeshIndexMax < faceCount)
@@ -145,13 +144,13 @@ enum
 			OK = NO;
 			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"faces", NULL), faceCount];
 		}
-		else if (kMaxDATFaces < faceCount)
+		else if (kMaxDATFacesPre173 < faceCount)
 		{
-			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOolite" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite%@, which has a limit of %u %@.", faceCount, NSLocalizedString(@"faces", NULL), @"", kMaxDATFaces, NSLocalizedString(@"faces", NULL)];
+			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOolite173" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite versions %@ and earlier, which have a limit of %u %@.", faceCount, NSLocalizedString(@"faces", NULL), @"1.73", kMaxDATFacesPre173, NSLocalizedString(@"faces", NULL)];
 		}
-		else if (kMaxDATFacesOld < faceCount)
+		else if (kMaxDATFacesPre168 < faceCount)
 		{
-			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOoliteOld" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite%@, which has a limit of %u %@.", faceCount, NSLocalizedString(@"faces", NULL), NSLocalizedString(@"1.68 and earlier", NULL), kMaxDATFacesOld, NSLocalizedString(@"faces", NULL)];
+			[ioIssues addWarningIssueWithKey:@"tooManyFacesForOolite168" localizedFormat:@"This document has %u %@. It will not be possible to open it with Oolite versions %@ and earlier, which have a limit of %u %@.", faceCount, NSLocalizedString(@"faces", NULL), @"1.68", kMaxDATFacesPre168, NSLocalizedString(@"faces", NULL)];
 		}
 	}
 	
@@ -170,8 +169,8 @@ enum
 	// Load vertices
 	if (OK)
 	{
-		OK = (KOoliteDatToken_VERTEX_SECTION == [lexer nextToken:&tokString]);
-		if (!OK) [ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), @"VERTEX", tokString];
+		OK = [lexer expectLiteral:"VERTEX"];
+		if (!OK) [ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", [lexer lineNumber], @"VERTEX", [lexer currentTokenString]];
 	}
 	if (OK)
 	{
@@ -209,12 +208,10 @@ enum
 			
 			r = vertices[i].Magnitude();
 			if (rMax < r) rMax = r;
-			
-			OK = [lexer passAtLeastOneLineBreak];
 		}
 		if (!OK)
 		{
-			[ioIssues addStopIssueWithKey:@"noVertexDataLoaded" localizedFormat:@"Vertex data could not be read for vertex line %u.", i + 1];
+			[ioIssues addStopIssueWithKey:@"noVertexDataLoaded" localizedFormat:@"Vertex data could not be read for vertex %u (line %u).", i + 1, [lexer lineNumber]];
 			TraceMessage(@"** Vertex loading failed at vertex index %u.", i + 1);
 		}
 	}
@@ -222,8 +219,8 @@ enum
 	// Load faces
 	if (OK)
 	{
-		OK = (KOoliteDatToken_FACES_SECTION == [lexer nextToken:&tokString]);
-		if (!OK) [ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), @"FACE", tokString];
+		OK = [lexer expectLiteral:"FACES"];
+		if (!OK)  [ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", [lexer lineNumber], @"FACES", [lexer currentTokenString]];
 	}
 	if (OK)
 	{
@@ -353,7 +350,6 @@ enum
 					faces[i].firstVertex = [buffer addVertexIndices:faceVertices texCoordIndices:faceTexCoords vertexNormals:faceNormals count:faceVertexCount];
 				}
 				
-				if (OK) OK = [lexer passAtLeastOneLineBreak];
 				if (!OK) break;
 			}
 		}
@@ -372,23 +368,24 @@ enum
 	if (OK)
 	{
 		readTextures = NO;
-		tok = [lexer nextTokenDesc:&tokString];
-		if (KOoliteDatToken_EOF == tok)
+		
+		tokString = [lexer nextToken];
+		if (tokString == nil)
 		{
-			[ioIssues addWarningIssueWithKey:@"vertexRange" localizedFormat:@"The document is missing an END line. This is not serious, but should be fixed by resaving the document."];
+			[ioIssues addWarningIssueWithKey:@"missingEnd" localizedFormat:@"The document is missing an END line. This is not serious, but should be fixed by resaving the document."];
 		}
-		else if (KOoliteDatToken_TEXTURES_SECTION == tok)
+		else if ([tokString isEqualToString:@"TEXTURES"])
 		{
 			readTextures = YES;
 		}
-		else if (KOoliteDatToken_END_SECTION == tok)
+		else if ([tokString isEqualToString:@"END"])
 		{
 			// Do nothing
 		}
 		else
 		{
 			OK = NO;
-			[ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), NSLocalizedString(@"TEXTURES or END", NULL), tokString];
+			[ioIssues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", [lexer lineNumber], NSLocalizedString(@"TEXTURES or END", NULL), tokString];
 		}
 		
 		if (OK && !readTextures)
@@ -460,7 +457,6 @@ enum
 					if (OK)
 					{
 						[buffer setTexCoordIndices:faceTexCoords startingAt:faces[i].firstVertex count:faces[i].vertexCount];
-						OK = [lexer passAtLeastOneLineBreak];
 					}
 					if (!OK) break;
 				}
@@ -495,12 +491,12 @@ enum
 	// Look for END
 	if (OK && readTextures)
 	{
-		tok = [lexer nextToken:NULL];
-		if (KOoliteDatToken_EOF == tok)
+		tokString = [lexer nextToken];
+		if (tokString == nil)
 		{
-			[ioIssues addWarningIssueWithKey:@"vertexRange" localizedFormat:@"The document is missing an END line. This is not serious, but should be fixed by resaving the document."];
+			[ioIssues addWarningIssueWithKey:@"missingEnd" localizedFormat:@"The document is missing an END line. This is not serious, but should be fixed by resaving the document."];
 		}
-		else if (KOoliteDatToken_END_SECTION == tok)
+		else if ([tokString isEqualToString:@"END"])
 		{
 			// Do nothing
 		}
@@ -549,6 +545,20 @@ enum
 }
 
 
+- (NSString *) minimumOoliteVersionString
+{
+	if (kMaxDATVerticesPre173 < _vertexCount || kMaxDATFacesPre173 < _faceCount)
+	{
+		return @"1.73";
+	}
+	if (kMaxDATVerticesPre168 < _vertexCount || kMaxDATFacesPre168 < _faceCount || kMaxDATMaterialsPre168 < _materialCount)
+	{
+		return @"1.68";
+	}
+	return nil;
+}
+
+
 - (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingOoliteDATToURL:(NSURL *)inFile
 {
 	DDMaterial				*material;
@@ -560,20 +570,21 @@ enum
 	
 	if (_hasNonTriangles)
 	{
-		[ioManager addWarningIssueWithKey:@"nonTriangularFaces" localizedFormat:@"This document contains non-triangular faces. In order to save it in the selected format, Dry Dock will triangulate it."];
+		[ioManager addWarningIssueWithKey:@"nonTriangularFaces" localizedFormat:@"This model contains non-triangular faces. In order to save it in the selected format, Dry Dock will triangulate it."];
 	}
 	
-	if (kMaxDATVertices < _vertexCount)
-	{
-		[ioManager addStopIssueWithKey:@"tooManyVertices" localizedFormat:@"This document contains %u %@; the selected format allows no more than %u.", _vertexCount, NSLocalizedString(@"vertices", NULL), kMaxDATVertices];
-	}
-	if (kMaxDATFaces < _faceCount)
-	{
-		[ioManager addStopIssueWithKey:@"tooManyFaces" localizedFormat:@"This document contains %u %@; the selected format allows no more than %u.", _faceCount, NSLocalizedString(@"faces", NULL), kMaxDATFaces];
-	}
+	// Check for high resource counts.
 	if (kMaxDATMaterials < _materialCount)
 	{
-		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This document contains %u %@; the selected format allows no more than %u.", _materialCount, NSLocalizedString(@"materials", NULL), kMaxDATMaterials];
+		[ioManager addStopIssueWithKey:@"tooManyMaterials" localizedFormat:@"This model contains %u materials; the selected format allows no more than %u.", _materialCount, kMaxDATMaterials];
+	}
+	else
+	{
+		NSString *minVersion = [self minimumOoliteVersionString];
+		if (minVersion != nil)
+		{
+			[ioManager addNoteIssueWithKey:@"complexDATOutput" localizedFormat:@"Due to its complexity, this model cannot be used with versions of Oolite earlier than %@.", minVersion];
+		}
 	}
 	
 	// Check for invalid texture names
@@ -600,7 +611,7 @@ enum
 	NSMutableString			*dataString;
 	NSDateFormatter			*formatter;
 	NSString				*dateString;
-	NSMutableString			*texNameString = nil;
+	NSString				*texNameString = nil;
 	unsigned				i, j, faceVertexCount;
 	DDMeshFaceData			*face;
 	NSString				*texName;
@@ -623,22 +634,28 @@ enum
 		texName = [_materials[i] name];
 		if (nil != texName)
 		{
-			if (nil == texNameString) texNameString = [texName mutableCopy];
-			else [texNameString appendFormat: @", %@", texName];
+			if (nil == texNameString) texNameString = texName;
+			else  texNameString = [texNameString stringByAppendingFormat:@", %@", texName];
 		}
 	}
 	
 	if (nil == texNameString) texNameString = @"none";
 	
 	// Write header comment
+	NSString *minVersion = [self minimumOoliteVersionString];
+	if (minVersion != nil)  minVersion = [NSString stringWithFormat:@"// Minimum Oolite version: %@\n"];
+	else  minVersion = @"";
+	
 	[dataString appendFormat:  @"//	Written by %@ on %@\n"
 								"//	\n"
 								"//	Model dimensions: %g x %g x %g (w x h x l)\n"
 								"//	Textures used: %@\n"
+								"%@",
 								"\n",
 								ApplicationNameAndVersionString(), dateString,
 								[self width], [self height], [self length],
-								texNameString];
+								texNameString,
+								minVersion];
 	
 	// Write vertex and face counts
 	[dataString appendFormat:@"NVERTS %u\nNFACES %u\n\nVERTEX\n", _vertexCount, _faceCount];

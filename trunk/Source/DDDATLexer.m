@@ -21,26 +21,16 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#define ENABLE_TRACE 0
-
 #import "DDDATLexer.h"
 #import "DDProblemReportManager.h"
 #import "DDErrorDescription.h"
 #import "Logging.h"
 
-DDDATLexer			*sDDDATLexerActive = nil;
-
-
-#if ENABLE_TRACE
-
-static const char *TokenString(int inToken);
-
-#endif
-
 
 @interface DDDATLexer (Private)
 
-- (void)advance;
+- (BOOL)advance;
+
 - (NSString *)describeToken;
 
 @end
@@ -54,15 +44,22 @@ static const char *TokenString(int inToken);
 	
 	if ([inURL isFileURL])
 	{
-		return [self initWithPath:[[inURL absoluteURL] path] issues:ioIssues];
+		NSError *error = nil;
+		NSData *data = [[NSData alloc] initWithContentsOfURL:inURL options:0 error:&error];
+		if (data == nil)
+		{
+			[ioIssues addStopIssueWithKey:@"noReadFile" localizedFormat:@"The document could not be loaded, because an error occurred: %@", [error localizedDescription]];
+			return nil;
+		}
+		return [self initWithData:data issues:ioIssues];
 	}
 	else
 	{
 		[NSException raise:NSInvalidArgumentException format:@"DDDATLexer does not support non-file URLs such as %@", [inURL absoluteURL]];
-		return nil;
 	}
 	
 	TraceExit();
+	return nil;
 }
 
 
@@ -70,29 +67,31 @@ static const char *TokenString(int inToken);
 {
 	TraceEnter();
 	
-	if (nil != sDDDATLexerActive) [NSException raise:NSInternalInconsistencyException format:@"Only one DDDATLexer may be active at a time."];
+	return [self initWithURL:[NSURL fileURLWithPath:inPath] issues:ioIssues];
 	
-	self = [super init];
-	if (nil != self)
+	TraceExit();
+	return self;
+}
+
+
+- (id)initWithData:(NSData *)inData issues:(DDProblemReportManager *)ioIssues
+{
+	if ([inData length] == 0)
 	{
-		_file = fopen([inPath fileSystemRepresentation], "rb");
-		if (NULL != _file)
-		{
-			_issues = [ioIssues retain];
-			OoliteDAT_SetInputFile(_file);
-			[self advance];
-			sDDDATLexerActive = self;
-		}
-		else
-		{
-			[ioIssues addStopIssueWithKey:@"noReadFilePOSIX" localizedFormat:@"The document could not be loaded, because a POSIX error of type %@ occured.", ErrnoAsNSString()];
-			[self release];
-			self = nil;
-		}
+		[self release];
+		return nil;
+	}
+	
+	if ((self = [super init]))
+	{
+		_data = [inData retain];
+		_cursor = [inData bytes];
+		_end = _cursor + [inData length];
+		_tokenLength = 0;
+		_lineNumber = 1;
 	}
 	
 	return self;
-	TraceExit();
 }
 
 
@@ -100,77 +99,64 @@ static const char *TokenString(int inToken);
 {
 	TraceEnter();
 	
-	if (NULL != _file) fclose(_file);
-	if (sDDDATLexerActive == self) sDDDATLexerActive = nil;
-	[_issues release];
+	[_data release];
+	[_tokenString release];
 	
 	[super dealloc];
 	TraceExit();
 }
 
 
-- (void)advance
+- (unsigned) lineNumber
 {
-	TraceIndent();
-	TraceMessage(@"Got token %s (%@).", TokenString(_nextToken), [self describeToken]);
-	TraceOutdent();
-	
-	_nextToken = OoliteDAT_yylex();
+	return _lineNumber;
 }
 
 
-- (OoliteDATLexToken)nextToken:(NSString **)outToken
+- (NSString *) currentTokenString
 {
 	TraceEnter();
 	
-	OoliteDATLexToken result = _nextToken;
-	if (NULL != outToken) *outToken = [NSString stringWithUTF8String:OoliteDAT_yytext];
-	[self advance];
-	return result;
-	
-	TraceExit();
-}
-
-
-- (OoliteDATLexToken)nextTokenDesc:(NSString **)outToken
-{
-	TraceEnter();
-	
-	OoliteDATLexToken result = _nextToken;
-	if (NULL != outToken) *outToken = [self describeToken];
-	[self advance];
-	return result;
-	
-	TraceExit();
-}
-
-
-- (void)skipLineBreaks
-{
-	TraceEnter();
-	
-	while (KOoliteDatToken_EOL == _nextToken) [self advance];
-	
-	TraceExit();
-}
-
-
-- (BOOL)passAtLeastOneLineBreak
-{
-	TraceEnter();
-	
-	if (KOoliteDatToken_EOL != _nextToken)
+	if (_tokenString == nil)
 	{
-		[_issues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), NSLocalizedString(@"end of line", NULL), [self describeToken]];
-		return NO;
+		_tokenString = [[NSString alloc] initWithBytes:_cursor length:_tokenLength encoding:NSUTF8StringEncoding];
+		if (_tokenString == nil)
+		{
+			_tokenString = [[NSString alloc] initWithBytes:_cursor length:_tokenLength encoding:NSISOLatin1StringEncoding];
+		}
 	}
-	do
+	TraceExit();
+	
+	return _tokenString;
+}
+
+
+- (NSString *)nextToken
+{
+	TraceEnter();
+	
+	if ([self advance])
 	{
-		[self advance];
-	} while (KOoliteDatToken_EOL == _nextToken);
-	return YES;
+		return [self currentTokenString];
+	}
 	
 	TraceExit();
+	
+	return nil;
+}
+
+
+- (BOOL) expectLiteral:(const char *)literal
+{
+	TraceEnter();
+	
+	if ([self advance])
+	{
+		return (strncmp(literal, _cursor, _tokenLength) == 0);
+	}
+	
+	TraceExit();
+	return NO;
 }
 
 
@@ -178,21 +164,15 @@ static const char *TokenString(int inToken);
 {
 	TraceEnter();
 	
-	if (KOoliteDatToken_INTEGER == _nextToken)
-	{
-		// Note that the lexer only recognises unsigned integers
-		if (NULL != outInt) *outInt = atoi(OoliteDAT_yytext);
-		[self advance];
-		return YES;
-	}
-	else
-	{
-		if (NULL != outInt) *outInt = 0;
-		[_issues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), NSLocalizedString(@"integer", NULL), [self describeToken]];
-		return NO;
-	}
+	NSParameterAssert(outInt != NULL);
+	
+	NSString *token = [self nextToken];
+	if (token == nil)  return NO;
+	
+	*outInt = [token intValue];
 	
 	TraceExit();
+	return YES;
 }
 
 
@@ -200,20 +180,15 @@ static const char *TokenString(int inToken);
 {
 	TraceEnter();
 	
-	if (KOoliteDatToken_REAL == _nextToken || KOoliteDatToken_INTEGER == _nextToken)
-	{
-		if (NULL != outReal) *outReal = atof(OoliteDAT_yytext);
-		[self advance];
-		return YES;
-	}
-	else
-	{
-		if (NULL != outReal) *outReal = 0.0;
-		[_issues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), NSLocalizedString(@"number", NULL), [self describeToken]];
-		return NO;
-	}
+	NSParameterAssert(outReal != NULL);
+	
+	NSString *token = [self nextToken];
+	if (token == nil)  return NO;
+	
+	*outReal = [token floatValue];
 	
 	TraceExit();
+	return YES;
 }
 
 
@@ -221,105 +196,102 @@ static const char *TokenString(int inToken);
 {
 	TraceEnter();
 	
-	if (KOoliteDatToken_NVERTS <= _nextToken && _nextToken <= KOoliteDatToken_STRING)
-	{
-		if (NULL != outString) *outString = [NSString stringWithUTF8String:OoliteDAT_yytext];
-		[self advance];
-		return YES;
-	}
-	else
-	{
-		if (NULL != outString) *outString = nil;
-		[_issues addStopIssueWithKey:@"parseError" localizedFormat:@"Parse error on line %u: expected %@, got %@.", OoliteDAT_LineNumber(), NSLocalizedString(@"name", NULL), [self describeToken]];
-		return NO;
-	}
+	NSParameterAssert(outString != NULL);
+	
+	NSString *token = [self nextToken];
+	if (token == nil)  return NO;
+	
+	*outString = [[token retain] autorelease];
 	
 	TraceExit();
+	return YES;
 }
 
 
-- (NSString *)describeToken
+static inline BOOL IsSeparatorChar(char c)
 {
-	NSString		*stringToQuote = nil;
+	return c == ' ' || c == ',' || c == '\t' || c == '\r' || c == '\n';
+}
+
+
+static inline BOOL IsLineEndChar(char c)
+{
+	return c == '\r' || c == '\n';
+}
+
+
+- (BOOL) advance
+{
+	TraceEnter();
 	
-	switch (_nextToken)
+	_cursor += _tokenLength;
+	NSAssert(_cursor <= _end, @"Lexer passed end of buffer");
+	
+	[_tokenString release];
+	_tokenString = nil;
+	
+#define EOF_BREAK()  do { if (__builtin_expect(_cursor == _end, 0))  return NO; } while (0)
+#define COMMENT_AT(loc)  (*(loc) == '#' || (*(loc) == '/' && (loc) + 1 < _end && *((loc) + 1) == '/'))
+	
+	/*	SKIP_WHILE: skip characters matching predicate, returning if we reach
+		end of data, and counting lines as we go.
+	*/
+#define SKIP_WHILE(predicate)  do { while (predicate) { \
+			if (!IsLineEndChar(*_cursor))  lastIsCR = NO; \
+			else \
+			{ \
+				if (!lastIsCR || *_cursor != '\n') \
+				{ \
+					_lineNumber++; \
+					lastIsCR = NO; \
+				} \
+				if (*_cursor == '\r')  lastIsCR = YES; \
+			} \
+			_cursor++; \
+			EOF_BREAK(); \
+		}} while (0)
+	
+	EOF_BREAK();
+	BOOL lastIsCR = NO;
+	
+	// Find beginning of next token.
+	for (;;)
 	{
-		case KOoliteDatToken_EOF:
-			return NSLocalizedString(@"end of file", NULL);
+		SKIP_WHILE(IsSeparatorChar(*_cursor));
 		
-		case KOoliteDatToken_EOL:
-			return NSLocalizedString(@"end of line", NULL);
-		
-		case KOoliteDatToken_VERTEX_SECTION:
-			stringToQuote = @"VERTEX";
+		// Skip comments.
+		if (COMMENT_AT(_cursor))
+		{
+			SKIP_WHILE(!IsLineEndChar(*_cursor));
+		}
+		else
+		{
 			break;
-		
-		case KOoliteDatToken_FACES_SECTION:
-			stringToQuote = @"FACES";
-			break;
-		
-		case KOoliteDatToken_TEXTURES_SECTION:
-			stringToQuote = @"TEXTURES";
-			break;
-		
-		case KOoliteDatToken_END_SECTION:
-			stringToQuote = @"END";
-			break;
-		
-		case KOoliteDatToken_NVERTS:
-			stringToQuote = @"NVERTS";
-			break;
-		
-		case KOoliteDatToken_NFACES:
-			stringToQuote = @"NFACES";
-			break;
-		
-		default:
-			stringToQuote = [NSString stringWithUTF8String:OoliteDAT_yytext];
+		}
 	}
 	
-	if (nil == stringToQuote) stringToQuote = @"";
-	else if (100 < [stringToQuote length])
+	// Find length of current token.
+	const char *endCursor = _cursor + 1;
+	while (endCursor < _end && !IsSeparatorChar(*endCursor) && !COMMENT_AT(endCursor))
 	{
-		stringToQuote = [NSString stringWithFormat:NSLocalizedString(@"%@...", NULL), [stringToQuote substringToIndex:100]];
+		endCursor++;
 	}
 	
-	return stringToQuote;//[NSString stringWithFormat:NSLocalizedString(@"\"%@\"", NULL), stringToQuote];
+	_tokenLength = endCursor - _cursor;
+	
+#undef EOF_BREAK
+#undef SKIP_WHILE
+#undef COMMENT_AT
+	
+	TraceMessage(@"Got token %@.", [self currentTokenString]);
+	TraceExit();
+	return YES;
 }
 
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%s %p>{file = %p, next token = %@}", object_getClassName(self), self, _file, [self describeToken]];
+	return [NSString stringWithFormat:@"<%@ %p>{next token = \"%@\"}", [self class], self, [self currentTokenString]];
 }
 
 @end
-
-
-#if ENABLE_TRACE
-
-static const char *TokenString(int inToken)
-{
-	#define CASE(foo) case KOoliteDatToken_ ## foo: return #foo;
-	
-	switch (inToken)
-	{
-		CASE(EOF);
-		CASE(EOL);
-		CASE(VERTEX_SECTION);
-		CASE(FACES_SECTION);
-		CASE(TEXTURES_SECTION);
-		CASE(END_SECTION);
-		CASE(NVERTS);
-		CASE(NFACES);
-		CASE(INTEGER);
-		CASE(REAL);
-		CASE(STRING);
-		
-		default: return "??";
-	}
-	
-	#undef CASE
-}
-
-#endif
