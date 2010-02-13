@@ -27,7 +27,7 @@
 #import "Logging.h"
 
 
-static BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value);
+static inline BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value) __attribute__((always_inline));
 
 
 @interface DDDATLexer (Private)
@@ -342,45 +342,18 @@ static inline BOOL IsLineEndChar(char c)
  * Assumes that the upper and lower case
  * alphabets and digits are each contiguous.
  */
-static BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value)
+static inline BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value)
 {
 	NSCParameterAssert(value != NULL);
+	if (__builtin_expect(length == 0, 0))
+	{
+		return NO;
+	}
 	
-	const char *s;
-	unsigned long acc = 0;
-	char c;
-	BOOL neg, any = NO;
+	const char *s = string;
 	size_t r = length;
-	if (__builtin_expect(r == 0, 0))
-	{
-		return NO;
-	}
-	
-	if (__builtin_expect(r == 0, 0))
-	{
-		return NO;
-	}
-	
-	/*
-	 * Skip white space and pick up leading + sign if any.
-	 */
-	s = string;
-	do {
-		c = *s++;
-		r--;
-	} while (isspace((unsigned char)c) && r > 0);
-	if (c == '-') {
-		neg = YES;
-		c = *s++;
-		r--;
-	} else {
-		neg = NO;
-		if (c == '+')
-		{
-			c = *s++;
-			r--;
-		}
-	}
+	unsigned long acc = 0;
+	BOOL any = NO;
 	
 	/*
 	 * Compute the cutoff value between legal numbers and illegal
@@ -390,22 +363,18 @@ static BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value)
 	 * is equal to this value may be valid or not; the limit
 	 * between valid and invalid numbers is then based on the last
 	 * digit.
-	 *
-	 * Set 'any' if any 'digits' consumed; make it negative to indicate
-	 * overflow.
 	 */
-	unsigned long cutoff = ULONG_MAX / 10;
-	int cutlim = ULONG_MAX % 10;
+	unsigned long cutoff = UINT_MAX / 10;
+	int cutlim = UINT_MAX % 10;
 	
 	for (;;)
 	{
+		char c = *s++;
+		
 		if (__builtin_expect(c >= '0' && c <= '9', 1))  c -= '0';
 		else  break;
 		
-		if (__builtin_expect(any < 0 || acc > cutoff || (acc == cutoff && c > cutlim), 0))
-		{
-			return NO;
-		}
+		if (__builtin_expect(any < 0 || acc > cutoff || (acc == cutoff && c > cutlim), 0))  return NO;
 		else
 		{
 			any = YES;
@@ -413,14 +382,10 @@ static BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value)
 			acc += c;
 		}
 		
-		if (r-- == 0)  break;
-		c = *s++;
+		if (--r == 0)  break;
 	}
 	
-	if (__builtin_expect(!any || (neg && acc != 0), 0))
-	{
-		return NO;
-	}
+	if (__builtin_expect(!any, 0))  return NO;
 	
 	*value = acc;
 	return YES;
