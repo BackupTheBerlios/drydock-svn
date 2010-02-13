@@ -114,7 +114,6 @@
 		1A01E6280ED98FD9004B59DC /* IconFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E6240ED98FD9004B59DC /* IconFamily.m */; settings = {COMPILER_FLAGS = "-Wno-sign-compare -Wno-deprecated-declarations"; }; };
 		1A01E6290ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E6250ED98FD9004B59DC /* NSString+CarbonFSRefCreation.m */; };
 		1A01E6310ED990E0004B59DC /* IconFamily+GarbageCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A01E62F0ED990E0004B59DC /* IconFamily+GarbageCollection.m */; };
-		1A01E72B0ED9AC58004B59DC /* SmartCrashReportsInstall.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A01E72A0ED9AC58004B59DC /* SmartCrashReportsInstall.o */; };
 		1A01E72E0ED9AC76004B59DC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A01E72D0ED9AC76004B59DC /* Security.framework */; };
 		1A01E7A60ED9B269004B59DC /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A01E7A50ED9B269004B59DC /* Sparkle.framework */; };
 		1A01E7B10ED9B277004B59DC /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A01E7B00ED9B277004B59DC /* Sparkle.framework */; };
@@ -231,8 +230,6 @@
 		1AA79C0909896FEA00A1810B /* Arrow Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1AA79C0809896FEA00A1810B /* Arrow Tool.tiff */; };
 		1ABEC05409485ED500B1E952 /* DisplayListCacheNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1ABEC05209485ED500B1E952 /* DisplayListCacheNode.mm */; };
 		1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1377F096894FD006BB3EE /* Dry Dock.icns */; };
-		1AC3A03D0D8C3559007E13E9 /* libSmartCrashReportsInstall.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
-		1AC3A0490D8C35CF007E13E9 /* libSmartCrashReportsInstall.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */; };
 		1AC5E3460A8DD2CE00C2D481 /* DDTextureInspectorController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5E3450A8DD2CE00C2D481 /* DDTextureInspectorController.mm */; };
 		1ACE7DE30954227B00BF7642 /* Rotate Tool.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7DE20954227B00BF7642 /* Rotate Tool.png */; };
 		1ACE7EF8095438E800BF7642 /* Inspector Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */; };
@@ -268,7 +265,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1AC3A0490D8C35CF007E13E9 /* libSmartCrashReportsInstall.dylib in Copy Frameworks */,
 				1A01E7BA0ED9B27E004B59DC /* Sparkle.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -291,8 +287,6 @@
 		1A01E62E0ED990E0004B59DC /* IconFamily+GarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "IconFamily+GarbageCollection.h"; path = "../../../../Source/IconFamily+GarbageCollection.h"; sourceTree = "<group>"; };
 		1A01E62F0ED990E0004B59DC /* IconFamily+GarbageCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "IconFamily+GarbageCollection.m"; path = "../../../../Source/IconFamily+GarbageCollection.m"; sourceTree = "<group>"; };
 		1A01E64A0ED99546004B59DC /* OoliteDAT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OoliteDAT.h; sourceTree = "<group>"; };
-		1A01E7290ED9AC4E004B59DC /* SmartCrashReportsInstall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmartCrashReportsInstall.h; path = "For Compiling on 10.5/SmartCrashReportsInstall.h"; sourceTree = "<group>"; };
-		1A01E72A0ED9AC58004B59DC /* SmartCrashReportsInstall.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = SmartCrashReportsInstall.o; path = "For Compiling on 10.5/SmartCrashReportsInstall.o"; sourceTree = "<group>"; };
 		1A01E72D0ED9AC76004B59DC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		1A01E7A50ED9B269004B59DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "With Garbage Collection/Sparkle.framework"; sourceTree = "<group>"; };
 		1A01E7B00ED9B277004B59DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
@@ -349,7 +343,6 @@
 		1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDATLexer.m; sourceTree = "<group>"; };
 		1A24608109A5D39000DC42F4 /* DDUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUtilities.h; sourceTree = "<group>"; };
 		1A24608209A5D39000DC42F4 /* DDUtilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DDUtilities.mm; sourceTree = "<group>"; };
-		1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libSmartCrashReportsInstall.dylib; sourceTree = "<group>"; };
 		1A345F4B0A1A6ADE007E491D /* DDMesh+WaveFrontOBJSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDMesh+WaveFrontOBJSupport.mm"; sourceTree = "<group>"; };
 		1A442147094C830B000E90C2 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		1A442148094C830B000E90C2 /* Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logging.m; sourceTree = "<group>"; };
@@ -479,7 +472,6 @@
 				1A01E5FA0ED98BC4004B59DC /* Accelerate.framework in Frameworks */,
 				1A01E5FB0ED98BC4004B59DC /* QuickTime.framework in Frameworks */,
 				1A01E5FC0ED98BC4004B59DC /* libz.dylib in Frameworks */,
-				1A01E72B0ED9AC58004B59DC /* SmartCrashReportsInstall.o in Frameworks */,
 				1A01E72E0ED9AC76004B59DC /* Security.framework in Frameworks */,
 				1A01E7A60ED9B269004B59DC /* Sparkle.framework in Frameworks */,
 			);
@@ -505,7 +497,6 @@
 				1A78150309767395001C0020 /* Accelerate.framework in Frameworks */,
 				1A543C1E09AD0088006B751A /* QuickTime.framework in Frameworks */,
 				1A085A5309B4718300FFD056 /* libz.dylib in Frameworks */,
-				1AC3A03D0D8C3559007E13E9 /* libSmartCrashReportsInstall.dylib in Frameworks */,
 				1A01E7B10ED9B277004B59DC /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -818,17 +809,6 @@
 			name = "Scene Graph";
 			sourceTree = "<group>";
 		};
-		1AA54853099CB57C00625FF2 /* Smart Crash Reports SDK */ = {
-			isa = PBXGroup;
-			children = (
-				1A27426B09A8B7410031F97B /* libSmartCrashReportsInstall.dylib */,
-				1A01E7290ED9AC4E004B59DC /* SmartCrashReportsInstall.h */,
-				1A01E72A0ED9AC58004B59DC /* SmartCrashReportsInstall.o */,
-			);
-			name = "Smart Crash Reports SDK";
-			path = "../Smart Crash Reports SDK";
-			sourceTree = "<group>";
-		};
 		1AA5485C099CB59D00625FF2 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -839,7 +819,6 @@
 				1A01E7D80ED9C810004B59DC /* CollectionUtils.m */,
 				1A01E7DC0ED9C819004B59DC /* JAPropertyListAccessors.m */,
 				1A01E7DD0ED9C819004B59DC /* JAPropertyListAccessors.h */,
-				1AA54853099CB57C00625FF2 /* Smart Crash Reports SDK */,
 			);
 			name = Libraries;
 			path = Source;
@@ -1667,13 +1646,14 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = (
 					"-DENABLE_LOGGING=1",
 					"-DPHYS_NO_VECTORISE_PPC",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "Dry Dock for Oolite";
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wextra",
@@ -1741,11 +1721,12 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DPHYS_NO_VECTORISE_PPC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "Dry Dock for Oolite";
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				STRIP_INSTALLED_PRODUCT = NO;
 				WARNING_CFLAGS = (
 					"-Wall",
@@ -1793,13 +1774,14 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Smart Crash Reports SDK\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = (
 					"-DNDEBUG",
 					"-DPHYS_NO_VECTORISE_PPC",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "Dry Dock for Oolite";
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wextra",

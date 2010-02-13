@@ -26,7 +26,6 @@
 
 #import "DDStartupController.h"
 #import "Logging.h"
-#import "SmartCrashReportsInstall.h"
 #import "DDApplicationDelegate.h"
 #import "DDUtilities.h"
 #import <dlfcn.h>
@@ -39,7 +38,6 @@
 // Stages of the dialog to run
 enum
 {
-	kFirstRunStage_askInstallSCR				= 0x00000001UL,
 	kFirstRunStage_askCheckForUpdates			= 0x00000002UL,
 	kFirstRunStage_updateCheckIsUpgrade			= 0x00000004UL,
 	kFirstRunStage_noSparkleForPanther			= 0x00000008UL
@@ -49,7 +47,6 @@ enum
 // Elements of first-start stuff that have been done
 enum
 {
-	kFirstRunState_offeredSCR					= 0x00000001UL,
 	kFirstRunState_configuredUKUpdateChecker	= 0x00000002UL,
 	kFirstRunState_configuredSparkle			= 0x00000004UL,
 	kFirstRunState_showedSparkleNoPanther		= 0x00000008UL
@@ -57,21 +54,10 @@ enum
 
 
 // Identifiers for tab view items in first-run wizard
-static NSString *kFirstRunTab_askInstallSCR			= @"install SCR";
 static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
 static NSString *kFirstRunTab_askNewUpdateOptions	= @"new update options";
 static NSString *kFirstRunTab_noSparkleForPanther	= @"Sparkle vs. Panther";
 static NSString *kFirstRunTab_finished				= @"finished";
-
-#if TIGER_OR_LATER
-	#define MySCRCanInstall		UnsanitySCR_CanInstall
-	#define MySCRInstall		UnsanitySCR_Install
-	#define UnloadSCR()			do {} while (0)
-#else
-	static Boolean MySCRCanInstall(Boolean* outOptionalAuthenticationWillBeRequired);
-	static OSStatus MySCRInstall(UInt32 inInstallFlags);
-	static void UnloadSCR(void);
-#endif
 
 
 #if RUN_PROBLEM_REPORTER_EXAMLE
@@ -157,8 +143,6 @@ static void RunProblemReporterExample(void);
 	unsigned				firstRunMask;
 	unsigned				toRun = 0;
 	BOOL					userResponse;
-	Boolean					authRequired = NO;
-	BOOL					canInstallSCR;
 	SUUpdater				*updater;
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -167,12 +151,6 @@ static void RunProblemReporterExample(void);
 	firstRunMask = [defaults integerForKey:@"first run status"];
 	
 	// Look for first-run actions which have not been performed
-	canInstallSCR = MySCRCanInstall(&authRequired);
-	if (canInstallSCR && ([defaults boolForKey:@"installed SCR"] || !(firstRunMask & kFirstRunState_offeredSCR)))
-	{
-		toRun |= kFirstRunStage_askInstallSCR;
-	}
-	
 	if (!(firstRunMask & kFirstRunState_configuredSparkle))
 	{
 		if (TigerOrLater())
@@ -194,32 +172,6 @@ static void RunProblemReporterExample(void);
 	}
 	
 	if (toRun) [self loadWizard];
-	
-	// Run "Install SCR" pane if required
-	if (toRun & kFirstRunStage_askInstallSCR)
-	{
-		TraceMessage(@"Running Install SCR pane.");
-		
-		[self loadWizard];
-		[authorisationRequiredForSCRField setHidden:!authRequired];
-		[self runFirstRunWizardPane:kFirstRunTab_askInstallSCR];
-		
-		if (nil != installSCRMatrix)
-		{
-			userResponse = [[installSCRMatrix selectedCell] tag];
-			if (userResponse)
-			{
-				MySCRInstall(kUnsanitySCR_DoNotPresentInstallUI);
-			}
-			
-			// Record the fact that we've done this
-			firstRunMask |= kFirstRunStage_askInstallSCR;
-			[defaults setInteger:firstRunMask forKey:@"first run status"];
-			[defaults setBool:YES forKey:@"installed SCR"];
-		}
-	}
-	
-	UnloadSCR();
 	
 	// Run "Check for Updates" pane if required
 	if (toRun & kFirstRunStage_askCheckForUpdates)
@@ -365,125 +317,6 @@ static void RunProblemReporterExample(void);
 }
 
 @end
-
-
-#if !TIGER_OR_LATER
-
-typedef enum
-{
-	kState_unloaded,
-	kState_unavailable,
-	kState_available
-} SCRLoadState;
-
-static SCRLoadState			sSCRLoadState = kState_unloaded;
-static void					*sSCRHandle = NULL;
-
-
-static SCRLoadState LoadSCR(void);
-
-
-typedef Boolean (*SCR_CanInstallPtr)(Boolean* outOptionalAuthenticationWillBeRequired);
-typedef OSStatus (*SCR_InstallPtr)(UInt32 inInstallFlags);
-
-static SCR_CanInstallPtr SCR_CanInstall;
-static SCR_InstallPtr SCR_Install;
-
-
-static Boolean MySCRCanInstall(Boolean* outOptionalAuthenticationWillBeRequired)
-{
-	TraceEnter();
-	
-	if (kState_available == LoadSCR())
-	{
-		return SCR_CanInstall(outOptionalAuthenticationWillBeRequired);
-	}
-	else
-	{
-		if (NULL != outOptionalAuthenticationWillBeRequired) *outOptionalAuthenticationWillBeRequired = NO;
-		return NO;
-	}
-	TraceExit();
-}
-
-
-static OSStatus MySCRInstall(UInt32 inInstallFlags)
-{
-	TraceEnter();
-	
-	if (kState_available == LoadSCR())
-	{
-		return SCR_Install(inInstallFlags);
-	}
-	else
-	{
-		return unimpErr;
-	}
-	TraceExit();
-}
-
-
-SCRLoadState LoadSCR(void)
-{
-	TraceEnter();
-	
-	if (kState_unloaded == sSCRLoadState)
-	{
-		sSCRLoadState = kState_unavailable;
-		
-		if (TigerOrLater())
-		{
-			// On Tiger; try loading the library
-			NSString			*path;
-			
-			path = [[NSBundle mainBundle] privateFrameworksPath];
-			path = [path stringByAppendingPathComponent:@"libSmartCrashReportsInstall.dylib"];
-			
-			sSCRHandle = dlopen([path fileSystemRepresentation], RTLD_NOW | RTLD_LOCAL);
-			if (NULL == sSCRHandle)
-			{
-				LogMessage(@"Failed to load libSmartCrashReportsInstall (%s).", dlerror());
-				sSCRLoadState = kState_unavailable;
-			}
-			else
-			{
-				SCR_CanInstall = (SCR_CanInstallPtr)dlsym(sSCRHandle, "UnsanitySCR_CanInstall");
-				SCR_Install = (SCR_InstallPtr)dlsym(sSCRHandle, "UnsanitySCR_Install");
-				if (NULL != SCR_CanInstall && NULL != SCR_Install)
-				{
-					TraceMessage(@"Successfully loaded libSmartCrashReportsInstall.");
-					sSCRLoadState = kState_available;
-				}
-				else
-				{
-					LogMessage(@"Failed to load symbols from libSmartCrashReportsInstall (%s).", dlerror());
-				}
-			}
-		}
-	}
-	
-	return sSCRLoadState;
-	TraceExit();
-}
-
-
-static void UnloadSCR(void)
-{
-	TraceEnter();
-	
-	if (NULL != sSCRHandle)
-	{
-		dlclose(sSCRHandle);
-		sSCRHandle = NULL;
-		SCR_CanInstall = NULL;
-		SCR_Install = NULL;
-		sSCRLoadState = kState_unloaded;
-	}
-	
-	TraceExit();
-}
-
-#endif
 
 
 #if RUN_PROBLEM_REPORTER_EXAMLE
