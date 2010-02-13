@@ -1,103 +1,247 @@
-{
-    IBClasses = (
-        {
-            ACTIONS = {showInspector = id; showReleaseNotes = id; }; 
-            CLASS = DDApplication; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                inspectorController = DDInspectorController; 
-                releaseNotesView = NSTextView; 
-                releaseNotesWindow = NSWindow; 
-            }; 
-            SUPERCLASS = NSApplication; 
-        }, 
-        {CLASS = DDApplicationDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {
-            CLASS = DDDocumentController; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSDocumentController; 
-        }, 
-        {CLASS = DDHeaderGradientView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {
-            CLASS = DDInspectorController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {defaultView = NSView; window = NSWindow; }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {checkForUpdatesAction = id; nextButtonAction = id; quitButtonAction = id; }; 
-            CLASS = DDStartupController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                authorisationRequiredForSCRField = NSTextField; 
-                autoInstallMatrix = NSMatrix; 
-                checkForUpdatesCheckBox = NSButton; 
-                checkForUpdatesMenuItem = NSMenuItem; 
-                continueButton = NSButton; 
-                installSCRMatrix = NSMatrix; 
-                integerFormatter = NSFormatter; 
-                stageTabView = NSTabView; 
-                updateFrequencyField = NSTextField; 
-                upgradeAutoInstallMatrix = NSMatrix; 
-                upgradeCheckForUpdatesCheckBox = NSButton; 
-                upgradeUpdateFrequencyField = NSTextField; 
-                window = NSWindow; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            CLASS = DDTextureInspectorController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                fileField = NSTextField; 
-                keyField = NSTextField; 
-                preview = NSImageView; 
-                refCountField = NSTextField; 
-                sizeField = NSTextField; 
-                table = NSTableView; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {
-                coalesceVertices = id; 
-                doCompareDialog = id; 
-                doRecenterDialog = id; 
-                doScaleDialog = id; 
-                exportDocument = id; 
-                flipX = id; 
-                flipY = id; 
-                flipZ = id; 
-                recalcNormals = id; 
-                reverseWinding = id; 
-                showInspector = id; 
-                toggleBoundingBox = id; 
-                toggleFaces = id; 
-                toggleNormals = id; 
-                toggleWireframe = id; 
-                triangulate = id; 
-            }; 
-            CLASS = FirstResponder; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {
-                closeFeedbackWindow = id; 
-                openURL = id; 
-                orderFrontFeedbackWindow = id; 
-                sendFeedback = id; 
-                sendFeedbackButtonAction = id; 
-            }; 
-            CLASS = UKFeedbackProvider; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                feedbackWindow = NSWindow; 
-                messageText = NSTextView; 
-                subjectField = NSComboBox; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>CLASS</key>
+			<string>DDApplicationDelegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DDInspectorController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>defaultView</key>
+				<string>NSView</string>
+				<key>window</key>
+				<string>NSPanel</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>showInspector</key>
+				<string>id</string>
+				<key>showReleaseNotes</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>DDApplication</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>inspectorController</key>
+				<string>DDInspectorController</string>
+				<key>releaseNotesView</key>
+				<string>NSTextView</string>
+				<key>releaseNotesWindow</key>
+				<string>NSWindow</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSApplication</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>coalesceVertices</key>
+				<string>id</string>
+				<key>doCompareDialog</key>
+				<string>id</string>
+				<key>doRecenterDialog</key>
+				<string>id</string>
+				<key>doScaleDialog</key>
+				<string>id</string>
+				<key>exportDocument</key>
+				<string>id</string>
+				<key>flipX</key>
+				<string>id</string>
+				<key>flipY</key>
+				<string>id</string>
+				<key>flipZ</key>
+				<string>id</string>
+				<key>recalcNormals</key>
+				<string>id</string>
+				<key>reverseWinding</key>
+				<string>id</string>
+				<key>showInspector</key>
+				<string>id</string>
+				<key>toggleBoundingBox</key>
+				<string>id</string>
+				<key>toggleFaces</key>
+				<string>id</string>
+				<key>toggleNormals</key>
+				<string>id</string>
+				<key>toggleWireframe</key>
+				<string>id</string>
+				<key>triangulate</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DDHeaderGradientView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>closeFeedbackWindow</key>
+				<string>id</string>
+				<key>openURL</key>
+				<string>id</string>
+				<key>orderFrontFeedbackWindow</key>
+				<string>id</string>
+				<key>sendFeedback</key>
+				<string>id</string>
+				<key>sendFeedbackButtonAction</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>UKFeedbackProvider</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>feedbackWindow</key>
+				<string>NSWindow</string>
+				<key>messageText</key>
+				<string>NSTextView</string>
+				<key>subjectField</key>
+				<string>NSComboBox</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>coalesceVertices</key>
+				<string>id</string>
+				<key>doCompareDialog</key>
+				<string>id</string>
+				<key>doRecenterDialog</key>
+				<string>id</string>
+				<key>doScaleDialog</key>
+				<string>id</string>
+				<key>recalcNormals</key>
+				<string>id</string>
+				<key>reverseWinding</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>DDDocument</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSDocument</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>checkForUpdatesAction</key>
+				<string>id</string>
+				<key>nextButtonAction</key>
+				<string>id</string>
+				<key>quitButtonAction</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>DDStartupController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>authorisationRequiredForSCRField</key>
+				<string>NSTextField</string>
+				<key>autoInstallMatrix</key>
+				<string>NSMatrix</string>
+				<key>checkForUpdatesCheckBox</key>
+				<string>NSButton</string>
+				<key>checkForUpdatesMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>continueButton</key>
+				<string>NSButton</string>
+				<key>installSCRMatrix</key>
+				<string>NSMatrix</string>
+				<key>integerFormatter</key>
+				<string>NSFormatter</string>
+				<key>stageTabView</key>
+				<string>NSTabView</string>
+				<key>updateFrequencyField</key>
+				<string>NSTextField</string>
+				<key>upgradeAutoInstallMatrix</key>
+				<string>NSMatrix</string>
+				<key>upgradeCheckForUpdatesCheckBox</key>
+				<string>NSButton</string>
+				<key>upgradeUpdateFrequencyField</key>
+				<string>NSTextField</string>
+				<key>window</key>
+				<string>NSWindow</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DDDocumentController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSDocumentController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DDTextureInspectorController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>fileField</key>
+				<string>NSTextField</string>
+				<key>keyField</key>
+				<string>NSTextField</string>
+				<key>preview</key>
+				<string>NSImageView</string>
+				<key>refCountField</key>
+				<string>NSTextField</string>
+				<key>sizeField</key>
+				<string>NSTextField</string>
+				<key>table</key>
+				<string>NSTableView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

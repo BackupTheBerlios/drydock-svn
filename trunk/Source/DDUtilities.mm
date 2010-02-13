@@ -59,7 +59,7 @@ extern NSString *LocationOfOoliteResources(void)
 			oolite = [[NSBundle alloc] initWithPath:[ooliteURL path]];
 			[ooliteURL release];
 			
-			oolitePath = [oolite resourcePath];
+			oolitePath = [[oolite resourcePath] retain];
 			[oolite release];
 		}
 		else
