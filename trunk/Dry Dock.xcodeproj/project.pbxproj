@@ -81,7 +81,6 @@
 		1A01E5DC0ED98BC4004B59DC /* DDAxisReassignDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AA54739099B370400625FF2 /* DDAxisReassignDialogController.mm */; };
 		1A01E5DD0ED98BC4004B59DC /* DDUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A24608209A5D39000DC42F4 /* DDUtilities.mm */; };
 		1A01E5DF0ED98BC4004B59DC /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
-		1A01E5E00ED98BC4004B59DC /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; settings = {COMPILER_FLAGS = "-pp -8 -CFre -POoliteDAT_yy"; }; };
 		1A01E5E10ED98BC4004B59DC /* DDDATLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */; };
 		1A01E5E20ED98BC4004B59DC /* DDMesh+PropertyListRepresentation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */; };
 		1A01E5E30ED98BC4004B59DC /* DDNormalSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5705EA09B1D10F00E0E17D /* DDNormalSet.mm */; };
@@ -147,7 +146,6 @@
 		1A18DDD309644E0D0010CE0B /* MacPAD.url in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DDD209644E0D0010CE0B /* MacPAD.url */; };
 		1A18DE08096456AF0010CE0B /* UKFeedbackProvider.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */; };
 		1A18DE20096457E90010CE0B /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A18DE1F096457E90010CE0B /* Message.framework */; };
-		1A1D51E409AFB4B30090D751 /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; settings = {COMPILER_FLAGS = "-pp -8 -CFre -POoliteDAT_yy"; }; };
 		1A1D51E509AFB4B40090D751 /* DDDATLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */; };
 		1A23CD3E098F40CF004A48CD /* DDMesh+GLRendering.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
 		1A23CD8C098F491A004A48CD /* DDMesh+OoliteDATSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
@@ -159,7 +157,6 @@
 		1A23DF970A04B28200934A0A /* ddoolite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23DF7B0A04B1DE00934A0A /* ddoolite.mm */; };
 		1A23DFFE0A04B82200934A0A /* DDMesh+OoliteDATSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD8A098F491A004A48CD /* DDMesh+OoliteDATSupport.mm */; };
 		1A23DFFF0A04B82300934A0A /* DDMesh+PropertyListRepresentation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5703D909B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm */; };
-		1A23E0090A04B85D00934A0A /* OoliteDAT.l in Sources */ = {isa = PBXBuildFile; fileRef = 1A245C1009A4676700DC42F4 /* OoliteDAT.l */; settings = {COMPILER_FLAGS = "-pp -8 -CFre -POoliteDAT_yy"; }; };
 		1A23E00A0A04B85E00934A0A /* DDDATLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */; };
 		1A23E0180A04B88500934A0A /* DDErrorDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A543C6B09AD0A3E006B751A /* DDErrorDescription.mm */; };
 		1A23E02D0A04B8FB00934A0A /* DDMaterialSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A5707A609B255C700E0E17D /* DDMaterialSet.mm */; };
@@ -335,8 +332,6 @@
 		1A23DF7B0A04B1DE00934A0A /* ddoolite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ddoolite.mm; sourceTree = "<group>"; };
 		1A23E0370A04B9C100934A0A /* DDUtilities-ddoolite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDUtilities-ddoolite.mm"; sourceTree = "<group>"; };
 		1A23E2BE0A04F4F100934A0A /* DDProblemReportManager-faceless.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DDProblemReportManager-faceless.mm"; sourceTree = "<group>"; };
-		1A245C1009A4676700DC42F4 /* OoliteDAT.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; lineEnding = 0; path = OoliteDAT.l; sourceTree = "<group>"; };
-		1A245CB109A4727700DC42F4 /* OoliteDATTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OoliteDATTokens.h; sourceTree = "<group>"; };
 		1A245EA909A4C8AF00DC42F4 /* DDDATLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDATLexer.h; sourceTree = "<group>"; };
 		1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDATLexer.m; sourceTree = "<group>"; };
 		1A24608109A5D39000DC42F4 /* DDUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUtilities.h; sourceTree = "<group>"; };
@@ -641,8 +636,6 @@
 			children = (
 				1A01E64A0ED99546004B59DC /* OoliteDAT.h */,
 				1A245EA909A4C8AF00DC42F4 /* DDDATLexer.h */,
-				1A245CB109A4727700DC42F4 /* OoliteDATTokens.h */,
-				1A245C1009A4676700DC42F4 /* OoliteDAT.l */,
 				1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */,
 			);
 			name = Lexers;
@@ -1108,7 +1101,6 @@
 				1A01E5DC0ED98BC4004B59DC /* DDAxisReassignDialogController.mm in Sources */,
 				1A01E5DD0ED98BC4004B59DC /* DDUtilities.mm in Sources */,
 				1A01E5DF0ED98BC4004B59DC /* DDErrorDescription.mm in Sources */,
-				1A01E5E00ED98BC4004B59DC /* OoliteDAT.l in Sources */,
 				1A01E5E10ED98BC4004B59DC /* DDDATLexer.m in Sources */,
 				1A01E5E20ED98BC4004B59DC /* DDMesh+PropertyListRepresentation.mm in Sources */,
 				1A01E5E30ED98BC4004B59DC /* DDNormalSet.mm in Sources */,
@@ -1148,7 +1140,6 @@
 				1A23DF970A04B28200934A0A /* ddoolite.mm in Sources */,
 				1A23DFFE0A04B82200934A0A /* DDMesh+OoliteDATSupport.mm in Sources */,
 				1A23DFFF0A04B82300934A0A /* DDMesh+PropertyListRepresentation.mm in Sources */,
-				1A23E0090A04B85D00934A0A /* OoliteDAT.l in Sources */,
 				1A23E00A0A04B85E00934A0A /* DDDATLexer.m in Sources */,
 				1A23E0180A04B88500934A0A /* DDErrorDescription.mm in Sources */,
 				1A23E02D0A04B8FB00934A0A /* DDMaterialSet.mm in Sources */,
@@ -1209,7 +1200,6 @@
 				1AA5473A099B370400625FF2 /* DDAxisReassignDialogController.mm in Sources */,
 				1A24610309A5DB9000DC42F4 /* DDUtilities.mm in Sources */,
 				1A543C6D09AD0A3E006B751A /* DDErrorDescription.mm in Sources */,
-				1A1D51E409AFB4B30090D751 /* OoliteDAT.l in Sources */,
 				1A1D51E509AFB4B40090D751 /* DDDATLexer.m in Sources */,
 				1A5703DA09B1286C00E0E17D /* DDMesh+PropertyListRepresentation.mm in Sources */,
 				1A5705EC09B1D10F00E0E17D /* DDNormalSet.mm in Sources */,

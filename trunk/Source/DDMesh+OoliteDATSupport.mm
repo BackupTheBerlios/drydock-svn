@@ -242,7 +242,7 @@ enum
 			{
 				if (![lexer readInteger:&smoothingGroupID])
 				{
-					[ioIssues addStopIssueWithKey:@"noSmoothingGroupLoaded" localizedFormat:@"Smoothing group ID could not be read for face line %u.", i + 1];
+					[ioIssues addStopIssueWithKey:@"noSmoothingGroupLoaded" localizedFormat:@"Smoothing group ID could not be read for face %u (line %u).", i + 1, [lexer lineNumber]];
 					TraceMessage(@"** Failed to read smoothing group ID for face index %u.", i + 1);
 					OK = NO;
 					break;
@@ -281,7 +281,7 @@ enum
 					![lexer readInteger:&g] ||
 					![lexer readInteger:&b])
 				{
-					[ioIssues addStopIssueWithKey:@"noReservedFieldsLoaded" localizedFormat:@"Reserved fields could not be read for face line %u.", i + 1];
+					[ioIssues addStopIssueWithKey:@"noReservedFieldsLoaded" localizedFormat:@"Reserved fields could not be read for face %u (line %u).", i + 1, [lexer lineNumber]];
 					TraceMessage(@"** Failed to read reserved fields for face index %u.", i + 1);
 					OK = NO;
 					break;
@@ -293,7 +293,7 @@ enum
 					![lexer readReal:&y] ||
 					![lexer readReal:&z])
 				{
-					[ioIssues addStopIssueWithKey:@"noNormalLoaded" localizedFormat:@"Normal data could not be read for face line %u.", i + 1];
+					[ioIssues addStopIssueWithKey:@"noNormalLoaded" localizedFormat:@"Normal data could not be read for face %u (line %u).", i + 1, [lexer lineNumber]];
 					TraceMessage(@"** Failed to read normal for face index %u.", i + 1);
 					OK = NO;
 					break;
@@ -304,7 +304,7 @@ enum
 				// Read vertex count
 				if (OK && ![lexer readInteger:&faceVertexCount])
 				{
-					[ioIssues addStopIssueWithKey:@"noVertexCountLoaded" localizedFormat:@"Vertex count could not be read for face line %u.", i + 1];
+					[ioIssues addStopIssueWithKey:@"noVertexCountLoaded" localizedFormat:@"Vertex count could not be read for face %u (line %u).", i + 1, [lexer lineNumber]];
 					TraceMessage(@"** Failed to read vertex count for face index %u.", i + 1);
 					OK = NO;
 					break;
@@ -314,7 +314,7 @@ enum
 				{
 					if (faceVertexCount < 3 || kMaxVertsPerFace < faceVertexCount)
 					{
-						[ioIssues addStopIssueWithKey:@"vertexCountRange" localizedFormat:@"Invalid vertex count (%u) for face line %u. Each face must have at least 3 and no more than %u vertices.", vertexCount, i + 1, kMaxVertsPerFace];
+						[ioIssues addStopIssueWithKey:@"vertexCountRange" localizedFormat:@"Invalid vertex count (%u) for face %u (line %u). Each face must have at least 3 and no more than %u vertices.", vertexCount, i + 1, [lexer lineNumber], kMaxVertsPerFace];
 						TraceMessage(@"** Vertex count (%u) out of range for face index %u.", faceVertexCount, i + 1);
 						OK = NO;
 						break;
@@ -328,15 +328,15 @@ enum
 					unsigned index;
 					if (![lexer readInteger:&index])
 					{
-						[ioIssues addStopIssueWithKey:@"noVertexDataLoaded" localizedFormat:@"Vertex data could not be read for face line %u.", i + 1];
+						[ioIssues addStopIssueWithKey:@"noVertexDataLoaded" localizedFormat:@"Vertex data could not be read for face %u (line %u).", i + 1, [lexer lineNumber]];
 						TraceMessage(@"** Failed to read vertex index %u for face index %u.", j + 1, i + 1);
 						OK = NO;
 						break;
 					}
 					if (vertexCount <= index)
 					{
-						[ioIssues addStopIssueWithKey:@"vertexRange" localizedFormat:@"Face line %u specifies a vertex index of %u, but there are only %u vertices in the document.", i + 1, index + 1, vertexCount];
-						TraceMessage(@"** Out-of-range vertex index (%U) for face index %u.", index, i + 1);
+						[ioIssues addStopIssueWithKey:@"vertexRange" localizedFormat:@"Face %u (line %u) specifies a vertex index of %u, but there are only %u vertices in the document.", i + 1, index + 1, vertexCount];
+						TraceMessage(@"** Out-of-range vertex index (%U) for face index %u.", index, [lexer lineNumber], i + 1);
 						OK = NO;
 						break;
 					}
@@ -410,7 +410,7 @@ enum
 				{
 					if (![lexer readString:&texFileName])
 					{
-						[ioIssues addStopIssueWithKey:@"noTextureNameLoaded" localizedFormat:@"Texture name could not be read for face line %u.", i + 1];
+						[ioIssues addStopIssueWithKey:@"noTextureNameLoaded" localizedFormat:@"Texture name could not be read for face %u (line %u).", i + 1, [lexer lineNumber]];
 						TraceMessage(@"** Failed to read texture name for face index %u.", i + 1);
 						OK = NO;
 						break;
@@ -435,7 +435,7 @@ enum
 					if (![lexer readReal:&max_s] ||
 						![lexer readReal:&max_t])
 					{
-						[ioIssues addStopIssueWithKey:@"noTextureScaleLoaded" localizedFormat:@"Texture scale could not be read for texture line %u.", i + 1];
+						[ioIssues addStopIssueWithKey:@"noTextureScaleLoaded" localizedFormat:@"Texture scale could not be read for face %u (line %u).", i + 1, [lexer lineNumber]];
 						TraceMessage(@"** Failed to read texture scale for face index %u.", i + 1);
 						OK = NO;
 						break;
@@ -447,7 +447,7 @@ enum
 						if (![lexer readReal:&s] ||
 							![lexer readReal:&t])
 						{
-							[ioIssues addStopIssueWithKey:@"noUVLoaded" localizedFormat:@"U/V pair could not be read for texture line %u.", i + 1];
+							[ioIssues addStopIssueWithKey:@"noUVLoaded" localizedFormat:@"U/V pair could not be read for face %u (line %u).", i + 1, [lexer lineNumber]];
 							TraceMessage(@"** Failed to read u/v pair for vertex %u of face index %u.", j + 1, i + 1);
 							OK = NO;
 							break;

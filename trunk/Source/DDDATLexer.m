@@ -3,7 +3,7 @@
 	Dry Dock for Oolite
 	$Id$
 	
-	Copyright © 2006 Jens Ayton
+	Copyright © 2010 Jens Ayton
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 	and associated documentation files (the “Software”), to deal in the Software without
@@ -25,6 +25,9 @@
 #import "DDProblemReportManager.h"
 #import "DDErrorDescription.h"
 #import "Logging.h"
+
+
+static BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value);
 
 
 @interface DDDATLexer (Private)
@@ -166,10 +169,8 @@
 	
 	NSParameterAssert(outInt != NULL);
 	
-	NSString *token = [self nextToken];
-	if (token == nil)  return NO;
-	
-	*outInt = [token intValue];
+	[self advance];
+	return ParseUnsignedInt(_cursor, _tokenLength, outInt);
 	
 	TraceExit();
 	return YES;
@@ -295,3 +296,132 @@ static inline BOOL IsLineEndChar(char c)
 }
 
 @end
+
+
+/*	ParseUnsignedInt()
+ *	What it says. Based on BSD strtoul(), but takes an explicit length and
+ *	only handles decimal integers.
+ *
+ *
+ * Copyright (c) 1990, 1993
+ *	The Regents of the University of California.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 4. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+
+#include <limits.h>
+#include <ctype.h>
+#include <errno.h>
+#include <stdlib.h>
+
+/*
+ * Convert a string to an unsigned long integer.
+ *
+ * Assumes that the upper and lower case
+ * alphabets and digits are each contiguous.
+ */
+static BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value)
+{
+	NSCParameterAssert(value != NULL);
+	
+	const char *s;
+	unsigned long acc = 0;
+	char c;
+	BOOL neg, any = NO;
+	size_t r = length;
+	if (__builtin_expect(r == 0, 0))
+	{
+		return NO;
+	}
+	
+	if (__builtin_expect(r == 0, 0))
+	{
+		return NO;
+	}
+	
+	/*
+	 * Skip white space and pick up leading + sign if any.
+	 */
+	s = string;
+	do {
+		c = *s++;
+		r--;
+	} while (isspace((unsigned char)c) && r > 0);
+	if (c == '-') {
+		neg = YES;
+		c = *s++;
+		r--;
+	} else {
+		neg = NO;
+		if (c == '+')
+		{
+			c = *s++;
+			r--;
+		}
+	}
+	
+	/*
+	 * Compute the cutoff value between legal numbers and illegal
+	 * numbers.  That is the largest legal value, divided by the
+	 * base.  An input number that is greater than this value, if
+	 * followed by a legal input character, is too big.  One that
+	 * is equal to this value may be valid or not; the limit
+	 * between valid and invalid numbers is then based on the last
+	 * digit.
+	 *
+	 * Set 'any' if any 'digits' consumed; make it negative to indicate
+	 * overflow.
+	 */
+	unsigned long cutoff = ULONG_MAX / 10;
+	int cutlim = ULONG_MAX % 10;
+	
+	for (;;)
+	{
+		if (__builtin_expect(c >= '0' && c <= '9', 1))  c -= '0';
+		else  break;
+		
+		if (__builtin_expect(any < 0 || acc > cutoff || (acc == cutoff && c > cutlim), 0))
+		{
+			return NO;
+		}
+		else
+		{
+			any = YES;
+			acc *= 10;
+			acc += c;
+		}
+		
+		if (r-- == 0)  break;
+		c = *s++;
+	}
+	
+	if (__builtin_expect(!any || (neg && acc != 0), 0))
+	{
+		return NO;
+	}
+	
+	*value = acc;
+	return YES;
+}
