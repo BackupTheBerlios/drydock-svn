@@ -74,7 +74,7 @@
 	GLuint				listName;
 	
 	context = [params objectForKey:@"context"];
-	listName = [params unsignedIntForKey:@"listname"];
+	listName = [params ja_unsignedIntForKey:@"listname"];
 	if (context != nil && listName != 0)
 	{
 		savedContext = [NSOpenGLContext currentContext];
