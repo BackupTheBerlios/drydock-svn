@@ -72,6 +72,9 @@ static int VersionCheck(void)
 		err = CreateStandardAlert(kAlertStopAlert, errStr, explStr, &alertParam, &alert);
 		if (!err) err = RunStandardAlert(alert, NULL, NULL);
 		
+		CFRelease(errStr);
+		CFRelease(explStr);
+		
 		if (err) NSLog(@"Version check: error %i showing alert.");
 	}
 	else

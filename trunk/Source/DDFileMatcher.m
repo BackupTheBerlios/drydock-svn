@@ -193,7 +193,7 @@ OSStatus (*LSCopyItemAttribute_ptr)(
 {
 	FSRef					fsRef;
 	NSURL					*url;
-	CFTypeRef				fileUTI;
+	CFTypeRef				fileUTI = NULL;
 	
 	url = [NSURL fileURLWithPath:inPath];
 	if (nil != url)
@@ -205,7 +205,7 @@ OSStatus (*LSCopyItemAttribute_ptr)(
 		}
 	}
 	
-	return (nil != fileUTI && UTTypeConformsTo(fileUTI, _uti));
+	return (NULL != fileUTI && UTTypeConformsTo(fileUTI, _uti));
 }
 
 

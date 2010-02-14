@@ -87,7 +87,7 @@ static unsigned GetMaxTextureSize(void);
 		TraceMessage(@"Using cached texture %@.", result);
 	}
 	
-	return result;
+	return [result autorelease];
 	TraceExit();
 }
 
@@ -111,7 +111,7 @@ static unsigned GetMaxTextureSize(void);
 		TraceMessage(@"Using cached texture %@.", result);
 	}
 	
-	return result;
+	return [result autorelease];
 	TraceExit();
 }
 
@@ -248,7 +248,6 @@ static unsigned GetMaxTextureSize(void);
 	if (err && !errDescribed)
 	{
 		[ioIssues addWarningIssueWithKey:@"textureFileNotLoadedOSErr" localizedFormat:@"The texture %@ could not be loaded, because an error of type %@ occured.", _key, OSStatusErrorNSString(err)];
-		errDescribed = YES;
 	}
 	
 	return !err;
