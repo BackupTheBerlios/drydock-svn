@@ -83,24 +83,12 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 	NSWindow					*window;
 	DDPreviewView				*view;
 	NSToolbar					*toolbar;
-	NSSplitView					*splitView;
-	NSRect						frame;
 	
 	TraceMessage(@"Setting up document window controller.");
 	TraceIndent();
 	
 	window = [self window];
 	[window useOptimizedDrawing:YES];
-	
-	// Set up split view
-	frame = [window frame];
-	splitView = [[NSSplitView alloc] initWithFrame:frame];
-	[splitView addSubview:leftView];
-	[splitView addSubview:rightView];
-	[splitView setDelegate:self];
-	[splitView setVertical:YES];
-	[splitView setIsPaneSplitter:YES];
-	[window setContentView:splitView];
 	
 	// Set up GL view
 	// At this point, glView is a placeholder NSView, because creating NSOpenGLViews in NIBs is severely broken.
@@ -172,8 +160,6 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 		[_sceneRoot addTag:_showFacesTag];
 		[_sceneRoot addTag:_showNormalsTag];
 		[_sceneRoot addTag:_showBBoxTag];
-		
-		[outlineView reloadData];
 	}
 	
 	return [[_sceneRoot retain] autorelease];
@@ -220,7 +206,7 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 		
 		[notificationCenter addObserver:self selector:@selector(documentRootMeshChanged:) name:kNotificationDDModelDocumentRootMeshChanged object:_modelDocument];
 		
-		_objectRadius = [[_modelDocument rootMesh] maxR];
+		_objectRadius = _modelDocument.rootMesh.boundingRadius;
 		if (_objectRadius < 1.0) _objectRadius = 1.0;
 		
 		[self invalidateSceneGraph];
@@ -534,42 +520,6 @@ NSString		*kToolbarCompare					= @"de.berlios.drydock toolbar compare";
 		[theItem setPaletteLabel:rename];
 	}
 	
-	return YES;
-}
-
-
-// Outline view for displaying scene graph (currently for debugging)
-
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
-{
-	if (nil == item) return [self sceneRoot];
-	return [item childAtIndex:index];
-}
-
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
-{
-	if (nil == item) return YES;
-	return 0 != [item numberOfChildren];
-}
-
-
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
-{
-	if (item == nil) return 1;
-	return [item numberOfChildren];
-}
-
-
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
-	return [item name];
-}
-
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
-{
-	NSLog(@"%@", item);
 	return YES;
 }
 

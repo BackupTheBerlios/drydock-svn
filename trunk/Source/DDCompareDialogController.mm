@@ -159,8 +159,8 @@
 	if (inResult)
 	{
 		// And now… we can actually show the Compare sheet. After setting it up, of course.
-		maxR1 = [_leftMesh maxR];
-		maxR2 = [_rightMesh maxR];
+		maxR1 = _leftMesh.boundingRadius;
+		maxR2 = _rightMesh.boundingRadius;
 		
 		if (maxR1 < maxR2) maxR1 = maxR2;
 		

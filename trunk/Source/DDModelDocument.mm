@@ -350,7 +350,7 @@ enum
 	if (inName != _name)
 	{
 		[_name autorelease];
-		_name = [inName retain];
+		_name = [inName copy];
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDDModelDocumentNameChanged object:self];
 	}
 	

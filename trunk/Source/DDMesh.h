@@ -110,15 +110,15 @@ typedef struct DDMeshFaceData
 	BOOL					_hasBadPolygons;
 }
 
-- (Scalar)length;
-- (Scalar)width;
-- (Scalar)height;
-- (Scalar)maxR;
+@property (readonly, nonatomic) Scalar length;
+@property (readonly, nonatomic) Scalar width;
+@property (readonly, nonatomic) Scalar height;
+@property (readonly) Scalar boundingRadius;
 
-- (unsigned)vertexCount;
-- (unsigned)faceCount;
+@property (readonly) NSUInteger vertexCount;
+@property (readonly) NSUInteger faceCount;
 
-- (NSString *)name;
+@property (readonly) NSString *name;
 
 - (void)recalculateNormals;
 - (void)reverseWinding;
@@ -130,8 +130,8 @@ typedef struct DDMeshFaceData
 - (void)scaleX:(Scalar)inX y:(Scalar)inY z:(Scalar)inZ;
 - (void)coalesceVertices;
 
-- (BOOL)hasNonTriangles;
-- (BOOL)hasBadPolygons;		// “Bad polygons” are not coplanar or not convex.
+@property (readonly) BOOL hasNonTriangles;
+@property (readonly) BOOL hasBadPolygons;		// “Bad polygons” are not coplanar or not convex.
 
 // This is mostly used by loaders and manipulators. Returns NO for serious errors.
 - (BOOL)findBadPolygonsWithIssues:(DDProblemReportManager *)ioManager;

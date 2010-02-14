@@ -41,16 +41,13 @@
 - (id)init;
 - (id)initWithMesh:(DDMesh *)inMesh;
 
-- (void)setRootMesh:(DDMesh *)inMesh;
-- (DDMesh *)rootMesh;
-
-- (void)setName:(NSString *)inName;
-- (NSString *)name;
+@property (retain, nonatomic) DDMesh *rootMesh;
+@property (copy, nonatomic) NSString *name;
 
 // Total bounding dimensions of root mesh and subentities
-- (Scalar)length;
-- (Scalar)width;
-- (Scalar)height;
+@property (readonly) Scalar length;
+@property (readonly) Scalar width;
+@property (readonly) Scalar height;
 
 - (id)initWithDryDockDocument:(NSURL *)inFile issues:(DDProblemReportManager *)ioIssues;
 - (void)gatherIssues:(DDProblemReportManager *)ioManager withWritingDryDockDocumentToURL:(NSURL *)inFile;

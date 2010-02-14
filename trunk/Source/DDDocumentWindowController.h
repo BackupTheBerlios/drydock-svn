@@ -40,10 +40,7 @@ enum
 
 @interface DDDocumentWindowController: NSWindowController<NSUserInterfaceValidations>
 {
-	IBOutlet NSView					*leftView,
-									*rightView;
 	IBOutlet DDPreviewView			*glView;
-	IBOutlet NSOutlineView			*outlineView;
 	IBOutlet NSMatrix				*toolMatrix;
 	
 	DDModelDocument					*_modelDocument;

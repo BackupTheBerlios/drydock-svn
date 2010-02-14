@@ -671,45 +671,17 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 }
 
 
-- (Scalar)maxR
-{
-	return _rMax;
-}
-
-
-- (BOOL)hasNonTriangles
-{
-	return _hasNonTriangles;
-}
-
-
-- (BOOL)hasBadPolygons
-{
-	return _hasBadPolygons;
-}
-
-
-- (unsigned)vertexCount
-{
-	return _vertexCount;
-}
-
-
-- (unsigned)faceCount
-{
-	return _faceCount;
-}
-
-
-- (NSString *)name
-{
-	return _name;
-}
+@synthesize boundingRadius = _rMax;
+@synthesize hasNonTriangles = _hasNonTriangles;
+@synthesize hasBadPolygons = _hasBadPolygons;
+@synthesize vertexCount = _vertexCount;
+@synthesize faceCount = _faceCount;
+@synthesize name = _name;
 
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ %p>{\"%@\", %u vertices, %u normals, %u faces}", [self className], self, _name ?: @"", _vertexCount, _normalCount, _faceCount];
+	return [NSString stringWithFormat:@"<%@ %p>{\"%@\", %u vertices, %u normals, %u faces}", [self className], self, self.name ?: @"", self.vertexCount, _normalCount, self.faceCount];
 }
 
 @end
