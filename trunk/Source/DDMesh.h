@@ -30,7 +30,7 @@
 @class SceneNode;
 
 
-#define USE_SHORT_INDICES		1
+#define USE_SHORT_INDICES		0
 
 #if USE_SHORT_INDICES
 	typedef uint_least16_t		DDMeshIndex;

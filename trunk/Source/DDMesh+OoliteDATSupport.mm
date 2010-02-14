@@ -564,7 +564,7 @@ enum
 	DDMaterial				*material;
 	NSString				*name;
 	NSCharacterSet			*whiteSpace, *miscChars;
-	int						i;
+	DDMeshIndex				i;
 	
 	[self findBadPolygonsWithIssues:ioManager];
 	

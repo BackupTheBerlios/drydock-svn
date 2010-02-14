@@ -66,7 +66,7 @@
 	[rev release];
 	if (NULL != array)
 	{
-		for (int i = 0; i != count; ++i)
+		for (DDMeshIndex i = 0; i != count; ++i)
 		{
 			[array[i] release];
 		}

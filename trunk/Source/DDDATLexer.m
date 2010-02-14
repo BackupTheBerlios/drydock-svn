@@ -27,9 +27,6 @@
 #import "Logging.h"
 
 
-static inline BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value) __attribute__((always_inline));
-
-
 @interface DDDATLexer (Private)
 
 - (BOOL)advance;
@@ -169,11 +166,34 @@ static inline BOOL ParseUnsignedInt(const char *string, size_t length, unsigned 
 	
 	NSParameterAssert(outInt != NULL);
 	
-	[self advance];
-	return ParseUnsignedInt(_cursor, _tokenLength, outInt);
+	if ([self advance])
+	{
+		unsigned result = 0;
+		const char *str = _cursor;
+		size_t rem = _tokenLength;
+		
+		if (__builtin_expect(rem == 0, 0))  return NO;
+		
+		do
+		{
+			char c = *str++;
+			if (__builtin_expect('0' <= c && c <= '9', 1))
+			{
+				result = result * 10 + c - '0';
+			}
+			else
+			{
+				return NO;
+			}
+		}
+		while (--rem);
+		
+		*outInt = result;
+		return YES;
+	}
 	
 	TraceExit();
-	return YES;
+	return NO;
 }
 
 
@@ -183,13 +203,21 @@ static inline BOOL ParseUnsignedInt(const char *string, size_t length, unsigned 
 	
 	NSParameterAssert(outReal != NULL);
 	
-	NSString *token = [self nextToken];
-	if (token == nil)  return NO;
-	
-	*outReal = [token floatValue];
+	if ([self advance])
+	{
+		/*	Make null-terminated copy of token on stack and strtod() it.
+			Float parsing is way to fiddly for a custom version to be worth it.
+		*/
+		char buffer[_tokenLength + 1];
+		memcpy(buffer, _cursor, _tokenLength);
+		buffer[_tokenLength] = '\0';
+		
+		*outReal = strtod(buffer, NULL);
+		return YES;
+	}
 	
 	TraceExit();
-	return YES;
+	return NO;
 }
 
 
@@ -296,97 +324,3 @@ static inline BOOL IsLineEndChar(char c)
 }
 
 @end
-
-
-/*	ParseUnsignedInt()
- *	What it says. Based on BSD strtoul(), but takes an explicit length and
- *	only handles decimal integers.
- *
- *
- * Copyright (c) 1990, 1993
- *	The Regents of the University of California.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
-
-#include <limits.h>
-#include <ctype.h>
-#include <errno.h>
-#include <stdlib.h>
-
-/*
- * Convert a string to an unsigned long integer.
- *
- * Assumes that the upper and lower case
- * alphabets and digits are each contiguous.
- */
-static inline BOOL ParseUnsignedInt(const char *string, size_t length, unsigned *value)
-{
-	NSCParameterAssert(value != NULL);
-	if (__builtin_expect(length == 0, 0))
-	{
-		return NO;
-	}
-	
-	const char *s = string;
-	size_t r = length;
-	unsigned long acc = 0;
-	BOOL any = NO;
-	
-	/*
-	 * Compute the cutoff value between legal numbers and illegal
-	 * numbers.  That is the largest legal value, divided by the
-	 * base.  An input number that is greater than this value, if
-	 * followed by a legal input character, is too big.  One that
-	 * is equal to this value may be valid or not; the limit
-	 * between valid and invalid numbers is then based on the last
-	 * digit.
-	 */
-	unsigned long cutoff = UINT_MAX / 10;
-	int cutlim = UINT_MAX % 10;
-	
-	for (;;)
-	{
-		char c = *s++;
-		
-		if (__builtin_expect(c >= '0' && c <= '9', 1))  c -= '0';
-		else  break;
-		
-		if (__builtin_expect(any < 0 || acc > cutoff || (acc == cutoff && c > cutlim), 0))  return NO;
-		else
-		{
-			any = YES;
-			acc *= 10;
-			acc += c;
-		}
-		
-		if (--r == 0)  break;
-	}
-	
-	if (__builtin_expect(!any, 0))  return NO;
-	
-	*value = acc;
-	return YES;
-}

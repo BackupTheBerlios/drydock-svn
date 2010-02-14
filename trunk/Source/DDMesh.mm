@@ -180,7 +180,7 @@ static inline Vector NormalForFace(DDMeshFaceData *inFace, Vector *inVertices, D
 	Free(_texCoords);
 	if(_materials != NULL)
 	{
-		for (int i = 0; i != _materialCount; ++i)
+		for (DDMeshIndex i = 0; i != _materialCount; ++i)
 		{
 			[_materials[i] release];
 		}

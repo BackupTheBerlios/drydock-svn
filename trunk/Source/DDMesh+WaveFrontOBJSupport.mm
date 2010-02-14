@@ -24,7 +24,7 @@
 #import "DDMesh.h"
 #import "Logging.h"
 #import "DDMaterial.h"
-#import "BS-HOM.h"
+//#import "BS-HOM.h"
 #import "DDProblemReportManager.h"
 #import "CocoaExtensions.h"
 #import "DDUtilities.h"
@@ -79,7 +79,7 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	BOOL					OK = YES;
 	NSMutableArray			*lines;
 	NSArray					*line;
-	unsigned				vertexCount, uvCount, normalCount, faceCount;
+	unsigned				vertexCount = 0, uvCount = 0, normalCount = 0, faceCount = 0;
 	unsigned				vertexIdx = 0, uvIdx = 0, normalIdx = 0, faceIdx = 0;
 	Vector					*vertices = NULL;
 	DDMeshFaceData			*faces = NULL, *face;
@@ -98,7 +98,6 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	NSError					*error;
 	unsigned				badUVWarnings = 0;
 	unsigned				badNormalWarnings = 0;
-	NSAutoreleasePool		*pool = nil;
 	BOOL					warnedAboutNoNormals = NO;
 	BOOL					warnedAboutCall = NO;
 	BOOL					warnedAboutShellScript = NO;
@@ -129,11 +128,23 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	
 	if (OK)
 	{
+		NSAutoreleasePool *pool = [NSAutoreleasePool new];
 		// Count various line types
+#if 0
 		[[lines countTo:&vertexCount] firstObjectEquals:@"v"];
 		[[lines countTo:&uvCount] firstObjectEquals:@"vt"];
 		[[lines countTo:&normalCount] firstObjectEquals:@"vn"];
 		[[lines countTo:&faceCount] firstObjectEquals:@"f"];
+#else
+		for (NSArray *line in lines)
+		{
+			NSString *first = [line objectAtIndex:0];
+			if ([first isEqualToString:@"v"])  vertexCount++;
+			else if ([first isEqualToString:@"vt"])  uvCount++;
+			else if ([first isEqualToString:@"vn"])  normalCount++;
+			else if ([first isEqualToString:@"f"])  faceCount++;
+		}
+#endif
 		
 		if (0 == uvCount) uvCount = 1;
 		if (0 == normalCount) normalCount = 1;
@@ -158,6 +169,9 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 			OK = NO;
 			[ioIssues addStopIssueWithKey:@"documentTooComplex" localizedFormat:@"This document is too complex to be loaded by Dry Dock. Dry Dock cannot handle models with more than %u %@; this document has %u.", kDDMeshIndexMax + 1, NSLocalizedString(@"normals", NULL), normalCount];
 		}
+		
+		
+		[pool drain];
 	}
 	
 	if (OK)
@@ -183,10 +197,11 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 	if (OK)
 	{
 		lineEnum = [lines objectEnumerator];
-		pool = [[NSAutoreleasePool alloc] init];
 		
 		while ((line = [lineEnum nextObject]))
 		{
+			NSAutoreleasePool *pool = [NSAutoreleasePool new];
+			
 			keyword = [line objectAtIndex:0];
 			params = [line objectAtIndex:1];
 			
@@ -576,7 +591,7 @@ static NSColor *ObjColorToNSColor(NSString *inColor);
 				}
 			}
 			
-			[pool release];
+			[pool drain];
 			pool = nil;
 			if (!OK) break;
 		}
