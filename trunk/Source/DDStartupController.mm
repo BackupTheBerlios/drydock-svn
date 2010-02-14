@@ -56,7 +56,6 @@ enum
 // Identifiers for tab view items in first-run wizard
 static NSString *kFirstRunTab_askCheckForUpdates	= @"check for updates";
 static NSString *kFirstRunTab_askNewUpdateOptions	= @"new update options";
-static NSString *kFirstRunTab_noSparkleForPanther	= @"Sparkle vs. Panther";
 static NSString *kFirstRunTab_finished				= @"finished";
 
 
@@ -153,21 +152,11 @@ static void RunProblemReporterExample(void);
 	// Look for first-run actions which have not been performed
 	if (!(firstRunMask & kFirstRunState_configuredSparkle))
 	{
-		if (TigerOrLater())
+		toRun |= kFirstRunStage_askCheckForUpdates;
+		if (firstRunMask & kFirstRunState_configuredUKUpdateChecker)
 		{
-			toRun |= kFirstRunStage_askCheckForUpdates;
-			if (firstRunMask & kFirstRunState_configuredUKUpdateChecker)
-			{
-				// Upgrading from version with old update checking scheme
-				toRun |= kFirstRunStage_updateCheckIsUpgrade;
-			}
-		}
-		else
-		{
-			if (!(firstRunMask & kFirstRunState_showedSparkleNoPanther) && firstRunMask & kFirstRunState_configuredUKUpdateChecker)
-			{
-				toRun |= kFirstRunStage_noSparkleForPanther;
-			}
+			// Upgrading from version with old update checking scheme
+			toRun |= kFirstRunStage_updateCheckIsUpgrade;
 		}
 	}
 	
@@ -211,16 +200,6 @@ static void RunProblemReporterExample(void);
 		[defaults setInteger:firstRunMask forKey:@"first run status"];
 	}
 	
-	if (toRun & kFirstRunStage_noSparkleForPanther)
-	{
-		TraceMessage(@"Showing no-Sparkle-for-Tiger pane.");
-		[self runFirstRunWizardPane:kFirstRunTab_noSparkleForPanther];
-		
-		// Record the fact that we've done this
-		firstRunMask |= kFirstRunState_showedSparkleNoPanther;
-		[defaults setInteger:firstRunMask forKey:@"first run status"];
-	}
-	
 	[defaults synchronize];
 	[self finishWizard];
 	
@@ -234,13 +213,10 @@ static void RunProblemReporterExample(void);
 		if (0 == [[[NSDocumentController sharedDocumentController] documents] count]) [[NSApp delegate] runOpenPanel];
 	#endif
 	
-	if (TigerOrLater())
-	{
-		// Create a Sparkle update checker
-		updater = [[SUUpdater alloc] init];
-		[checkForUpdatesMenuItem setTarget:updater];
-		[checkForUpdatesMenuItem setAction:@selector(checkForUpdates:)];
-	}
+	// Create a Sparkle update checker
+	updater = [[SUUpdater alloc] init];
+	[checkForUpdatesMenuItem setTarget:updater];
+	[checkForUpdatesMenuItem setAction:@selector(checkForUpdates:)];
 	
 	[self autorelease];
 	

@@ -27,17 +27,6 @@
 #import "Logging.h"
 
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_4
-
-@interface NSWindow (TigerMethods)
-
-- (float)userSpaceScaleFactor;
-
-@end
-
-#endif
-
-
 #define	kBorderWidth			0.25f		// Effective border width in points
 #define kInverseBorderWidth		(1.0f / (kBorderWidth))
 #define kBackAlpha				0.60f
@@ -52,14 +41,7 @@
 	NSRect					frame;
 	
 	window = [self window];
-	if ([window respondsToSelector:@selector(userSpaceScaleFactor)])
-	{
-		scale = [window userSpaceScaleFactor];
-	}
-	else
-	{
-		scale = 1.0f;
-	}
+	scale = [window userSpaceScaleFactor];
 	
 	if (scale < kInverseBorderWidth)
 	{

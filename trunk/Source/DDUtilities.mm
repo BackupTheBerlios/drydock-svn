@@ -72,22 +72,3 @@ extern NSString *LocationOfOoliteResources(void)
 	return ([NSNull null] == oolitePath) ? nil : oolitePath;
 	TraceExit();
 }
-
-
-#if !TIGER_OR_LATER
-
-BOOL TigerOrLater(void)
-{
-	static long			version = 0;
-	OSErr				err;
-	
-	if (0 == version)
-	{
-		err = Gestalt(gestaltSystemVersion, &version);
-		if (noErr != err) return NO;
-	}
-	
-	return 0x1040 <= version;
-}
-
-#endif

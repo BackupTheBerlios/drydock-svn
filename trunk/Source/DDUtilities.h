@@ -36,17 +36,5 @@ extern NSString *ApplicationNameAndVersionString(void);
 extern NSString *LocationOfOoliteResources(void);
 
 
-#if MAC_OS_X_VERSION_10_4 <= MAC_OS_X_VERSION_MAX_ALLOWED
-
-#endif
-
-
-#if TIGER_OR_LATER
-	#define TigerOrLater() 1
-#else
-	FOUNDATION_EXPORT BOOL TigerOrLater(void);
-#endif
-
-
 #define Free(x)  do {__typeof(x) _x = (x); if (_x != NULL)  { free(_x); x = NULL; } }  while (0)
 #define Release(x)  do { [(x) release]; (x) = nil; }  while (0)

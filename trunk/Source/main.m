@@ -24,15 +24,8 @@ int main(int argc, char *argv[])
 }
 
 
-#if LEOPARD_OR_LATER
 #define ERR_STR		CFSTR("Dry Dock requires Mac OS X 10.5 or later.")
 #define EXPL_STR	CFSTR("It is not possible to use Dry Dock on versions of Mac OS X prior to Mac OS X 10.5.")
-#define ALERT_PARAM_REC_VERSION_2	1
-#else
-#define	ERR_STR		CFSTR("Dry Dock requires Mac OS X 10.4 or later.")
-#define EXPL_STR	CFSTR("It is not possible to use Dry Dock on versions of Mac OS X prior to Mac OS X 10.4.")
-#define ALERT_PARAM_REC_VERSION_2	0
-#endif
 
 
 static int VersionCheck(void)
@@ -52,10 +45,8 @@ static int VersionCheck(void)
 		kAlertStdAlertOKButton,
 		0,			// cancelButton
 		kWindowDefaultPosition,
-		0			// flags
-#if ALERT_PARAM_REC_VERSION_2
-		,NULL		// icon
-#endif
+		0,			// flags
+		NULL		// icon
 	};
 	DialogRef				alert = NULL;
 	
