@@ -17,7 +17,6 @@
 		1A01E5990ED98BC4004B59DC /* Rotate Tool.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7DE20954227B00BF7642 /* Rotate Tool.png */; };
 		1A01E59A0ED98BC4004B59DC /* Inspector Toolbar Item.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1ACE7EF7095438E800BF7642 /* Inspector Toolbar Item.icns */; };
 		1A01E59B0ED98BC4004B59DC /* MacPAD.url in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DDD209644E0D0010CE0B /* MacPAD.url */; };
-		1A01E59C0ED98BC4004B59DC /* UKFeedbackProvider.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */; };
 		1A01E59D0ED98BC4004B59DC /* Dry Dock.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1377F096894FD006BB3EE /* Dry Dock.icns */; };
 		1A01E59E0ED98BC4004B59DC /* Document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AE683C4096CA1BB00622ECC /* Document.icns */; };
 		1A01E59F0ED98BC4004B59DC /* Oolite Model.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A901230096D324800A5AC2D /* Oolite Model.icns */; };
@@ -144,7 +143,6 @@
 		1A0FFE770981EE3100599E84 /* DDCompareDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A0FFE760981EE3100599E84 /* DDCompareDialogController.mm */; };
 		1A13B0090A09FFFF0017CD80 /* DDFileMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A13B0070A09FFFF0017CD80 /* DDFileMatcher.m */; };
 		1A18DDD309644E0D0010CE0B /* MacPAD.url in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DDD209644E0D0010CE0B /* MacPAD.url */; };
-		1A18DE08096456AF0010CE0B /* UKFeedbackProvider.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */; };
 		1A18DE20096457E90010CE0B /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A18DE1F096457E90010CE0B /* Message.framework */; };
 		1A1D51E509AFB4B40090D751 /* DDDATLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A245EAA09A4C8AF00DC42F4 /* DDDATLexer.m */; };
 		1A23CD3E098F40CF004A48CD /* DDMesh+GLRendering.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A23CD3D098F40CF004A48CD /* DDMesh+GLRendering.mm */; settings = {COMPILER_FLAGS = "-falign-loops=16"; }; };
@@ -320,7 +318,6 @@
 		1A13B0060A09FFFF0017CD80 /* DDFileMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileMatcher.h; sourceTree = "<group>"; };
 		1A13B0070A09FFFF0017CD80 /* DDFileMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileMatcher.m; sourceTree = "<group>"; };
 		1A18DDD209644E0D0010CE0B /* MacPAD.url */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MacPAD.url; sourceTree = "<group>"; };
-		1A18DE05096456AF0010CE0B /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/UKFeedbackProvider.nib; sourceTree = "<group>"; };
 		1A18DE0D096456D20010CE0B /* UKFeedbackProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKFeedbackProvider.h; sourceTree = "<group>"; };
 		1A18DE0E096456D20010CE0B /* UKFeedbackProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKFeedbackProvider.m; sourceTree = "<group>"; };
 		1A18DE1F096457E90010CE0B /* Message.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Message.framework; path = /System/Library/Frameworks/Message.framework; sourceTree = "<absolute>"; };
@@ -679,7 +676,6 @@
 				1A0B86B309B9BB380034D90F /* Document Inspector.nib */,
 				1AA548B0099CB91200625FF2 /* DDApplication.nib */,
 				1AA54974099CC00700625FF2 /* DDAxisReassignDialog.nib */,
-				1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */,
 				2A37F4B4FDCFA73011CA2CEA /* DDDocument.nib */,
 				1A0FFE4D0981EA9F00599E84 /* DDComparatorView.nib */,
 				1A0FFE5B0981EBB200599E84 /* DDCompareDialog.nib */,
@@ -988,7 +984,6 @@
 				1A01E5990ED98BC4004B59DC /* Rotate Tool.png in Resources */,
 				1A01E59A0ED98BC4004B59DC /* Inspector Toolbar Item.icns in Resources */,
 				1A01E59B0ED98BC4004B59DC /* MacPAD.url in Resources */,
-				1A01E59C0ED98BC4004B59DC /* UKFeedbackProvider.nib in Resources */,
 				1A01E59D0ED98BC4004B59DC /* Dry Dock.icns in Resources */,
 				1A01E59E0ED98BC4004B59DC /* Document.icns in Resources */,
 				1A01E59F0ED98BC4004B59DC /* Oolite Model.icns in Resources */,
@@ -1027,7 +1022,6 @@
 				1ACE7DE30954227B00BF7642 /* Rotate Tool.png in Resources */,
 				1ACE7EF8095438E800BF7642 /* Inspector Toolbar Item.icns in Resources */,
 				1A18DDD309644E0D0010CE0B /* MacPAD.url in Resources */,
-				1A18DE08096456AF0010CE0B /* UKFeedbackProvider.nib in Resources */,
 				1AC13780096894FD006BB3EE /* Dry Dock.icns in Resources */,
 				1AE683C5096CA1BB00622ECC /* Document.icns in Resources */,
 				1A901231096D324800A5AC2D /* Oolite Model.icns in Resources */,
@@ -1259,14 +1253,6 @@
 				1A0FFE5C0981EBB200599E84 /* English */,
 			);
 			name = DDCompareDialog.nib;
-			sourceTree = "<group>";
-		};
-		1A18DE04096456AF0010CE0B /* UKFeedbackProvider.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1A18DE05096456AF0010CE0B /* English */,
-			);
-			name = UKFeedbackProvider.nib;
 			sourceTree = "<group>";
 		};
 		1A53D8270ADD2B500057ED21 /* DDStartup.nib */ = {
